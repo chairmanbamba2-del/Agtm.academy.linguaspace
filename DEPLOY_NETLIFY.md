@@ -88,6 +88,32 @@ Dans les paramètres du site Netlify :
 2. Dans "Site URL", ajouter `https://[votre-site].netlify.app`
 3. Sauvegarder
 
+### ❌ Impossible de se connecter en tant qu'admin
+**Cause possible** : La colonne `role` manque dans la table `lingua_users`
+**Solution** :
+1. **Exécuter la migration SQL** dans Supabase Dashboard → SQL Editor :
+   ```sql
+   -- Ajouter la colonne role
+   ALTER TABLE lingua_users ADD COLUMN role TEXT DEFAULT 'user' 
+     CHECK (role IN ('user', 'admin', 'super_admin'));
+   
+   -- Promouvoir votre compte (remplacez l'email)
+   UPDATE lingua_users 
+   SET role = 'super_admin' 
+   WHERE email = 'votre-email@exemple.com';
+   ```
+2. **Vérifier la mise à jour** :
+   ```sql
+   SELECT email, full_name, role FROM lingua_users WHERE email = 'votre-email@exemple.com';
+   ```
+3. **Se déconnecter et se reconnecter** dans l'application pour rafraîchir le token
+
+### ❌ Build échoue à cause de dépendances
+**Solution** : Les versions des dépendances sont maintenant figées pour compatibilité Netlify. 
+Si le build échoue toujours, vérifiez les logs Netlify et assurez-vous que :
+- Les variables d'environnement `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` sont définies
+- La commande de build utilise `--legacy-peer-deps` (déjà configuré dans `netlify.toml`)
+
 ## Configuration avancée
 
 ### Déploiement continu
