@@ -1,347 +1,1439 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Landing() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+const Landing = () => {
+  useEffect(() => {
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) el.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
 
-  const features = [
-    {
-      icon: '🤖',
-      title: 'Assistant IA Claude',
-      description: 'Coach personnel IA 24h/24 avec reconnaissance vocale, correction d\'écrits et score de prononciation.'
-    },
-    {
-      icon: '📊',
-      title: 'Apprentissage personnalisé',
-      description: 'Programmes adaptés à votre niveau avec suivi de progression en temps réel.'
-    },
-    {
-      icon: '🌍',
-      title: '4 langues disponibles',
-      description: 'Anglais, Français, Espagnol, Allemand avec contenus natifs et culturels.'
-    },
-    {
-      icon: '📱',
-      title: 'Application PWA mobile',
-      description: 'Installez l\'application sur votre téléphone sans passer par l\'App Store.'
-    },
-    {
-      icon: '🎓',
-      title: 'Certification officielle',
-      description: 'Tests de niveau CEFR et certificats reconnus avec QR code de vérification.'
-    },
-    {
-      icon: '💬',
-      title: 'English Corner',
-      description: 'Espace communautaire pour pratiquer avec d\'autres apprenants du monde entier.'
-    }
-  ]
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  const languages = [
-    { code: 'en', name: 'Anglais', flag: '🇬🇧', levels: 'A1 à C2' },
-    { code: 'es', name: 'Espagnol', flag: '🇪🇸', levels: 'A1 à C2' },
-    { code: 'de', name: 'Allemand', flag: '🇩🇪', levels: 'A1 à B2' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷', levels: 'A1 à C2' }
-  ]
+    // CEFR level selection
+    document.querySelectorAll('.cefr-level').forEach(el => {
+      el.addEventListener('click', function() {
+        document.querySelectorAll('.cefr-level').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
 
-  const plans = [
-    {
-      name: 'Uni Langue',
-      price: '25 000 FCFA/mois',
-      description: 'Accès complet à une langue de votre choix',
-      features: ['Tous les niveaux', 'Assistant IA', 'English Corner', 'Certification']
-    },
-    {
-      name: 'All Access',
-      price: '40 000 FCFA/mois',
-      description: 'Accès illimité à toutes les langues',
-      features: ['4 langues', 'Tous les niveaux', 'Assistant IA Premium', 'Certification illimitée', 'Support prioritaire'],
-      highlighted: true
-    }
-  ]
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-dark text-white">
-      {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-dark/90 backdrop-blur-sm border-b border-bdr">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center">
-                <span className="text-dark font-bold">LS</span>
-              </div>
-              <div>
-                <h1 className="font-serif text-xl text-white">Lingua <span className="text-gold">Space</span></h1>
-                <p className="text-xs text-muted font-mono">by AGTM Digital Academy</p>
-              </div>
-            </div>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+  :root {
+    --navy: #0D2D52;
+    --blue: #1B4F8A;
+    --gold: #E8941A;
+    --gold-light: #F5B942;
+    --gold-pale: #FDF0D5;
+    --white: #FAFAF8;
+    --off: #F2EDE8;
+    --dark: #080F1A;
+    --muted: #8A9AB5;
+    --en: #C8102E;
+    --es: #AA151B;
+    --de: #000000;
+    --fr: #002395;
+  }
 
-            {/* Desktop menu */}
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-sm text-white hover:text-gold transition-colors">Fonctionnalités</a>
-              <a href="#languages" className="text-sm text-white hover:text-gold transition-colors">Langues</a>
-              <a href="#pricing" className="text-sm text-white hover:text-gold transition-colors">Tarifs</a>
-              <Link to="/login" className="text-sm text-white hover:text-gold transition-colors">Connexion</Link>
-              <Link to="/signup" className="px-4 py-2 bg-gold text-dark text-sm font-semibold rounded-sm hover:bg-gold-lt transition-all">
-                Commencer gratuitement
-              </Link>
-            </div>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-            {/* Mobile menu button */}
-            <button 
-              className="md:hidden text-white"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
+  html { scroll-behavior: smooth; }
 
-          {/* Mobile menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-bdr pt-4">
-              <div className="flex flex-col gap-4">
-                <a href="#features" className="text-sm text-white hover:text-gold transition-colors">Fonctionnalités</a>
-                <a href="#languages" className="text-sm text-white hover:text-gold transition-colors">Langues</a>
-                <a href="#pricing" className="text-sm text-white hover:text-gold transition-colors">Tarifs</a>
-                <Link to="/login" className="text-sm text-white hover:text-gold transition-colors">Connexion</Link>
-                <Link to="/signup" className="px-4 py-2 bg-gold text-dark text-sm font-semibold rounded-sm hover:bg-gold-lt transition-all text-center">
-                  Commencer gratuitement
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue/20 rounded-full mb-6">
-                <span className="text-gold">✨</span>
-                <span className="text-sm font-mono text-gold">Nouvelle génération</span>
-              </div>
-              <h1 className="font-serif text-5xl md:text-6xl text-white mb-6 leading-tight">
-                Apprenez les langues avec l'<span className="text-gold italic">IA</span>
-              </h1>
-              <p className="text-xl text-muted mb-8 max-w-2xl">
-                Lingua Space révolutionne l'apprentissage des langues avec un assistant IA personnel, 
-                des programmes adaptés et une certification reconnue à l'international.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  to="/signup" 
-                  className="px-8 py-4 bg-gold text-dark text-lg font-semibold rounded-sm hover:bg-gold-lt transition-all text-center"
-                >
-                  Essai gratuit 7 jours
-                </Link>
-                <a 
-                  href="#features" 
-                  className="px-8 py-4 border border-bdr text-white text-lg rounded-sm hover:border-gold hover:text-gold transition-all text-center"
-                >
-                  Découvrir les fonctionnalités
-                </a>
-              </div>
-              <div className="mt-8 flex items-center gap-4 text-sm text-muted">
-                <div className="flex items-center gap-2">
-                  <span className="text-green">✓</span>
-                  <span>Aucune carte bancaire requise</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-green">✓</span>
-                  <span>Annulation à tout moment</span>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-blue/10 rounded-2xl blur-3xl"></div>
-              <div className="relative bg-card border border-bdr rounded-2xl p-8">
-                <div className="aspect-video bg-gradient-to-br from-blue/20 to-gold/10 rounded-xl mb-6 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-6xl mb-4">🌍</div>
-                    <h3 className="font-serif text-2xl text-white">Lingua Space</h3>
-                    <p className="text-muted">Votre passeport linguistique</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  {languages.map(lang => (
-                    <div key={lang.code} className="text-center p-3 bg-dark/50 rounded-lg">
-                      <div className="text-2xl mb-2">{lang.flag}</div>
-                      <div className="font-semibold">{lang.name}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-card/30">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl text-white mb-4">Pourquoi choisir Lingua Space ?</h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto">
-              Une plateforme complète qui combine technologie de pointe et pédagogie éprouvée
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="bg-dark border border-bdr rounded-xl p-6 hover:border-gold/40 transition-colors">
-                <div className="text-3xl mb-4">{feature.icon}</div>
-                <h3 className="font-serif text-xl text-white mb-3">{feature.title}</h3>
-                <p className="text-muted">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(8, 15, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(232, 148, 26, 0.15);
+  }
 
-      {/* Languages Section */}
-      <section id="languages" className="py-20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl text-white mb-4">4 langues, des milliers de possibilités</h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto">
-              Des programmes complets du niveau débutant (A1) au niveau expert (C2)
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {languages.map(lang => (
-              <div key={lang.code} className="bg-card border border-bdr rounded-xl p-6 text-center hover:border-gold/40 transition-colors">
-                <div className="text-5xl mb-4">{lang.flag}</div>
-                <h3 className="font-serif text-2xl text-white mb-2">{lang.name}</h3>
-                <p className="text-muted mb-4">Niveaux {lang.levels}</p>
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue/20 rounded-full">
-                  <span className="text-gold text-sm">✓</span>
-                  <span className="text-sm text-white">Disponible</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-card/30">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl text-white mb-4">Des tarifs adaptés à vos besoins</h2>
-            <p className="text-xl text-muted max-w-3xl mx-auto">
-              Choisissez la formule qui correspond à vos objectifs linguistiques
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {plans.map((plan, index) => (
-              <div 
-                key={index} 
-                className={`relative border rounded-xl p-8 ${plan.highlighted ? 'border-gold bg-dark' : 'border-bdr bg-card'}`}
-              >
-                {plan.highlighted && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <div className="px-4 py-1 bg-gold text-dark text-sm font-semibold rounded-full">
-                      Le plus populaire
-                    </div>
-                  </div>
-                )}
-                <h3 className="font-serif text-2xl text-white mb-2">{plan.name}</h3>
-                <p className="text-muted mb-6">{plan.description}</p>
-                <div className="mb-6">
-                  <span className="font-serif text-4xl text-white">{plan.price}</span>
-                  <span className="text-muted">/mois</span>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-3">
-                      <span className="text-green">✓</span>
-                      <span className="text-white">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link 
-                  to="/signup" 
-                  className={`block w-full text-center py-3 rounded-sm font-semibold transition-all ${
-                    plan.highlighted 
-                      ? 'bg-gold text-dark hover:bg-gold-lt' 
-                      : 'bg-blue text-white hover:bg-blue/80'
-                  }`}
-                >
-                  Commencer maintenant
-                </Link>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12">
-            <p className="text-muted">
-              Essai gratuit de 7 jours · Aucun engagement · Annulation à tout moment
-            </p>
-          </div>
-        </div>
-      </section>
+  .nav-logo .brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
 
-      {/* CTA Section */}
-      <section className="py-20">
-        <div className="container mx-auto max-w-4xl px-4 text-center">
-          <div className="bg-gradient-to-r from-blue/20 to-gold/10 border border-bdr rounded-2xl p-12">
-            <h2 className="font-serif text-4xl text-white mb-6">
-              Prêt à parler couramment ?
-            </h2>
-            <p className="text-xl text-muted mb-8 max-w-2xl mx-auto">
-              Rejoignez des milliers d'apprenants qui ont transformé leur vie avec Lingua Space
-            </p>
-            <Link 
-              to="/signup" 
-              className="inline-flex items-center gap-3 px-8 py-4 bg-gold text-dark text-lg font-semibold rounded-sm hover:bg-gold-lt transition-all"
-            >
-              <span>Commencer gratuitement</span>
-              <span>→</span>
-            </Link>
-            <div className="mt-8 text-sm text-muted">
-              <p>Une question ? Contactez-nous : contact@agtm-education.com · +225 07 07 96 72 50</p>
-            </div>
-          </div>
-        </div>
-      </section>
+  .nav-logo .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
 
-      {/* Footer */}
-      <footer className="border-t border-bdr py-8">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full bg-gold flex items-center justify-center">
-                  <span className="text-dark font-bold">LS</span>
-                </div>
-                <div>
-                  <h3 className="font-serif text-xl text-white">Lingua Space</h3>
-                  <p className="text-xs text-muted font-mono">by AGTM Digital Academy</p>
-                </div>
-              </div>
-              <p className="text-sm text-muted max-w-md">
-                Plateforme d'apprentissage des langues avec IA. 
-                Certifications reconnues à l'international.
-              </p>
-            </div>
-            <div className="text-center md:text-right">
-              <p className="text-sm text-muted mb-2">© 2024 AGTM Digital Academy. Tous droits réservés.</p>
-              <p className="text-xs text-muted">
-                Abidjan, Côte d'Ivoire · 
-                <a href="https://lingua.africaglobaltraining.com" className="text-gold hover:underline ml-1">
-                  lingua.africaglobaltraining.com
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .btn-nav {
+    background: var(--gold);
+    color: var(--dark) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8rem 2rem 4rem;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(27, 79, 138, 0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 60%, rgba(232, 148, 26, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 40%, rgba(13, 45, 82, 0.5) 0%, transparent 60%);
+  }
+
+  .lang-orbs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.12;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .orb-en { width: 300px; height: 300px; background: #C8102E; top: 10%; left: -5%; animation-delay: 0s; }
+  .orb-es { width: 250px; height: 250px; background: #F1BF00; top: 60%; right: -3%; animation-delay: 2s; }
+  .orb-de { width: 200px; height: 200px; background: #FFFFFF; bottom: 10%; left: 15%; animation-delay: 4s; }
+  .orb-fr { width: 280px; height: 280px; background: #002395; top: 20%; right: 10%; animation-delay: 6s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.05); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 40px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    position: relative;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-title .word-space {
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 300;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-langs {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .lang-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(4px);
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+
+  .lang-badge .flag { font-size: 1rem; }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    padding: 1rem 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.25s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(232, 148, 26, 0.3);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    font-family: 'Space Mono', monospace;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollAnim 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scrollAnim {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.3; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    background: rgba(27, 79, 138, 0.15);
+    border-top: 1px solid rgba(232, 148, 26, 0.2);
+    border-bottom: 1px solid rgba(232, 148, 26, 0.2);
+    padding: 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .stat-item { padding: 0.5rem; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 30px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* ─── CORNERS ─── */
+  .corners-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    margin-top: 3rem;
+  }
+
+  .corner-card {
+    background: var(--dark);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    group: true;
+  }
+
+  .corner-card:hover {
+    background: rgba(27, 79, 138, 0.2);
+  }
+
+  .corner-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .corner-card:hover::before { opacity: 1; }
+  .corner-en::before { background: var(--en); }
+  .corner-es::before { background: #F1BF00; }
+  .corner-de::before { background: rgba(255,255,255,0.5); }
+  .corner-fr::before { background: var(--fr); }
+
+  .corner-flag {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  }
+
+  .corner-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--white);
+  }
+
+  .corner-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .corner-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .corner-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .corner-feature {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .corner-feature::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  .corner-bg-text {
+    position: absolute;
+    bottom: -1rem;
+    right: -0.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    font-weight: 700;
+    opacity: 0.04;
+    pointer-events: none;
+    line-height: 1;
+    color: white;
+    user-select: none;
+  }
+
+  /* ─── IA SECTION ─── */
+  .ia-section {
+    background: linear-gradient(135deg, rgba(13, 45, 82, 0.6), rgba(8, 15, 26, 0.8));
+    border: 1px solid rgba(232, 148, 26, 0.2);
+    border-radius: 4px;
+    padding: 4rem;
+    margin: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ia-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(232, 148, 26, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .ia-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .ia-mockup {
+    background: rgba(8, 15, 26, 0.8);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .ia-mockup-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .ia-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--gold), var(--blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  .ia-name { font-size: 0.85rem; font-weight: 600; }
+  .ia-status { font-size: 0.7rem; color: #4ADE80; }
+
+  .chat-bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    max-width: 85%;
+  }
+
+  .bubble-ai {
+    background: rgba(27, 79, 138, 0.3);
+    border: 1px solid rgba(27, 79, 138, 0.4);
+    color: var(--white);
+    border-radius: 4px 12px 12px 12px;
+  }
+
+  .bubble-user {
+    background: rgba(232, 148, 26, 0.15);
+    border: 1px solid rgba(232, 148, 26, 0.2);
+    color: var(--white);
+    margin-left: auto;
+    border-radius: 12px 4px 12px 12px;
+  }
+
+  .bubble-correction {
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    color: rgba(255,255,255,0.8);
+    font-size: 0.78rem;
+    border-radius: 4px 12px 12px 12px;
+  }
+
+  .ia-content .section-label { margin-bottom: 1rem; }
+
+  .ia-modes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .ia-mode {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .ia-mode:hover {
+    background: rgba(232, 148, 26, 0.06);
+    border-color: rgba(232, 148, 26, 0.2);
+  }
+
+  .ia-mode-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .ia-mode-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .ia-mode-desc { font-size: 0.75rem; color: var(--muted); }
+  .ia-mode-badge {
+    margin-left: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 100px;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .badge-std { background: rgba(232, 148, 26, 0.15); color: var(--gold); border: 1px solid rgba(232, 148, 26, 0.3); }
+  .badge-prm { background: rgba(27, 79, 138, 0.3); color: #93C5FD; border: 1px solid rgba(147, 197, 253, 0.3); }
+
+  /* ─── PRICING ─── */
+  .pricing-section { max-width: 1200px; margin: 0 auto; padding: 6rem 4rem; }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .pricing-card {
+    background: var(--dark);
+    padding: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-card.featured {
+    background: linear-gradient(145deg, rgba(13, 45, 82, 0.9), rgba(8, 15, 26, 0.95));
+  }
+
+  .pricing-card.featured::before {
+    content: 'POPULAIRE';
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--dark);
+    background: var(--gold);
+    padding: 0.3rem 0.75rem;
+    border-radius: 2px;
+  }
+
+  .plan-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+  .plan-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .plan-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+
+  .plan-price {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .price-currency {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .plan-period {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .plan-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin-bottom: 1.5rem;
+  }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .plan-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+  }
+
+  .feature-check {
+    color: var(--gold);
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+
+  .plan-lang-chips {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+
+  .lang-chip {
+    padding: 0.25rem 0.6rem;
+    border: 1px solid rgba(232, 148, 26, 0.3);
+    border-radius: 100px;
+    font-size: 0.72rem;
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .plan-cta {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+
+  .cta-gold {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  .cta-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(232, 148, 26, 0.3);
+  }
+
+  .cta-outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  .cta-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .pricing-note {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  /* ─── PAYMENT METHODS ─── */
+  .payment-methods {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .pay-badge {
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.03);
+  }
+
+  /* ─── MODULES PREVIEW ─── */
+  .modules-section { max-width: 1200px; margin: 0 auto; padding: 0 4rem 6rem; }
+
+  .cefr-track {
+    display: flex;
+    gap: 0;
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .cefr-level {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .cefr-level:last-child { border-right: none; }
+
+  .cefr-level:hover {
+    background: rgba(232, 148, 26, 0.08);
+  }
+
+  .cefr-level.active {
+    background: rgba(232, 148, 26, 0.12);
+  }
+
+  .cefr-level.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+
+  .cefr-code {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .cefr-name {
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .cefr-count {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ─── INSTALL SECTION ─── */
+  .install-section {
+    background: rgba(13, 45, 82, 0.3);
+    border-top: 1px solid rgba(232, 148, 26, 0.15);
+    border-bottom: 1px solid rgba(232, 148, 26, 0.15);
+    padding: 4rem;
+    text-align: center;
+  }
+
+  .install-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .install-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--gold), var(--blue));
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 1.5rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+    .corners-grid { grid-template-columns: 1fr; }
+    .ia-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .ia-section { margin: 0 1.5rem; padding: 2rem; }
+    .cefr-track { flex-wrap: wrap; }
+    .cefr-level { flex: 0 0 33.33%; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    .pricing-section, .modules-section { padding: 4rem 1.5rem; }
+    .install-section { padding: 3rem 1.5rem; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+` }} />
+      <div dangerouslySetInnerHTML={{ __html: `
+
+
+<nav>
+  <div className="nav-logo">
+    <span className="brand">AGTM Digital Academy</span>
+    <span className="name">LINGUA SPACE</span>
+  </div>
+  <ul className="nav-links">
+    <li><a href="#corners">Les Corners</a></li>
+    <li><a href="#assistant">IA Coach</a></li>
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#pricing">Abonnements</a></li>
+    <li><a href="#pricing" className="btn-nav">Commencer</a></li>
+  </ul>
+</nav>
+
+
+<section className="hero" style="max-width:none; padding-top: 8rem; padding-left: 0; padding-right: 0;">
+  <div className="hero-bg"></div>
+  <div className="lang-orbs">
+    <div className="orb orb-en"></div>
+    <div className="orb orb-es"></div>
+    <div className="orb orb-de"></div>
+    <div className="orb orb-fr"></div>
+  </div>
+
+  <div className="hero-eyebrow">Programme 100% Digital</div>
+
+  <h1 className="hero-title">
+    <span>Parlez</span>
+    <em>le monde.</em>
+  </h1>
+
+  <p className="hero-subtitle">Apprenez. Pratiquez. Maîtrisez.</p>
+
+  <div className="hero-langs">
+    <span className="lang-badge"><span className="flag">🇬🇧</span> English Corner</span>
+    <span className="lang-badge"><span className="flag">🇪🇸</span> Rincón Español</span>
+    <span className="lang-badge"><span className="flag">🇩🇪</span> Deutsche Ecke</span>
+    <span className="lang-badge"><span className="flag">🇫🇷</span> Espace Francophone</span>
+  </div>
+
+  <div className="hero-cta">
+    <a href="#pricing" className="btn-primary">Choisir mon forfait →</a>
+    <a href="#corners" className="btn-ghost">Découvrir les Corners</a>
+  </div>
+
+  <div className="hero-scroll">
+    <div className="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+
+<div className="stats-bar">
+  <div className="stat-item">
+    <span className="stat-number">4</span>
+    <span className="stat-label">Langues disponibles</span>
+  </div>
+  <div className="stat-item">
+    <span className="stat-number">400</span>
+    <span className="stat-label">Modules A1 → C2</span>
+  </div>
+  <div className="stat-item">
+    <span className="stat-number">2000+</span>
+    <span className="stat-label">Contenus audio/vidéo</span>
+  </div>
+  <div className="stat-item">
+    <span className="stat-number">24/7</span>
+    <span className="stat-label">IA Coach disponible</span>
+  </div>
+</div>
+
+
+<section id="corners" className="fade-in">
+  <span className="section-label">Vos espaces d'immersion</span>
+  <h2 className="section-title">Quatre <em>Corners</em>,<br>une seule ambition.</h2>
+  <p style="color: var(--muted); font-size: 0.9rem; max-width: 500px; line-height: 1.8;">
+    Chaque Corner est un univers d'immersion linguistique : flux de contenus authentiques, quiz automatiques, coach IA et 100 modules progressifs.
+  </p>
+
+  <div className="corners-grid">
+    <div className="corner-card corner-en">
+      <span className="corner-flag">🇬🇧</span>
+      <div className="corner-name">English Corner</div>
+      <span className="corner-tag">British & American English</span>
+      <p className="corner-desc">Podcasts BBC, extraits de séries, news et culture anglophone. Votre coach IA pratique avec vous le Business English, l'IELTS et la vie quotidienne.</p>
+      <div className="corner-features">
+        <span className="corner-feature">News & Podcasts authentiques</span>
+        <span className="corner-feature">Préparation IELTS / TOEFL</span>
+        <span className="corner-feature">Business & Professional English</span>
+        <span className="corner-feature">100 modules A1 → C2</span>
+      </div>
+      <span className="corner-bg-text">EN</span>
     </div>
-  )
-}
+
+    <div className="corner-card corner-es">
+      <span className="corner-flag">🇪🇸</span>
+      <div className="corner-name">Rincón Español</div>
+      <span className="corner-tag">Español Internacional</span>
+      <p className="corner-desc">Télévision espagnole, musique latine, culture hispanique. Votre coach IA vous emmène de Madrid à México City, conversation après conversation.</p>
+      <div className="corner-features">
+        <span className="corner-feature">Radio & TV hispanophone</span>
+        <span className="corner-feature">Préparation DELE</span>
+        <span className="corner-feature">Espagnol des affaires</span>
+        <span className="corner-feature">100 modules A1 → C2</span>
+      </div>
+      <span className="corner-bg-text">ES</span>
+    </div>
+
+    <div className="corner-card corner-de">
+      <span className="corner-flag">🇩🇪</span>
+      <div className="corner-name">Deutsche Ecke</div>
+      <span className="corner-tag">Deutsch für alle</span>
+      <p className="corner-desc">Actualité Deutsche Welle, culture germanique et humour allemand. Une porte d'entrée vers l'Europe, les études et les opportunités professionnelles.</p>
+      <div className="corner-features">
+        <span className="corner-feature">Deutsche Welle intégré</span>
+        <span className="corner-feature">Préparation TestDaF / Goethe</span>
+        <span className="corner-feature">Allemand professionnel</span>
+        <span className="corner-feature">100 modules A1 → C2</span>
+      </div>
+      <span className="corner-bg-text">DE</span>
+    </div>
+
+    <div className="corner-card corner-fr">
+      <span className="corner-flag">🇫🇷</span>
+      <div className="corner-name">Espace Francophone</div>
+      <span className="corner-tag">Francophonie mondiale</span>
+      <p className="corner-desc">RFI, littérature africaine, culture francophone mondiale. Perfectionnez votre français écrit et oral pour les concours, les examens et le monde professionnel.</p>
+      <div className="corner-features">
+        <span className="corner-feature">RFI Savoirs & culture africaine</span>
+        <span className="corner-feature">Préparation DELF / DALF</span>
+        <span className="corner-feature">Français des affaires</span>
+        <span className="corner-feature">100 modules A1 → C2</span>
+      </div>
+      <span className="corner-bg-text">FR</span>
+    </div>
+  </div>
+</section>
+
+
+<div id="assistant" className="ia-section fade-in">
+  <div className="ia-grid">
+    <div className="ia-content">
+      <span className="section-label">Intelligence Artificielle</span>
+      <h2 className="section-title" style="font-size: 2.5rem;">Votre coach<br><em>personnel</em> 24h/24.</h2>
+      <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 1.5rem;">
+        Propulsé par Claude Sonnet & Opus d'Anthropic, votre assistant corrige vos erreurs, reformule naturellement et vous fait progresser conversation après conversation.
+      </p>
+
+      <div className="ia-modes">
+        <div className="ia-mode">
+          <span className="ia-mode-icon">🗣️</span>
+          <div>
+            <div className="ia-mode-name">Free Talk</div>
+            <div className="ia-mode-desc">Conversation libre sur tous les sujets</div>
+          </div>
+          <span className="ia-mode-badge badge-std">STANDARD</span>
+        </div>
+        <div className="ia-mode">
+          <span className="ia-mode-icon">💼</span>
+          <div>
+            <div className="ia-mode-name">Business Mode</div>
+            <div className="ia-mode-desc">Réunions, emails, présentations pro</div>
+          </div>
+          <span className="ia-mode-badge badge-std">STANDARD</span>
+        </div>
+        <div className="ia-mode">
+          <span className="ia-mode-icon">🎭</span>
+          <div>
+            <div className="ia-mode-name">Role Play</div>
+            <div className="ia-mode-desc">Jeux de rôle immersifs et scénarios</div>
+          </div>
+          <span className="ia-mode-badge badge-prm">PREMIUM</span>
+        </div>
+        <div className="ia-mode">
+          <span className="ia-mode-icon">🎯</span>
+          <div>
+            <div className="ia-mode-name">Exam Prep</div>
+            <div className="ia-mode-desc">IELTS, DELF, DELE, Goethe...</div>
+          </div>
+          <span className="ia-mode-badge badge-prm">PREMIUM</span>
+        </div>
+      </div>
+    </div>
+
+    <div className="ia-mockup">
+      <div className="ia-mockup-header">
+        <div className="ia-avatar">🤖</div>
+        <div>
+          <div className="ia-name">Lingua AI Coach · English Corner</div>
+          <div className="ia-status">● En ligne · Niveau B1 détecté</div>
+        </div>
+      </div>
+
+      <div className="chat-bubble bubble-ai">
+        Hello! I'm your English Coach. What would you like to practice today? We can do a free conversation, or maybe prepare for a job interview? 😊
+      </div>
+
+      <div className="chat-bubble bubble-user">
+        I want to practice for a interview. I'm a little nervous about speak english in front of people.
+      </div>
+
+      <div className="chat-bubble bubble-correction">
+        ✏️ <strong>Quick correction:</strong> "…nervous about <em>speaking</em> English…" — use the gerund after prepositions. Great initiative though!
+      </div>
+
+      <div className="chat-bubble bubble-ai">
+        That's completely normal! Let's do a mock interview together. I'll be the interviewer. Ready? <br><br>
+        <em>"Tell me about yourself and why you applied for this position."</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<section className="modules-section fade-in" id="modules">
+  <span className="section-label">Parcours structuré</span>
+  <h2 className="section-title">100 modules.<br><em>6 niveaux</em> CEFR.</h2>
+  <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.8; max-width: 500px;">
+    Chaque langue dispose de 100 modules progressifs, de l'alphabet jusqu'à la maîtrise avancée. Un test de niveau automatique vous place dès l'inscription.
+  </p>
+
+  <div className="cefr-track">
+    <div className="cefr-level">
+      <span className="cefr-code">A1</span>
+      <span className="cefr-name">Découverte</span>
+      <span className="cefr-count">~15 modules</span>
+    </div>
+    <div className="cefr-level">
+      <span className="cefr-code">A2</span>
+      <span className="cefr-name">Survie</span>
+      <span className="cefr-count">~18 modules</span>
+    </div>
+    <div className="cefr-level active">
+      <span className="cefr-code">B1</span>
+      <span className="cefr-name">Seuil</span>
+      <span className="cefr-count">~20 modules</span>
+    </div>
+    <div className="cefr-level">
+      <span className="cefr-code">B2</span>
+      <span className="cefr-name">Avancé</span>
+      <span className="cefr-count">~20 modules</span>
+    </div>
+    <div className="cefr-level">
+      <span className="cefr-code">C1</span>
+      <span className="cefr-name">Autonome</span>
+      <span className="cefr-count">~15 modules</span>
+    </div>
+    <div className="cefr-level">
+      <span className="cefr-code">C2</span>
+      <span className="cefr-name">Maîtrise</span>
+      <span className="cefr-count">~12 modules</span>
+    </div>
+  </div>
+</section>
+
+
+<section className="pricing-section fade-in" id="pricing">
+  <div style="text-align:center;">
+    <span className="section-label" style="justify-content:center;">Tarifs & Abonnements</span>
+    <h2 className="section-title" style="font-size: clamp(2rem, 5vw, 3rem);">Simple. <em>Transparent.</em> Accessible.</h2>
+    <p style="color: var(--muted); font-size: 0.9rem; max-width: 480px; margin: 0 auto 1rem; line-height: 1.8;">
+      Aucun engagement à long terme. Résiliez quand vous voulez. Paiement par Mobile Money, Wave ou carte bancaire.
+    </p>
+  </div>
+
+  <div className="pricing-grid">
+
+    
+    <div className="pricing-card">
+      <span className="plan-icon">🟡</span>
+      <div className="plan-name">Forfait</div>
+      <div className="plan-title">LINGUA UNI</div>
+      <div className="plan-price">
+        <span className="price-amount">10 000</span>
+        <span className="price-currency">FCFA</span>
+      </div>
+      <div className="plan-period">par mois · 1 langue au choix</div>
+
+      <div className="plan-lang-chips">
+        <span className="lang-chip">🇬🇧 EN</span>
+        <span className="lang-chip">🇪🇸 ES</span>
+        <span className="lang-chip">🇩🇪 DE</span>
+        <span className="lang-chip">🇫🇷 FR</span>
+      </div>
+
+      <div className="plan-divider"></div>
+
+      <ul className="plan-features">
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>1 Corner au choix parmi les 4 langues</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>100 modules A1 → C2 (langue choisie)</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Flux audio/vidéo + quiz IA automatiques</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Assistant IA Speaking & Listening — Claude Sonnet</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>30 sessions IA par mois</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Test de niveau automatique à l'inscription</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Rapport de progression hebdomadaire</span>
+        </li>
+      </ul>
+
+      <a href="#" className="plan-cta cta-outline">Commencer avec UNI</a>
+    </div>
+
+    
+    <div className="pricing-card featured">
+      <span className="plan-icon">🔵</span>
+      <div className="plan-name">Forfait</div>
+      <div className="plan-title">LINGUA ALL ACCESS</div>
+      <div className="plan-price">
+        <span className="price-amount">15 000</span>
+        <span className="price-currency">FCFA</span>
+      </div>
+      <div className="plan-period">par mois · Les 4 langues incluses</div>
+
+      <div className="plan-lang-chips">
+        <span className="lang-chip">🇬🇧 EN</span>
+        <span className="lang-chip">🇪🇸 ES</span>
+        <span className="lang-chip">🇩🇪 DE</span>
+        <span className="lang-chip">🇫🇷 FR</span>
+      </div>
+
+      <div className="plan-divider"></div>
+
+      <ul className="plan-features">
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span><strong>Les 4 Corners</strong> — English, Español, Deutsch, Français</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>400 modules A1 → C2 (toutes langues)</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Flux audio/vidéo illimité + quiz IA</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Assistant IA premium — <strong>Claude Opus</strong></span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span><strong>Sessions IA illimitées</strong></span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Role Play & Exam Prep (IELTS, DELF, DELE, Goethe)</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Progression simultanée sur 4 langues</span>
+        </li>
+        <li className="plan-feature">
+          <span className="feature-check">✦</span>
+          <span>Rapport détaillé + leaderboard mensuel</span>
+        </li>
+      </ul>
+
+      <a href="#" className="plan-cta cta-gold">Commencer avec ALL ACCESS</a>
+    </div>
+  </div>
+
+  <div className="pricing-note">
+    🔒 Paiement 100% sécurisé ·
+    Sans engagement ·
+    Résiliation en 1 clic
+  </div>
+  <div className="payment-methods">
+    <span className="pay-badge">🟠 Orange Money</span>
+    <span className="pay-badge">🔵 Wave</span>
+    <span className="pay-badge">🟡 MTN MoMo</span>
+    <span className="pay-badge">💳 Carte bancaire</span>
+    <span className="pay-badge">🌍 Flutterwave</span>
+  </div>
+</section>
+
+
+<div className="install-section fade-in">
+  <div className="install-content">
+    <div className="install-icon">📱</div>
+    <span className="section-label" style="justify-content:center; margin-bottom:1rem;">Application mobile</span>
+    <h3 className="section-title" style="font-size:2rem; text-align:center;">Installez LINGUA SPACE<br>sur votre <em>téléphone.</em></h3>
+    <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 2rem;">
+      Disponible comme application installable (PWA) sur Android et iOS. Aucun téléchargement depuis un store. Ouvrez le site et appuyez sur "Ajouter à l'écran d'accueil".
+    </p>
+    <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+      <a href="#" className="btn-primary">📲 Installer sur Android</a>
+      <a href="#" className="btn-ghost">🍎 Installer sur iOS</a>
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  <div className="footer-logo">LINGUA SPACE <span style="color:var(--muted); font-size:0.75rem; font-family:'Space Mono'; font-weight:400;">by AGTM</span></div>
+  <ul className="footer-links">
+    <li><a href="#">À propos</a></li>
+    <li><a href="#">Conditions</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="https://africaglobaltraining.com">AGTM Academy</a></li>
+  </ul>
+  <span className="footer-copy">© 2025 AGTM Digital Academy · lingua.africaglobaltraining.com</span>
+</footer>
+
+
+
+` }} />
+    </>
+  );
+};
+
+export default Landing;
