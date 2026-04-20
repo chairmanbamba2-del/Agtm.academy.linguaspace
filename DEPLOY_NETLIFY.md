@@ -32,16 +32,23 @@ git push -u origin master
    - Publish directory: `dist`
 6. Cliquer sur **"Deploy site"**
 
-### 4. Variables d'environnement (optionnel mais recommandé)
+### 4. Variables d'environnement (⚠️ **OBLIGATOIRE** ⚠️)
+**L'application échouera avec l'erreur "Variables Supabase manquantes" si ces variables ne sont pas définies.**
+
 Dans les paramètres du site Netlify :
-- **Build & Deploy** → **Environment variables** → **Add variable**
-- Ajouter les variables nécessaires :
+- **Site settings** → **Build & Deploy** → **Environment variables** → **Add variable**
+- Ajouter les variables **exactement comme ci-dessous** :
   ```
-  VITE_SUPABASE_URL=https://mctcnnmtudksgzuzknjo.supabase.co
-  VITE_SUPABASE_ANON_KEY=sb_publishable_Ha62DK2foulS52-zTM-Csg_Sd4_nnL2 
-  VITE_APP_ENV=production
-  VITE_APP_URL=https://[votre-site].netlify.app
+  VITE_SUPABASE_URL = https://mctcnnmtudksgzuzknjo.supabase.co
+  VITE_SUPABASE_ANON_KEY = sb_publishable_Ha62DK2foulS52-zTM-Csg_Sd4_nnL2 
+  VITE_APP_ENV = production
+  VITE_APP_URL = https://lingua.africaglobaltraining.com
   ```
+
+**Important** : Après avoir ajouté/modifié les variables, **redéployez manuellement** le site :
+1. Allez dans **Deploys**
+2. Cliquez sur **"Trigger deploy"** → **"Clear cache and deploy site"**
+3. Attendez la fin du déploiement (2-3 minutes)
 
 ### 5. Domaine personnalisé (optionnel)
 - **Site settings** → **Domain management**
@@ -88,31 +95,29 @@ Dans les paramètres du site Netlify :
 2. Dans "Site URL", ajouter `https://[votre-site].netlify.app`
 3. Sauvegarder
 
-### ❌ Impossible de se connecter en tant qu'admin
-**Cause possible** : La colonne `role` manque dans la table `lingua_users`
-**Solution** :
-1. **Exécuter la migration SQL** dans Supabase Dashboard → SQL Editor :
-   ```sql
-   -- Ajouter la colonne role
-   ALTER TABLE lingua_users ADD COLUMN role TEXT DEFAULT 'user' 
-     CHECK (role IN ('user', 'admin', 'super_admin'));
-   
-   -- Promouvoir votre compte (remplacez l'email)
-   UPDATE lingua_users 
-   SET role = 'super_admin' 
-   WHERE email = 'votre-email@exemple.com';
-   ```
-2. **Vérifier la mise à jour** :
-   ```sql
-   SELECT email, full_name, role FROM lingua_users WHERE email = 'votre-email@exemple.com';
-   ```
-3. **Se déconnecter et se reconnecter** dans l'application pour rafraîchir le token
+### ✅ ADMIN : Migration déjà exécutée
+**Statut** : La migration SQL a été exécutée avec succès le 20/04/2026.
+**Compte admin** : `chairmanbamba2@gmail.com` (Issa Bamba) est maintenant `super_admin`.
+
+**Pour vérifier** :
+1. Connectez-vous à Supabase Dashboard → Table Editor → `lingua_users`
+2. Vérifiez que la colonne `role` existe et que votre compte a `super_admin`
+
+**Pour accéder à l'Espace Admin** :
+1. Connectez-vous à l'application avec `chairmanbamba2@gmail.com`
+2. Les liens d'administration apparaîtront dans la sidebar (🔧 Administration)
+3. L'Espace Marketing est accessible via `/admin/marketing`
 
 ### ❌ Build échoue à cause de dépendances
 **Solution** : Les versions des dépendances sont maintenant figées pour compatibilité Netlify. 
 Si le build échoue toujours, vérifiez les logs Netlify et assurez-vous que :
 - Les variables d'environnement `VITE_SUPABASE_URL` et `VITE_SUPABASE_ANON_KEY` sont définies
 - La commande de build utilise `--legacy-peer-deps` (déjà configuré dans `netlify.toml`)
+
+### ⚠️ Erreur PWA "Download error or resource isn't a valid image"
+**Cause** : Les icônes PNG référencées dans le manifeste n'existaient pas.
+**Solution appliquée** : Les icônes ont été remplacées par des SVG (supporté par tous les navigateurs modernes).
+**Si l'erreur persiste** : Elle est non bloquante et n'empêche pas l'application de fonctionner.
 
 ## Configuration avancée
 
