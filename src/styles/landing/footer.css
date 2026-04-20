@@ -1,0 +1,39 @@
+  /* --- FOOTER --- */
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    font-family: 'Space Mono', monospace;
+  }
+

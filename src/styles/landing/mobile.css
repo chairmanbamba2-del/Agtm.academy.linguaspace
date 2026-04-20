@@ -1,0 +1,35 @@
+/* --- MOBILE --- */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+
+    .corners-grid { display: flex; }
+    .corner-card { width: calc(100vw - 3rem); }
+    .ia-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .ia-section { margin: 0 1.5rem; padding: 2rem; }
+    .cefr-track { 
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .cefr-level { 
+      border-right: none;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 1.5rem 1rem;
+    }
+    .cefr-level:nth-child(even) {
+      border-right: none;
+    }
+    .cefr-level:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    .pricing-section, .modules-section { padding: 4rem 1.5rem; }
+    .install-section { padding: 3rem 1.5rem; }
+  }
+

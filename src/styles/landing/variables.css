@@ -1,0 +1,16 @@
+/* CSS Variables for Lingua Space */
+:root {
+  --navy: #0D2D52;
+  --blue: #1B4F8A;
+  --gold: #E8941A;
+  --gold-light: #F5B942;
+  --gold-pale: #FDF0D5;
+  --white: #FAFAF8;
+  --off: #F2EDE8;
+  --dark: #080F1A;
+  --muted: #8A9AB5;
+  --en: #C8102E;
+  --es: #AA151B;
+  --de: #000000;
+  --fr: #002395;
+}

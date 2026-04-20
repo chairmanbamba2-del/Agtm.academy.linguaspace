@@ -1,0 +1,74 @@
+  /* --- NAV --- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(8, 15, 26, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(232, 148, 26, 0.15);
+  }
+
+  .nav-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    z-index: 101;
+  }
+
+  .nav-logo .brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .nav-logo .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .nav-logo a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .btn-nav {
+    background: var(--gold);
+    color: var(--dark) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    font-size: 0.8rem !important;
+  }
+

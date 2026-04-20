@@ -1,0 +1,96 @@
+/* --- BENTO STATS GRID --- */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 3rem 4rem;
+    position: relative;
+  }
+
+  .stat-item {
+    background: rgba(13, 45, 82, 0.4);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    text-align: center;
+    transition: all 0.3s ease;
+    /* Border gradient effect */
+    background-clip: padding-box;
+  }
+
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 2px;
+    background: linear-gradient(135deg, 
+      rgba(232, 148, 26, 0.6) 0%,
+      rgba(27, 79, 138, 0.8) 50%,
+      rgba(232, 148, 26, 0.6) 100%);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .stat-item:hover::before {
+    opacity: 1;
+    animation: border-beam 2s linear infinite;
+  }
+
+  .stat-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(232, 148, 26, 0.15);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+    text-shadow: 0 4px 12px rgba(232, 148, 26, 0.3);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    display: block;
+    font-weight: 500;
+  }
+
+  @keyframes border-beam {
+    0% {
+      background-position: 0% 0%;
+    }
+    100% {
+      background-position: 200% 200%;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .stats-bar {
+      grid-template-columns: 1fr;
+      padding: 2rem 1.5rem;
+      gap: 1rem;
+    }
+    .stat-item {
+      padding: 1.5rem 1rem;
+    }
+    .stat-number {
+      font-size: 2.5rem;
+    }
+  }
+

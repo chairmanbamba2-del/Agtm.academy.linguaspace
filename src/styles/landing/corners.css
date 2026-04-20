@@ -1,0 +1,115 @@
+/* --- CORNERS --- */
+  .corners-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 1.5px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    margin-top: 3rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .corners-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .corner-card {
+    background: var(--dark);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 0 0 auto;
+    width: calc(100vw - 8rem);
+    scroll-snap-align: start;
+  }
+
+  .corner-card:hover {
+    background: rgba(27, 79, 138, 0.2);
+  }
+
+  .corner-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .corner-card:hover::before { opacity: 1; }
+  .corner-en::before { background: var(--en); }
+  .corner-es::before { background: #F1BF00; }
+  .corner-de::before { background: rgba(255,255,255,0.5); }
+  .corner-fr::before { background: var(--fr); }
+
+  .corner-flag {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+  }
+
+  .corner-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--white);
+  }
+
+  .corner-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .corner-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .corner-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .corner-feature {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .corner-feature::before {
+    content: 'Ã¢â€ â€™';
+    color: var(--gold);
+    font-size: 0.7rem;
+  }
+
+  .corner-bg-text {
+    position: absolute;
+    bottom: -1rem;
+    right: -0.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    font-weight: 700;
+    opacity: 0.04;
+    pointer-events: none;
+    line-height: 1;
+    color: white;
+    user-select: none;
+  }
+
