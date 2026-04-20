@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
   useEffect(() => {
@@ -1003,7 +1004,9 @@ const Landing = () => {
     transform: translateY(0);
   }
 ` }} />
-      
+      <div dangerouslySetInnerHTML={{ __html: `
+
+
 <nav>
   <div className="nav-logo">
     <span className="brand">AGTM Digital Academy</span>
@@ -1078,7 +1081,7 @@ const Landing = () => {
 
 <section id="corners" className="fade-in">
   <span className="section-label">Vos espaces d'immersion</span>
-  <h2 className="section-title">Quatre <em>Corners</em>,<br />une seule ambition.</h2>
+  <h2 className="section-title">Quatre <em>Corners</em>,<br>une seule ambition.</h2>
   <p style="color: var(--muted); font-size: 0.9rem; max-width: 500px; line-height: 1.8;">
     Chaque Corner est un univers d'immersion linguistique : flux de contenus authentiques, quiz automatiques, coach IA et 100 modules progressifs.
   </p>
@@ -1147,7 +1150,7 @@ const Landing = () => {
   <div className="ia-grid">
     <div className="ia-content">
       <span className="section-label">Intelligence Artificielle</span>
-      <h2 className="section-title" style="font-size: 2.5rem;">Votre coach<br /><em>personnel</em> 24h/24.</h2>
+      <h2 className="section-title" style="font-size: 2.5rem;">Votre coach<br><em>personnel</em> 24h/24.</h2>
       <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 1.5rem;">
         Propulsé par Claude Sonnet & Opus d'Anthropic, votre assistant corrige vos erreurs, reformule naturellement et vous fait progresser conversation après conversation.
       </p>
@@ -1210,7 +1213,7 @@ const Landing = () => {
       </div>
 
       <div className="chat-bubble bubble-ai">
-        That's completely normal! Let's do a mock interview together. I'll be the interviewer. Ready? <br /><br />
+        That's completely normal! Let's do a mock interview together. I'll be the interviewer. Ready? <br><br>
         <em>"Tell me about yourself and why you applied for this position."</em>
       </div>
     </div>
@@ -1220,7 +1223,7 @@ const Landing = () => {
 
 <section className="modules-section fade-in" id="modules">
   <span className="section-label">Parcours structuré</span>
-  <h2 className="section-title">100 modules.<br /><em>6 niveaux</em> CEFR.</h2>
+  <h2 className="section-title">100 modules.<br><em>6 niveaux</em> CEFR.</h2>
   <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.8; max-width: 500px;">
     Chaque langue dispose de 100 modules progressifs, de l'alphabet jusqu'à la maîtrise avancée. Un test de niveau automatique vous place dès l'inscription.
   </p>
@@ -1271,7 +1274,7 @@ const Landing = () => {
 
   <div className="pricing-grid">
 
-
+    
     <div className="pricing-card">
       <span className="plan-icon">🟡</span>
       <div className="plan-name">Forfait</div>
@@ -1325,7 +1328,7 @@ const Landing = () => {
       <a href="#" className="plan-cta cta-outline">Commencer avec UNI</a>
     </div>
 
-
+    
     <div className="pricing-card featured">
       <span className="plan-icon">🔵</span>
       <div className="plan-name">Forfait</div>
@@ -1403,7 +1406,7 @@ const Landing = () => {
   <div className="install-content">
     <div className="install-icon">📱</div>
     <span className="section-label" style="justify-content:center; margin-bottom:1rem;">Application mobile</span>
-    <h3 className="section-title" style="font-size:2rem; text-align:center;">Installez LINGUA SPACE<br />sur votre <em>téléphone.</em></h3>
+    <h3 className="section-title" style="font-size:2rem; text-align:center;">Installez LINGUA SPACE<br>sur votre <em>téléphone.</em></h3>
     <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 2rem;">
       Disponible comme application installable (PWA) sur Android et iOS. Aucun téléchargement depuis un store. Ouvrez le site et appuyez sur "Ajouter à l'écran d'accueil".
     </p>
@@ -1427,6 +1430,8 @@ const Landing = () => {
 </footer>
 
 
+
+` }} />
     </>
   );
 };
