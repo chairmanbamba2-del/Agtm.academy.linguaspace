@@ -1,0 +1,21 @@
+{
+  "name": "Next.js + Tailwind + Supabase",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20",  // Node 20 + TypeScript
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}   // Optionnel : pour Docker inside
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "saoudrizwan.claude-dev",     // ← Cline
+        "eamodio.gitlens"
+      ]
+    }
+  },
+  "postCreateCommand": "npm install",
+  "forwardPorts": [3000],   // Pour voir ton app Next.js sur localhost:3000
+  "remoteUser": "node"
+}

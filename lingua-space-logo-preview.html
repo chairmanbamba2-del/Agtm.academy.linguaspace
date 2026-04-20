@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGTM LINGUA SPACE — Logo Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Space Mono', monospace;
+    background: #080F1A;
+    color: #FAFAF8;
+    padding: 40px 20px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: #E8941A;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: #8A9AB5;
+    margin-bottom: 60px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+  }
+  .card {
+    border: 1px solid #1E3A5F;
+    background: #132540;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .card-label {
+    padding: 12px 16px;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: #E8941A;
+    border-bottom: 1px solid #1E3A5F;
+    text-transform: uppercase;
+  }
+  .card-bg-dark { background: #080F1A; padding: 40px; display:flex; align-items:center; justify-content:center; min-height: 200px; }
+  .card-bg-navy { background: #0D2D52; padding: 40px; display:flex; align-items:center; justify-content:center; min-height: 200px; }
+  .card-bg-gold { background: #E8941A; padding: 40px; display:flex; align-items:center; justify-content:center; min-height: 200px; }
+  .card-bg-white { background: #FAFAF8; padding: 40px; display:flex; align-items:center; justify-content:center; min-height: 200px; }
+  .card-info {
+    padding: 14px 16px;
+    font-size: 9px;
+    color: #8A9AB5;
+    line-height: 1.8;
+    border-top: 1px solid #1E3A5F;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #8A9AB5;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    max-width: 1200px;
+    margin: 0 auto 60px;
+  }
+  .usage-card {
+    border: 1px solid #1E3A5F;
+    background: #132540;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    font-size: 9px;
+    color: #8A9AB5;
+  }
+  .usage-card .size { font-size: 18px; color: #E8941A; font-family: 'Cormorant Garamond', serif; margin-bottom: 8px; }
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto 60px;
+  }
+  .color-chip {
+    height: 80px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .color-chip span { font-size: 8px; letter-spacing: 0.1em; color: rgba(0,0,0,0.6); font-weight: bold; }
+  .color-chip .hex { color: rgba(0,0,0,0.4); font-size: 7px; }
+  .anim-pulse { animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+  .anim-rotate { animation: rotateSlow 20s linear infinite; transform-origin: 50% 50%; }
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .anim-orbit1 { animation: orbit1 6s linear infinite; transform-origin: 60px 60px; }
+  .anim-orbit2 { animation: orbit2 9s linear infinite; transform-origin: 60px 60px; }
+  @keyframes orbit1 {
+    from { transform: rotate(0deg) translateX(38px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(38px) rotate(-360deg); }
+  }
+  @keyframes orbit2 {
+    from { transform: rotate(180deg) translateX(52px) rotate(-180deg); }
+    to   { transform: rotate(540deg) translateX(52px) rotate(-540deg); }
+  }
+</style>
+</head>
+<body>
+
+<h1>LINGUA SPACE</h1>
+<p class="subtitle">LOGO SYSTEM — AGTM DIGITAL ACADEMY · BRAND ASSETS 2025</p>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VARIANTE 1 — LOGO PRINCIPAL (Constellation + Wordmark) -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<p class="section-title">01 — Logo Principal</p>
+<div class="grid">
+
+  <!-- Sur fond sombre -->
+  <div class="card">
+    <div class="card-label">Version principale — fond sombre</div>
+    <div class="card-bg-dark">
+      <svg width="280" height="90" viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#E8941A" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#E8941A" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="blur1">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <!-- Icône constellation -->
+        <!-- Cercle extérieur -->
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#1B4F8A" stroke-width="0.8" stroke-dasharray="3 4"/>
+
+        <!-- Glow central -->
+        <circle cx="45" cy="45" r="28" fill="url(#glow1)"/>
+
+        <!-- Lignes constellation (entre les 4 nœuds de langue) -->
+        <!-- EN (haut) → ES (droite) → FR (bas) → DE (gauche) → EN -->
+        <line x1="45" y1="10" x2="80" y2="45" stroke="#E8941A" stroke-width="0.6" opacity="0.5"/>
+        <line x1="80" y1="45" x2="45" y2="80" stroke="#E8941A" stroke-width="0.6" opacity="0.5"/>
+        <line x1="45" y1="80" x2="10" y2="45" stroke="#E8941A" stroke-width="0.6" opacity="0.5"/>
+        <line x1="10" y1="45" x2="45" y2="10" stroke="#E8941A" stroke-width="0.6" opacity="0.5"/>
+        <!-- Diagonales -->
+        <line x1="45" y1="10" x2="45" y2="80" stroke="#E8941A" stroke-width="0.4" opacity="0.25"/>
+        <line x1="10" y1="45" x2="80" y2="45" stroke="#E8941A" stroke-width="0.4" opacity="0.25"/>
+
+        <!-- Nœuds des 4 langues -->
+        <!-- EN - haut -->
+        <circle cx="45" cy="10" r="4" fill="#0D2D52" stroke="#E8941A" stroke-width="1.5"/>
+        <text x="45" y="13.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#E8941A">EN</text>
+        <!-- ES - droite -->
+        <circle cx="80" cy="45" r="4" fill="#0D2D52" stroke="#F5B942" stroke-width="1.5"/>
+        <text x="80" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#F5B942">ES</text>
+        <!-- FR - bas -->
+        <circle cx="45" cy="80" r="4" fill="#0D2D52" stroke="#E8941A" stroke-width="1.5"/>
+        <text x="45" y="83.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#E8941A">FR</text>
+        <!-- DE - gauche -->
+        <circle cx="10" cy="45" r="4" fill="#0D2D52" stroke="#F5B942" stroke-width="1.5"/>
+        <text x="10" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#F5B942">DE</text>
+
+        <!-- Nœud central — bulle de parole stylisée -->
+        <circle cx="45" cy="45" r="12" fill="#1B4F8A" stroke="#E8941A" stroke-width="1"/>
+        <!-- Onde sonore / parole -->
+        <path d="M 39 42 Q 45 38 51 42 Q 45 46 39 42 Z" fill="#E8941A" opacity="0.9"/>
+        <path d="M 39 45 Q 45 41 51 45 Q 45 49 39 45 Z" fill="#F5B942" opacity="0.7"/>
+        <path d="M 39 48 Q 45 44 51 48 Q 45 52 39 48 Z" fill="#E8941A" opacity="0.5"/>
+
+        <!-- Wordmark -->
+        <!-- LINGUA -->
+        <text x="105" y="38" font-family="Cormorant Garamond, Georgia, serif" font-size="28" font-weight="400" fill="#FAFAF8" letter-spacing="4">LINGUA</text>
+        <!-- SPACE -->
+        <text x="107" y="58" font-family="Space Mono, monospace" font-size="11" font-weight="400" fill="#E8941A" letter-spacing="8">SPACE</text>
+        <!-- Tagline -->
+        <text x="107" y="74" font-family="Space Mono, monospace" font-size="6" fill="#8A9AB5" letter-spacing="3">BY AGTM DIGITAL ACADEMY</text>
+      </svg>
+    </div>
+    <div class="card-info">Usage : landing page, app header, splash screen · Fond recommandé : #080F1A ou #0D2D52</div>
+  </div>
+
+  <!-- Sur fond navy -->
+  <div class="card">
+    <div class="card-label">Version principale — fond navy AGTM</div>
+    <div class="card-bg-navy">
+      <svg width="280" height="90" viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#1B4F8A" stroke-width="0.8" stroke-dasharray="3 4"/>
+        <circle cx="45" cy="45" r="22" fill="rgba(232,148,26,0.1)"/>
+        <line x1="45" y1="10" x2="80" y2="45" stroke="#E8941A" stroke-width="0.6" opacity="0.6"/>
+        <line x1="80" y1="45" x2="45" y2="80" stroke="#E8941A" stroke-width="0.6" opacity="0.6"/>
+        <line x1="45" y1="80" x2="10" y2="45" stroke="#E8941A" stroke-width="0.6" opacity="0.6"/>
+        <line x1="10" y1="45" x2="45" y2="10" stroke="#E8941A" stroke-width="0.6" opacity="0.6"/>
+        <line x1="45" y1="10" x2="45" y2="80" stroke="#E8941A" stroke-width="0.4" opacity="0.3"/>
+        <line x1="10" y1="45" x2="80" y2="45" stroke="#E8941A" stroke-width="0.4" opacity="0.3"/>
+        <circle cx="45" cy="10" r="4" fill="#0D2D52" stroke="#E8941A" stroke-width="1.5"/>
+        <text x="45" y="13.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#E8941A">EN</text>
+        <circle cx="80" cy="45" r="4" fill="#0D2D52" stroke="#F5B942" stroke-width="1.5"/>
+        <text x="80" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#F5B942">ES</text>
+        <circle cx="45" cy="80" r="4" fill="#0D2D52" stroke="#E8941A" stroke-width="1.5"/>
+        <text x="45" y="83.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#E8941A">FR</text>
+        <circle cx="10" cy="45" r="4" fill="#0D2D52" stroke="#F5B942" stroke-width="1.5"/>
+        <text x="10" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#F5B942">DE</text>
+        <circle cx="45" cy="45" r="12" fill="#0D2D52" stroke="#E8941A" stroke-width="1"/>
+        <path d="M 39 42 Q 45 38 51 42 Q 45 46 39 42 Z" fill="#E8941A" opacity="0.9"/>
+        <path d="M 39 45 Q 45 41 51 45 Q 45 49 39 45 Z" fill="#F5B942" opacity="0.7"/>
+        <path d="M 39 48 Q 45 44 51 48 Q 45 52 39 48 Z" fill="#E8941A" opacity="0.5"/>
+        <text x="105" y="38" font-family="Cormorant Garamond, Georgia, serif" font-size="28" font-weight="400" fill="#FAFAF8" letter-spacing="4">LINGUA</text>
+        <text x="107" y="58" font-family="Space Mono, monospace" font-size="11" fill="#E8941A" letter-spacing="8">SPACE</text>
+        <text x="107" y="74" font-family="Space Mono, monospace" font-size="6" fill="#8A9AB5" letter-spacing="3">BY AGTM DIGITAL ACADEMY</text>
+      </svg>
+    </div>
+    <div class="card-info">Usage : pitch deck, documents officiels, email header</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VARIANTE 2 — ICÔNE SEULE (PWA, favicon, app icon)     -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<p class="section-title">02 — Icône seule (PWA / App Icon)</p>
+<div class="grid">
+
+  <div class="card">
+    <div class="card-label">App icon 512×512 — fond navy</div>
+    <div class="card-bg-dark" style="gap:20px; flex-wrap:wrap;">
+      <!-- 512px preview -->
+      <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="26" fill="#0D2D52"/>
+        <circle cx="60" cy="58" r="46" fill="none" stroke="#1B4F8A" stroke-width="1" stroke-dasharray="4 5"/>
+        <circle cx="60" cy="58" r="32" fill="rgba(232,148,26,0.08)"/>
+        <line x1="60" y1="14" x2="104" y2="58" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="104" y1="58" x2="60" y2="102" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="60" y1="102" x2="16" y2="58" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="16" y1="58" x2="60" y2="14" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="60" y1="14" x2="60" y2="102" stroke="#E8941A" stroke-width="0.5" opacity="0.25"/>
+        <line x1="16" y1="58" x2="104" y2="58" stroke="#E8941A" stroke-width="0.5" opacity="0.25"/>
+        <!-- Nœuds -->
+        <circle cx="60" cy="14" r="5.5" fill="#0D2D52" stroke="#E8941A" stroke-width="2"/>
+        <text x="60" y="17" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#E8941A" font-weight="bold">EN</text>
+        <circle cx="104" cy="58" r="5.5" fill="#0D2D52" stroke="#F5B942" stroke-width="2"/>
+        <text x="104" y="61" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#F5B942" font-weight="bold">ES</text>
+        <circle cx="60" cy="102" r="5.5" fill="#0D2D52" stroke="#E8941A" stroke-width="2"/>
+        <text x="60" y="105" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#E8941A" font-weight="bold">FR</text>
+        <circle cx="16" cy="58" r="5.5" fill="#0D2D52" stroke="#F5B942" stroke-width="2"/>
+        <text x="16" y="61" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#F5B942" font-weight="bold">DE</text>
+        <!-- Centre -->
+        <circle cx="60" cy="58" r="18" fill="#1B4F8A" stroke="#E8941A" stroke-width="1.5"/>
+        <!-- Ondes de parole -->
+        <path d="M 52 54 Q 60 49 68 54 Q 60 59 52 54 Z" fill="#E8941A"/>
+        <path d="M 52 58 Q 60 53 68 58 Q 60 63 52 58 Z" fill="#F5B942" opacity="0.8"/>
+        <path d="M 52 62 Q 60 57 68 62 Q 60 67 52 62 Z" fill="#E8941A" opacity="0.6"/>
+      </svg>
+      <!-- 192px preview -->
+      <svg width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="26" fill="#0D2D52"/>
+        <circle cx="60" cy="58" r="46" fill="none" stroke="#1B4F8A" stroke-width="1" stroke-dasharray="4 5"/>
+        <circle cx="60" cy="58" r="32" fill="rgba(232,148,26,0.08)"/>
+        <line x1="60" y1="14" x2="104" y2="58" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="104" y1="58" x2="60" y2="102" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="60" y1="102" x2="16" y2="58" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="16" y1="58" x2="60" y2="14" stroke="#E8941A" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="60" cy="14" r="5.5" fill="#0D2D52" stroke="#E8941A" stroke-width="2"/>
+        <text x="60" y="17" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#E8941A" font-weight="bold">EN</text>
+        <circle cx="104" cy="58" r="5.5" fill="#0D2D52" stroke="#F5B942" stroke-width="2"/>
+        <text x="104" y="61" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#F5B942" font-weight="bold">ES</text>
+        <circle cx="60" cy="102" r="5.5" fill="#0D2D52" stroke="#E8941A" stroke-width="2"/>
+        <text x="60" y="105" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#E8941A" font-weight="bold">FR</text>
+        <circle cx="16" cy="58" r="5.5" fill="#0D2D52" stroke="#F5B942" stroke-width="2"/>
+        <text x="16" y="61" text-anchor="middle" font-family="Space Mono" font-size="5" fill="#F5B942" font-weight="bold">DE</text>
+        <circle cx="60" cy="58" r="18" fill="#1B4F8A" stroke="#E8941A" stroke-width="1.5"/>
+        <path d="M 52 54 Q 60 49 68 54 Q 60 59 52 54 Z" fill="#E8941A"/>
+        <path d="M 52 58 Q 60 53 68 58 Q 60 63 52 58 Z" fill="#F5B942" opacity="0.8"/>
+        <path d="M 52 62 Q 60 57 68 62 Q 60 67 52 62 Z" fill="#E8941A" opacity="0.6"/>
+      </svg>
+      <!-- 48px preview -->
+      <svg width="48" height="48" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="26" fill="#0D2D52"/>
+        <line x1="60" y1="14" x2="104" y2="58" stroke="#E8941A" stroke-width="1.5" opacity="0.6"/>
+        <line x1="104" y1="58" x2="60" y2="102" stroke="#E8941A" stroke-width="1.5" opacity="0.6"/>
+        <line x1="60" y1="102" x2="16" y2="58" stroke="#E8941A" stroke-width="1.5" opacity="0.6"/>
+        <line x1="16" y1="58" x2="60" y2="14" stroke="#E8941A" stroke-width="1.5" opacity="0.6"/>
+        <circle cx="60" cy="14" r="7" fill="#E8941A"/>
+        <circle cx="104" cy="58" r="7" fill="#F5B942"/>
+        <circle cx="60" cy="102" r="7" fill="#E8941A"/>
+        <circle cx="16" cy="58" r="7" fill="#F5B942"/>
+        <circle cx="60" cy="58" r="20" fill="#1B4F8A" stroke="#E8941A" stroke-width="2"/>
+        <path d="M 50 55 Q 60 48 70 55 Q 60 62 50 55 Z" fill="#E8941A"/>
+        <path d="M 50 62 Q 60 55 70 62 Q 60 69 50 62 Z" fill="#F5B942" opacity="0.8"/>
+      </svg>
+      <!-- 16px favicon -->
+      <svg width="24" height="24" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="20" fill="#0D2D52"/>
+        <circle cx="60" cy="60" r="20" fill="#1B4F8A"/>
+        <circle cx="60" cy="20" r="10" fill="#E8941A"/>
+        <circle cx="100" cy="60" r="10" fill="#F5B942"/>
+        <circle cx="60" cy="100" r="10" fill="#E8941A"/>
+        <circle cx="20" cy="60" r="10" fill="#F5B942"/>
+        <line x1="60" y1="20" x2="100" y2="60" stroke="#E8941A" stroke-width="2" opacity="0.6"/>
+        <line x1="100" y1="60" x2="60" y2="100" stroke="#E8941A" stroke-width="2" opacity="0.6"/>
+        <line x1="60" y1="100" x2="20" y2="60" stroke="#E8941A" stroke-width="2" opacity="0.6"/>
+        <line x1="20" y1="60" x2="60" y2="20" stroke="#E8941A" stroke-width="2" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="card-info">Tailles : 512×512 (app store) · 192×192 (PWA) · 48×48 (dock) · 16×16 (favicon)</div>
+  </div>
+
+  <!-- Variante animée -->
+  <div class="card">
+    <div class="card-label">Version animée — Web / App</div>
+    <div class="card-bg-dark">
+      <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <rect width="120" height="120" rx="26" fill="#0D2D52"/>
+        <!-- Cercle rotatif -->
+        <g class="anim-rotate" style="transform-origin: 60px 60px;">
+          <circle cx="60" cy="60" r="46" fill="none" stroke="#1B4F8A" stroke-width="0.8" stroke-dasharray="5 8"/>
+        </g>
+        <circle cx="60" cy="60" r="30" fill="rgba(232,148,26,0.07)"/>
+        <!-- Lignes statiques -->
+        <line x1="60" y1="14" x2="106" y2="60" stroke="#E8941A" stroke-width="0.7" opacity="0.4"/>
+        <line x1="106" y1="60" x2="60" y2="106" stroke="#E8941A" stroke-width="0.7" opacity="0.4"/>
+        <line x1="60" y1="106" x2="14" y2="60" stroke="#E8941A" stroke-width="0.7" opacity="0.4"/>
+        <line x1="14" y1="60" x2="60" y2="14" stroke="#E8941A" stroke-width="0.7" opacity="0.4"/>
+        <!-- Nœuds pulsants -->
+        <circle cx="60" cy="14" r="5" fill="#0D2D52" stroke="#E8941A" stroke-width="2" class="anim-pulse"/>
+        <text x="60" y="17" text-anchor="middle" font-family="Space Mono" font-size="4.5" fill="#E8941A" font-weight="bold">EN</text>
+        <circle cx="106" cy="60" r="5" fill="#0D2D52" stroke="#F5B942" stroke-width="2" class="anim-pulse" style="animation-delay:0.75s"/>
+        <text x="106" y="63" text-anchor="middle" font-family="Space Mono" font-size="4.5" fill="#F5B942" font-weight="bold">ES</text>
+        <circle cx="60" cy="106" r="5" fill="#0D2D52" stroke="#E8941A" stroke-width="2" class="anim-pulse" style="animation-delay:1.5s"/>
+        <text x="60" y="109" text-anchor="middle" font-family="Space Mono" font-size="4.5" fill="#E8941A" font-weight="bold">FR</text>
+        <circle cx="14" cy="60" r="5" fill="#0D2D52" stroke="#F5B942" stroke-width="2" class="anim-pulse" style="animation-delay:2.25s"/>
+        <text x="14" y="63" text-anchor="middle" font-family="Space Mono" font-size="4.5" fill="#F5B942" font-weight="bold">DE</text>
+        <!-- Nœud central -->
+        <circle cx="60" cy="60" r="18" fill="#1B4F8A" stroke="#E8941A" stroke-width="1.5"/>
+        <path d="M 52 56 Q 60 51 68 56 Q 60 61 52 56 Z" fill="#E8941A"/>
+        <path d="M 52 60 Q 60 55 68 60 Q 60 65 52 60 Z" fill="#F5B942" opacity="0.8"/>
+        <path d="M 52 64 Q 60 59 68 64 Q 60 69 52 64 Z" fill="#E8941A" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="card-info">CSS animation : cercle rotatif + nœuds pulsants · Usage : splash screen, loading state</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VARIANTE 3 — LOGO HORIZONTAL compact                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<p class="section-title">03 — Logo horizontal compact (Navbar)</p>
+<div class="grid">
+  <div class="card">
+    <div class="card-label">Navbar — fond sombre</div>
+    <div class="card-bg-dark">
+      <svg width="220" height="44" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg">
+        <!-- Mini icône -->
+        <circle cx="22" cy="22" r="19" fill="none" stroke="#1B4F8A" stroke-width="0.6" stroke-dasharray="2 3"/>
+        <line x1="22" y1="4" x2="40" y2="22" stroke="#E8941A" stroke-width="0.7" opacity="0.5"/>
+        <line x1="40" y1="22" x2="22" y2="40" stroke="#E8941A" stroke-width="0.7" opacity="0.5"/>
+        <line x1="22" y1="40" x2="4" y2="22" stroke="#E8941A" stroke-width="0.7" opacity="0.5"/>
+        <line x1="4" y1="22" x2="22" y2="4" stroke="#E8941A" stroke-width="0.7" opacity="0.5"/>
+        <circle cx="22" cy="4"  r="2.5" fill="#0D2D52" stroke="#E8941A" stroke-width="1.2"/>
+        <circle cx="40" cy="22" r="2.5" fill="#0D2D52" stroke="#F5B942" stroke-width="1.2"/>
+        <circle cx="22" cy="40" r="2.5" fill="#0D2D52" stroke="#E8941A" stroke-width="1.2"/>
+        <circle cx="4"  cy="22" r="2.5" fill="#0D2D52" stroke="#F5B942" stroke-width="1.2"/>
+        <circle cx="22" cy="22" r="9" fill="#1B4F8A" stroke="#E8941A" stroke-width="1"/>
+        <path d="M 17 20 Q 22 17 27 20 Q 22 23 17 20 Z" fill="#E8941A"/>
+        <path d="M 17 23 Q 22 20 27 23 Q 22 26 17 23 Z" fill="#F5B942" opacity="0.8"/>
+        <!-- Texte -->
+        <text x="52" y="20" font-family="Cormorant Garamond, Georgia, serif" font-size="18" font-weight="400" fill="#FAFAF8" letter-spacing="2">LINGUA</text>
+        <text x="54" y="35" font-family="Space Mono, monospace" font-size="8" fill="#E8941A" letter-spacing="5">SPACE</text>
+      </svg>
+    </div>
+    <div class="card-info">Usage : barre de navigation · src/components/layout/Navbar.jsx</div>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Navbar — fond blanc (version claire)</div>
+    <div class="card-bg-white">
+      <svg width="220" height="44" viewBox="0 0 220 44" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="19" fill="none" stroke="#1B4F8A" stroke-width="0.6" stroke-dasharray="2 3"/>
+        <line x1="22" y1="4" x2="40" y2="22" stroke="#0D2D52" stroke-width="0.7" opacity="0.5"/>
+        <line x1="40" y1="22" x2="22" y2="40" stroke="#0D2D52" stroke-width="0.7" opacity="0.5"/>
+        <line x1="22" y1="40" x2="4" y2="22" stroke="#0D2D52" stroke-width="0.7" opacity="0.5"/>
+        <line x1="4" y1="22" x2="22" y2="4" stroke="#0D2D52" stroke-width="0.7" opacity="0.5"/>
+        <circle cx="22" cy="4"  r="2.5" fill="#FAFAF8" stroke="#0D2D52" stroke-width="1.2"/>
+        <circle cx="40" cy="22" r="2.5" fill="#FAFAF8" stroke="#1B4F8A" stroke-width="1.2"/>
+        <circle cx="22" cy="40" r="2.5" fill="#FAFAF8" stroke="#0D2D52" stroke-width="1.2"/>
+        <circle cx="4"  cy="22" r="2.5" fill="#FAFAF8" stroke="#1B4F8A" stroke-width="1.2"/>
+        <circle cx="22" cy="22" r="9" fill="#1B4F8A" stroke="#0D2D52" stroke-width="1"/>
+        <path d="M 17 20 Q 22 17 27 20 Q 22 23 17 20 Z" fill="#E8941A"/>
+        <path d="M 17 23 Q 22 20 27 23 Q 22 26 17 23 Z" fill="#F5B942" opacity="0.8"/>
+        <text x="52" y="20" font-family="Cormorant Garamond, Georgia, serif" font-size="18" font-weight="600" fill="#0D2D52" letter-spacing="2">LINGUA</text>
+        <text x="54" y="35" font-family="Space Mono, monospace" font-size="8" fill="#E8941A" letter-spacing="5">SPACE</text>
+      </svg>
+    </div>
+    <div class="card-info">Usage : email, documents imprimés, co-branding</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- VARIANTE 4 — VERSION DORÉE (sur fond or)               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<p class="section-title">04 — Version inversée (sur fond or)</p>
+<div class="grid">
+  <div class="card">
+    <div class="card-label">Version inversée — fond gold</div>
+    <div class="card-bg-gold">
+      <svg width="280" height="90" viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="45" cy="45" r="38" fill="none" stroke="#0D2D52" stroke-width="0.8" stroke-dasharray="3 4"/>
+        <circle cx="45" cy="45" r="22" fill="rgba(13,45,82,0.1)"/>
+        <line x1="45" y1="10" x2="80" y2="45" stroke="#0D2D52" stroke-width="0.8" opacity="0.5"/>
+        <line x1="80" y1="45" x2="45" y2="80" stroke="#0D2D52" stroke-width="0.8" opacity="0.5"/>
+        <line x1="45" y1="80" x2="10" y2="45" stroke="#0D2D52" stroke-width="0.8" opacity="0.5"/>
+        <line x1="10" y1="45" x2="45" y2="10" stroke="#0D2D52" stroke-width="0.8" opacity="0.5"/>
+        <circle cx="45" cy="10" r="4" fill="#E8941A" stroke="#0D2D52" stroke-width="1.5"/>
+        <text x="45" y="13.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#0D2D52" font-weight="bold">EN</text>
+        <circle cx="80" cy="45" r="4" fill="#E8941A" stroke="#1B4F8A" stroke-width="1.5"/>
+        <text x="80" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#0D2D52" font-weight="bold">ES</text>
+        <circle cx="45" cy="80" r="4" fill="#E8941A" stroke="#0D2D52" stroke-width="1.5"/>
+        <text x="45" y="83.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#0D2D52" font-weight="bold">FR</text>
+        <circle cx="10" cy="45" r="4" fill="#E8941A" stroke="#1B4F8A" stroke-width="1.5"/>
+        <text x="10" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="#0D2D52" font-weight="bold">DE</text>
+        <circle cx="45" cy="45" r="12" fill="#0D2D52" stroke="#1B4F8A" stroke-width="1"/>
+        <path d="M 39 42 Q 45 38 51 42 Q 45 46 39 42 Z" fill="#E8941A"/>
+        <path d="M 39 45 Q 45 41 51 45 Q 45 49 39 45 Z" fill="#F5B942" opacity="0.8"/>
+        <path d="M 39 48 Q 45 44 51 48 Q 45 52 39 48 Z" fill="#E8941A" opacity="0.6"/>
+        <text x="105" y="38" font-family="Cormorant Garamond, Georgia, serif" font-size="28" font-weight="400" fill="#0D2D52" letter-spacing="4">LINGUA</text>
+        <text x="107" y="58" font-family="Space Mono, monospace" font-size="11" fill="#0D2D52" letter-spacing="8">SPACE</text>
+        <text x="107" y="74" font-family="Space Mono, monospace" font-size="6" fill="rgba(13,45,82,0.5)" letter-spacing="3">BY AGTM DIGITAL ACADEMY</text>
+      </svg>
+    </div>
+    <div class="card-info">Usage : merchandising, certificats, supports premium</div>
+  </div>
+
+  <!-- Monochrome blanc -->
+  <div class="card">
+    <div class="card-label">Version monochrome blanc</div>
+    <div class="card-bg-navy">
+      <svg width="280" height="90" viewBox="0 0 280 90" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="45" cy="45" r="38" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" stroke-dasharray="3 4"/>
+        <line x1="45" y1="10" x2="80" y2="45" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+        <line x1="80" y1="45" x2="45" y2="80" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+        <line x1="45" y1="80" x2="10" y2="45" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+        <line x1="10" y1="45" x2="45" y2="10" stroke="rgba(255,255,255,0.5)" stroke-width="0.8"/>
+        <circle cx="45" cy="10" r="4" fill="#0D2D52" stroke="white" stroke-width="1.5"/>
+        <text x="45" y="13.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="white" font-weight="bold">EN</text>
+        <circle cx="80" cy="45" r="4" fill="#0D2D52" stroke="white" stroke-width="1.5"/>
+        <text x="80" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="white" font-weight="bold">ES</text>
+        <circle cx="45" cy="80" r="4" fill="#0D2D52" stroke="white" stroke-width="1.5"/>
+        <text x="45" y="83.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="white" font-weight="bold">FR</text>
+        <circle cx="10" cy="45" r="4" fill="#0D2D52" stroke="white" stroke-width="1.5"/>
+        <text x="10" y="48.5" text-anchor="middle" font-family="Space Mono" font-size="4" fill="white" font-weight="bold">DE</text>
+        <circle cx="45" cy="45" r="12" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1.2"/>
+        <path d="M 39 42 Q 45 38 51 42 Q 45 46 39 42 Z" fill="white"/>
+        <path d="M 39 45 Q 45 41 51 45 Q 45 49 39 45 Z" fill="white" opacity="0.7"/>
+        <path d="M 39 48 Q 45 44 51 48 Q 45 52 39 48 Z" fill="white" opacity="0.5"/>
+        <text x="105" y="38" font-family="Cormorant Garamond, Georgia, serif" font-size="28" font-weight="400" fill="white" letter-spacing="4">LINGUA</text>
+        <text x="107" y="58" font-family="Space Mono, monospace" font-size="11" fill="white" letter-spacing="8" opacity="0.85">SPACE</text>
+        <text x="107" y="74" font-family="Space Mono, monospace" font-size="6" fill="rgba(255,255,255,0.4)" letter-spacing="3">BY AGTM DIGITAL ACADEMY</text>
+      </svg>
+    </div>
+    <div class="card-info">Usage : fonds de couleur, broderie, sérigraphie, gravure</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PALETTE DE COULEURS                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<p class="section-title">05 — Palette officielle</p>
+<div class="color-grid">
+  <div class="color-chip" style="background:#0D2D52;">
+    <span>AGTM Navy</span>
+    <span class="hex">#0D2D52</span>
+  </div>
+  <div class="color-chip" style="background:#1B4F8A;">
+    <span>AGTM Blue</span>
+    <span class="hex">#1B4F8A</span>
+  </div>
+  <div class="color-chip" style="background:#E8941A; border-color: #E8941A;">
+    <span style="color:rgba(0,0,0,0.7)">LINGUA Gold</span>
+    <span class="hex" style="color:rgba(0,0,0,0.5)">#E8941A</span>
+  </div>
+  <div class="color-chip" style="background:#F5B942; border-color: #F5B942;">
+    <span style="color:rgba(0,0,0,0.7)">Gold Light</span>
+    <span class="hex" style="color:rgba(0,0,0,0.5)">#F5B942</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- USAGE SIZES                                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<p class="section-title">06 — Usages recommandés</p>
+<div class="usage-grid">
+  <div class="usage-card">
+    <div class="size">512px</div>
+    <div>App Store / Play Store<br>PWA maskable icon</div>
+  </div>
+  <div class="usage-card">
+    <div class="size">192px</div>
+    <div>PWA icon<br>Android homescreen</div>
+  </div>
+  <div class="usage-card">
+    <div class="size">180px</div>
+    <div>Apple touch icon<br>iOS homescreen</div>
+  </div>
+  <div class="usage-card">
+    <div class="size">48px</div>
+    <div>Browser tab favicon<br>Desktop dock</div>
+  </div>
+  <div class="usage-card">
+    <div class="size">280×90</div>
+    <div>Logo principal<br>Landing page</div>
+  </div>
+  <div class="usage-card">
+    <div class="size">220×44</div>
+    <div>Navbar compact<br>Email header</div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center; padding: 40px; border-top: 1px solid #1E3A5F; margin-top: 20px;">
+  <p style="font-size:9px; color:#8A9AB5; letter-spacing:0.2em;">
+    AGTM LINGUA SPACE — Brand Assets · lingua.africaglobaltraining.com
+  </p>
+  <p style="font-size:9px; color:#1E3A5F; margin-top:6px; letter-spacing:0.15em;">
+    Concept : Constellation des langues · 4 nœuds (EN · ES · DE · FR) · Ondes de parole centrales
+  </p>
+</div>
+
+</body>
+</html>
