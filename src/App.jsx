@@ -59,9 +59,9 @@ function PublicRoute({ children }) {
 function AdminRoute({ children }) {
   const user    = useUserStore(s => s.user)
   const loading = useUserStore(s => s.loading)
+  const isAdmin = useUserStore(s => s.isAdmin)
   if (loading) return null
-  // TODO : vérifier le rôle admin dans Supabase
-  return user ? children : <Navigate to="/login" replace />
+  return user && isAdmin ? children : <Navigate to="/" replace />
 }
 
 // ─── App ────────────────────────────────────────────────────
