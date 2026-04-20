@@ -426,7 +426,7 @@ const Landing = () => {
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s;
-    group: true;
+
   }
 
   .corner-card:hover {
@@ -1006,7 +1006,6 @@ const Landing = () => {
       
 <nav>
   <div className="nav-logo">
-    <span className="brand">AGTM Digital Academy</span>
     <span className="name">LINGUA SPACE</span>
   </div>
   <ul className="nav-links">
@@ -1019,7 +1018,7 @@ const Landing = () => {
 </nav>
 
 
-<section className="hero" style="max-width:none; padding-top: 8rem; padding-left: 0; padding-right: 0;">
+<section className="hero" style={{maxWidth: 'none', paddingTop: '8rem', paddingLeft: '0', paddingRight: '0'}}>
   <div className="hero-bg"></div>
   <div className="lang-orbs">
     <div className="orb orb-en"></div>
@@ -1079,7 +1078,7 @@ const Landing = () => {
 <section id="corners" className="fade-in">
   <span className="section-label">Vos espaces d'immersion</span>
   <h2 className="section-title">Quatre <em>Corners</em>,<br />une seule ambition.</h2>
-  <p style="color: var(--muted); font-size: 0.9rem; max-width: 500px; line-height: 1.8;">
+  <p style={{color: 'var(--muted)', fontSize: '0.9rem', maxWidth: '500px', lineHeight: 1.8}}>
     Chaque Corner est un univers d'immersion linguistique : flux de contenus authentiques, quiz automatiques, coach IA et 100 modules progressifs.
   </p>
 
@@ -1147,8 +1146,8 @@ const Landing = () => {
   <div className="ia-grid">
     <div className="ia-content">
       <span className="section-label">Intelligence Artificielle</span>
-      <h2 className="section-title" style="font-size: 2.5rem;">Votre coach<br /><em>personnel</em> 24h/24.</h2>
-      <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 1.5rem;">
+      <h2 className="section-title" style={{fontSize: '2.5rem'}}>Votre coach<br /><em>personnel</em> 24h/24.</h2>
+      <p style={{color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.8, marginBottom: '1.5rem'}}>
         Propulsé par Claude Sonnet & Opus d'Anthropic, votre assistant corrige vos erreurs, reformule naturellement et vous fait progresser conversation après conversation.
       </p>
 
@@ -1221,7 +1220,7 @@ const Landing = () => {
 <section className="modules-section fade-in" id="modules">
   <span className="section-label">Parcours structuré</span>
   <h2 className="section-title">100 modules.<br /><em>6 niveaux</em> CEFR.</h2>
-  <p style="color: var(--muted); font-size: 0.9rem; line-height: 1.8; max-width: 500px;">
+  <p style={{color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.8, maxWidth: '500px'}}>
     Chaque langue dispose de 100 modules progressifs, de l'alphabet jusqu'à la maîtrise avancée. Un test de niveau automatique vous place dès l'inscription.
   </p>
 
@@ -1261,10 +1260,10 @@ const Landing = () => {
 
 
 <section className="pricing-section fade-in" id="pricing">
-  <div style="text-align:center;">
-    <span className="section-label" style="justify-content:center;">Tarifs & Abonnements</span>
-    <h2 className="section-title" style="font-size: clamp(2rem, 5vw, 3rem);">Simple. <em>Transparent.</em> Accessible.</h2>
-    <p style="color: var(--muted); font-size: 0.9rem; max-width: 480px; margin: 0 auto 1rem; line-height: 1.8;">
+  <div style={{textAlign: 'center'}}>
+    <span className="section-label" style={{justifyContent: 'center'}}>Tarifs & Abonnements</span>
+    <h2 className="section-title" style={{fontSize: 'clamp(2rem, 5vw, 3rem)'}}>Simple. <em>Transparent.</em> Accessible.</h2>
+    <p style={{color: 'var(--muted)', fontSize: '0.9rem', maxWidth: '480px', margin: '0 auto 1rem', lineHeight: 1.8}}>
       Aucun engagement à long terme. Résiliez quand vous voulez. Paiement par Mobile Money, Wave ou carte bancaire.
     </p>
   </div>
@@ -1402,12 +1401,12 @@ const Landing = () => {
 <div className="install-section fade-in">
   <div className="install-content">
     <div className="install-icon">📱</div>
-    <span className="section-label" style="justify-content:center; margin-bottom:1rem;">Application mobile</span>
-    <h3 className="section-title" style="font-size:2rem; text-align:center;">Installez LINGUA SPACE<br />sur votre <em>téléphone.</em></h3>
-    <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 2rem;">
+    <span className="section-label" style={{justifyContent: 'center', marginBottom: '1rem'}}>Application mobile</span>
+    <h3 className="section-title" style={{fontSize: '2rem', textAlign: 'center'}}>Installez LINGUA SPACE<br />sur votre <em>téléphone.</em></h3>
+    <p style={{color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.8, marginBottom: '2rem'}}>
       Disponible comme application installable (PWA) sur Android et iOS. Aucun téléchargement depuis un store. Ouvrez le site et appuyez sur "Ajouter à l'écran d'accueil".
     </p>
-    <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+    <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap'}}>
       <a href="#" className="btn-primary">📲 Installer sur Android</a>
       <a href="#" className="btn-ghost">🍎 Installer sur iOS</a>
     </div>
@@ -1416,14 +1415,14 @@ const Landing = () => {
 
 
 <footer>
-  <div className="footer-logo">LINGUA SPACE <span style="color:var(--muted); font-size:0.75rem; font-family:'Space Mono'; font-weight:400;">by AGTM</span></div>
+  <div className="footer-logo">LINGUA SPACE</div>
   <ul className="footer-links">
     <li><a href="#">À propos</a></li>
     <li><a href="#">Conditions</a></li>
     <li><a href="#">Contact</a></li>
     <li><a href="https://africaglobaltraining.com">AGTM Academy</a></li>
   </ul>
-  <span className="footer-copy">© 2025 AGTM Digital Academy · lingua.africaglobaltraining.com</span>
+  <span className="footer-copy">© 2025 LINGUA SPACE · lingua.africaglobaltraining.com</span>
 </footer>
 
 

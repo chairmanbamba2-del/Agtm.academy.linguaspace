@@ -8,10 +8,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icons/*.png', 'icons/*.svg'],
-      manifest: {
-        name: 'AGTM Lingua Space',
+       manifest: {
+        name: 'Lingua Space',
         short_name: 'LinguaSpace',
-        description: 'Apprenez les langues avec l\'IA — AGTM Digital Academy',
+        description: 'Apprenez les langues avec l\'IA — Lingua Space',
         theme_color: '#0D2D52',
         background_color: '#080F1A',
         display: 'standalone',
