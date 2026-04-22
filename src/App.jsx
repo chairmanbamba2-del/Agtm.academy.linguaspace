@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useUserStore } from './store/userStore'
 import { supabase } from './lib/supabase'
 import ToastProvider from './components/ui/Toast'
+import InstallPWA from './components/ui/InstallPWA'
 import Spinner from './components/ui/Spinner'
 
 // ── Pages existantes ────────────────────────────────────────
@@ -82,6 +83,7 @@ export default function App() {
   return (
     <ToastProvider>
       <BrowserRouter>
+        <InstallPWA />
         <Routes>
           {/* ── Publiques ── */}
           <Route path="/"                  element={<Landing />} />
