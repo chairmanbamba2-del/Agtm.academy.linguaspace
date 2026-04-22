@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/layout/Navbar';
 import MasterCard, { LevelBadge } from '../components/ui/MasterCard';
 import { PulseAvatar, AIVoiceWave, ElasticBubble } from '../components/ui/AIWidgets';
 
@@ -29,23 +30,7 @@ const Landing = () => {
 
   return (
     <>
-      {/* NAVBAR Premium */}
-      <nav className="navbar fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-dark/90 backdrop-blur-nav border-b border-gold-dim">
-        <div className="flex flex-col gap-1">
-          <Link to="/" className="no-underline">
-            <span className="font-mono text-xs text-muted">AGTM Digital Academy</span>
-            <div className="font-serif text-xl text-white tracking-tight">LINGUA SPACE</div>
-          </Link>
-        </div>
-        <ul className="hidden md:flex items-center gap-6 list-none m-0 p-0">
-          <li><a href="#corners" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">Les Corners</a></li>
-          <li><a href="#assistant" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">IA Coach</a></li>
-          <li><a href="#modules" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">Modules</a></li>
-          <li><a href="#pricing" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">Abonnements</a></li>
-          <li><Link to="/signup" className="btn-gold px-6 py-2 text-sm font-semibold no-underline">Commencer</Link></li>
-        </ul>
-        <button className="md:hidden text-white text-2xl">☰</button>
-      </nav>
+      <Navbar />
 
       {/* HERO SECTION avec grille or & halos radiaux */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 overflow-hidden bg-lingua">
@@ -79,11 +64,11 @@ const Landing = () => {
             ))}
           </div>
           
-          {/* CTA */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#pricing" className="btn-gold px-6 py-3 text-base font-semibold sm:px-8 sm:py-4 sm:text-lg">Choisir mon forfait →</a>
-            <a href="#corners" className="btn-outline px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg">Découvrir les Corners</a>
-          </div>
+           {/* CTA */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+             <Link to="/subscribe" className="btn-gold px-6 py-3 text-base font-semibold sm:px-8 sm:py-4 sm:text-lg text-center no-underline">Choisir mon forfait →</Link>
+             <a href="#corners" className="btn-outline px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg text-center no-underline">Découvrir les Corners</a>
+           </div>
         </div>
         
         {/* Scroll indicator */}
@@ -329,7 +314,7 @@ const Landing = () => {
                 ))}
               </div>
               
-              <a href="#pricing" className="btn-gold w-full py-3 font-semibold">Choisir LINGUA UNI</a>
+               <Link to="/signup?plan=uni" className="btn-gold w-full py-3 font-semibold block text-center no-underline">Choisir LINGUA UNI</Link>
             </MasterCard>
             
             {/* Forfait LINGUA PRO - ALL ACCESS avec glow */}
@@ -373,7 +358,7 @@ const Landing = () => {
                   ))}
                 </div>
                 
-                <a href="#pricing" className="btn-gold w-full py-3 font-semibold shadow-gold-lg">Choisir LINGUA PRO</a>
+                 <Link to="/signup?plan=pro" className="btn-gold w-full py-3 font-semibold shadow-gold-lg block text-center no-underline">Choisir LINGUA PRO</Link>
               </div>
             </MasterCard>
           </div>

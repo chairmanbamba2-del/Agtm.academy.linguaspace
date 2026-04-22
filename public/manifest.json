@@ -1,0 +1,59 @@
+{
+  "name": "Lingua Space",
+  "short_name": "LinguaSpace",
+  "description": "Apprenez les langues avec l'IA — Lingua Space",
+  "theme_color": "#0D2D52",
+  "background_color": "#080F1A",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["education", "productivity", "lifestyle"],
+  "lang": "fr",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Accéder à votre tableau de bord",
+      "url": "/dashboard"
+    },
+    {
+      "name": "Assistant IA",
+      "short_name": "IA Coach",
+      "description": "Pratiquer avec l'assistant IA",
+      "url": "/assistant"
+    },
+    {
+      "name": "Mes Modules",
+      "short_name": "Modules",
+      "description": "Continuer l'apprentissage",
+      "url": "/modules/en"
+    }
+  ]
+}

@@ -140,12 +140,18 @@ export default function Navbar({ onMenuToggle }) {
 
         {/* Liens visiteur (non connecté) */}
         {!user && (
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-4">
             <Link
               to="/login"
               className="text-sm text-muted hover:text-white transition-colors duration-200"
             >
               Connexion
+            </Link>
+            <Link
+              to="/subscribe"
+              className="text-sm text-muted hover:text-white transition-colors duration-200"
+            >
+              Forfaits
             </Link>
             <Link
               to="/signup"
@@ -223,7 +229,7 @@ export default function Navbar({ onMenuToggle }) {
                 </button>
               </div>
             </>
-          ) : (
+           ) : (
             <>
               <Link
                 to="/login"
@@ -231,6 +237,13 @@ export default function Navbar({ onMenuToggle }) {
                 className="px-3 py-2.5 text-sm text-muted hover:text-white transition-colors"
               >
                 Connexion
+              </Link>
+              <Link
+                to="/subscribe"
+                onClick={() => setMenuOpen(false)}
+                className="px-3 py-2.5 text-sm text-muted hover:text-white transition-colors"
+              >
+                Forfaits
               </Link>
               <Link
                 to="/signup"
