@@ -9,7 +9,6 @@ import { useUserStore } from './store/userStore'
 import { supabase } from './lib/supabase'
 import ToastProvider from './components/ui/Toast'
 import InstallPWA from './components/ui/InstallPWA'
-import { useProfile } from './hooks/useAuth'
 import Spinner from './components/ui/Spinner'
 
 // ── Pages existantes ────────────────────────────────────────
@@ -43,8 +42,7 @@ import Marketing         from './pages/admin/Marketing'
 function PrivateRoute({ children }) {
   const user    = useUserStore(s => s.user)
   const loading = useUserStore(s => s.loading)
-  const { loading: profileLoading } = useProfile()
-  if (loading || profileLoading) return (
+  if (loading) return (
     <div className="flex items-center justify-center h-screen bg-dark">
       <Spinner size="lg" label="Chargement..." />
     </div>

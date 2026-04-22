@@ -6,7 +6,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useSubscription } from '../../hooks/useSubscription'
 import { LANGUAGES } from '../../lib/constants'
-import { useSignOut } from '../../hooks/useAuth'
+import { useSignOut, useProfile } from '../../hooks/useAuth'
 import { useUserStore } from '../../store/userStore'
 
 // Couleurs des flags par langue (identitaires)
@@ -45,6 +45,7 @@ const NAV_SECTIONS = [
 export default function Sidebar({ open, onClose }) {
   const location  = useLocation()
   const signOut   = useSignOut()
+  useProfile()
   const { languages, isPremium } = useSubscription()
   const { isAdmin } = useUserStore()
 
