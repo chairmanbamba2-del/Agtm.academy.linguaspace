@@ -6,6 +6,7 @@ import { useUserStore } from '../store/userStore'
 import { useProfile } from '../hooks/useAuth'
 import { useSubscription } from '../hooks/useSubscription'
 import { LANGUAGES, CEFR_LABELS } from '../lib/constants'
+import MasterCard, { XPBar, LevelBadge, StreakBadge } from '../components/ui/MasterCard'
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -41,36 +42,57 @@ export default function Dashboard() {
           </h1>
         </div>
         {isPremium && (
-          <span className="font-mono text-[9px] tracking-[0.2em] bg-blue/30 border border-blue/50 text-blue-300 px-3 py-1.5">
-            ALL ACCESS
-          </span>
+          // MAP: Badge ALL ACCESS → style glassmorphism (identique à Sidebar)
+          <div
+            className="mx-2 px-3 py-2 rounded-sm text-center"
+            style={{
+              background:  'linear-gradient(135deg, rgba(27,79,138,0.3), rgba(13,45,82,0.2))',
+              border:      '1px solid rgba(93,165,229,0.2)',
+            }}
+          >
+            <p className="font-mono text-[7px] tracking-[0.2em] text-blue-300/70 uppercase mb-0.5">Forfait actif</p>
+            <p className="font-mono text-[10px] tracking-widest text-blue-200 font-bold">ALL ACCESS</p>
+          </div>
         )}
       </div>
 
       {/* Alerte expiration */}
       {isActive && daysLeft <= 5 && (
-        <div className="bg-gold/10 border border-gold/30 rounded px-5 py-4 mb-8 flex items-center justify-between">
-          <div>
-            <p className="text-gold text-sm font-medium">Votre abonnement expire dans {daysLeft} jour{daysLeft > 1 ? 's' : ''}</p>
-            <p className="text-muted text-xs mt-0.5">Renouvelez pour continuer votre progression.</p>
+        // MAP: Alerte → MasterCard avec glow gold
+        <MasterCard variant="corner" glow className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-gold text-sm font-medium">Votre abonnement expire dans {daysLeft} jour{daysLeft > 1 ? 's' : ''}</p>
+              <p className="text-muted text-xs mt-0.5">Renouvelez pour continuer votre progression.</p>
+            </div>
+            <Link to="/subscribe" className="btn-gold text-xs py-2 px-4">Renouveler</Link>
           </div>
-          <Link to="/subscribe" className="btn-gold text-xs py-2 px-4">Renouveler</Link>
-        </div>
+        </MasterCard>
       )}
 
       {/* Stats globales */}
       <div className="grid grid-cols-3 gap-4 mb-10">
-        {[
-          { label: 'XP Total',      value: totalXP.toLocaleString(), icon: '⚡' },
-          { label: 'Meilleure série', value: `${maxStreak}j`,       icon: '🔥' },
-          { label: 'Langues actives', value: languages.length,      icon: '🌍' },
-        ].map(s => (
-          <div key={s.label} className="card p-5">
-            <div className="text-2xl mb-2">{s.icon}</div>
-            <div className="font-serif text-2xl text-gold">{s.value}</div>
-            <div className="text-xs text-muted mt-1">{s.label}</div>
-          </div>
-        ))}
+        {/* MAP: XP Total → MasterCard stat avec barre XP */}
+        <MasterCard variant="stat" padding="md" xp={totalXP}>
+          <div className="text-2xl mb-2">⚡</div>
+          <div className="font-serif text-2xl text-gold">{totalXP.toLocaleString()}</div>
+          <div className="text-xs text-muted mt-1">XP Total</div>
+        </MasterCard>
+
+        {/* MAP: Meilleure série → MasterCard stat avec StreakBadge */}
+        <MasterCard variant="stat" padding="md" streak={maxStreak}>
+          <div className="text-2xl mb-2">🔥</div>
+          <div className="font-serif text-2xl text-gold">{maxStreak}j</div>
+          <div className="text-xs text-muted mt-1">Meilleure série</div>
+          {/* StreakBadge s'affiche automatiquement via la prop streak */}
+        </MasterCard>
+
+        {/* MAP: Langues actives → MasterCard stat simple */}
+        <MasterCard variant="stat" padding="md">
+          <div className="text-2xl mb-2">🌍</div>
+          <div className="font-serif text-2xl text-gold">{languages.length}</div>
+          <div className="text-xs text-muted mt-1">Langues actives</div>
+        </MasterCard>
       </div>
 
       {/* Mes Corners */}
@@ -87,24 +109,30 @@ export default function Dashboard() {
             const streak = prog?.streak_days || 0
 
             return (
-              <div key={lang} className="card p-6 group hover:border-gold/30 transition-all">
+              // MAP: Carte langue → MasterCard corner avec couleur langue
+              <MasterCard
+                key={lang}
+                variant="corner"
+                lang={lang}
+                glow
+                interactive
+                xp={xp}
+                xpMax={5000}
+                streak={streak}
+              >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">{l.flag}</span>
                     <div>
                       <h3 className="font-serif text-lg text-white">{l.corner}</h3>
-                      <p className="font-mono text-[10px] tracking-[0.2em] text-gold uppercase">{level} — {CEFR_LABELS[level]}</p>
+                      {/* MAP: Niveau CEFR → LevelBadge */}
+                      <LevelBadge level={level} lang={lang} size="sm" />
                     </div>
                   </div>
-                  {streak > 0 && (
-                    <span className="font-mono text-xs text-gold flex items-center gap-1">🔥 {streak}j</span>
-                  )}
+                  {/* MAP: Streak → StreakBadge (s'affiche automatiquement via prop streak) */}
                 </div>
 
-                <div className="h-1.5 bg-dark rounded-full mb-4">
-                  <div className="h-1.5 bg-gold rounded-full transition-all"
-                       style={{ width: `${Math.min((xp / 5000) * 100, 100)}%` }} />
-                </div>
+                {/* MAP: Barre XP → XPBar (s'affiche automatiquement via props xp/xpMax) */}
                 <p className="text-xs text-muted mb-5">{xp} XP</p>
 
                 <div className="flex gap-2">
@@ -117,7 +145,7 @@ export default function Dashboard() {
                     Modules
                   </Link>
                 </div>
-              </div>
+              </MasterCard>
             )
           })}
         </div>
@@ -133,10 +161,13 @@ export default function Dashboard() {
             { to: '/settings',  icon: '⚙️', label: 'Paramètres', sub: 'Compte & abonnement' },
             { to: '/subscribe', icon: '⬆️', label: isPremium ? 'Mon forfait' : 'Passer Premium', sub: isPremium ? 'ALL ACCESS actif' : 'Débloquer tout' },
           ].map(item => (
-            <Link key={item.to} to={item.to} className="card p-5 hover:border-gold/30 transition-all group">
-              <div className="text-2xl mb-3">{item.icon}</div>
-              <div className="text-sm font-medium text-white group-hover:text-gold transition-colors">{item.label}</div>
-              <div className="text-xs text-muted mt-1">{item.sub}</div>
+            // MAP: Carte accès rapide → MasterCard action
+            <Link key={item.to} to={item.to}>
+              <MasterCard variant="action" padding="sm" interactive>
+                <div className="text-2xl mb-3">{item.icon}</div>
+                <div className="text-sm font-medium text-white group-hover:text-gold transition-colors">{item.label}</div>
+                <div className="text-xs text-muted mt-1">{item.sub}</div>
+              </MasterCard>
             </Link>
           ))}
         </div>

@@ -6,6 +6,8 @@ import { useProfile } from '../hooks/useAuth'
 import { useSubscription } from '../hooks/useSubscription'
 import { sendAIMessage, speak, startListening } from '../lib/ai'
 import { LANGUAGES, AI_MODES } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
+import { AIVoiceWave, PulseAvatar, ElasticBubble } from '../components/ui/AIWidgets'
 
 export default function Assistant() {
   const { loading } = useProfile()
@@ -112,136 +114,315 @@ export default function Assistant() {
     }
   }
 
+  // Couleur d'accent selon la langue active
+  const LANG_ACCENT = {
+    en: { color: '#C8102E', glow: 'rgba(200,16,46,0.3)'  },
+    es: { color: '#F1BF00', glow: 'rgba(241,191,0,0.3)'  },
+    de: { color: '#94A3B8', glow: 'rgba(148,163,184,0.3)' },
+    fr: { color: '#4A7FBF', glow: 'rgba(74,127,191,0.3)'  },
+  }
+  const langAccent = LANG_ACCENT[currentLang] || { color: '#E8941A', glow: 'rgba(232,148,26,0.3)' }
+
   return (
     <AppLayout>
-      <div className="flex flex-col h-[calc(100vh-5rem)] max-h-[800px]">
-        {/* Header */}
-        <div className="mb-4">
-          <p className="section-label">IA Coach</p>
-          <h1 className="font-serif text-2xl text-white">Assistant <em className="text-gold">Multilingue</em></h1>
-        </div>
+      {/* ── Conteneur principal ──────────────────────────────── */}
+      <div className="flex flex-col h-[calc(100dvh-80px)] max-h-[880px]">
 
-        {/* Config bar */}
-        <div className="flex flex-wrap gap-3 mb-4">
-          {/* Langue */}
-          <div className="flex gap-1">
-            {languages.map(l => (
-              <button key={l} onClick={() => setSelectedLang(l)}
-                className={`px-3 py-1.5 text-sm rounded transition-all flex items-center gap-1.5
-                  ${currentLang === l ? 'bg-gold text-dark font-semibold' : 'bg-card text-muted hover:text-white border border-white/8'}`}>
-                {LANGUAGES[l].flag} {LANGUAGES[l].name}
-              </button>
-            ))}
+        {/* ── Header ─────────────────────────────────────────── */}
+        <div className="flex items-end justify-between mb-5 flex-shrink-0">
+          <div>
+            <p className="font-mono text-[9px] tracking-[0.3em] text-gold/70 uppercase mb-1">IA Coach</p>
+            <h1 className="font-serif text-2xl text-white leading-tight">
+              Assistant <em className="text-gold" style={{ textShadow: '0 0 20px rgba(232,148,26,0.4)' }}>Multilingue</em>
+            </h1>
           </div>
-
-          {/* Mode */}
-          <div className="flex gap-1 flex-wrap">
-            {accessibleModes.map(m => (
-              <button key={m.id} onClick={() => setMode(m.id)}
-                className={`px-3 py-1.5 text-xs rounded transition-all flex items-center gap-1
-                  ${selectedMode === m.id ? 'bg-blue/40 text-white border border-blue/50' : 'bg-card text-muted hover:text-white border border-white/8'}`}>
-                {m.icon} {m.label}
-              </button>
-            ))}
-            {!isPremium && (
-              <span className="px-3 py-1.5 text-xs text-muted border border-white/5 rounded flex items-center gap-1">
-                🔒 Role Play & Exam Prep <span className="text-gold">→ Premium</span>
-              </span>
+            {/* Indicateur de niveau actif */}
+            {level && (
+              <div className="flex items-center gap-2">
+                <LevelBadge level={level} lang={currentLang} size="sm" />
+                <span className="font-mono text-xs text-muted">{langInfo?.name}</span>
+              </div>
             )}
-          </div>
         </div>
 
-        {/* Zone de chat */}
-        <div className="flex-1 overflow-y-auto card p-4 mb-4 space-y-4">
-          {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              {msg.role === 'assistant' && (
-                <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2 flex-shrink-0 self-end"
-                     style={{ background: 'linear-gradient(135deg, #E8941A, #1B4F8A)' }}>
-                  🤖
-                </div>
-              )}
-              <div className={`max-w-[80%] px-4 py-3 rounded text-sm leading-relaxed
-                ${msg.role === 'user'
-                  ? 'bg-gold/15 border border-gold/20 text-white rounded-br-sm'
-                  : 'bg-blue/20 border border-blue/30 text-white rounded-bl-sm'}`}>
-                {msg.content}
-              </div>
-            </div>
-          ))}
+        {/* ── Barre de configuration ──────────────────────────── */}
+         <MasterCard
+           variant="action"
+           padding="sm"
+           className="flex flex-wrap gap-2 mb-4 flex-shrink-0"
+         >
+          {/* Sélecteur de langue */}
+          <div className="flex gap-1 items-center flex-wrap">
+            {languages.map(l => {
+              const la  = LANG_ACCENT[l] || { color: '#E8941A' }
+              const sel = currentLang === l
+              return (
+                 <button
+                   key={l}
+                   onClick={() => setSelectedLang(l)}
+                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-sm font-medium transition-all duration-250 ${sel ? '' : 'glass'}`}
+                   style={sel ? {
+                     background:  `${la.color}22`,
+                     border:      `1px solid ${la.color}55`,
+                     color:       '#FAFAF8',
+                     boxShadow:   `0 0 12px ${la.color}33`,
+                   } : { color: '#8A9AB5' }}
+                 >
+                   {LANGUAGES[l].flag} {LANGUAGES[l].name}
+                 </button>
+              )
+            })}
+          </div>
 
+          {/* Séparateur */}
+          <div className="w-px self-stretch bg-white/8 mx-1 hidden sm:block" />
+
+          {/* Sélecteur de mode */}
+          <div className="flex gap-1 flex-wrap items-center">
+            {accessibleModes.map(m => {
+              const sel = selectedMode === m.id
+              return (
+                 <button
+                   key={m.id}
+                   onClick={() => setMode(m.id)}
+                   className={`flex items-center gap-1 px-3 py-1.5 rounded-sm text-xs transition-all duration-250 ${sel ? '' : 'glass'}`}
+                   style={sel ? {
+                     background:  'rgba(27,79,138,0.35)',
+                     border:      '1px solid rgba(27,79,138,0.6)',
+                     color:       '#FAFAF8',
+                     boxShadow:   '0 0 10px rgba(27,79,138,0.2)',
+                   } : { color: '#8A9AB5' }}
+                 >
+                   <span>{m.icon}</span>
+                   <span>{m.label}</span>
+                 </button>
+              )
+            })}
+            {!isPremium && (
+               <span
+                 className="flex items-center gap-1 px-3 py-1.5 rounded-sm text-xs glass"
+                 style={{
+                   color:    '#8A9AB5',
+                   opacity:  0.6,
+                 }}
+               >
+                 <span>🔒</span>
+                 <span>Role Play</span>
+                 <span style={{ color: '#E8941A' }}>→ Premium</span>
+               </span>
+            )}
+           </div>
+         </MasterCard>
+
+        {/* ── Zone de chat ──────────────────────────────────── */}
+         <MasterCard
+           variant="content"
+           padding="sm"
+           className="flex-1 overflow-y-auto sidebar-scrollbar mb-3 space-y-5"
+         >
+           {messages.map((msg, i) => (
+             <ElasticBubble key={i}>
+               <ChatBubble msg={msg} langAccent={langAccent} />
+             </ElasticBubble>
+           ))}
+
+          {/* Typing indicator */}
           {aiLoading && (
-            <div className="flex justify-start">
-              <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm mr-2 self-end"
-                   style={{ background: 'linear-gradient(135deg, #E8941A, #1B4F8A)' }}>🤖</div>
-              <div className="bg-blue/20 border border-blue/30 px-4 py-3 rounded rounded-bl-sm">
-                <div className="flex gap-1">
-                  {[0,1,2].map(i => (
-                    <div key={i} className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce"
-                         style={{ animationDelay: `${i * 0.15}s` }} />
-                  ))}
-                </div>
-              </div>
+            <div className="flex items-end gap-2.5">
+               <AIAvatar isSpeaking={false} langAccent={langAccent} isThinking={aiLoading} />
+              <div
+                className="flex items-center gap-1.5 px-4 py-3 rounded-2xl rounded-bl-sm"
+                style={{
+                  background: 'rgba(27,79,138,0.2)',
+                  border:     '1px solid rgba(27,79,138,0.3)',
+                }}
+              >
+                {[0, 1, 2].map(i => (
+                  <span
+                    key={i}
+                    className="block w-1.5 h-1.5 rounded-full bg-gold/70"
+                    style={{
+                      animation:      'bounce-dot 1.2s ease-in-out infinite',
+                      animationDelay: `${i * 0.18}s`,
+                    }}
+                  />
+                 ))}
+          </div>
             </div>
           )}
 
+          {/* Message d'erreur */}
           {error && (
-            <div className="text-center text-xs text-red-400 bg-red-900/20 border border-red-500/20 px-3 py-2 rounded">
+            <div
+              className="text-center text-xs px-4 py-2.5 rounded-card"
+              style={{
+                color:       '#F87171',
+                background:  'rgba(239,68,68,0.08)',
+                border:      '1px solid rgba(239,68,68,0.2)',
+              }}
+            >
               {error}
             </div>
           )}
 
           <div ref={chatEndRef} />
-        </div>
+        </MasterCard>
 
-        {/* Zone de saisie */}
-        <div className="flex gap-3 items-end">
+        {/* ── Indicateurs vocaux ────────────────────────────── */}
+        {(isListening || isSpeaking) && (
+          <div className="flex items-center justify-center gap-6 py-2 mb-1 flex-shrink-0">
+             {isListening && <VoiceWaveIndicator label={`Écoute · ${langInfo?.name}`} color="#EF4444" active={isListening} />}
+             {isSpeaking  && <VoiceWaveIndicator label="L'IA parle..." color={langAccent.color} active={isSpeaking} />}
+          </div>
+        )}
+
+        {/* ── Zone de saisie ────────────────────────────────── */}
+         <MasterCard
+           variant="action"
+           padding="none"
+           className="flex gap-2 items-end p-2 flex-shrink-0"
+         >
           {/* Bouton micro */}
-          <button onClick={handleVoice}
-            className={`flex-shrink-0 w-12 h-12 rounded flex items-center justify-center text-xl transition-all
-              ${isListening
-                ? 'bg-red-500 text-white animate-pulse'
-                : 'bg-card text-muted hover:text-white border border-white/10'}`}
-            title={isListening ? 'Arrêter l\'écoute' : 'Parler'}>
-            {isListening ? '⏹' : '🎙️'}
+          <button
+            onClick={handleVoice}
+            title={isListening ? "Arrêter l'écoute" : 'Parler'}
+            className="flex-shrink-0 w-11 h-11 rounded-card flex items-center justify-center transition-all duration-250"
+            style={isListening ? {
+              background: 'rgba(239,68,68,0.2)',
+              border:     '1px solid rgba(239,68,68,0.5)',
+              color:      '#FCA5A5',
+              boxShadow:  '0 0 16px rgba(239,68,68,0.3)',
+              animation:  'speak-pulse 1.5s ease-in-out infinite',
+            } : {
+              background: 'rgba(255,255,255,0.04)',
+              border:     '1px solid rgba(255,255,255,0.08)',
+              color:      '#8A9AB5',
+            }}
+          >
+            <span className="text-lg leading-none">{isListening ? '■' : '⏺'}</span>
           </button>
 
           {/* Input texte */}
-          <div className="flex-1 relative">
+          <div className="flex-1">
             <textarea
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder={`Écrivez ou parlez en ${langInfo?.name}... (Entrée pour envoyer)`}
+              placeholder={`Écrivez en ${langInfo?.name || 'votre langue'}… (Entrée pour envoyer)`}
               rows={1}
-              className="w-full bg-card border border-white/10 text-white px-4 py-3 text-sm rounded resize-none
-                         focus:outline-none focus:border-gold/40 transition-colors placeholder:text-white/25"
-              style={{ minHeight: '48px', maxHeight: '120px' }}
+              className="w-full text-white text-sm resize-none focus:outline-none"
+              style={{
+                background:       'transparent',
+                border:           'none',
+                color:            '#FAFAF8',
+                minHeight:        '44px',
+                maxHeight:        '120px',
+                padding:          '0.65rem 0.5rem',
+                lineHeight:       '1.5',
+                caretColor:       langAccent.color,
+                fontFamily:       'DM Sans, sans-serif',
+              }}
             />
           </div>
 
           {/* Bouton envoyer */}
-          <button onClick={() => sendMessage(input)} disabled={!input.trim() || aiLoading}
-            className="flex-shrink-0 btn-gold px-4 py-3 disabled:opacity-40 disabled:cursor-not-allowed">
-            {aiLoading ? '⏳' : '→'}
-          </button>
-        </div>
-
-        {isListening && (
-          <p className="text-center text-xs text-red-400 mt-2 animate-pulse">
-            🔴 Écoute en cours... Parlez en {langInfo?.name}
-          </p>
-        )}
-        {isSpeaking && (
-          <p className="text-center text-xs text-blue-400 mt-2">
-            🔊 L'IA parle...
-          </p>
-        )}
-      </div>
+          <button
+            onClick={() => sendMessage(input)}
+            disabled={!input.trim() || aiLoading}
+            className="flex-shrink-0 w-11 h-11 rounded-card flex items-center justify-center text-dark font-bold text-lg transition-all duration-250 disabled:opacity-30 disabled:cursor-not-allowed"
+            style={{
+              background: input.trim() && !aiLoading
+                ? 'linear-gradient(135deg, #E8941A, #F5B942)'
+                : 'rgba(232,148,26,0.2)',
+              boxShadow: input.trim() && !aiLoading
+                ? '0 4px 16px rgba(232,148,26,0.35)'
+                : 'none',
+            }}
+          >
+            {aiLoading ? (
+              <span
+                className="w-4 h-4 border-2 border-dark/40 border-t-dark rounded-full"
+                style={{ animation: 'spin-slow 0.8s linear infinite' }}
+              />
+            ) : (
+              <span className="text-base">↑</span>
+            )}
+           </button>
+         </MasterCard>
+       </div>
     </AppLayout>
   )
 }
 
+// ── Sous-composant : bulle de chat ──────────────────────────
+function ChatBubble({ msg, langAccent }) {
+  const isUser = msg.role === 'user'
+
+  return (
+    <div className={`flex items-end gap-2.5 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+
+      {/* Avatar IA */}
+      {!isUser && <AIAvatar isSpeaking={false} langAccent={langAccent} />}
+
+      {/* Bulle de message */}
+      <div
+        className="max-w-[78%] text-sm leading-relaxed"
+        style={isUser ? {
+          // Bulle utilisateur : dorée, coin bas-droit carré
+          background:    'linear-gradient(135deg, rgba(232,148,26,0.18), rgba(232,148,26,0.08))',
+          border:        '1px solid rgba(232,148,26,0.25)',
+          color:         '#FAFAF8',
+          borderRadius:  '18px 18px 4px 18px',
+          padding:       '0.75rem 1rem',
+          boxShadow:     '0 2px 12px rgba(232,148,26,0.1)',
+        } : {
+          // Bulle IA : bleue, coin bas-gauche carré
+          background:    'linear-gradient(135deg, rgba(27,79,138,0.25), rgba(13,45,82,0.3))',
+          border:        '1px solid rgba(27,79,138,0.35)',
+          color:         '#FAFAF8',
+          borderRadius:  '18px 18px 18px 4px',
+          padding:       '0.75rem 1rem',
+          boxShadow:     '0 2px 12px rgba(0,0,0,0.2)',
+        }}
+      >
+        {msg.content}
+      </div>
+    </div>
+  )
+}
+
+// ── Sous-composant : avatar IA ──────────────────────────────
+function AIAvatar({ isSpeaking, langAccent, isThinking = false }) {
+  return (
+    <PulseAvatar isThinking={isThinking || isSpeaking}>
+      <div
+        className="w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0 select-none"
+        style={{
+          background: 'linear-gradient(135deg, #E8941A 0%, #1B4F8A 100%)',
+        }}
+      >
+        ◎
+      </div>
+    </PulseAvatar>
+  )
+}
+
+// ── Sous-composant : indicateur vague sonore ────────────────
+function VoiceWaveIndicator({ label, color, active = true }) {
+  return (
+    <div className="flex items-center gap-3">
+      <AIVoiceWave active={active} />
+      <span
+        className="font-mono text-[9px] tracking-[0.15em] uppercase"
+        style={{ color }}
+      >
+        {label}
+      </span>
+    </div>
+  )
+}
+
+// ────────────────────────────────────────────────────────────
 function getWelcomeMessage(lang, level, mode) {
   const messages = {
     en: {

@@ -7,6 +7,7 @@ import { useSignOut } from '../hooks/useAuth'
 import { useSubscription } from '../hooks/useSubscription'
 import { supabase } from '../lib/supabase'
 import { LANGUAGES, PLANS } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
@@ -39,7 +40,7 @@ export default function Settings() {
       )}
 
       {/* Infos compte */}
-      <section className="card p-6 mb-6">
+      <MasterCard variant="content" padding="lg" className="mb-6">
         <h2 className="font-serif text-lg text-white mb-4">Informations personnelles</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -59,10 +60,10 @@ export default function Settings() {
             <p className="text-white text-sm">{linguaUser?.country || 'CI'}</p>
           </div>
         </div>
-      </section>
+      </MasterCard>
 
       {/* Abonnement */}
-      <section className="card p-6 mb-6">
+      <MasterCard variant="content" padding="lg" className="mb-6">
         <h2 className="font-serif text-lg text-white mb-4">Mon abonnement</h2>
 
         {isActive && plan ? (
@@ -121,17 +122,17 @@ export default function Settings() {
             <Link to="/subscribe" className="btn-gold">Choisir un forfait →</Link>
           </div>
         )}
-      </section>
+      </MasterCard>
 
       {/* Danger zone */}
-      <section className="card p-6 border border-red-500/20">
+      <MasterCard variant="content" padding="lg" className="border border-red-500/20">
         <h2 className="font-serif text-lg text-white mb-4">Zone sensible</h2>
         <div className="flex flex-wrap gap-3">
           <button onClick={signOut} className="btn-outline text-sm border-white/20 hover:border-white/40">
             🚪 Se déconnecter
           </button>
         </div>
-      </section>
+      </MasterCard>
     </AppLayout>
   )
 }

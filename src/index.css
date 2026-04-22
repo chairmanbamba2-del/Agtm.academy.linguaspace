@@ -111,9 +111,7 @@ body::after {
     @apply border border-white/20 text-white px-6 py-3 text-sm font-medium tracking-wide
            transition-all duration-200 hover:border-white/50 hover:-translate-y-0.5 rounded-sm bg-transparent;
   }
-  .card {
-    @apply bg-card border border-[#1E3A5F] rounded-sm;
-  }
+
   .section-label {
     @apply font-mono text-[10px] tracking-[0.3em] text-gold uppercase mb-3;
   }

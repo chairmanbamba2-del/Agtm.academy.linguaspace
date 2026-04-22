@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useUserStore } from '../store/userStore'
 import { supabase } from '../lib/supabase'
 import { LANGUAGES } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 import Spinner from '../components/ui/Spinner'
 
 const BLOCKS = [
@@ -137,21 +138,21 @@ export default function LevelTest() {
             <p className="text-muted text-sm">Évaluation officielle CEFR · Durée : 45 minutes</p>
           </div>
 
-          <div className="card p-6 mb-6">
-            <h3 className="font-serif text-lg text-white mb-4">Structure du test</h3>
-            <div className="space-y-3">
-              {BLOCKS.map((b, i) => (
-                <div key={b.id} className="flex items-center gap-3 p-3 bg-dark rounded">
-                  <span className="text-xl">{b.icon}</span>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium text-white">{b.label}</div>
-                    <div className="text-xs text-muted">{b.id === 'expression' ? '2 questions ouvertes' : '10 questions QCM'}</div>
-                  </div>
-                  <span className="font-mono text-xs text-gold">{b.weight}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+           <MasterCard variant="content" padding="lg" className="mb-6">
+             <h3 className="font-serif text-lg text-white mb-4">Structure du test</h3>
+             <div className="space-y-3">
+               {BLOCKS.map((b, i) => (
+                 <div key={b.id} className="flex items-center gap-3 p-3 bg-dark rounded">
+                   <span className="text-xl">{b.icon}</span>
+                   <div className="flex-1">
+                     <div className="text-sm font-medium text-white">{b.label}</div>
+                     <div className="text-xs text-muted">{b.id === 'expression' ? '2 questions ouvertes' : '10 questions QCM'}</div>
+                   </div>
+                   <span className="font-mono text-xs text-gold">{b.weight}</span>
+                 </div>
+               ))}
+             </div>
+           </MasterCard>
 
           <div className="bg-gold/8 border border-gold/20 px-4 py-3 rounded text-xs text-muted mb-6 leading-relaxed">
             ⚠️ <strong className="text-white">Important :</strong> Une fois le test commencé, vous avez exactement 45 minutes.
@@ -257,22 +258,22 @@ export default function LevelTest() {
 
           {/* Transcript audio pour le bloc listening */}
           {currentBlock.id === 'listening' && qIdx === 0 && questions.transcript && (
-            <div className="card p-4 mb-4 border-l-4 border-gold">
+            <MasterCard variant="content" padding="md" className="mb-4 border-l-4 border-gold">
               <div className="font-mono text-[10px] text-gold tracking-widest uppercase mb-2">📻 Transcription audio</div>
               <p className="text-sm text-white/80 leading-relaxed italic">{questions.transcript}</p>
-            </div>
+            </MasterCard>
           )}
 
           {/* Texte de lecture pour le bloc reading */}
           {currentBlock.id === 'reading' && qIdx === 0 && questions.reading_passage && (
-            <div className="card p-4 mb-4 border-l-4 border-blue">
+            <MasterCard variant="content" padding="md" className="mb-4 border-l-4 border-blue-400">
               <div className="font-mono text-[10px] text-blue-300 tracking-widest uppercase mb-2">📖 Texte à lire</div>
               <p className="text-sm text-white/80 leading-relaxed">{questions.reading_passage}</p>
-            </div>
+            </MasterCard>
           )}
 
           {!isExpression && currentQ ? (
-            <div className="card p-6">
+            <MasterCard variant="content" padding="lg">
               <div className="font-mono text-[10px] text-gold tracking-widest uppercase mb-3">
                 Question {qIdx + 1} / {currentQs.length} · {currentBlock.label}
               </div>
@@ -291,9 +292,9 @@ export default function LevelTest() {
                   </button>
                 ))}
               </div>
-            </div>
+            </MasterCard>
           ) : isExpression && currentQ ? (
-            <div className="card p-6">
+            <MasterCard variant="content" padding="lg">
               <div className="font-mono text-[10px] text-gold tracking-widest uppercase mb-3">
                 Expression {qIdx + 1} / {currentQs.length} · Réponse libre
               </div>
@@ -309,7 +310,7 @@ export default function LevelTest() {
               <div className="text-right text-xs text-muted mt-1">
                 {(currentAnswer || '').split(/\s+/).filter(Boolean).length} mots
               </div>
-            </div>
+            </MasterCard>
           ) : null}
 
           <div className="flex gap-3 mt-4">
@@ -351,7 +352,7 @@ export default function LevelTest() {
           </div>
 
           {/* Scores par compétence */}
-          <div className="card p-6 mb-6">
+          <MasterCard variant="content" padding="lg" className="mb-6">
             <h3 className="font-serif text-lg text-white mb-4">Résultats détaillés</h3>
             {[
               { label: 'Compréhension orale', val: result.scores.listening, w: '35%', color: 'bg-blue' },
@@ -369,7 +370,7 @@ export default function LevelTest() {
                 </div>
               </div>
             ))}
-          </div>
+          </MasterCard>
 
           <div className="flex gap-3">
             {result.passed ? (

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '@/styles/landing/landing.css';
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard';
+import { PulseAvatar, AIVoiceWave, ElasticBubble } from '../components/ui/AIWidgets';
 
 const Landing = () => {
   useEffect(() => {
@@ -28,432 +29,372 @@ const Landing = () => {
 
   return (
     <>
-      
-<nav>
-  <div className="nav-logo">
-    <Link to="/">
-      <span className="name">LINGUA SPACE</span>
-    </Link>
-  </div>
-  <ul className="nav-links">
-    <li><a href="#corners">Les Corners</a></li>
-    <li><a href="#assistant">IA Coach</a></li>
-    <li><a href="#modules">Modules</a></li>
-    <li><a href="#pricing">Abonnements</a></li>
-    <li><Link to="/login">Se connecter</Link></li>
-    <li><Link to="/signup" className="btn-nav">S'inscrire</Link></li>
-  </ul>
-</nav>
+      {/* NAVBAR Premium */}
+      <nav className="navbar fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 bg-dark/90 backdrop-blur-nav border-b border-gold-dim">
+        <div className="flex flex-col gap-1">
+          <Link to="/" className="no-underline">
+            <span className="font-mono text-xs text-muted">AGTM Digital Academy</span>
+            <div className="font-serif text-xl text-white tracking-tight">LINGUA SPACE</div>
+          </Link>
+        </div>
+        <ul className="hidden md:flex items-center gap-6 list-none m-0 p-0">
+          <li><a href="#corners" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">Les Corners</a></li>
+          <li><a href="#assistant" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">IA Coach</a></li>
+          <li><a href="#modules" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">Modules</a></li>
+          <li><a href="#pricing" className="text-white text-sm font-medium py-1 border-b-2 border-transparent hover:border-gold hover:text-gold transition-all duration-250 no-underline">Abonnements</a></li>
+          <li><Link to="/signup" className="btn-gold px-6 py-2 text-sm font-semibold no-underline">Commencer</Link></li>
+        </ul>
+        <button className="md:hidden text-white text-2xl">☰</button>
+      </nav>
 
-
-<section className="hero" style={{maxWidth: 'none', paddingTop: '8rem', paddingLeft: '0', paddingRight: '0'}}>
-  <div className="hero-bg"></div>
-  <div className="lang-orbs">
-    <div className="orb orb-en"></div>
-    <div className="orb orb-es"></div>
-    <div className="orb orb-de"></div>
-    <div className="orb orb-fr"></div>
-  </div>
-
-  <div className="hero-eyebrow">Programme 100% Digital</div>
-
-  <h1 className="hero-title">
-    <span>Parlez</span>
-    <em>le monde.</em>
-  </h1>
-
-  <p className="hero-subtitle">Apprenez. Pratiquez. MaÃ®trisez.</p>
-
-  <div className="hero-langs">
-    <span className="lang-badge"><span className="flag">ðŸ‡¬ðŸ‡§</span> English Corner</span>
-    <span className="lang-badge"><span className="flag">ðŸ‡ªðŸ‡¸</span> RincÃ³n EspaÃ±ol</span>
-    <span className="lang-badge"><span className="flag">ðŸ‡©ðŸ‡ª</span> Deutsche Ecke</span>
-    <span className="lang-badge"><span className="flag">ðŸ‡«ðŸ‡·</span> Espace Francophone</span>
-  </div>
-
-  <div className="hero-cta">
-    <a href="#pricing" className="btn-primary">Choisir mon forfait â†’</a>
-    <a href="#corners" className="btn-ghost">DÃ©couvrir les Corners</a>
-  </div>
-
-  <div className="hero-scroll">
-    <div className="scroll-line"></div>
-    SCROLL
-  </div>
-</section>
-
-
-<div className="stats-bar">
-  <div className="stat-item">
-    <span className="stat-number">4</span>
-    <span className="stat-label">Langues disponibles</span>
-  </div>
-  <div className="stat-item">
-    <span className="stat-number">400</span>
-    <span className="stat-label">Modules A1 â†’ C2</span>
-  </div>
-  <div className="stat-item">
-    <span className="stat-number">2000+</span>
-    <span className="stat-label">Contenus audio/vidÃ©o</span>
-  </div>
-  <div className="stat-item">
-    <span className="stat-number">24/7</span>
-    <span className="stat-label">IA Coach disponible</span>
-  </div>
-</div>
-
-
-<section id="corners" className="fade-in">
-  <span className="section-label">Vos espaces d'immersion</span>
-  <h2 className="section-title">Quatre <em>Corners</em>,<br />une seule ambition.</h2>
-  <p style={{color: 'var(--muted)', fontSize: '0.9rem', maxWidth: '500px', lineHeight: 1.8}}>
-    Chaque Corner est un univers d'immersion linguistique : flux de contenus authentiques, quiz automatiques, coach IA et 100 modules progressifs.
-  </p>
-
-  <div className="corners-grid">
-    <div className="corner-card corner-en">
-      <span className="corner-flag">ðŸ‡¬ðŸ‡§</span>
-      <div className="corner-name">English Corner</div>
-      <span className="corner-tag">British & American English</span>
-      <p className="corner-desc">Podcasts BBC, extraits de sÃ©ries, news et culture anglophone. Votre coach IA pratique avec vous le Business English, l'IELTS et la vie quotidienne.</p>
-      <div className="corner-features">
-        <span className="corner-feature">News & Podcasts authentiques</span>
-        <span className="corner-feature">PrÃ©paration IELTS / TOEFL</span>
-        <span className="corner-feature">Business & Professional English</span>
-        <span className="corner-feature">100 modules A1 â†’ C2</span>
-      </div>
-      <span className="corner-bg-text">EN</span>
-    </div>
-
-    <div className="corner-card corner-es">
-      <span className="corner-flag">ðŸ‡ªðŸ‡¸</span>
-      <div className="corner-name">RincÃ³n EspaÃ±ol</div>
-      <span className="corner-tag">EspaÃ±ol Internacional</span>
-      <p className="corner-desc">TÃ©lÃ©vision espagnole, musique latine, culture hispanique. Votre coach IA vous emmÃ¨ne de Madrid Ã  MÃ©xico City, conversation aprÃ¨s conversation.</p>
-      <div className="corner-features">
-        <span className="corner-feature">Radio & TV hispanophone</span>
-        <span className="corner-feature">PrÃ©paration DELE</span>
-        <span className="corner-feature">Espagnol des affaires</span>
-        <span className="corner-feature">100 modules A1 â†’ C2</span>
-      </div>
-      <span className="corner-bg-text">ES</span>
-    </div>
-
-    <div className="corner-card corner-de">
-      <span className="corner-flag">ðŸ‡©ðŸ‡ª</span>
-      <div className="corner-name">Deutsche Ecke</div>
-      <span className="corner-tag">Deutsch fÃ¼r alle</span>
-      <p className="corner-desc">ActualitÃ© Deutsche Welle, culture germanique et humour allemand. Une porte d'entrÃ©e vers l'Europe, les Ã©tudes et les opportunitÃ©s professionnelles.</p>
-      <div className="corner-features">
-        <span className="corner-feature">Deutsche Welle intÃ©grÃ©</span>
-        <span className="corner-feature">PrÃ©paration TestDaF / Goethe</span>
-        <span className="corner-feature">Allemand professionnel</span>
-        <span className="corner-feature">100 modules A1 â†’ C2</span>
-      </div>
-      <span className="corner-bg-text">DE</span>
-    </div>
-
-    <div className="corner-card corner-fr">
-      <span className="corner-flag">ðŸ‡«ðŸ‡·</span>
-      <div className="corner-name">Espace Francophone</div>
-      <span className="corner-tag">Francophonie mondiale</span>
-      <p className="corner-desc">RFI, littÃ©rature africaine, culture francophone mondiale. Perfectionnez votre franÃ§ais Ã©crit et oral pour les concours, les examens et le monde professionnel.</p>
-      <div className="corner-features">
-        <span className="corner-feature">RFI Savoirs & culture africaine</span>
-        <span className="corner-feature">PrÃ©paration DELF / DALF</span>
-        <span className="corner-feature">FranÃ§ais des affaires</span>
-        <span className="corner-feature">100 modules A1 â†’ C2</span>
-      </div>
-      <span className="corner-bg-text">FR</span>
-    </div>
-  </div>
-</section>
-
-
-<div id="assistant" className="ia-section fade-in">
-  <div className="ia-grid">
-    <div className="ia-content">
-      <span className="section-label">Intelligence Artificielle</span>
-      <h2 className="section-title" style={{fontSize: '2.5rem'}}>Votre coach<br /><em>personnel</em> 24h/24.</h2>
-      <p style={{color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.8, marginBottom: '1.5rem'}}>
-        PropulsÃ© par Claude Sonnet & Opus d'Anthropic, votre assistant corrige vos erreurs, reformule naturellement et vous fait progresser conversation aprÃ¨s conversation.
-      </p>
-
-      <div className="ia-modes">
-        <div className="ia-mode">
-          <span className="ia-mode-icon">ðŸ—£ï¸</span>
-          <div>
-            <div className="ia-mode-name">Free Talk</div>
-            <div className="ia-mode-desc">Conversation libre sur tous les sujets</div>
+      {/* HERO SECTION avec grille or & halos radiaux */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 overflow-hidden bg-lingua">
+        {/* Grille or subtile animée */}
+        <div className="absolute inset-0 bg-grid-gold bg-grid-60 opacity-10 animate-grid-move"></div>
+        
+        {/* Halos radiaux */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold-glow rounded-full blur-3xl opacity-20 animate-float"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-blue/20 rounded-full blur-3xl opacity-15 animate-float" style={{animationDelay: '1s'}}></div>
+        
+        {/* Contenu Hero */}
+        <div className="relative z-10 text-center max-w-4xl mx-auto fade-in">
+          <div className="font-mono text-sm tracking-ultra text-gold uppercase mb-6">Programme 100% Digital</div>
+          
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white leading-tight mb-6 animate-pop-in">
+            <span className="block">Parlez </span>
+            <em className="text-gold not-italic relative">
+              le monde.
+              <span className="absolute -inset-4 bg-gold-glow blur-xl opacity-30 -z-10"></span>
+            </em>
+          </h1>
+          
+          <p className="text-xl text-muted mb-10 max-w-2xl mx-auto">Apprenez. Pratiquez. Maîtrisez.</p>
+          
+          {/* Langues badges */}
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
+            {['🇬🇧 English Corner', '🇪🇸 Rincón Español', '🇩🇪 Deutsche Ecke', '🇫🇷 Espace Francophone'].map((lang, i) => (
+               <span key={i} className="px-3 py-1.5 bg-card border border-bdr rounded-sm text-white text-xs sm:text-sm font-medium">
+                {lang}
+              </span>
+            ))}
           </div>
-          <span className="ia-mode-badge badge-std">STANDARD</span>
-        </div>
-        <div className="ia-mode">
-          <span className="ia-mode-icon">ðŸ’¼</span>
-          <div>
-            <div className="ia-mode-name">Business Mode</div>
-            <div className="ia-mode-desc">RÃ©unions, emails, prÃ©sentations pro</div>
+          
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#pricing" className="btn-gold px-6 py-3 text-base font-semibold sm:px-8 sm:py-4 sm:text-lg">Choisir mon forfait →</a>
+            <a href="#corners" className="btn-outline px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg">Découvrir les Corners</a>
           </div>
-          <span className="ia-mode-badge badge-std">STANDARD</span>
         </div>
-        <div className="ia-mode">
-          <span className="ia-mode-icon">ðŸŽ­</span>
-          <div>
-            <div className="ia-mode-name">Role Play</div>
-            <div className="ia-mode-desc">Jeux de rÃ´le immersifs et scÃ©narios</div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 text-muted text-xs">
+          <div className="w-px h-10 bg-gold/30"></div>
+          SCROLL
+        </div>
+      </section>
+
+      {/* STATS BAR */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 px-4 bg-card border-y border-bdr">
+        {[
+          { number: '4', label: 'Langues disponibles' },
+          { number: '400', label: 'Modules A1 → C2' },
+          { number: '2000+', label: 'Contenus audio/vidéo' },
+          { number: '24/7', label: 'IA Coach disponible' }
+        ].map((stat, i) => (
+          <div key={i} className="text-center">
+            <div className="font-serif text-3xl text-gold mb-1">{stat.number}</div>
+            <div className="text-sm text-muted">{stat.label}</div>
           </div>
-          <span className="ia-mode-badge badge-prm">PREMIUM</span>
-        </div>
-        <div className="ia-mode">
-          <span className="ia-mode-icon">ðŸŽ¯</span>
-          <div>
-            <div className="ia-mode-name">Exam Prep</div>
-            <div className="ia-mode-desc">IELTS, DELF, DELE, Goethe...</div>
+        ))}
+      </div>
+
+      {/* CORNERS SECTION */}
+      <section id="corners" className="fade-in py-20 px-4 bg-dark">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <div className="section-label">Vos espaces d'immersion</div>
+            <h2 className="section-title">Quatre <em>Corners</em>,<br />une seule ambition.</h2>
+            <p className="text-muted max-w-xl">
+              Chaque Corner est un univers d'immersion linguistique : flux de contenus authentiques, quiz automatiques, coach IA et 100 modules progressifs.
+            </p>
           </div>
-          <span className="ia-mode-badge badge-prm">PREMIUM</span>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { flag: '🇬🇧', name: 'English Corner', tag: 'British & American English', color: 'en', bgText: 'EN',
+                desc: 'Podcasts BBC, extraits de séries, news et culture anglophone. Votre coach IA pratique avec vous le Business English, l\'IELTS et la vie quotidienne.',
+                features: ['News & Podcasts authentiques', 'Préparation IELTS / TOEFL', 'Business & Professional English', '100 modules A1 → C2']
+              },
+              { flag: '🇪🇸', name: 'Rincón Español', tag: 'Español Internacional', color: 'es', bgText: 'ES',
+                desc: 'Télévision espagnole, musique latine, culture hispanique. Votre coach IA vous emmène de Madrid à México City, conversation après conversation.',
+                features: ['Radio & TV hispanophone', 'Préparation DELE', 'Espagnol des affaires', '100 modules A1 → C2']
+              },
+              { flag: '🇩🇪', name: 'Deutsche Ecke', tag: 'Deutsch für alle', color: 'de', bgText: 'DE',
+                desc: 'Actualité Deutsche Welle, culture germanique et humour allemand. Une porte d\'entrée vers l\'Europe, les études et les opportunités professionnelles.',
+                features: ['Deutsche Welle intégré', 'Préparation TestDaF / Goethe', 'Allemand professionnel', '100 modules A1 → C2']
+              },
+              { flag: '🇫🇷', name: 'Espace Francophone', tag: 'Francophonie mondiale', color: 'fr', bgText: 'FR',
+                desc: 'RFI, littérature africaine, culture francophone mondiale. Perfectionnez votre français écrit et oral pour les concours, les examens et le monde professionnel.',
+                features: ['RFI Savoirs & culture africaine', 'Préparation DELF / DALF', 'Français des affaires', '100 modules A1 → C2']
+              }
+            ].map((corner, i) => (
+              <MasterCard key={i} variant="corner" padding="lg" className={`corner-${corner.color}`}>
+                <div className="relative">
+                  <span className="text-3xl">{corner.flag}</span>
+                  <div className="text-xl font-serif text-white mt-3">{corner.name}</div>
+                  <span className="text-xs text-gold font-mono mt-1 block">{corner.tag}</span>
+                  <p className="text-sm text-muted mt-4 leading-relaxed">{corner.desc}</p>
+                  <div className="space-y-2 mt-6">
+                    {corner.features.map((feat, j) => (
+                      <div key={j} className="flex items-center gap-2 text-sm">
+                        <span className="text-gold">✓</span>
+                        <span className="text-muted-2">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="absolute -bottom-4 -right-4 text-7xl opacity-5 font-bold select-none">{corner.bgText}</div>
+                </div>
+              </MasterCard>
+            ))}
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <div className="ia-mockup">
-      <div className="ia-mockup-header">
-        <div className="ia-avatar">ðŸ¤–</div>
-        <div>
-          <div className="ia-name">Lingua AI Coach Â· English Corner</div>
-          <div className="ia-status">â— En ligne Â· Niveau B1 dÃ©tectÃ©</div>
+      {/* DÉCOUVREZ VOTRE COACH - Simulation IA */}
+      <section id="assistant" className="fade-in py-20 px-4 bg-card">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="section-label">Intelligence Artificielle</div>
+              <h2 className="section-title">Votre coach<br /><em>personnel</em> 24h/24.</h2>
+              <p className="text-muted mb-8">
+                Propulsé par Claude Sonnet & Opus d'Anthropic, votre assistant corrige vos erreurs, reformule naturellement et vous fait progresser conversation après conversation.
+              </p>
+              
+              <div className="space-y-4">
+                {[
+                  { icon: '🗣️', name: 'Free Talk', desc: 'Conversation libre sur tous les sujets', badge: 'STANDARD' },
+                  { icon: '💼', name: 'Business Mode', desc: 'Réunions, emails, présentations pro', badge: 'STANDARD' },
+                  { icon: '🎭', name: 'Role Play', desc: 'Jeux de rôle immersifs et scénarios', badge: 'PREMIUM' },
+                  { icon: '🎯', name: 'Exam Prep', desc: 'IELTS, DELF, DELE, Goethe...', badge: 'PREMIUM' }
+                ].map((mode, i) => (
+                  <MasterCard key={i} variant="action" padding="sm" className="flex items-center gap-4">
+                    <span className="text-2xl">{mode.icon}</span>
+                    <div className="flex-1">
+                      <div className="font-medium text-white">{mode.name}</div>
+                      <div className="text-xs text-muted">{mode.desc}</div>
+                    </div>
+                    <span className={`px-3 py-1 text-xs font-mono rounded-sm ${mode.badge === 'PREMIUM' ? 'bg-gold/20 text-gold' : 'bg-blue/20 text-blue'}`}>
+                      {mode.badge}
+                    </span>
+                  </MasterCard>
+                ))}
+              </div>
+            </div>
+            
+            {/* Mockup conversation IA */}
+            <div className="relative">
+              <MasterCard variant="content" padding="lg" className="relative z-10">
+                {/* En-tête du chat */}
+                <div className="flex items-center gap-3 mb-6">
+                  <PulseAvatar isThinking={true}>
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-blue flex items-center justify-center text-white">
+                      🤖
+                    </div>
+                  </PulseAvatar>
+                  <div>
+                    <div className="font-medium text-white">Lingua AI Coach · English Corner</div>
+                    <div className="flex items-center gap-2 text-xs text-muted">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      En ligne · Niveau B1 détecté
+                      <AIVoiceWave active={true} className="ml-2" />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Conversation */}
+                <div className="space-y-4">
+                  <ElasticBubble>
+                    <div className="bg-blue/20 border border-blue/30 rounded-2xl rounded-bl-sm p-4 text-sm text-white">
+                      Hello! I'm your English Coach. What would you like to practice today? We can do a free conversation, or maybe prepare for a job interview? 😊
+                    </div>
+                  </ElasticBubble>
+                  
+                  <div className="flex justify-end">
+                    <ElasticBubble>
+                      <div className="bg-gold/10 border border-gold/30 rounded-2xl rounded-br-sm p-4 text-sm text-white">
+                        I want to practice for a interview. I'm a little nervous about speak english in front of people.
+                      </div>
+                    </ElasticBubble>
+                  </div>
+                  
+                  <ElasticBubble>
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-2xl rounded-bl-sm p-4 text-sm text-white">
+                      <span className="text-green-400">✔️ Quick correction:</span> "…nervous about <em className="font-semibold">speaking</em> English…" — use the gerund after prepositions. Great initiative though!
+                    </div>
+                  </ElasticBubble>
+                  
+                  <ElasticBubble>
+                    <div className="bg-blue/20 border border-blue/30 rounded-2xl rounded-bl-sm p-4 text-sm text-white">
+                      That's completely normal! Let's do a mock interview together. I'll be the interviewer. Ready? <br /><br />
+                      <em>"Tell me about yourself and why you applied for this position."</em>
+                    </div>
+                  </ElasticBubble>
+                </div>
+              </MasterCard>
+              
+              {/* Effets décoratifs */}
+              <div className="absolute -top-6 -left-6 w-48 h-48 bg-gold-glow rounded-full blur-3xl opacity-20 -z-10"></div>
+              <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-blue/10 rounded-full blur-3xl opacity-15 -z-10"></div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="chat-bubble bubble-ai">
-        Hello! I'm your English Coach. What would you like to practice today? We can do a free conversation, or maybe prepare for a job interview? ðŸ˜Š
-      </div>
+      {/* MODULES SECTION */}
+      <section id="modules" className="fade-in py-20 px-4 bg-dark">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <div className="section-label">Parcours structuré</div>
+            <h2 className="section-title">100 modules.<br /><em>6 niveaux</em> CEFR.</h2>
+            <p className="text-muted max-w-xl">
+              Chaque langue dispose de 100 modules progressifs, de l'alphabet jusqu'à la maîtrise avancée. Un test de niveau automatique vous place dès l'inscription.
+            </p>
+          </div>
+          
+          {/* Track CEFR */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 max-w-4xl mx-auto">
+            {[
+              { code: 'A1', name: 'Découverte', count: '~15 modules' },
+              { code: 'A2', name: 'Survie', count: '~18 modules' },
+              { code: 'B1', name: 'Seuil', count: '~20 modules' },
+              { code: 'B2', name: 'Avancé', count: '~20 modules' },
+              { code: 'C1', name: 'Autonome', count: '~15 modules' },
+              { code: 'C2', name: 'Maîtrise', count: '~12 modules' }
+            ].map((level, i) => (
+              <div key={i} className="cefr-level text-center p-4 rounded-sm border border-bdr bg-card cursor-pointer transition-all hover:border-gold">
+                <div className="font-serif text-2xl text-gold mb-1">{level.code}</div>
+                <div className="font-medium text-white text-sm mb-1">{level.name}</div>
+                <div className="text-xs text-muted">{level.count}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <div className="chat-bubble bubble-user">
-        I want to practice for a interview. I'm a little nervous about speak english in front of people.
-      </div>
+      {/* PRICING SECTION Premium */}
+      <section id="pricing" className="fade-in py-20 px-4 bg-card">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="section-label" style={{justifyContent: 'center'}}>Tarifs & Abonnements</div>
+            <h2 className="section-title">Simple. <em>Transparent.</em> Accessible.</h2>
+            <p className="text-muted max-w-lg mx-auto">
+              Aucun engagement à long terme. Résiliez quand vous voulez. Paiement par Mobile Money, Wave ou carte bancaire.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Forfait LINGUA UNI */}
+            <MasterCard variant="content" padding="xl" className="text-center">
+              <div className="mb-6">
+                <span className="text-3xl">🟢</span>
+                <div className="font-mono text-xs tracking-ultra text-muted uppercase mt-2">Forfait</div>
+                <div className="font-serif text-3xl text-white mt-1">LINGUA UNI</div>
+              </div>
+              
+              <div className="mb-6">
+                <div className="font-serif text-4xl text-gold">10 000 <span className="text-lg">FCFA</span></div>
+                <div className="text-sm text-muted mt-1">par mois · 1 langue au choix</div>
+              </div>
+              
+              <div className="flex justify-center gap-2 mb-6">
+                {['🇬🇧 EN', '🇪🇸 ES', '🇩🇪 DE', '🇫🇷 FR'].map((chip, i) => (
+                  <span key={i} className="px-3 py-1 bg-dark border border-bdr rounded-sm text-sm">
+                    {chip}
+                  </span>
+                ))}
+              </div>
+              
+              <div className="space-y-3 mb-8">
+                {[
+                  '1 Corner au choix parmi les 4 langues',
+                  '100 modules A1 → C2 (langue choisie)',
+                  'Flux audio/vidéo + quiz IA automatiques',
+                  'Coach IA Free Talk & Business Mode'
+                ].map((feat, i) => (
+                  <div key={i} className="flex items-center gap-3 text-sm">
+                    <span className="text-green-400">✓</span>
+                    <span className="text-white/80">{feat}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <a href="#pricing" className="btn-gold w-full py-3 font-semibold">Choisir LINGUA UNI</a>
+            </MasterCard>
+            
+            {/* Forfait LINGUA PRO - ALL ACCESS avec glow */}
+            <MasterCard variant="corner" glow={true} padding="xl" className="text-center relative overflow-hidden">
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-gold-glow rounded-full blur-3xl opacity-30"></div>
+              <div className="relative z-10">
+                <div className="mb-6">
+                  <span className="text-3xl">⭐</span>
+                  <div className="font-mono text-xs tracking-ultra text-gold uppercase mt-2">Forfait</div>
+                  <div className="font-serif text-3xl text-white mt-1">LINGUA PRO</div>
+                  <div className="mt-2">
+                    <LevelBadge level="ALL ACCESS" lang="premium" size="sm" />
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <div className="font-serif text-4xl text-gold">15 000 <span className="text-lg">FCFA</span></div>
+                  <div className="text-sm text-muted mt-1">par mois · 4 langues incluses</div>
+                </div>
+                
+                <div className="flex justify-center gap-2 mb-6">
+                  {['🇬🇧 EN', '🇪🇸 ES', '🇩🇪 DE', '🇫🇷 FR'].map((chip, i) => (
+                    <span key={i} className="px-3 py-1 bg-dark border border-gold/30 rounded-sm text-sm">
+                      {chip}
+                    </span>
+                  ))}
+                </div>
+                
+                <div className="space-y-3 mb-8">
+                  {[
+                    'Accès aux 4 Corners (EN, ES, DE, FR)',
+                    '400 modules A1 → C2 (toutes langues)',
+                    'Flux audio/vidéo + quiz IA automatiques',
+                    'Coach IA complet (Role Play + Exam Prep)',
+                    'Statistiques avancées & progression'
+                  ].map((feat, i) => (
+                    <div key={i} className="flex items-center gap-3 text-sm">
+                      <span className="text-gold">✓</span>
+                      <span className="text-white">{feat}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <a href="#pricing" className="btn-gold w-full py-3 font-semibold shadow-gold-lg">Choisir LINGUA PRO</a>
+              </div>
+            </MasterCard>
+          </div>
+        </div>
+      </section>
 
-      <div className="chat-bubble bubble-correction">
-        âœï¸ <strong>Quick correction:</strong> "â€¦nervous about <em>speaking</em> Englishâ€¦" â€” use the gerund after prepositions. Great initiative though!
-      </div>
-
-      <div className="chat-bubble bubble-ai">
-        That's completely normal! Let's do a mock interview together. I'll be the interviewer. Ready? <br /><br />
-        <em>"Tell me about yourself and why you applied for this position."</em>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<section className="modules-section fade-in" id="modules">
-  <span className="section-label">Parcours structurÃ©</span>
-  <h2 className="section-title">100 modules.<br /><em>6 niveaux</em> CEFR.</h2>
-  <p style={{color: 'var(--muted)', fontSize: '0.9rem', lineHeight: 1.8, maxWidth: '500px'}}>
-    Chaque langue dispose de 100 modules progressifs, de l'alphabet jusqu'Ã  la maÃ®trise avancÃ©e. Un test de niveau automatique vous place dÃ¨s l'inscription.
-  </p>
-
-  <div className="cefr-track">
-    <div className="cefr-level">
-      <span className="cefr-code">A1</span>
-      <span className="cefr-name">DÃ©couverte</span>
-      <span className="cefr-count">~15 modules</span>
-    </div>
-    <div className="cefr-level">
-      <span className="cefr-code">A2</span>
-      <span className="cefr-name">Survie</span>
-      <span className="cefr-count">~18 modules</span>
-    </div>
-    <div className="cefr-level active">
-      <span className="cefr-code">B1</span>
-      <span className="cefr-name">Seuil</span>
-      <span className="cefr-count">~20 modules</span>
-    </div>
-    <div className="cefr-level">
-      <span className="cefr-code">B2</span>
-      <span className="cefr-name">AvancÃ©</span>
-      <span className="cefr-count">~20 modules</span>
-    </div>
-    <div className="cefr-level">
-      <span className="cefr-code">C1</span>
-      <span className="cefr-name">Autonome</span>
-      <span className="cefr-count">~15 modules</span>
-    </div>
-    <div className="cefr-level">
-      <span className="cefr-code">C2</span>
-      <span className="cefr-name">MaÃ®trise</span>
-      <span className="cefr-count">~12 modules</span>
-    </div>
-  </div>
-</section>
-
-
-<section className="pricing-section fade-in" id="pricing">
-  <div style={{textAlign: 'center'}}>
-    <span className="section-label" style={{justifyContent: 'center'}}>Tarifs & Abonnements</span>
-    <h2 className="section-title" style={{fontSize: 'clamp(2rem, 5vw, 3rem)'}}>Simple. <em>Transparent.</em> Accessible.</h2>
-    <p style={{color: 'var(--muted)', fontSize: '0.9rem', maxWidth: '480px', margin: '0 auto 1rem', lineHeight: 1.8}}>
-      Aucun engagement Ã  long terme. RÃ©siliez quand vous voulez. Paiement par Mobile Money, Wave ou carte bancaire.
-    </p>
-  </div>
-
-  <div className="pricing-grid">
-
-
-    <div className="pricing-card">
-      <span className="plan-icon">ðŸŸ¡</span>
-      <div className="plan-name">Forfait</div>
-      <div className="plan-title">LINGUA UNI</div>
-      <div className="plan-price">
-        <span className="price-amount">10 000</span>
-        <span className="price-currency">FCFA</span>
-      </div>
-      <div className="plan-period">par mois Â· 1 langue au choix</div>
-
-      <div className="plan-lang-chips">
-        <span className="lang-chip">ðŸ‡¬ðŸ‡§ EN</span>
-        <span className="lang-chip">ðŸ‡ªðŸ‡¸ ES</span>
-        <span className="lang-chip">ðŸ‡©ðŸ‡ª DE</span>
-        <span className="lang-chip">ðŸ‡«ðŸ‡· FR</span>
-      </div>
-
-      <div className="plan-divider"></div>
-
-      <ul className="plan-features">
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>1 Corner au choix parmi les 4 langues</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>100 modules A1 â†’ C2 (langue choisie)</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Flux audio/vidÃ©o + quiz IA automatiques</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Assistant IA Speaking & Listening â€” Claude Sonnet</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>30 sessions IA par mois</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Test de niveau automatique Ã  l'inscription</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Rapport de progression hebdomadaire</span>
-        </li>
-      </ul>
-
-      <Link to="/signup?plan=uni" className="plan-cta cta-outline">Commencer avec UNI</Link>
-    </div>
-
-
-    <div className="pricing-card featured">
-      <span className="plan-icon">ðŸ”µ</span>
-      <div className="plan-name">Forfait</div>
-      <div className="plan-title">LINGUA ALL ACCESS</div>
-      <div className="plan-price">
-        <span className="price-amount">15 000</span>
-        <span className="price-currency">FCFA</span>
-      </div>
-      <div className="plan-period">par mois Â· Les 4 langues incluses</div>
-
-      <div className="plan-lang-chips">
-        <span className="lang-chip">ðŸ‡¬ðŸ‡§ EN</span>
-        <span className="lang-chip">ðŸ‡ªðŸ‡¸ ES</span>
-        <span className="lang-chip">ðŸ‡©ðŸ‡ª DE</span>
-        <span className="lang-chip">ðŸ‡«ðŸ‡· FR</span>
-      </div>
-
-      <div className="plan-divider"></div>
-
-      <ul className="plan-features">
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span><strong>Les 4 Corners</strong> â€” English, EspaÃ±ol, Deutsch, FranÃ§ais</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>400 modules A1 â†’ C2 (toutes langues)</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Flux audio/vidÃ©o illimitÃ© + quiz IA</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Assistant IA premium â€” <strong>Claude Opus</strong></span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span><strong>Sessions IA illimitÃ©es</strong></span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Role Play & Exam Prep (IELTS, DELF, DELE, Goethe)</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Progression simultanÃ©e sur 4 langues</span>
-        </li>
-        <li className="plan-feature">
-          <span className="feature-check">âœ¦</span>
-          <span>Rapport dÃ©taillÃ© + leaderboard mensuel</span>
-        </li>
-      </ul>
-
-      <Link to="/signup?plan=all-access" className="plan-cta cta-gold">Commencer avec ALL ACCESS</Link>
-    </div>
-  </div>
-
-  <div className="pricing-note">
-    ðŸ”’ Paiement 100% sÃ©curisÃ© Â·
-    Sans engagement Â·
-    RÃ©siliation en 1 clic
-  </div>
-  <div className="payment-methods">
-    <span className="pay-badge">ðŸŸ  Orange Money</span>
-    <span className="pay-badge">ðŸ”µ Wave</span>
-    <span className="pay-badge">ðŸŸ¡ MTN MoMo</span>
-    <span className="pay-badge">ðŸ’³ Carte bancaire</span>
-    <span className="pay-badge">ðŸŒ Flutterwave</span>
-  </div>
-</section>
-
-
-<div className="install-section fade-in">
-  <div className="install-content">
-    <div className="install-icon">ðŸ“±</div>
-    <span className="section-label" style={{justifyContent: 'center', marginBottom: '1rem'}}>Application mobile</span>
-    <h3 className="section-title" style={{fontSize: '2rem', textAlign: 'center'}}>Installez LINGUA SPACE<br />sur votre <em>tÃ©lÃ©phone.</em></h3>
-    <p style={{color: 'var(--muted)', fontSize: '0.88rem', lineHeight: 1.8, marginBottom: '2rem'}}>
-      Disponible comme application installable (PWA) sur Android et iOS. Aucun tÃ©lÃ©chargement depuis un store. Ouvrez le site et appuyez sur "Ajouter Ã  l'Ã©cran d'accueil".
-    </p>
-    <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap'}}>
-      <a href="#" className="btn-primary">ðŸ“² Installer sur Android</a>
-      <a href="#" className="btn-ghost">ðŸŽ Installer sur iOS</a>
-    </div>
-  </div>
-</div>
-
-
-<footer>
-  <div className="footer-logo">LINGUA SPACE</div>
-  <ul className="footer-links">
-    <li><a href="#">Ã€ propos</a></li>
-    <li><a href="#">Conditions</a></li>
-    <li><a href="#">Contact</a></li>
-    <li><a href="https://africaglobaltraining.com">AGTM Academy</a></li>
-  </ul>
-  <span className="footer-copy">Â© 2025 LINGUA SPACE Â· lingua.africaglobaltraining.com</span>
-</footer>
-
-
+      {/* FOOTER */}
+      <footer className="py-10 px-4 bg-dark border-t border-bdr">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="font-serif text-xl text-white mb-4">LINGUA SPACE <span className="font-mono text-sm text-muted">by AGTM</span></div>
+          <ul className="flex flex-wrap justify-center gap-6 mb-6 list-none p-0">
+            <li><a href="#" className="text-muted hover:text-white transition-colors no-underline">À propos</a></li>
+            <li><a href="#" className="text-muted hover:text-white transition-colors no-underline">Conditions</a></li>
+            <li><a href="#" className="text-muted hover:text-white transition-colors no-underline">Contact</a></li>
+            <li><a href="https://africaglobaltraining.com" className="text-muted hover:text-white transition-colors no-underline">AGTM Academy</a></li>
+          </ul>
+          <div className="text-xs text-muted">
+            © 2025 AGTM Digital Academy · lingua.africaglobaltraining.com
+          </div>
+        </div>
+      </footer>
     </>
   );
 };

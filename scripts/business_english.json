@@ -1,0 +1,80 @@
+[
+  {
+    "title": "Business English: Negotiating a Contract",
+    "level": "B2",
+    "description": "Master the language of professional negotiation — from opening positions and making concessions to closing deals with confidence.",
+    "contentText": "## Business English: Negotiating a Contract\n\nContract negotiation is one of the most **high-stakes situations** in professional English. The ability to assert your position, acknowledge the other party's concerns, and reach a mutually beneficial agreement requires a precise, nuanced vocabulary.\n\n---\n\n### Phase 1 — Opening Positions\n\nBefore diving into specifics, skilled negotiators **establish the framework** of the discussion. Use these phrases to open firmly but respectfully:\n\n- *\"Our initial position is that...\"* — to state your starting point\n- *\"We're looking for a deal that reflects...\"* — to signal your priorities without committing\n- *\"I'd like to table the question of...\"* — **BE CAREFUL**: in British English, \"to table\" means to **put something on the agenda**; in American English, it means to **postpone**. Know your audience.\n\n---\n\n### Phase 2 — Making Concessions\n\nA negotiation where neither party moves is a **deadlock**, not a deal. Concessions must be framed carefully to preserve perceived value:\n\n- *\"We could be flexible on the delivery timeline **provided that**...\"*\n- *\"That's a point worth considering. In exchange, we would need...\"*\n- *\"We can move on price, but only if the payment terms are adjusted.\"*\n\nThe key structure is the **conditional concession**: *give something → get something*. Never concede without attaching a condition.\n\n---\n\n### Phase 3 — Handling Objections\n\nWhen the other party pushes back, avoid direct confrontation. Use **softening language**:\n\n- *\"I understand your concern, however...\"*\n- *\"That's a fair point. What I would suggest is...\"*\n- *\"I hear what you're saying, but from our perspective...\"*\n\nThe phrase *\"I hear what you're saying\"* is particularly powerful — it signals active listening without any concession of agreement.\n\n---\n\n### Phase 4 — Closing the Deal\n\nA skilled negotiator knows when to **lock in an agreement** before momentum is lost:\n\n- *\"I think we've found common ground on the key points.\"*\n- *\"Are we in a position to move forward on this basis?\"*\n- *\"Let's get this down in writing and move to the next steps.\"*\n\nClosing language is **decisive and forward-looking** — it shifts from discussion to action.\n\n---\n\n> **Pro tip:** Record yourself doing a mock negotiation. The gap between what you *think* you sound like and what you *actually* sound like in a second language is where the real learning happens.",
+    "transcript": "LEXIQUE — Business English: Negotiating a Contract\n\n1. TO TABLE (v.) — Ambiguous false friend: in British English = to put on the agenda; in American English = to postpone. Always clarify context.\n\n2. DEADLOCK (n.) — A situation in which no progress can be made because neither party will yield. \"The talks ended in a deadlock after six hours.\"\n\n3. CONCESSION (n.) — Something given up or agreed to in order to reach a compromise. \"Making a small concession on price secured the long-term contract.\"\n\n4. LEVERAGE (n.) — The power to influence someone or achieve an advantage in a negotiation. \"Our exclusivity clause gave us significant leverage.\"\n\n5. STAKEHOLDER (n.) — Any person or group with an interest in the outcome of a negotiation or project.\n\n6. CAVEAT (n.) — A warning or proviso attached to an agreement. \"We accept, with the caveat that delivery must occur before Q4.\"\n\n7. COUNTEROFFER (n.) — A response to an offer that modifies its terms. \"They rejected our bid but sent a counteroffer the same afternoon.\"\n\n8. DUE DILIGENCE (n./phr.) — The investigation or audit performed before signing a contract. \"We cannot proceed without completing due diligence.\"\n\n9. BINDING (adj.) — Legally obligatory; enforceable by law. \"Once signed, the NDA is fully binding on both parties.\"\n\n10. MUTUAL CONSENT (n./phr.) — Agreement reached voluntarily by all parties involved. \"The contract may only be modified with the mutual consent of both signatories.\"",
+    "durationMin": 25,
+    "contentType": "lesson",
+    "quiz": {
+      "questions": [
+        {
+          "id": "q1",
+          "question": "In British English, what does 'to table a proposal' mean?",
+          "options": [
+            "A. To postpone it indefinitely",
+            "B. To put it on the agenda for discussion",
+            "C. To reject it formally",
+            "D. To sign it immediately"
+          ],
+          "correct": "B",
+          "explanation": "In British English, 'to table' means to bring something forward for discussion. In American English, the opposite — it means to postpone."
+        },
+        {
+          "id": "q2",
+          "question": "A negotiation where neither party makes any progress is called a:",
+          "options": [
+            "A. Leverage",
+            "B. Concession",
+            "C. Deadlock",
+            "D. Counteroffer"
+          ],
+          "correct": "C",
+          "explanation": "A deadlock (or stalemate) occurs when both parties are unwilling to move, blocking all progress."
+        },
+        {
+          "id": "q3",
+          "question": "Which sentence correctly uses a conditional concession?",
+          "options": [
+            "A. 'We will reduce the price.'",
+            "B. 'We can reduce the price if the contract term is extended to two years.'",
+            "C. 'Please reduce your price.'",
+            "D. 'Our price is non-negotiable.'"
+          ],
+          "correct": "B",
+          "explanation": "A conditional concession always follows the structure: give something → only if you get something. Option B is the only one that attaches a condition."
+        },
+        {
+          "id": "q4",
+          "question": "Which phrase is best for softening a pushback without conceding agreement?",
+          "options": [
+            "A. 'You are completely wrong about this.'",
+            "B. 'That is not our problem.'",
+            "C. 'I hear what you're saying, but from our perspective...'",
+            "D. 'We agree with everything you've said.'"
+          ],
+          "correct": "C",
+          "explanation": "'I hear what you're saying' signals active listening while 'but from our perspective' allows you to restate your position — no agreement is implied."
+        },
+        {
+          "id": "q5",
+          "question": "The term 'due diligence' in a contract negotiation refers to:",
+          "options": [
+            "A. Paying on time",
+            "B. Being polite during discussions",
+            "C. The investigation or audit done before signing",
+            "D. A type of financial penalty"
+          ],
+          "correct": "C",
+          "explanation": "Due diligence is the process of thoroughly investigating a deal, company, or document before committing to a legally binding agreement."
+        }
+      ]
+    },
+    "metadata": {
+      "language": "en",
+      "order_num": 42,
+      "is_published": true
+    }
+  }
+]

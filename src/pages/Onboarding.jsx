@@ -5,6 +5,7 @@ import { useSubscription } from '../hooks/useSubscription'
 import { generateLevelTest } from '../lib/ai'
 import { updateProgress } from '../lib/supabase'
 import { LANGUAGES, CEFR_LEVELS, CEFR_LABELS } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 
 // Calcule le niveau CEFR depuis le score (0-100)
 function scoreToLevel(score) {
@@ -86,25 +87,24 @@ export default function Onboarding() {
           </p>
 
           {tested.length > 0 && (
-            <div className="card p-4 mb-6 text-left">
-              <p className="text-xs text-muted mb-2 font-mono tracking-widest uppercase">Niveaux détectés</p>
-              {tested.map(l => (
-                <div key={l} className="flex items-center justify-between py-1">
-                  <span className="text-sm text-white">{LANGUAGES[l].flag} {LANGUAGES[l].name}</span>
-                  <span className="font-mono text-gold text-sm">{results[l].level} — {CEFR_LABELS[results[l].level]}</span>
-                </div>
-              ))}
-            </div>
+             <MasterCard variant="content" padding="md" className="mb-6 text-left">
+               <p className="text-xs text-muted mb-2 font-mono tracking-widest uppercase">Niveaux détectés</p>
+               {tested.map(l => (
+                 <div key={l} className="flex items-center justify-between py-1">
+                   <span className="text-sm text-white">{LANGUAGES[l].flag} {LANGUAGES[l].name}</span>
+                   <span className="font-mono text-gold text-sm">{results[l].level} — {CEFR_LABELS[results[l].level]}</span>
+                 </div>
+               ))}
+             </MasterCard>
           )}
 
           <div className="grid grid-cols-2 gap-3 mb-6">
             {untested.map(lang => (
-              <button key={lang} onClick={() => startTest(lang)} disabled={loading}
-                className="card p-5 text-center hover:border-gold/40 transition-all disabled:opacity-50">
-                <div className="text-3xl mb-2">{LANGUAGES[lang].flag}</div>
-                <div className="text-sm font-medium text-white">{LANGUAGES[lang].name}</div>
-                <div className="text-xs text-muted mt-1">Tester mon niveau</div>
-              </button>
+               <MasterCard key={lang} variant="action" padding="lg" interactive={true} onClick={() => startTest(lang)} className={`text-center hover:border-gold/40 transition-all ${loading ? 'opacity-50' : ''}`}>
+                 <div className="text-3xl mb-2">{LANGUAGES[lang].flag}</div>
+                 <div className="text-sm font-medium text-white">{LANGUAGES[lang].name}</div>
+                 <div className="text-xs text-muted mt-1">Tester mon niveau</div>
+               </MasterCard>
             ))}
           </div>
 
@@ -179,16 +179,16 @@ export default function Onboarding() {
 
           <div className="space-y-3 mb-10">
             {Object.entries(results).map(([lang, { level }]) => (
-              <div key={lang} className="card p-5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{LANGUAGES[lang].flag}</span>
-                  <span className="text-white font-medium">{LANGUAGES[lang].name}</span>
-                </div>
-                <div className="text-right">
-                  <div className="font-mono text-xl text-gold">{level}</div>
-                  <div className="text-xs text-muted">{CEFR_LABELS[level]}</div>
-                </div>
-              </div>
+               <MasterCard key={lang} variant="content" padding="lg" className="flex items-center justify-between">
+                 <div className="flex items-center gap-3">
+                   <span className="text-2xl">{LANGUAGES[lang].flag}</span>
+                   <span className="text-white font-medium">{LANGUAGES[lang].name}</span>
+                 </div>
+                 <div className="text-right">
+                   <div className="font-mono text-xl text-gold">{level}</div>
+                   <div className="text-xs text-muted">{CEFR_LABELS[level]}</div>
+                 </div>
+               </MasterCard>
             ))}
           </div>
 

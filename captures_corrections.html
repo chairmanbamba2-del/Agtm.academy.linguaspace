@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTURES D'ÉCRAN DES CORRECTIONS - Lingua Space</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0D2D52;
+            --blue: #1B4F8A;
+            --gold: #E8941A;
+            --gold-light: #F5B942;
+            --gold-pale: #FDF0D5;
+            --white: #FAFAF8;
+            --off: #F2EDE8;
+            --dark: #080F1A;
+            --muted: #8A9AB5;
+            --en: #C8102E;
+            --es: #AA151B;
+            --de: #000000;
+            --fr: #002395;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(232, 148, 26, 0.2);
+        }
+        
+        h1 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+        
+        .capture-section {
+            background: rgba(13, 45, 82, 0.3);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(27, 79, 138, 0.3);
+        }
+        
+        h2 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+        }
+        
+        .capture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .capture-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .capture-box {
+            background: rgba(8, 15, 26, 0.7);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid rgba(232, 148, 26, 0.2);
+            text-align: center;
+        }
+        
+        .capture-title {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .capture-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .capture-navigation {
+            background: rgba(8, 15, 26, 0.9);
+            border: 2px solid rgba(232, 148, 26, 0.3);
+        }
+        
+        .capture-navigation .nav-preview {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            width: 100%;
+        }
+        
+        .nav-logo-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .nav-brand-preview {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+        
+        .nav-name-preview {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
+        
+        .nav-links-preview {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        
+        .nav-link-before {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+        }
+        
+        .nav-link-after {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+        
+        .capture-hero {
+            background: 
+                radial-gradient(ellipse 60% 50% at 50% 0%, rgba(13, 45, 82, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 60%, rgba(232, 148, 26, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 80% 40%, rgba(8, 15, 26, 0.3) 0%, transparent 60%),
+                var(--dark);
+            border: 2px solid rgba(232, 148, 26, 0.3);
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .hero-title-preview {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 0.95;
+            margin-bottom: 20px;
+        }
+        
+        .hero-title-before {
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-title-after {
+            letter-spacing: 0.01em;
+        }
+        
+        .hero-title-before span {
+            color: var(--white);
+        }
+        
+        .hero-title-after span {
+            color: var(--white);
+        }
+        
+        .hero-title-before em {
+            font-style: italic;
+            color: var(--gold);
+        }
+        
+        .hero-title-after em {
+            font-style: italic;
+            color: var(--gold);
+        }
+        
+        .capture-background {
+            background: 
+                radial-gradient(ellipse 60% 50% at 50% 0%, rgba(13, 45, 82, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 60%, rgba(232, 148, 26, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 80% 40%, rgba(8, 15, 26, 0.3) 0%, transparent 60%),
+                var(--dark);
+            border: 2px solid rgba(232, 148, 26, 0.3);
+        }
+        
+        .bg-before {
+            background: 
+                radial-gradient(ellipse 60% 50% at 50% 0%, rgba(27, 79, 138, 0.35) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 60%, rgba(232, 148, 26, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 80% 40%, rgba(13, 45, 82, 0.5) 0%, transparent 60%),
+                var(--dark);
+        }
+        
+        .capture-logo {
+            background: rgba(8, 15, 26, 0.9);
+            border: 2px solid rgba(232, 148, 26, 0.3);
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 0.05em;
+            position: relative;
+            z-index: 1001;
+        }
+        
+        .logo-yellow-block {
+            position: absolute;
+            width: 120px;
+            height: 40px;
+            background: var(--gold);
+            opacity: 0.3;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .badge-before {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6b6b;
+        }
+        
+        .badge-after {
+            background: rgba(0, 200, 83, 0.2);
+            color: #00C853;
+        }
+        
+        .capture-desc {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 15px;
+        }
+        
+        .summary-section {
+            background: rgba(13, 45, 82, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+            border: 2px solid var(--gold);
+        }
+        
+        .summary-title {
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .summary-content {
+            color: var(--white);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .summary-highlight {
+            color: var(--gold);
+            font-weight: bold;
+        }
+        
+        .correction-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .correction-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .correction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .correction-check {
+            color: #00C853;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .correction-text {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CAPTURES D'ÉCRAN DES CORRECTIONS</h1>
+            <p class="subtitle">Lingua Space - Visualisation des corrections appliquées</p>
+        </header>
+        
+        <section class="capture-section">
+            <h2>1. Navigation - Liens améliorés</h2>
+            <div class="capture-grid">
+                <div class="capture-box">
+                    <div class="capture-title">AVANT</div>
+                    <div class="capture-image capture-navigation">
+                        <div class="nav-preview">
+                            <div class="nav-logo-preview">
+                                <span class="nav-brand-preview">AGTM Digital Academy</span>
+                                <span class="nav-name-preview">LINGUA SPACE</span>
+                            </div>
+                            <ul class="nav-links-preview">
+                                <li><a href="#" class="nav-link-before">Accueil</a></li>
+                                <li><a href="#" class="nav-link-before">Corners</a></li>
+                                <li><a href="#" class="nav-link-before">IA Coach</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="status-badge badge-before">Problème : Liens gris-bleu (#8A9AB5)</div>
+                    <div class="capture-desc">Les liens étaient difficiles à lire avec un faible contraste.</div>
+                </div>
+                
+                <div class="capture-box">
+                    <div class="capture-title">APRÈS</div>
+                    <div class="capture-image capture-navigation">
+                        <div class="nav-preview">
+                            <div class="nav-logo-preview">
+                                <span class="nav-brand-preview">AGTM Digital Academy</span>
+                                <span class="nav-name-preview">LINGUA SPACE</span>
+                            </div>
+                            <ul class="nav-links-preview">
+                                <li><a href="#" class="nav-link-after">Accueil</a></li>
+                                <li><a href="#" class="nav-link-after">Corners</a></li>
+                                <li><a href="#" class="nav-link-after">IA Coach</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="status-badge badge-after">Corrigé : Liens blancs (#FFFFFF), font-weight 600</div>
+                    <div class="capture-desc">Liens parfaitement lisibles avec un contraste optimal.</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="capture-section">
+            <h2>2. Background - Harmonisation</h2>
+            <div class="capture-grid">
+                <div class="capture-box">
+                    <div class="capture-title">AVANT</div>
+                    <div class="capture-image bg-before">
+                        <div style="color: var(--white); font-size: 1.2rem; font-weight: bold;">
+                            Background trop clair
+                        </div>
+                    </div>
+                    <div class="status-badge badge-before">Problème : Bleu trop clair, dégradés intenses</div>
+                    <div class="capture-desc">Le fond était trop lumineux et distrayait du contenu.</div>
+                </div>
+                
+                <div class="capture-box">
+                    <div class="capture-title">APRÈS</div>
+                    <div class="capture-image capture-background">
+                        <div style="color: var(--white); font-size: 1.2rem; font-weight: bold;">
+                            Background harmonisé
+                        </div>
+                    </div>
+                    <div class="status-badge badge-after">Corrigé : Fond sombre, dégradés subtils</div>
+                    <div class="capture-desc">Fond bleu nuit/noir mat professionnel qui fait ressortir le contenu.</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="capture-section">
+            <h2>3. "Parlez le monde" - Espacement</h2>
+            <div class="capture-grid">
+                <div class="capture-box">
+                    <div class="capture-title">AVANT</div>
+                    <div class="capture-image capture-hero">
+                        <div class="hero-title-preview hero-title-before">
+                            <span>Parlez</span><em>le monde.</em>
+                        </div>
+                    </div>
+                    <div class="status-badge badge-before">Problème : Pas d'espace, letter-spacing: -0.02em</div>
+                    <div class="capture-desc">Le titre était trop serré et difficile à lire.</div>
+                </div>
+                
+                <div class="capture-box">
+                    <div class="capture-title">APRÈS</div>
+                    <div class="capture-image capture-hero">
+                        <div class="hero-title-preview hero-title-after">
+                            <span>Parlez </span><em>le monde.</em>
+                        </div>
+                    </div>
+                    <div class="status-badge badge-after">Corrigé : Espace ajouté, letter-spacing: 0.01em</div>
+                    <div class="capture-desc">Titre parfaitement lisible avec un espacement naturel.</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="capture-section">
+            <h2>4. Logo - Z-index corrigé</h2>
+            <div class="capture-grid">
+                <div class="capture-box">
+                    <div class="capture-title">AVANT</div>
+                    <div class="capture-image capture-logo">
+                        <div class="logo-yellow-block" style="top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        <div class="logo-text" style="color: rgba(232, 148, 26, 0.5);">LINGUA SPACE</div>
+                    </div>
+                    <div class="status-badge

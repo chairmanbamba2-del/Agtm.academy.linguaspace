@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signIn, authErrorMessage } from '../lib/auth'
 import Navbar from '../components/layout/Navbar'
+import MasterCard from '../components/ui/MasterCard'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -35,7 +36,7 @@ export default function Login() {
             <h1 className="font-serif text-3xl text-white">Bon retour sur <em className="text-gold">LINGUA SPACE</em></h1>
           </div>
 
-          <div className="card p-8">
+          <MasterCard variant="content" padding="lg">
             {error && (
               <div className="bg-red-900/30 border border-red-500/30 text-red-300 text-sm px-4 py-3 rounded mb-6">
                 {error}
@@ -73,7 +74,7 @@ export default function Login() {
               Pas encore de compte ?{' '}
               <Link to="/signup" className="text-gold hover:text-gold-lt transition-colors">Créer un compte</Link>
             </p>
-          </div>
+          </MasterCard>
         </div>
       </div>
     </div>

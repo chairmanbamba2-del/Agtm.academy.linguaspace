@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import Modal from '../components/ui/Modal'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
+import { ElasticBubble } from '../components/ui/AIWidgets'
 import { useUserStore } from '../store/userStore'
 import { supabase, markModuleComplete, updateProgress } from '../lib/supabase'
 import { generateQuiz } from '../lib/ai'
@@ -34,8 +36,17 @@ export default function Module() {
 
   async function startQuiz() {
     setQuizModalOpen(true)
-    setLoading(true)
     setPhase('quiz')
+    
+    // Priorité des données : quiz_json en base > génération IA > fallback
+    if (module.quiz_json && module.quiz_json.questions) {
+      // Utiliser le quiz pré-généré stocké en base
+      setQuiz(module.quiz_json.questions)
+      return
+    }
+    
+    // Fallback : générer via Edge Function AI
+    setLoading(true)
     try {
       const data = await generateQuiz({
         transcript: module.transcript || module.description || module.title,
@@ -101,7 +112,7 @@ export default function Module() {
       </div>
 
       {/* Header module */}
-      <div className="card p-6 mb-8">
+      <MasterCard variant="corner" padding="lg" className="mb-8">
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
@@ -114,22 +125,22 @@ export default function Module() {
           </div>
           <span className="text-3xl flex-shrink-0">{LANGUAGES[lang]?.flag}</span>
         </div>
-      </div>
+      </MasterCard>
 
       {/* Contenu du module */}
       <div>
         {/* Contenu du module */}
         {module.content_url && (
-          <div className="card p-4 mb-6 aspect-video flex items-center justify-center">
+          <MasterCard variant="content" padding="none" className="mb-6 aspect-video overflow-hidden">
             <iframe src={module.content_url} className="w-full h-full" allowFullScreen title={module.title} />
-          </div>
+          </MasterCard>
         )}
 
-        <div className="card p-6 mb-8 prose prose-invert max-w-none">
-          <div className="text-white/80 text-sm leading-relaxed whitespace-pre-wrap">
+        <MasterCard variant="content" padding="lg" className="mb-8">
+           <div className="prose prose-invert prose-sm md:prose-base max-w-none prose-headings:text-white prose-p:text-white/80 prose-li:text-white/80 leading-relaxed">
             {module.content_text || module.description || `Ce module couvre les fondamentaux de la leçon "${module.title}". Travaillez les exercices et pratiquez avec votre coach IA pour consolider vos acquis.`}
           </div>
-        </div>
+        </MasterCard>
 
         <div className="flex gap-3">
           <button onClick={startQuiz} className="btn-gold flex-1 text-center">
@@ -158,29 +169,43 @@ export default function Module() {
               <div>
                 <div className="space-y-6 mb-8">
                   {quiz.map((q, i) => (
-                    <div key={q.id} className="card p-6">
+                    <MasterCard key={q.id} variant="content" padding="lg" className="mb-0">
                       <p className="text-xs text-muted font-mono mb-2">Question {i + 1} / {quiz.length}</p>
                       <p className="text-white mb-4 leading-snug">{q.question}</p>
                       <div className="space-y-2">
-                        {q.options.map(opt => (
-                          <button key={opt} onClick={() => setAnswers(a => ({ ...a, [q.id]: opt[0] }))}
-                            className={`w-full text-left px-4 py-3 rounded text-sm border transition-all
-                              ${answers[q.id] === opt[0]
-                                ? 'border-gold bg-gold/10 text-white'
-                                : 'border-white/8 bg-dark text-white/70 hover:border-gold/30'}`}>
-                            {opt}
-                          </button>
-                        ))}
+                        {q.options.map(opt => {
+                          const isSelected = answers[q.id] === opt[0];
+                          const isCorrect = q.correct === opt[0];
+                          const showResult = phase === 'result';
+                          return (
+                            <MasterCard
+                              key={opt}
+                              variant="action"
+                              interactive={!showResult}
+                              onClick={() => !showResult && setAnswers(a => ({ ...a, [q.id]: opt[0] }))}
+                              className={`w-full text-left transition-all ${isSelected ? 'ring-2 ring-gold' : ''} ${showResult ? (isCorrect ? 'border-green-500 shadow-green' : isSelected ? 'border-red-500 shadow-red' : '') : ''}`}
+                            >
+                              <div className="px-4 py-3 text-sm">
+                                {opt}
+                              </div>
+                            </MasterCard>
+                          );
+                        })}
                       </div>
-                    </div>
+                    </MasterCard>
                   ))}
                 </div>
 
-                <button onClick={submitQuiz}
-                  disabled={Object.keys(answers).length < quiz.length}
-                  className="btn-gold w-full text-center disabled:opacity-40 disabled:cursor-not-allowed">
-                  Valider et voir mon score →
-                </button>
+                <MasterCard
+                  variant="action"
+                  interactive={Object.keys(answers).length === quiz.length}
+                  onClick={submitQuiz}
+                  className={`w-full text-center ${Object.keys(answers).length === quiz.length ? '' : 'opacity-40 cursor-not-allowed'}`}
+                >
+                  <div className="px-6 py-4 font-semibold">
+                    Valider et voir mon score →
+                  </div>
+                </MasterCard>
               </div>
             ) : null}
           </div>
@@ -188,29 +213,34 @@ export default function Module() {
 
         {phase === 'result' && quiz && (
           <div>
-            <div className="card p-10 text-center mb-8">
-              <div className="text-6xl mb-4">
-                {score / quiz.length >= 0.8 ? '🏆' : score / quiz.length >= 0.6 ? '👍' : '💪'}
-              </div>
-              <div className="font-serif text-5xl text-gold mb-2">{score}/{quiz.length}</div>
-              <div className="font-mono text-sm text-white mb-1">
-                {score / quiz.length >= 0.8 ? 'Excellent ! Module validé.' : score / quiz.length >= 0.6 ? 'Bien ! Continuez ainsi.' : 'Revoyez le contenu et réessayez.'}
-              </div>
-              <div className="text-muted text-xs">+{score >= quiz.length * 0.8 ? 100 : score >= quiz.length * 0.6 ? 70 : 40} XP gagnés</div>
-            </div>
+            <ElasticBubble>
+              <MasterCard variant="corner" padding="xl" className="text-center mb-8">
+                <div className="text-6xl mb-4">
+                  {score / quiz.length >= 0.8 ? '🏆' : score / quiz.length >= 0.6 ? '👍' : '💪'}
+                </div>
+                <div className="font-serif text-5xl text-gold mb-2">{score}/{quiz.length}</div>
+                <div className="font-mono text-sm text-white mb-1">
+                  {score / quiz.length >= 0.8 ? 'Excellent ! Module validé.' : score / quiz.length >= 0.6 ? 'Bien ! Continuez ainsi.' : 'Revoyez le contenu et réessayez.'}
+                </div>
+                <div className="flex items-center justify-center gap-3 mt-4">
+                  <LevelBadge level={level} lang={lang} size="md" />
+                  <span className="text-muted text-xs">+{score >= quiz.length * 0.8 ? 100 : score >= quiz.length * 0.6 ? 70 : 40} XP gagnés</span>
+                </div>
+              </MasterCard>
+            </ElasticBubble>
 
             {/* Corrections */}
             <div className="space-y-3 mb-8">
               {quiz.map(q => {
                 const ok = answers[q.id] === q.correct
                 return (
-                  <div key={q.id} className={`card p-4 border ${ok ? 'border-green-500/30' : 'border-red-500/30'}`}>
+                  <MasterCard key={q.id} variant="content" padding="md" className={`border ${ok ? 'border-green-500/30 shadow-green' : 'border-red-500/30 shadow-red'}`}>
                     <p className="text-sm text-white mb-1">{q.question}</p>
-                    <p className={`text-xs font-mono ${ok ? 'text-green-400' : 'text-red-400'}`}>
-                      {ok ? '✓ Correct' : `✗ Réponse correcte : ${q.correct}`}
-                    </p>
-                    {!ok && q.explanation && <p className="text-xs text-muted mt-1">{q.explanation}</p>}
-                  </div>
+                     <p className={`text-xs font-mono ${ok ? 'text-green-400' : 'text-red-400'}`}>
+                       {ok ? '✓ Correct' : `✗ Réponse correcte : ${q.correct}`}
+                     </p>
+                     {q.explanation && <p className="text-xs text-muted mt-1">{q.explanation}</p>}
+                  </MasterCard>
                 )
               })}
             </div>

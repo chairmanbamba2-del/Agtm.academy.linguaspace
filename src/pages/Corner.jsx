@@ -4,6 +4,7 @@ import AppLayout from '../components/layout/AppLayout'
 import { supabase } from '../lib/supabase'
 import { useSubscription } from '../hooks/useSubscription'
 import { LANGUAGES } from '../lib/constants'
+import MasterCard, { LevelBadge, MasterCardSkeleton } from '../components/ui/MasterCard'
 
 const THEMES = {
   en: [
@@ -125,7 +126,7 @@ export default function Corner() {
 
       {/* Recherche */}
       <div className="flex gap-2 mb-4">
-        <div className="flex-1 flex items-center gap-2 bg-card border border-[#1E3A5F] rounded px-3 py-2">
+         <div className="flex-1 flex items-center gap-3 glass rounded-lg px-4 py-3 border border-white/10">
           <span className="text-muted text-sm">🔍</span>
           <input
             value={search}
@@ -135,7 +136,7 @@ export default function Corner() {
           />
         </div>
         <select value={type} onChange={e => setType(e.target.value)}
-          className="bg-card border border-[#1E3A5F] text-white text-sm px-3 py-2 rounded">
+                     className="glass rounded-lg px-4 py-3 border border-white/10 text-white text-sm">
           <option value="all">Tout type</option>
           <option value="video">📹 Vidéo</option>
           <option value="audio">🎧 Audio</option>
@@ -146,42 +147,36 @@ export default function Corner() {
       {/* Filtres niveaux */}
       <div className="flex gap-2 mb-3 overflow-x-auto pb-1 scrollbar-none">
         {LEVELS.map(l => (
-          <button key={l} onClick={() => setLevel(l)}
-            className={`px-3 py-1.5 rounded-full font-mono text-xs font-bold flex-shrink-0 border transition-all
-              ${level === l
-                ? 'bg-gold text-dark border-gold'
-                : 'bg-card border-[#1E3A5F] text-muted hover:border-gold/40 hover:text-white'}`}>
-            {l === 'all' ? 'Tous' : l}
-          </button>
+           <button key={l} onClick={() => setLevel(l)}
+             className={`px-3 py-1.5 rounded-full font-mono text-xs font-bold flex-shrink-0 border transition-all
+               ${level === l
+                 ? 'bg-gold text-dark border-gold shadow-gold-sm'
+                 : 'glass border-white/10 text-muted hover:border-gold/40 hover:text-white'}`}>
+             {l === 'all' ? 'Tous' : l}
+           </button>
         ))}
       </div>
 
       {/* Filtres thèmes */}
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1 scrollbar-none">
         {themes.map(t => (
-          <button key={t.code} onClick={() => setTheme(t.code)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs flex-shrink-0 border transition-all
-              ${theme === t.code
-                ? 'bg-blue/30 border-blue/50 text-white'
-                : 'bg-card border-[#1E3A5F] text-muted hover:text-white'}`}>
-            <span>{t.icon}</span>
-            <span>{t.label}</span>
-          </button>
+           <button key={t.code} onClick={() => setTheme(t.code)}
+             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs flex-shrink-0 border transition-all
+               ${theme === t.code
+                 ? 'bg-blue/30 border-blue/50 text-white shadow-blue-sm'
+                 : 'glass border-white/10 text-muted hover:text-white'}`}>
+             <span>{t.icon}</span>
+             <span>{t.label}</span>
+           </button>
         ))}
       </div>
 
       {/* Grille de contenu */}
       {loading ? (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="card rounded-lg overflow-hidden animate-pulse">
-              <div className="aspect-video bg-[#1E3A5F]" />
-              <div className="p-3 space-y-2">
-                <div className="h-3 bg-[#1E3A5F] rounded w-3/4" />
-                <div className="h-2 bg-[#1E3A5F] rounded w-1/2" />
-              </div>
-            </div>
-          ))}
+           {[...Array(6)].map((_, i) => (
+             <MasterCardSkeleton key={i} variant="content" padding="none" />
+           ))}
         </div>
       ) : content.length === 0 ? (
         <div className="text-center py-16">
@@ -192,9 +187,14 @@ export default function Corner() {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             {content.map(item => (
-              <div key={item.id}
-                className="card rounded-lg overflow-hidden hover:border-gold/30 transition-all cursor-pointer group"
-                onClick={() => setPlaying(item)}>
+               <MasterCard key={item.id}
+                 variant="content"
+                 lang={lang}
+                 interactive
+                 glow
+                 padding="none"
+                 className="overflow-hidden group"
+                 onClick={() => setPlaying(item)}>
 
                 {/* Thumbnail */}
                 <div className="aspect-video relative overflow-hidden bg-navy">
@@ -217,11 +217,9 @@ export default function Corner() {
 
                   {/* Badges */}
                   <div className="absolute top-2 left-2 flex gap-1">
-                    {item.level_target && (
-                      <span className="font-mono text-[9px] px-1.5 py-0.5 bg-dark/80 text-gold rounded">
-                        {item.level_target}
-                      </span>
-                    )}
+                     {item.level_target && (
+                       <LevelBadge level={item.level_target} lang={lang} size="xs" />
+                     )}
                     <span className="font-mono text-[9px] px-1.5 py-0.5 bg-dark/80 text-white/70 rounded">
                       {item.content_type === 'video' ? '📹' :
                        item.content_type === 'audio' ? '🎧' : '📖'}
@@ -243,11 +241,11 @@ export default function Corner() {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="text-xs text-muted">{item.channel_name || item.source}</div>
-                    {item.view_count > 0 && (
-                      <div className="font-mono text-[9px] text-muted">
-                        {(item.view_count / 1000).toFixed(0)}K vues
-                      </div>
-                    )}
+                       {item.view_count > 0 && (
+                         <div className="font-mono text-[9px] text-muted">
+                           {(item.view_count / 1000).toFixed(0)}K vues
+                         </div>
+                       )}
                   </div>
                   {item.theme && (
                     <div className="mt-1.5">
@@ -257,7 +255,7 @@ export default function Corner() {
                     </div>
                   )}
                 </div>
-              </div>
+              </MasterCard>
             ))}
           </div>
 
@@ -266,14 +264,14 @@ export default function Corner() {
             <span className="text-xs text-muted">{total} résultat(s)</span>
             <div className="flex gap-2">
               <button disabled={page === 0} onClick={() => setPage(p => p - 1)}
-                className="px-3 py-1.5 text-xs border border-white/15 text-muted disabled:opacity-30 rounded-sm hover:border-gold/30 hover:text-gold">
+                className="px-3 py-1.5 text-xs glass border border-white/10 text-muted disabled:opacity-30 rounded-sm hover:border-gold hover:text-gold">
                 ← Précédent
               </button>
               <span className="px-3 py-1.5 text-xs text-muted font-mono">
                 {page + 1} / {Math.ceil(total / PER_PAGE)}
               </span>
               <button disabled={(page + 1) * PER_PAGE >= total} onClick={() => setPage(p => p + 1)}
-                className="px-3 py-1.5 text-xs border border-white/15 text-muted disabled:opacity-30 rounded-sm hover:border-gold/30 hover:text-gold">
+                className="px-3 py-1.5 text-xs glass border border-white/10 text-muted disabled:opacity-30 rounded-sm hover:border-gold hover:text-gold">
                 Suivant →
               </button>
             </div>
@@ -287,7 +285,7 @@ export default function Corner() {
           onClick={() => setPlaying(null)}>
 
           <div
-            className="w-full max-w-2xl bg-card border border-[#1E3A5F] rounded-lg overflow-hidden shadow-2xl"
+             className="w-full max-w-2xl glass border border-white/10 rounded-lg overflow-hidden shadow-2xl"
             onClick={e => e.stopPropagation()}>
 
             {/* ✅ LECTEUR YOUTUBE EMBED */}

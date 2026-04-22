@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useUserStore } from '../store/userStore'
 import { supabase } from '../lib/supabase'
 import { LANGUAGES } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 import Spinner from '../components/ui/Spinner'
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
@@ -87,13 +88,13 @@ export default function PlacementTest() {
           20 questions · 10 minutes · Résultat immédiat<br/>
           Votre niveau de départ sera configuré automatiquement.
         </p>
-        <div className="card p-4 mb-6 text-left space-y-2">
+        <MasterCard variant="content" padding="md" className="mb-6 text-left space-y-2">
           {['Aucune inscription supplémentaire', 'Questions adaptatives A1→C2', 'Résultat détaillé avec recommandations', 'Accès direct aux modules de votre niveau'].map(f => (
             <div key={f} className="flex items-center gap-2 text-sm text-muted">
               <span className="text-green-400">✓</span> {f}
             </div>
           ))}
-        </div>
+        </MasterCard>
         {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
         <button onClick={startTest} disabled={loading}
           className="w-full py-3 bg-gold text-dark font-semibold rounded-sm hover:bg-gold-lt transition-all disabled:opacity-50">
@@ -121,7 +122,7 @@ export default function PlacementTest() {
 
       {/* Question */}
       <div className="max-w-xl mx-auto">
-        <div className="card p-6 mb-4">
+        <MasterCard variant="content" padding="lg" className="mb-4">
           <div className="font-mono text-[9px] text-gold uppercase tracking-widest mb-3">
             {language?.name} · Niveau {q.level}
           </div>
@@ -140,7 +141,7 @@ export default function PlacementTest() {
               </button>
             ))}
           </div>
-        </div>
+        </MasterCard>
 
         <div className="flex gap-3">
           <button disabled={current === 0} onClick={() => setCurrent(c => c - 1)}
@@ -177,7 +178,7 @@ export default function PlacementTest() {
           </p>
         </div>
 
-        <div className="card p-5 mb-4">
+        <MasterCard variant="content" padding="lg" className="mb-4">
           <p className="text-sm text-white/80 leading-relaxed mb-4">{result.recommendation}</p>
 
           {result.strengths?.length > 0 && (
@@ -205,7 +206,7 @@ export default function PlacementTest() {
               </div>
             </div>
           )}
-        </div>
+        </MasterCard>
 
         <div className="flex gap-3">
           <button onClick={() => navigate(`/modules/${lang}`)}

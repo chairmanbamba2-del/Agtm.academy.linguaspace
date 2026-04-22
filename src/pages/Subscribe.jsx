@@ -4,6 +4,7 @@ import { useUserStore } from '../store/userStore'
 import { supabase } from '../lib/supabase'
 import { initPayment } from '../lib/ai'
 import Navbar from '../components/layout/Navbar'
+import MasterCard from '../components/ui/MasterCard'
 import { LANGUAGES, PLANS, PAYMENT_METHODS } from '../lib/constants'
 
 export default function Subscribe() {
@@ -88,8 +89,9 @@ export default function Subscribe() {
             <p className="text-muted text-sm mb-8">Sans engagement. Résiliation en 1 clic.</p>
             <div className="grid grid-cols-1 gap-4">
               {Object.values(PLANS).map(p => (
-                <button key={p.id} onClick={() => { setPlan(p.id); setStep(p.id === 'uni' ? 2 : 3) }}
-                  className={`card p-6 text-left transition-all hover:border-gold/30 ${plan === p.id ? 'border-gold/50' : ''}`}>
+                 <MasterCard key={p.id} onClick={() => { setPlan(p.id); setStep(p.id === 'uni' ? 2 : 3) }}
+                  variant="content" padding="lg" interactive={true}
+                  className={`text-left hover:border-gold/30 ${plan === p.id ? 'border-gold/50' : ''}`}>
                   <div className="flex items-center justify-between mb-3">
                     <div>
                       <p className="font-mono text-[10px] tracking-[0.2em] text-muted uppercase">Forfait</p>
@@ -107,7 +109,7 @@ export default function Subscribe() {
                       </li>
                     ))}
                   </ul>
-                </button>
+                </MasterCard>
               ))}
             </div>
           </div>
@@ -119,13 +121,14 @@ export default function Subscribe() {
             <h2 className="font-serif text-2xl text-white mb-2">Choisissez votre langue</h2>
             <p className="text-muted text-sm mb-8">Forfait UNI — 1 langue à maîtriser.</p>
             <div className="grid grid-cols-2 gap-3">
-              {Object.values(LANGUAGES).map(l => (
-                <button key={l.code} onClick={() => { setLang(l.code); setStep(3) }}
-                  className={`card p-6 text-center transition-all hover:border-gold/30 ${selectedLang === l.code ? 'border-gold/50' : ''}`}>
+               {Object.values(LANGUAGES).map(l => (
+                <MasterCard key={l.code} onClick={() => { setLang(l.code); setStep(3) }}
+                  variant="corner" padding="lg" interactive={true}
+                  className={`text-center hover:border-gold/30 ${selectedLang === l.code ? 'border-gold/50' : ''}`}>
                   <div className="text-4xl mb-2">{l.flag}</div>
                   <div className="font-serif text-white text-lg">{l.name}</div>
                   <div className="text-muted text-xs mt-1">{l.corner}</div>
-                </button>
+                </MasterCard>
               ))}
             </div>
             <button onClick={() => setStep(1)} className="mt-6 text-sm text-muted hover:text-white transition-colors">
@@ -138,22 +141,23 @@ export default function Subscribe() {
         {step === 3 && (
           <div>
             <h2 className="font-serif text-2xl text-white mb-2">Mode de paiement</h2>
-            <div className="card p-4 mb-6 flex items-center justify-between">
+            <MasterCard variant="content" padding="md" className="mb-6 flex items-center justify-between">
               <div>
                 <p className="text-xs text-muted">Votre forfait</p>
                 <p className="font-serif text-lg text-gold">{PLANS[plan]?.name}</p>
                 {selectedLang && <p className="text-xs text-white/60">{LANGUAGES[selectedLang]?.flag} {LANGUAGES[selectedLang]?.name}</p>}
               </div>
               <span className="font-serif text-2xl text-gold">{PLANS[plan]?.price.toLocaleString()} FCFA</span>
-            </div>
+            </MasterCard>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
               {PAYMENT_METHODS.map(m => (
-                <button key={m.id} onClick={() => setPayMethod(m.id)}
-                  className={`card p-4 text-center transition-all hover:border-gold/30 ${payMethod === m.id ? 'border-gold/50 bg-gold/5' : ''}`}>
+                <MasterCard key={m.id} onClick={() => setPayMethod(m.id)}
+                  variant="action" padding="md" interactive={true}
+                  className={`text-center hover:border-gold/30 ${payMethod === m.id ? 'border-gold/50 bg-gold/5' : ''}`}>
                   <div className="text-2xl mb-1">{m.emoji}</div>
                   <div className="text-sm text-white">{m.label}</div>
-                </button>
+                </MasterCard>
               ))}
             </div>
 

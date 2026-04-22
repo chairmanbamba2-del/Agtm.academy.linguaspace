@@ -6,6 +6,7 @@ import { useProfile } from '../hooks/useAuth'
 import { useSubscription } from '../hooks/useSubscription'
 import { supabase } from '../lib/supabase'
 import { LANGUAGES } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 
 export default function Leaderboard() {
   useProfile()

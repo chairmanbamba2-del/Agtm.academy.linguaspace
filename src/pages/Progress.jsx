@@ -4,6 +4,7 @@ import { useUserStore } from '../store/userStore'
 import { useProfile } from '../hooks/useAuth'
 import { useSubscription } from '../hooks/useSubscription'
 import { LANGUAGES, CEFR_LEVELS, CEFR_LABELS } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 
 export default function Progress() {
   useProfile()
@@ -26,11 +27,11 @@ export default function Progress() {
           { v: totalModules,              l: 'Modules complétés', i: '📚' },
           { v: `${maxStreak}j`,           l: 'Meilleure série',  i: '🔥' },
         ].map(s => (
-          <div key={s.l} className="card p-5 text-center">
+          <MasterCard key={s.l} variant="content" padding="lg" className="text-center">
             <div className="text-3xl mb-2">{s.i}</div>
             <div className="font-serif text-3xl text-gold">{s.v}</div>
             <div className="text-xs text-muted mt-1">{s.l}</div>
-          </div>
+          </MasterCard>
         ))}
       </div>
 
@@ -45,39 +46,39 @@ export default function Progress() {
           const pct   = Math.round(((idx + 1) / CEFR_LEVELS.length) * 100)
           const l     = LANGUAGES[lang]
 
-          return (
-            <div key={lang} className="card p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl">{l.flag}</span>
-                  <div>
-                    <h3 className="font-serif text-lg text-white">{l.corner}</h3>
-                    <p className="text-xs text-muted">{prog?.modules_completed || 0} modules complétés</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="font-mono text-xl text-gold">{level}</div>
-                  <div className="text-xs text-muted">{CEFR_LABELS[level]}</div>
-                </div>
-              </div>
+           return (
+             <MasterCard key={lang} variant="content" padding="lg">
+               <div className="flex items-center justify-between mb-4">
+                 <div className="flex items-center gap-3">
+                   <span className="text-3xl">{l.flag}</span>
+                   <div>
+                     <h3 className="font-serif text-lg text-white">{l.corner}</h3>
+                     <p className="text-xs text-muted">{prog?.modules_completed || 0} modules complétés</p>
+                   </div>
+                 </div>
+                 <div className="text-right">
+                   <div className="font-mono text-xl text-gold">{level}</div>
+                   <div className="text-xs text-muted">{CEFR_LABELS[level]}</div>
+                 </div>
+               </div>
 
-              {/* Barre CEFR */}
-              <div className="flex gap-1 mb-3">
-                {CEFR_LEVELS.map((l, i) => (
-                  <div key={l} className={`flex-1 h-2 rounded-sm transition-all
-                    ${i <= idx ? 'bg-gold' : 'bg-card'}`} />
-                ))}
-              </div>
-              <div className="flex justify-between text-[9px] font-mono text-muted mb-4">
-                {CEFR_LEVELS.map(l => <span key={l}>{l}</span>)}
-              </div>
+               {/* Barre CEFR */}
+               <div className="flex gap-1 mb-3">
+                 {CEFR_LEVELS.map((l, i) => (
+                   <div key={l} className={`flex-1 h-2 rounded-sm transition-all
+                     ${i <= idx ? 'bg-gold' : 'bg-card'}`} />
+                 ))}
+               </div>
+               <div className="flex justify-between text-[9px] font-mono text-muted mb-4">
+                 {CEFR_LEVELS.map(l => <span key={l}>{l}</span>)}
+               </div>
 
-              <div className="flex items-center justify-between text-xs text-muted">
-                <span>🔥 {prog?.streak_days || 0} jours de série</span>
-                <span>⚡ {xp.toLocaleString()} XP</span>
-              </div>
-            </div>
-          )
+               <div className="flex items-center justify-between text-xs text-muted">
+                 <span>🔥 {prog?.streak_days || 0} jours de série</span>
+                 <span>⚡ {xp.toLocaleString()} XP</span>
+               </div>
+             </MasterCard>
+           )
         })}
       </div>
 
@@ -94,12 +95,12 @@ export default function Progress() {
           { icon: '🎯', name: 'Quiz Parfait', desc: '100% à un quiz',       earned: false },
           { icon: '🚀', name: 'ALL ACCESS',   desc: 'Forfait premium',      earned: false },
         ].map(b => (
-          <div key={b.name} className={`card p-4 text-center transition-all ${b.earned ? '' : 'opacity-35'}`}>
+          <MasterCard key={b.name} variant="content" padding="md" className={`text-center transition-all ${b.earned ? '' : 'opacity-35'}`}>
             <div className="text-3xl mb-2">{b.icon}</div>
             <div className="text-sm font-medium text-white mb-0.5">{b.name}</div>
             <div className="text-xs text-muted">{b.desc}</div>
             {b.earned && <div className="text-[9px] text-gold font-mono mt-1 tracking-widest">OBTENU</div>}
-          </div>
+          </MasterCard>
         ))}
       </div>
     </AppLayout>

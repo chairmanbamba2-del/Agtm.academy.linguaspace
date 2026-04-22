@@ -7,6 +7,7 @@ import { useProfile } from '../hooks/useAuth'
 import { useSubscription } from '../hooks/useSubscription'
 import { getModules, supabase } from '../lib/supabase'
 import { LANGUAGES, CEFR_LEVELS, CEFR_LABELS } from '../lib/constants'
+import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 
 export default function Modules() {
   const { lang }    = useParams()
@@ -82,39 +83,39 @@ export default function Modules() {
             const inProg    = mp?.status === 'in_progress'
 
             return (
-              <div key={m.id} className={`card p-5 flex items-center gap-4 transition-all
-                ${isLocked ? 'opacity-40' : 'hover:border-gold/30 cursor-pointer'}`}>
+               <MasterCard key={m.id} variant="content" padding="lg" className={`flex items-center gap-4 transition-all
+                 ${isLocked ? 'opacity-40' : 'hover:border-gold/30 cursor-pointer'}`}>
 
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0
-                  ${completed ? 'bg-green-500/20 text-green-400 border border-green-500/40'
-                   : isLocked  ? 'bg-card text-muted border border-white/10'
-                   : 'bg-gold/10 text-gold border border-gold/30'}`}>
-                  {completed ? '✓' : isLocked ? '🔒' : m.order_num}
-                </div>
+                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0
+                   ${completed ? 'bg-green-500/20 text-green-400 border border-green-500/40'
+                    : isLocked  ? 'bg-card text-muted border border-white/10'
+                    : 'bg-gold/10 text-gold border border-gold/30'}`}>
+                   {completed ? '✓' : isLocked ? '🔒' : m.order_num}
+                 </div>
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="font-mono text-[9px] tracking-[0.2em] text-gold">{m.level}</span>
-                    <span className="text-white/20 text-xs">·</span>
-                    <span className="text-xs text-muted capitalize">{m.content_type || 'Leçon'}</span>
-                    {m.duration_min && <span className="text-xs text-muted">{m.duration_min} min</span>}
-                  </div>
-                  <h3 className="text-sm font-medium text-white truncate">{m.title}</h3>
-                  {m.description && <p className="text-xs text-muted mt-0.5 truncate">{m.description}</p>}
-                </div>
+                 <div className="flex-1 min-w-0">
+                   <div className="flex items-center gap-2 mb-0.5">
+                     <span className="font-mono text-[9px] tracking-[0.2em] text-gold">{m.level}</span>
+                     <span className="text-white/20 text-xs">·</span>
+                     <span className="text-xs text-muted capitalize">{m.content_type || 'Leçon'}</span>
+                     {m.duration_min && <span className="text-xs text-muted">{m.duration_min} min</span>}
+                   </div>
+                   <h3 className="text-sm font-medium text-white truncate">{m.title}</h3>
+                   {m.description && <p className="text-xs text-muted mt-0.5 truncate">{m.description}</p>}
+                 </div>
 
-                <div className="flex-shrink-0">
-                  {completed && mp?.score != null && (
-                    <span className="font-mono text-xs text-green-400">{mp.score}%</span>
-                  )}
-                  {!isLocked && (
-                    <Link to={`/module/${lang}/${m.id}`}
-                      className="btn-gold text-xs py-1.5 px-3 ml-3">
-                      {completed ? 'Revoir' : inProg ? 'Continuer' : 'Commencer'}
-                    </Link>
-                  )}
-                </div>
-              </div>
+                 <div className="flex-shrink-0">
+                   {completed && mp?.score != null && (
+                     <span className="font-mono text-xs text-green-400">{mp.score}%</span>
+                   )}
+                   {!isLocked && (
+                     <Link to={`/module/${lang}/${m.id}`}
+                       className="btn-gold text-xs py-1.5 px-3 ml-3">
+                       {completed ? 'Revoir' : inProg ? 'Continuer' : 'Commencer'}
+                     </Link>
+                   )}
+                 </div>
+               </MasterCard>
             )
           })}
         </div>

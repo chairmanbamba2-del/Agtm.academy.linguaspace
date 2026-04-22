@@ -2,26 +2,29 @@
   "name": "lingua-space",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "date-fns": "^3.6.0",
+    "framer-motion": "^11.0.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "react-router-dom": "^6.26.0",
-    "@supabase/supabase-js": "^2.45.0",
-    "zustand": "^4.5.0",
-    "framer-motion": "^11.0.0",
-    "date-fns": "^3.6.0"
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "@vitejs/plugin-react": "4.3.0",
-    "vite": "5.0.0",
-    "vite-plugin-pwa": "0.20.0",
-    "tailwindcss": "3.4.0",
     "autoprefixer": "10.4.14",
-    "postcss": "8.4.38"
+    "dotenv": "^17.4.2",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.0",
+    "vite": "5.0.0",
+    "vite-plugin-pwa": "0.20.0"
   }
 }
