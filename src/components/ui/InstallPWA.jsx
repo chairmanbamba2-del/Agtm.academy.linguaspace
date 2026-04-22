@@ -6,8 +6,13 @@ export default function InstallPWA() {
   const [isInstalled, setIsInstalled] = useState(false)
 
   useEffect(() => {
-    // Vérifier si déjà installé
     if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true)
+      return
+    }
+
+    const installed = localStorage.getItem('pwa_installed')
+    if (installed) {
       setIsInstalled(true)
       return
     }
@@ -20,29 +25,38 @@ export default function InstallPWA() {
 
     window.addEventListener('beforeinstallprompt', handler)
 
-    // Vérifier si déjà installé via localStorage
-    const installed = localStorage.getItem('pwa_installed')
-    if (installed) {
-      setIsInstalled(true)
-      setShowInstall(false)
-    }
+    // Fallback : afficher après 3s même si beforeinstallprompt n'a pas été déclenché
+    const timer = setTimeout(() => setShowInstall(true), 3000)
 
-    return () => window.removeEventListener('beforeinstallprompt', handler)
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler)
+      clearTimeout(timer)
+    }
   }, [])
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return
-    deferredPrompt.prompt()
-    const { outcome } = await deferredPrompt.userChoice
-    if (outcome === 'accepted') {
-      localStorage.setItem('pwa_installed', 'true')
-      setShowInstall(false)
-      setIsInstalled(true)
+    if (deferredPrompt) {
+      deferredPrompt.prompt()
+      const { outcome } = await deferredPrompt.userChoice
+      if (outcome === 'accepted') {
+        localStorage.setItem('pwa_installed', 'true')
+        setShowInstall(false)
+        setIsInstalled(true)
+      }
+      setDeferredPrompt(null)
+    } else {
+      // Fallback : instructions manuelles
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+      const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
+      if (isIOS || isSafari) {
+        alert('Sur iOS : ouvrez Safari, tapez sur "Partager" → "Ajouter à l\'écran d\'accueil"')
+      } else {
+        alert('Sur Chrome : ouvrez le menu (⋮) → "Installer l\'application" ou "Ajouter à l\'écran d\'accueil"')
+      }
     }
-    setDeferredPrompt(null)
   }
 
-  if (isInstalled || !showInstall) return null
+  if (isInstalled) return null
 
   return (
     <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] animate-slide-up">
