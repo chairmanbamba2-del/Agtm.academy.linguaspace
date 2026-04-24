@@ -19,15 +19,19 @@ async function generatePDF() {
   console.log('📄 Génération du PDF...')
   const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] })
   const page = await browser.newPage()
+  await page.setRequestInterception(true)
+  page.on('request', (req) => {
+    if (['image', 'font', 'stylesheet', 'media'].includes(req.resourceType())) req.abort()
+    else req.continue()
+  })
   
   // Lire le HTML et remplacer les URLs
   let html = fs.readFileSync(HTML_FILE, 'utf8')
-  // Enlever les polices Google pour le PDF offline
-  html = html.replace('@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap);', '')
-  // Ajouter une police de secours
-  html = html.replace('font-family:\'Inter\',sans-serif;', 'font-family:sans-serif;')
+  html = html.replace(/@import url\([^)]+\);/g, '')
+  html = html.replace(/font-family:'[^']+',sans-serif;/g, 'font-family:sans-serif;')
 
-  await page.setContent(html, { waitUntil: 'networkidle0' })
+  await page.setContent(html, { waitUntil: 'domcontentloaded', timeout: 60000 })
+  await new Promise(r => setTimeout(r, 2000))
   await page.pdf({
     path: PDF_FILE,
     format: 'A4',
@@ -42,10 +46,6 @@ async function generatePDF() {
 async function generatePPTX() {
   console.log('📊 Génération du PPTX...')
   const pptx = officegen('pptx')
-  pptx.setTitle('AGTM Digital Academy — Présentation Investisseurs')
-  pptx.setSubject('Plateforme EdTech Africaine')
-  pptx.setAuthor('AGTM Digital Academy')
-
   // Styles
   const gold = 'D4A017'
   const dark = '060E1A'

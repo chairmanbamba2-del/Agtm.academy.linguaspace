@@ -996,6 +996,123 @@ window._iaGeneratedQuestions = [];
       }, 300)
     }
 
+    // ── MODAL D'EXPRESSION LIBRE AVEC CORRECTION IA ──────────────
+    window._aiOpenFreeCorrection = function() {
+      const existing = document.getElementById('aiFreeModal')
+      if (existing) existing.remove()
+      const overlay = document.createElement('div')
+      overlay.id = 'aiFreeModal'
+      overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)'
+      overlay.innerHTML = `<div style="background:linear-gradient(135deg,#0E2040,#1A1808);border:1px solid rgba(200,150,12,0.35);border-radius:14px;padding:20px;max-width:620px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.6)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div style="font-size:1.1rem;font-weight:900;color:#E8B84B">✍️ Expression libre</div>
+          <button onclick="this.closest('#aiFreeModal').remove()" style="background:none;border:none;color:#6A8AAA;cursor:pointer;font-size:1.3rem;padding:4px 8px">✕</button>
+        </div>
+        <div style="font-size:.78rem;color:#8AAAC0;line-height:1.6;margin-bottom:12px">
+          Écris un texte en anglais sur le sujet de ton choix, ou choisis un sujet proposé. L'IA corrigera ta réponse avec une note et des suggestions d'amélioration.
+        </div>
+        <select id="aiFreePrompt" onchange="if(this.value){document.getElementById('aiFreeAnswer').placeholder='Écris ta réponse en anglais...';document.getElementById('aiFreeContext').value=this.options[this.selectedIndex].text}"
+          style="width:100%;padding:8px 12px;background:rgba(13,27,42,0.7);border:1px solid rgba(200,150,12,0.2);border-radius:8px;color:#D4C8A0;font-size:.8rem;margin-bottom:10px;cursor:pointer">
+          <option value="">Choisis un sujet (optionnel)...</option>
+          <option value="Describe your daily routine in English. Include what you do in the morning, afternoon, and evening.">🕐 Describe your daily routine</option>
+          <option value="Write a paragraph about your future career goals. What job do you want and why?">🎯 Your future career goals</option>
+          <option value="Describe your favorite place in the world. Why is it special to you?">🌍 Your favorite place</option>
+          <option value="Write an email to a friend inviting them to visit your country.">📧 Invitation email to a friend</option>
+          <option value="What are the advantages and disadvantages of social media? Give your opinion.">📱 Social media pros and cons</option>
+          <option value="Describe a memorable travel experience. Where did you go and what happened?">✈️ A memorable travel experience</option>
+          <option value="Write about the importance of learning English in today's world.">📚 Importance of learning English</option>
+          <option value="Describe your favorite book or movie and explain why you like it.">🎬 Favorite book or movie</option>
+          <option value="Free topic — Write about anything you want in English.">💡 Free topic (your choice)</option>
+        </select>
+        <input id="aiFreeContext" type="hidden" value="">
+        <textarea id="aiFreeAnswer" rows="6" placeholder="Écris ta réponse en anglais..."
+          style="width:100%;padding:10px 12px;background:rgba(0,0,0,0.35);border:1px solid rgba(200,150,12,0.15);border-radius:8px;color:#e0e0e0;font-size:.85rem;resize:vertical;font-family:inherit;box-sizing:border-box;outline:none"></textarea>
+        <div id="aiFreeResult" style="margin-top:10px"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <button onclick="var a=document.getElementById('aiFreeAnswer'),c=document.getElementById('aiFreeContext'),r=document.getElementById('aiFreeResult');if(!a.value.trim()){r.innerHTML='<div style=color:#E04A4A;font-size:.8rem>Veuillez écrire une réponse.</div>';return}this.disabled=true;this.textContent='⏳ Correction...';r.innerHTML='<div style=color:#6A8AAA;font-size:.8rem>Analyse par IA...</div>';fetch('https://fglzovvsyloprokmdadx.supabase.co/functions/v1/lingua-ai-enhanced',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+SUPABASE_ANON},body:JSON.stringify({provider:'deepseek',model:'deepseek-chat',messages:[{role:'system',content:'Tu es un correcteur d\\'anglais. Réponds UNIQUEMENT en JSON.'},{role:'user',content:'Corrige cette réponse d\\'étudiant en anglais. Contexte: '+(c.value||'Général')+'\\n\\nRéponse: '+a.value+'\\n\\nFormat JSON: {"note":14,"points_forts":["..."],"points_faibles":["..."],"suggestion":"...","version_corrigee":"..."}'}],max_tokens:800,temperature:0.3})}).then(function(r){return r.json()}).then(function(d){var t;try{t=JSON.parse((d.choices?.[0]?.message?.content||d.content||'').replace(/```json|```/g,'').trim())}catch(e){throw Error('Réponse IA invalide')}var n=Math.round(Math.min(Math.max(t.note||10,0),20)),c2=n>=14?'#4AE090':n>=10?'#D4A017':'#E04A4A';r.innerHTML='<div style=background:rgba(13,27,42,0.7);border:1px solid '+c2+'40;border-radius:10px;padding:12px><div style=display:flex;align-items:center;gap:12px;margin-bottom:8px><span style=font-size:1.8rem;font-weight:900;color:'+c2+'>'+n+'<span style=font-size:.8rem;color:#6A8AAA>/20</span></span><div style=flex:1><div style=font-weight:700;color:#E8B84B;font-size:.82rem;margin-bottom:3px>'+(n>=17?'🌟 Excellent !':n>=14?'✅ Très bien':n>=10?'📝 Peut mieux faire':'📚 À réviser')+'</div><div style=font-size:.72rem;color:#6A8AAA>Correction par IA</div></div></div>'+(t.points_forts?.length?'<div style=margin-bottom:6px><span style=font-size:.75rem;font-weight:700;color:#4AE090>✅ Points forts</span>'+t.points_forts.map(function(p){return '<div style=font-size:.75rem;color:#90A4AE;padding:2px 0 2px 16px>• '+p+'</div>'}).join('')+'</div>':'')+(t.points_faibles?.length?'<div style=margin-bottom:6px><span style=font-size:.75rem;font-weight:700;color:#E8B84B>📌 Axes d\\'amélioration</span>'+t.points_faibles.map(function(p){return '<div style=font-size:.75rem;color:#90A4AE;padding:2px 0 2px 16px>• '+p+'</div>'}).join('')+'</div>':'')+(t.suggestion?'<div style=margin-bottom:6px;background:rgba(200,150,12,0.08);border-radius:6px;padding:8px><span style=font-size:.75rem;font-weight:700;color:#D4A017>💡 Suggestion</span><div style=font-size:.75rem;color:#D4C8A0;margin-top:2px>'+t.suggestion+'</div></div>':'')+(t.version_corrigee&&t.version_corrigee!=='Aucune correction nécessaire'?'<div style=background:rgba(74,144,217,0.08);border-radius:6px;padding:8px><span style=font-size:.75rem;font-weight:700;color:#4A90D9>✏️ Version corrigée</span><div style=font-size:.75rem;color:#B0C4DE;margin-top:2px;font-style:italic>'+t.version_corrigee+'</div></div>':'')+'</div>'}).catch(function(e){console.error('[IA Free]',e);r.innerHTML='<div style=color:#E04A4A;font-size:.8rem>❌ Erreur : '+e.message+'</div>'}).finally(function(){this.disabled=false;this.textContent='🤖 Corriger par IA'}.bind(this))"
+            style="flex:1;padding:10px 16px;border-radius:8px;border:none;background:linear-gradient(135deg,#D4A017,#E8B84B);color:#0A1520;font-weight:800;font-size:.82rem;cursor:pointer">🤖 Corriger par IA</button>
+          <button onclick="document.getElementById('aiFreeAnswer').value='';document.getElementById('aiFreeResult').innerHTML=''" style="padding:10px 16px;border-radius:8px;border:1px solid rgba(200,150,12,0.2);background:transparent;color:#8AAAC0;font-size:.82rem;cursor:pointer">🗑️ Effacer</button>
+        </div>
+      </div>`
+      document.body.appendChild(overlay)
+    }
+
+    // ── CORRECTION IA DES RÉPONSES LIBRES (dans les quiz) ─────────
+    window._aiCorrectAnswer = async function(element) {
+      const container = element.closest('[data-ai-correct]') || element.parentElement
+      const answerEl = container.querySelector('[data-ai-answer]')
+      const resultEl = container.querySelector('[data-ai-result]')
+      const contextEl = container.querySelector('[data-ai-context]')
+      if (!answerEl) return
+      const answer = answerEl.value
+      if (!answer.trim()) { toast('Veuillez écrire une réponse avant de demander la correction IA.','err'); return }
+      const context = contextEl ? contextEl.value : (container.dataset.aiContext || '')
+      element.disabled = true
+      element.textContent = '⏳ Correction en cours...'
+      if (resultEl) resultEl.innerHTML = '<div style="color:#6A8AAA;font-size:.8rem">Analyse de la réponse par IA...</div>'
+      try {
+        const prompt = `Tu es un professeur d'anglais expert. Corrige la réponse suivante de manière constructive.
+
+Contexte de la question : ${context || 'Question générale'}
+
+Réponse de l'étudiant : ${answer}
+
+Règles de correction :
+1. Note sur 20 (nombre entier)
+2. Évaluation précise de la grammaire, du vocabulaire, de la pertinence
+3. Suggestion d'amélioration concrète
+4. Si la réponse est très bonne (17+/20), félicitations
+5. Si la réponse est insuffisante (<10/20), guide l'étudiant
+
+Réponds STRICTEMENT au format JSON suivant, sans aucun texte avant ou après :
+{"note": 14, "points_forts": ["...", "..."], "points_faibles": ["...", "..."], "suggestion": "...", "version_corrigee": "..."}
+
+Pour "version_corrigee", réécris la réponse de l'étudiant de manière améliorée si nécessaire, ou mets "Aucune correction nécessaire" si la réponse est déjà correcte.`
+        const resp = await fetch('https://fglzovvsyloprokmdadx.supabase.co/functions/v1/lingua-ai-enhanced', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + SUPABASE_ANON },
+          body: JSON.stringify({
+            provider: 'deepseek', model: 'deepseek-chat',
+            messages: [{ role: 'system', content: 'Tu es un assistant correcteur d\'anglais. Réponds UNIQUEMENT en JSON.' }, { role: 'user', content: prompt }],
+            max_tokens: 800, temperature: 0.3
+          })
+        })
+        if (!resp.ok) throw new Error('Erreur API: ' + resp.status)
+        const data = await resp.json()
+        let correction
+        try {
+          const raw = data?.choices?.[0]?.message?.content || data?.content || data?.result || ''
+          correction = JSON.parse(raw.replace(/```json|```/g, '').trim())
+        } catch(e) {
+          throw new Error('Réponse IA invalide')
+        }
+        const note = Math.round(Math.min(Math.max(correction.note||10, 0), 20))
+        const col = note >= 14 ? '#4AE090' : note >= 10 ? '#D4A017' : '#E04A4A'
+        if (resultEl) {
+          resultEl.innerHTML = `<div style="background:rgba(13,27,42,0.7);border:1px solid ${col}40;border-radius:10px;padding:12px">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+              <span style="font-size:1.8rem;font-weight:900;color:${col}">${note}<span style="font-size:.8rem;color:#6A8AAA">/20</span></span>
+              <div style="flex:1">
+                <div style="font-weight:700;color:#E8B84B;font-size:.82rem;margin-bottom:3px">${note>=17?'🌟 Excellent !':note>=14?'✅ Très bien':note>=10?'📝 Peut mieux faire':'📚 À réviser'}</div>
+                <div style="font-size:.72rem;color:#6A8AAA">Correction par IA · ${correction.points_forts?.length||0} points forts · ${correction.points_faibles?.length||0} axes d'amélioration</div>
+              </div>
+            </div>
+            ${correction.points_forts?.length ? `<div style="margin-bottom:6px"><span style="font-size:.75rem;font-weight:700;color:#4AE090">✅ Points forts</span>${correction.points_forts.map(p=>`<div style="font-size:.75rem;color:#90A4AE;padding:2px 0 2px 16px">• ${p}</div>`).join('')}</div>` : ''}
+            ${correction.points_faibles?.length ? `<div style="margin-bottom:6px"><span style="font-size:.75rem;font-weight:700;color:#E8B84B">📌 Axes d'amélioration</span>${correction.points_faibles.map(p=>`<div style="font-size:.75rem;color:#90A4AE;padding:2px 0 2px 16px">• ${p}</div>`).join('')}</div>` : ''}
+            ${correction.suggestion ? `<div style="margin-bottom:6px;background:rgba(200,150,12,0.08);border-radius:6px;padding:8px"><span style="font-size:.75rem;font-weight:700;color:#D4A017">💡 Suggestion</span><div style="font-size:.75rem;color:#D4C8A0;margin-top:2px">${correction.suggestion}</div></div>` : ''}
+            ${correction.version_corrigee && correction.version_corrigee !== 'Aucune correction nécessaire' ? `<div style="background:rgba(74,144,217,0.08);border-radius:6px;padding:8px"><span style="font-size:.75rem;font-weight:700;color:#4A90D9">✏️ Version corrigée</span><div style="font-size:.75rem;color:#B0C4DE;margin-top:2px;font-style:italic">${correction.version_corrigee}</div></div>` : ''}
+          </div>`
+        }
+        toast('✅ Réponse corrigée : ' + note + '/20', note >= 14 ? 'green' : (note >= 10 ? 'gold' : 'err'))
+      } catch(err) {
+        console.error('[IA Correction]', err)
+        if (resultEl) resultEl.innerHTML = '<div style="color:#E04A4A;font-size:.8rem">❌ Erreur de correction IA : ' + (err.message||'') + '</div>'
+        toast('Erreur de correction IA','err')
+      }
+      element.disabled = false
+      element.textContent = '🤖 Corriger par IA'
+    }
+
     const SUPABASE_ANON         = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww'
     // ⚠️ Clé service_role — requis pour créer des comptes sans confirmation email
     // Supabase Dashboard → Settings → API → service_role (section "Project API keys")
@@ -15844,6 +15961,66 @@ ${hon ? `
     }
     const _NBL={A1:'#4AE090',A2:'#4A90D9',B1:'#D4A017',B2:'#E8A030',C1:'#E04A4A',C2:'#9B59B6'}
 
+    // ── LISTENING TOEIC / TOEFL — Audio + Exercices ──────────────────
+    const _LISTENING_EX = [
+      // TOEIC — Part 2: Question-Response
+      {id:'toeic_l1',exam:'TOEIC',part:'Part 2 — Question-Response',niveau:'B1',duree:10,
+       objectifs:["Comprendre des questions simples en contexte professionnel","Choisir la réponse appropriée parmi 3 choix","Identifier les mots-clés dans les questions Wh-"],
+       script:"Woman: When is the meeting scheduled?\nMan: It's at 3 PM, in the conference room.\nWoman: Should I bring the reports?\nMan: Yes, please bring copies for everyone.\n\nNarrator: Question 1 — What time is the meeting?\nNarrator: Question 2 — Where will the meeting take place?\nNarrator: Question 3 — What should the woman bring?",
+       video_id:'bB_bMf_0k1M',
+       questions:[
+         {q:"What time is the meeting?",opts:["A) 2 PM","B) 3 PM","C) 4 PM","D) 1 PM"],rep:'B',expl:"L'homme dit clairement 'It's at 3 PM'."},
+         {q:"Where is the meeting?",opts:["A) In the lobby","B) In the conference room","C) In the cafeteria","D) In the office"],rep:'B',expl:"La salle de réunion (conference room) est indiquée."},
+         {q:"What should the woman bring?",opts:["A) A laptop","B) Copies of the reports","C) Coffee","D) A projector"],rep:'B',expl:"L'homme demande d'apporter des copies pour tout le monde."}
+       ]},
+      {id:'toeic_l2',exam:'TOEIC',part:'Part 3 — Short Conversations',niveau:'B1',duree:12,
+       objectifs:["Comprendre des conversations courtes de 3-4 échanges","Extraire des informations factuelles (qui, quoi, où, quand)","Inférer le contexte professionnel"],
+       script:"Man A: Have you finished the quarterly report yet?\nMan B: Almost. I just need to finalize the sales figures.\nMan A: When do you think you'll be done?\nMan B: By tomorrow morning, before the manager's review.\nMan A: Perfect. Email it to me once it's ready.\n\nNarrator: Question 1 — What document are they discussing?\nNarrator: Question 2 — What does Man B still need to complete?\nNarrator: Question 3 — When does Man B expect to finish?",
+       video_id:'bB_bMf_0k1M',
+       questions:[
+         {q:"What document are they discussing?",opts:["A) The annual report","B) The quarterly report","C) The budget proposal","D) The marketing plan"],rep:'B',expl:"La conversation porte sur le rapport trimestriel (quarterly report)."},
+         {q:"What does Man B still need to complete?",opts:["A) The introduction","B) The sales figures","C) The conclusion","D) The appendix"],rep:'B',expl:"Il lui reste à finaliser les chiffres de vente (sales figures)."},
+         {q:"When does Man B expect to finish?",opts:["A) By tonight","B) By tomorrow morning","C) By next week","D) By the end of the day"],rep:'B',expl:"Il promet d'avoir terminé demain matin avant la révision du manager."}
+       ]},
+      {id:'toeic_l3',exam:'TOEIC',part:'Part 4 — Short Talks',niveau:'B2',duree:15,
+       objectifs:["Comprendre des annonces et présentations courtes","Identifier l'objectif principal d'un discours","Extraire des détails numériques et des dates"],
+       script:"Good morning everyone. This is your CEO speaking. I'm pleased to announce that our company has reached 2 million dollars in revenue this quarter, a 15% increase from last year. As a result, all employees will receive a bonus in next month's paycheck. Thank you for your hard work and dedication.\n\nNarrator: Question 1 — Who is speaking?\nNarrator: Question 2 — What is the revenue amount?\nNarrator: Question 3 — What will employees receive?",
+       video_id:'bB_bMf_0k1M',
+       questions:[
+         {q:"Who is speaking?",opts:["A) The HR manager","B) The CEO","C) The sales director","D) The team leader"],rep:'B',expl:"L'orateur se présente comme le CEO (PDG)."},
+         {q:"What is the revenue amount?",opts:["A) 1 million dollars","B) 2 million dollars","C) 3 million dollars","D) 5 million dollars"],rep:'B',expl:"Le chiffre d'affaires est de 2 millions de dollars ce trimestre."},
+         {q:"What will employees receive?",opts:["A) A promotion","B) A bonus","C) Extra vacation","D) A company car"],rep:'B',expl:"Tous les employés recevront une prime (bonus) le mois prochain."}
+       ]},
+      // TOEFL — Listening Academic
+      {id:'toefl_l1',exam:'TOEFL',part:'Academic Lecture — Biology',niveau:'B2',duree:15,
+       objectifs:["Comprendre une conférence académique courte","Identifier la thèse principale et les arguments","Prendre des notes efficaces en anglais"],
+       script:"Professor: Today we'll discuss a fascinating topic in marine biology: coral bleaching. Corals have a symbiotic relationship with algae called zooxanthellae, which provide them with nutrients and their vibrant colors. When water temperatures rise, corals expel these algae, causing them to turn white — this is coral bleaching. Climate change is the primary driver of this phenomenon, threatening reef ecosystems worldwide.\n\nNarrator: Question 1 — What is the main topic of the lecture?\nNarrator: Question 2 — What do zooxanthellae provide to corals?\nNarrator: Question 3 — What causes corals to expel the algae?",
+       video_id:'bB_bMf_0k1M',
+       questions:[
+         {q:"What is the main topic of the lecture?",opts:["A) Ocean pollution","B) Coral bleaching","C) Marine predators","D) Fish migration"],rep:'B',expl:"Le cours porte sur le blanchissement des coraux (coral bleaching)."},
+         {q:"What do zooxanthellae provide to corals?",opts:["A) Protection","B) Nutrients and color","C) Heat resistance","D) Oxygen"],rep:'B',expl:"Les zooxanthellae fournissent nutriments et couleurs vibrantes aux coraux."},
+         {q:"What causes corals to expel the algae?",opts:["A) Pollution","B) Rising water temperatures","C) Overfishing","D) Acid rain"],rep:'B',expl:"La hausse des températures de l'eau (rising water temperatures) est la cause."}
+       ]},
+      {id:'toefl_l2',exam:'TOEFL',part:'Student-Professor Discussion',niveau:'B2',duree:12,
+       objectifs:["Comprendre une discussion académique informelle","Reconnaître les expressions de suggestion et d'approbation","Extraire les conseils donnés à l'étudiant"],
+       script:"Student: Professor, I'm struggling with my research paper on renewable energy.\nProfessor: What specifically is challenging?\nStudent: I have too many sources and can't narrow my focus.\nProfessor: Try focusing on one country's transition to solar power. For example, Morocco's Noor solar plant is a great case study.\nStudent: That's a great idea. I'll start there.\n\nNarrator: Question 1 — What is the student's problem?\nNarrator: Question 2 — What does the professor suggest?\nNarrator: Question 3 — Which country does the professor mention as an example?",
+       video_id:'bB_bMf_0k1M',
+       questions:[
+         {q:"What is the student's problem?",opts:["A) He can't find sources","B) He has too many sources","C) He doesn't understand the topic","D) He failed the exam"],rep:'B',expl:"L'étudiant a trop de sources et n'arrive pas à cibler son sujet."},
+         {q:"What does the professor suggest?",opts:["A) Change topics","B) Focus on one country's solar transition","C) Use fewer sources","D) Work with a partner"],rep:'B',expl:"Le professeur suggère de se concentrer sur la transition solaire d'un seul pays."},
+         {q:"Which country does the professor mention as an example?",opts:["A) Egypt","B) Morocco","C) Kenya","D) South Africa"],rep:'B',expl:"La centrale solaire Noor au Maroc est citée comme exemple."}
+       ]},
+      {id:'toefl_l3',exam:'TOEFL',part:'Listening for Academic Purposes',niveau:'C1',duree:18,
+       objectifs:["Comprendre un discours académique dense avec vocabulaire spécialisé","Relever les relations de cause à effet","Synthétiser l'information entendue"],
+       script:"Professor: The Industrial Revolution, beginning in late 18th-century Britain, fundamentally transformed not just manufacturing, but society as a whole. Key inventions like the steam engine and the spinning jenny dramatically increased productivity. This led to urbanization as people moved from rural areas to factory towns. However, working conditions were often harsh, with long hours and child labor being common. These conditions eventually sparked labor reforms and the rise of trade unions.\n\nNarrator: Question 1 — When did the Industrial Revolution begin?\nNarrator: Question 2 — What was one major social consequence?\nNarrator: Question 3 — What did poor working conditions lead to?",
+       video_id:'bB_bMf_0k1M',
+       questions:[
+         {q:"When did the Industrial Revolution begin?",opts:["A) Early 17th century","B) Late 18th century","C) Mid 19th century","D) Early 20th century"],rep:'B',expl:"La Révolution industrielle a commencé à la fin du 18e siècle en Grande-Bretagne."},
+         {q:"What was one major social consequence of the Industrial Revolution?",opts:["A) Decreased population","B) Urbanization","C) Improved working hours","D) Lower productivity"],rep:'B',expl:"L'urbanisation massive a été une conséquence directe de l'exode rural vers les villes."},
+         {q:"What did poor working conditions eventually lead to?",opts:["A) Economic collapse","B) Labor reforms and trade unions","C) Mass emigration","D) Factory closures"],rep:'B',expl:"Les mauvaises conditions ont conduit à des réformes du travail et à l'essor des syndicats."}
+       ]},
+    ]
+
     // ── TEST DE PLACEMENT AGTM — 20 questions mixtes A1→B2 ──────────
     const _PLACEMENT_QS = [
       {q:"My name ___ Kofi.",opts:["A) am","B) is","C) are","D) be"],rep:"B",niv:"A1",dom:"Grammaire"},
@@ -15986,6 +16163,7 @@ ${hon ? `
       const t = window._actTab
       const tabs = [
         {id:'catalogue',label:'📚 Catalogue'},
+        {id:'listening',label:'🎧 Listening'},
         {id:'tests',label:'🎯 Tests & Placement'},
         {id:'evaluations',label:'📝 Évaluations'},
       ]
@@ -16007,6 +16185,10 @@ ${hon ? `
             style="padding:5px 14px;border-radius:8px;border:1px solid rgba(74,144,217,0.4);background:rgba(74,144,217,0.1);color:#4A90D9;cursor:pointer;font-size:.75rem;font-weight:700;transition:all .15s"
             onmouseover="this.style.background='rgba(74,144,217,0.25)'"
             onmouseout="this.style.background='rgba(74,144,217,0.1)'">🇺🇸 Générer un quiz TOEFL</button>
+          <button onclick="window._aiOpenFreeCorrection()"
+            style="padding:5px 14px;border-radius:8px;border:1px solid rgba(128,200,255,0.3);background:rgba(128,200,255,0.08);color:#80C8FF;cursor:pointer;font-size:.75rem;font-weight:700;transition:all .15s"
+            onmouseover="this.style.background='rgba(128,200,255,0.2)'"
+            onmouseout="this.style.background='rgba(128,200,255,0.08)'">✍️ Expression libre</button>
         </div>
       </div>`
       const tabBar = `<div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid rgba(200,150,12,0.2);padding-bottom:0">
@@ -16017,6 +16199,7 @@ ${hon ? `
           border-bottom:${t===tab.id?'2px solid #D4A017':'2px solid transparent'}">${tab.label}</button>`).join('')}
       </div>`
       if (t === 'catalogue') { setContent(_apCatalogue(tabs, t)); return }
+      else if (t === 'listening') { setContent(hero + tabBar + _apListeningView()); return }
       else if (t === 'tests') { setContent(hero + tabBar + _apTestsView()); if(['admin','formateur'].includes(profile?.role)) _apLoadPlacementResults() }
       else _apEvalView(hero + tabBar)
     }
@@ -17186,6 +17369,76 @@ font-family:Space Mono,monospace;font-weight:700;color:#4AE090;margin-left:auto'
         </div>
         ${errHtml}
       </div>`)
+    }
+
+    // ── LISTENING (TOEIC / TOEFL) ──────────────────────────────────
+    function _apListeningView() {
+      const filterNiv = window._actNiv || 'all'
+      const filterExam = window._apListExam || 'all'
+      let items = _LISTENING_EX
+      if (filterExam !== 'all') items = items.filter(e => e.exam === filterExam)
+      if (filterNiv !== 'all') items = items.filter(e => e.niveau === filterNiv)
+      const nbl = _NBL
+      const s = window._apListSel || null
+      const nblArr = [...new Set(_LISTENING_EX.map(e=>e.niveau))].sort()
+      return `<div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <span style="color:#8AAAC0;font-size:.8rem;font-weight:700">Filtrer :</span>
+        <select onchange="window._apListExam=this.value;_apRender()"
+          style="padding:5px 10px;background:rgba(13,27,42,0.7);border:1px solid rgba(200,150,12,0.2);border-radius:7px;color:#D4C8A0;font-size:.78rem;cursor:pointer">
+          <option value="all">Tous les examens</option>
+          <option value="TOEIC" ${filterExam==='TOEIC'?'selected':''}>TOEIC</option>
+          <option value="TOEFL" ${filterExam==='TOEFL'?'selected':''}>TOEFL</option>
+        </select>
+        <select onchange="window._actNiv=this.value;_apRender()"
+          style="padding:5px 10px;background:rgba(13,27,42,0.7);border:1px solid rgba(200,150,12,0.2);border-radius:7px;color:#D4C8A0;font-size:.78rem;cursor:pointer">
+          <option value="all">Tous niveaux</option>
+          ${nblArr.map(n=>`<option value="${n}" ${filterNiv===n?'selected':''}>${n}</option>`).join('')}
+        </select>
+        <span style="margin-left:auto;color:#6A8AAA;font-size:.78rem">${items.length} exercice${items.length>1?'s':''}</span>
+      </div>
+      <div id="ap-list-here" class="grid-2" style="margin-top:8px">
+        ${items.map(ex => {
+          const col = nbl[ex.niveau]||'#4A90D9'
+          const isOpen = s === ex.id
+          return `<div style="background:rgba(13,27,42,0.5);border:1px solid ${isOpen?'rgba(200,150,12,0.4)':'rgba(200,150,12,0.12)'};border-radius:12px;overflow:hidden">
+            <div onclick="window._apListSel=window._apListSel==='${ex.id}'?null:'${ex.id}';window._actTab='listening';_apRender()" style="cursor:pointer;padding:14px;display:flex;align-items:center;gap:10px">
+              <span style="font-size:1.3rem">${ex.exam==='TOEIC'?'🌍':'🇺🇸'}</span>
+              <div style="flex:1;min-width:0">
+                <div style="font-weight:700;color:#E8B84B;font-size:.85rem">${ex.part}</div>
+                <div style="color:#8AAAC0;font-size:.75rem">${ex.exam} · ${ex.duree} min</div>
+              </div>
+              <span style="padding:2px 10px;border-radius:10px;font-size:.68rem;font-weight:800;background:${col}20;color:${col};border:1px solid ${col}40">${ex.niveau}</span>
+              <span style="color:#6A8AAA;font-size:.7rem">${isOpen?'▲':'▼'}</span>
+            </div>
+            ${isOpen ? `<div style="border-top:1px solid rgba(200,150,12,0.12);padding:14px">
+              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+                <div style="flex:1;min-width:180px">
+                  <div style="font-size:.78rem;color:#D4C8A0;font-weight:700;margin-bottom:6px">Objectifs</div>
+                  <ul style="margin:0;padding-left:16px;color:#8AAAC0;font-size:.75rem;line-height:1.6">
+                    ${ex.objectifs.map(o=>`<li>${o}</li>`).join('')}
+                  </ul>
+                  <div style="font-size:.78rem;color:#D4C8A0;font-weight:700;margin:10px 0 6px">Script audio</div>
+                  <div style="background:rgba(0,0,0,0.25);border-radius:8px;padding:10px;font-size:.75rem;color:#90A4AE;line-height:1.5;white-space:pre-wrap;border:1px solid rgba(200,150,12,0.08)">${ex.script}</div>
+                </div>
+                <div style="flex:0 0 280px;max-width:100%">
+                  <div style="font-size:.78rem;color:#D4C8A0;font-weight:700;margin-bottom:6px">Écouter</div>
+                  <div style="background:#0A1520;border-radius:8px;padding:8px;border:1px solid rgba(200,150,12,0.1)">
+                    <iframe width="100%" height="158" src="https://www.youtube-nocookie.com/embed/${ex.video_id}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:6px"></iframe>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:.78rem;color:#D4C8A0;font-weight:700;margin-bottom:6px">Questions de compréhension</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                ${ex.questions.map((q,i)=>`<div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:8px 10px;border:1px solid rgba(200,150,12,0.06)">
+                  <div style="font-size:.78rem;color:#D4C8A0;margin-bottom:5px">${i+1}. ${q.q}</div>
+                  <div style="display:flex;gap:4px;flex-wrap:wrap">${q.opts.map((o,j)=>`<span style="padding:2px 8px;border-radius:6px;font-size:.72rem;background:${String.fromCharCode(65+j)===q.rep?'rgba(74,224,144,0.15)':'rgba(255,255,255,0.04)'};color:${String.fromCharCode(65+j)===q.rep?'#4AE090':'#6A8AAA'};border:1px solid ${String.fromCharCode(65+j)===q.rep?'rgba(74,224,144,0.3)':'rgba(255,255,255,0.06)'}">${o}</span>`).join('')}</div>
+                  <div style="font-size:.68rem;color:#6A8AAA;margin-top:3px">💡 ${q.expl}</div>
+                </div>`).join('')}
+              </div>
+            </div>` : ''}
+          </div>`
+        }).join('')}
+      </div>`
     }
 
     // ── TESTS DE NIVEAU ───────────────────────────────────────────
