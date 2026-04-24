@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport de Diagnostic Pédagogique - AGTM Digital Academy Premium</title>
+    <style>
+        :root {
+            --premium-gold: #D4A017;
+            --premium-sapphire: #4A90D9;
+            --premium-navy: #0D1B2A;
+            --premium-card: #1E2E42;
+            --premium-border: #2C3E50;
+            --premium-text: #E2D8C0;
+            --premium-muted: #8A9AB5;
+            --premium-success: #22C55E;
+            --premium-warning: #F59E0B;
+            --premium-critical: #EF4444;
+            --premium-info: #3B82F6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #09111E 0%, #152540 100%);
+            color: var(--premium-text);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, var(--premium-navy) 0%, #152233 100%);
+            border: 1px solid var(--premium-border);
+            border-radius: 16px;
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
+        }
+        
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--premium-gold) 0%, #F5B942 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--premium-navy);
+        }
+        
+        .title-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--premium-gold) 0%, #F5B942 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        
+        .title-section .subtitle {
+            font-size: 1.1rem;
+            color: var(--premium-muted);
+            font-weight: 400;
+        }
+        
+        .meta-info {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .meta-label {
+            font-size: 0.85rem;
+            color: var(--premium-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        
+        .meta-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--premium-text);
+        }
+        
+        .card {
+            background: rgba(30, 46, 66, 0.8);
+            border: 1px solid var(--premium-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--premium-gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--premium-gold);
+            border-radius: 2px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .status-critical {
+            background: rgba(239, 68, 68, 0.15);
+            color: #FCA5A5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .status-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #FCD34D;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .status-info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93C5FD;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .status-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86EFAC;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--premium-border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        thead {
+            background: linear-gradient(90deg, #1C3258 0%, #2C2208 100%);
+        }
+        
+        th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--premium-gold);
+            border-bottom: 1px solid var(--premium-border);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: top;
+        }
+        
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .problem-cell {
+            color: #FCA5A5;
+            font-weight: 500;
+        }
+        
+        .solution-cell {
+            color: #86EFAC;
+            font-weight: 500;
+        }
+        
+        .recommendation-box {
+            background: rgba(212, 160, 23, 0.08);
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .recommendation-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--premium-gold);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--premium-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--premium-border);
+            margin-top: 40px;
+        }
+        
+        .section-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .section-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-list li:before {
+            content: '•';
+            color: var(--premium-gold);
+            font-size: 1.2rem;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .kpi-item {
+            background: rgba(30, 46, 66, 0.6);
+            border: 1px solid var(--premium-border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--premium-gold);
+            margin: 10px 0;
+        }
+        
+        .kpi-label {
+            font-size: 0.85rem;
+            color: var(--premium-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-title">
+                <div class="logo">📚</div>
+                <div class="title-section">
+                    <h1>Rapport de Diagnostic Pédagogique</h1>
+                    <div class="subtitle">AGTM Digital Academy Premium - Analyse complète du système pédagogique</div>
+                </div>
+            </div>
+            
+            <div class="meta-info">
+                <div class="meta-item">
+                    <div class="meta-label">Date du rapport</div>
+                    <div class="meta-value">23 Avril 2026</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Auditeur</div>
+                    <div class="meta-value">Cline - Architecte Logiciel IA</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Version</div>
+                    <div class="meta-value">1.0</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Statut global</div>
+                    <div class="meta-value"><span class="status-badge status-success">FONCTIONNEL</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section 1: English Corner -->
+        <div class="card">
+            <div class="card-title">🇬🇧 1. English Corner - Espace d'apprentissage autonome</div>
+            
+            <div class="kpi-grid">
+                <div class="kpi-item">
+                    <div class="kpi-value">794+</div>
+                    <div class="kpi-label">Vidéos disponibles</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-value">18</div>
+                    <div class="kpi-label">Modules de grammaire</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-value">140+</div>
+                    <div class="kpi-label">Thèmes de vocabulaire</div>
+                </div>
+                <div class="kpi-item">
+                    <div class="kpi-value">7</div>
+                    <div class="kpi-label">Compétences principales</div>
+                </div>
+            </div>
+            
+            <h3 style="color: var(--premium-sapphire); margin: 20px 0 10px;">✅ Points forts</h3>
+            <ul class="section-list">
+                <li>Interface moderne et responsive (5534 lignes de code HTML/CSS/JS)</li>
+                <li>Intégration YouTube API avec playlists curatées par niveau (A1 → C2)</li>
+                <li>Système de quiz interactif avec génération IA (Claude API)</li>
+                <li>Classe virtuelle synchronisée avec outils formateur</li>
+                <li>Quiz triggers automatiques pendant la lecture vidéo</li>
+                <li>Tracking de progression avec sauvegarde Supabase</li>
+            </ul>
+            
+            <h3 style="color: var(--premium-warning); margin: 20px 0 10px;">⚠️ Points d'attention</h3>
+            <ul class="section-list">
+                <li>API English Corner dépendante de clés externes (YouTube, Listen Notes, Claude)</li>
+                <li>Absence de contenu généré par IA pour tous les niveaux</li>
+                <li>Interface complexe pouvant être simplifiée</li>
+            </ul>
+        </div>
+        
+        <!-- Section 2: Modules pédagogiques -->
+        <div class="card">
+            <div class="card-title">📚 2. Modules pédagogiques et organisation</div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Niveau CECRL</th>
+                            <th>Modules disponibles</th>
+                            <th>Contenu IA généré</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>A1 - Débutant</td>
+                            <td>Présent simple, articles, verbes réguliers</td>
+                            <td>✅ Complet</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                        </tr>
+                        <tr>
+                            <td>A2 - Élémentaire</td>
+                            <td>Passé simple, futur avec "going to", comparatifs</td>
+                            <td>✅ Complet</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                        </tr>
+                        <tr>
+                            <td>B1 - Intermédiaire</td>
+                            <td>Present perfect, verbes modaux, relatives</td>
+                            <td>✅ Complet</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                        </tr>
+                        <tr>
+                            <td>B2 - Intermédiaire supérieur</td>
+                            <td>Conditionnels, voix passive</td>
+                            <td>✅ Complet</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                        </tr>
+                        <tr>
+                            <td>C1 - Avancé</td>
+                            <td>Subjonctif, inversion, langage figuratif</td>
+                            <td>✅ Complet</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                        </tr>
+                        <tr>
+                            <td>C2 - Maîtrise</td>
+                            <td>Discours académique, idiomes avancés</td>
+                            <td>⚠️ Partiel</td>
+                            <td><span class="status-badge status-warning">EN DÉVELOPPEMENT</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="recommendation-box">
+                <div class="recommendation-title">💡 Recommandation</div>
+                <p>Prioriser le développement du contenu C2 pour compléter l'offre "Elite Academy". Intégrer davantage de contenu business English et préparation aux certifications internationales (IELTS, TOEFL, TOEIC).</p>
+            </div>
+        </div>
+        
+        <!-- Section 3: Quiz et évaluations -->
+        <div class="card">
+            <div class="card-title">🧠 3. Système de quiz et évaluations</div>
+            
+            <h3 style="color: var(--premium-sapphire); margin: 20px 0 10px;">Types d'évaluations disponibles</h3>
+            <ul class="section-list">
+                <li><strong>Quiz interactif</strong> : 8 questions aléatoires depuis la banque AGTM</li>
+                <li><strong>Évaluations en ligne</strong> : Fiches partageables (?eval_id=XXX)</li>
+                <li><strong>Quiz triggers vidéo</strong> : Questions automatiques pendant la lecture</li>
+                <li><strong>Quiz manuel formateur</strong> : Diffusion en direct en classe virtuelle</li>
+                <li><strong>Test de niveau</strong> : Évaluation initiale de placement</li>
+                <li><strong>Évaluations de séances</strong> : Formulaire de satisfaction (?satisfaction=ID)</li>
+            </ul>
+            
+            <h3 style="color: var(--premium-warning); margin: 20px 0 10px;">Problèmes identifiés</h3>
+            <ul class="section-list">
+                <li>Banque de questions limitée pour les niveaux avancés</li>
+                <li>Absence de système de correction automatique pour les questions ouvertes</li>
+                <li>Interface d'évaluation formateur peu intuitive en classe virtuelle</li>
+            </ul>
+            
+            <div class="recommendation-box">
+                <div class="recommendation-title">🚀 Amélioration proposée</div>
+                <p>Développer un module IA de génération de questions adaptatives basé sur le niveau et les erreurs fréquentes des apprenants. Ajouter un système de feedback détaillé pour les réponses ouvertes.</p>
+            </div>
+        </div>
+        
+        <!-- Section 4: Gestion des séances -->
+        <div class="card">
+            <div class="card-title">📅 4. Gestion des séances et emploi du temps</div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Composant</th>
+                            <th>Statut</th>
+                            <th>Fonctionnalités</th>
+                            <th>Problèmes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Planning des séances</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                            <td>Création, modification, annulation, Google Meet intégré</td>
+                            <td class="problem-cell">Interface complexe pour les nouveaux formateurs</td>
+                        </tr>
+                        <tr>
+                            <td>Pointage de présence</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                            <td>Formulaire dédié (?pointage=ID), validation en temps réel</td>
+                            <td class="problem-cell">Absence de notification automatique</td>
+                        </tr>
+                        <tr>
+                            <td>Emploi du temps étudiant</td>
+                            <td><span class="status-badge status-success">OPÉRATIONNEL</span></td>
+                            <td>Synchronisation automatique, vue semaine/mois</td>
+                            <td class="problem-cell">Performance sur mobile à améliorer</td>
+                        </tr>
+                        <tr>
+                            <td>Rapports de séance</td>
+                            <td><span class="status-badge status-warning">PARTIEL</span></td>
+                            <td>Génération manuelle, templates disponibles</td>
+                            <td class="problem-cell">Pas d'intégration IA pour la génération</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="recommendation-box">
+                <div class="recommendation-title">⚡ Optimisation workflow</div>
+                <p>Automatiser le workflow complet : planification → notification → pointage → rapport → facturation. Intégrer l'IA pour générer des rapports de séance à partir des notes du formateur.</p>
+            </div>
+        </div>
+        
+        <!-- Section 5: Conformité "Elite Academy" -->
+        <div class="card">
+            <div class="card-title">🏆 5. Conformité avec la politique "Elite Academy"</div>
+            
+            <h3 style="color: var(--premium-sapphire); margin: 20px 0 10px;">✅ Critères respectés</h3>
+            <ul class="section-list">
+                <li><strong>Design premium</strong> : Interface haut de gamme avec couleurs or/saphir</li>
+                <li><strong>Contenu de qualité</strong> : Modules structurés par niveau CECRL</li>
+                <li><strong>Technologie avancée</strong> : IA pédagogique, classe virtuelle, quiz interactifs</li>
+                <li><strong>Expérience utilisateur</strong> : Navigation fluide, responsive design</li>
+                <li><strong>Sécurité des données</strong> : RLS Supabase, authentification sécurisée</li>
+            </ul>
+            
+            <h3 style="color: var(--premium-warning); margin: 20px 0 10px;">⚠️ Critères à améliorer</h3>
+            <ul class="section-list">
+                <li><strong>Contenu exclusif</strong> : Besoin de plus de matériel propriétaire généré par IA</li>
+                <li><strong>Certifications</strong> : Intégration limitée avec les tests officiels (IELTS/TOEFL)</li>
+                <li><strong>Reporting avancé</strong> : Analytics pédagogiques à enrichir</li>
+                <li><strong>Mobile first</strong> : Certaines interfaces nécessitent optimisation mobile</li>
+            </ul>
+            
+            <div class="recommendation-box">
+                <div class="recommendation-title">🎯 Roadmap "Elite Academy"</div>
+                <p>1. Développer 50+ modules propriétaires générés par IA<br>
+                2. Intégrer des simulateurs de tests officiels (IELTS, TOEFL)<br>
+                3. Créer un dashboard analytics avancé pour les formateurs<br>
+                4. Optimiser l'expérience mobile sur toutes les fonctionnalités</p>
+            </div>
+        </div>
+        
+        <!-- Section 6: Recommandations stratégiques -->
+        <div class="card">
+            <div class="card-title">🚀 6. Recommandations stratégiques</div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Priorité</th>
+                            <th>Recommandation</th>
+                            <th>Impact</th>
+                            <th>Effort</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🔴 Haute</td>
+                            <td class="solution-cell">Compléter le contenu C2 et business English</td>
+                            <td>Positionnement premium</td>
+                            <td>Moyen</td>
+                        </tr>
+                        <tr>
+                            <td>🔴 Haute</td>
+                            <td class="solution-cell">Automatiser la génération de rapports de séance par IA</td>
+                            <td>Gain de temps formateurs</td>
+                            <td>Élevé</td>
+                        </tr>
+                        <tr>
+                            <td>🟡 Moyenne</td>
+                            <td class="solution-cell">Développer des simulateurs de tests officiels</td>
+                            <td>Valeur ajoutée marketing</td>
+                            <td>Élevé</td>
+                        </tr>
+                        <tr>
+                            <td>🟡 Moyenne</td>
+                            <td class="solution-cell">Optimiser l'interface mobile de l'English Corner</td>
+                            <td>Expérience utilisateur</td>
+                            <td>Moyen</td>
+                        </tr>
+                        <tr>
+                            <td>🟢 Basse</td>
+                            <td class="solution-cell">Ajouter des notifications push pour les séances</td>
+                            <td>Engagement apprenants</td>
+                            <td>Faible</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="recommendation-box" style="margin-top: 20px;">
+                <div class="recommendation-title">📊 Conclusion</div>
+                <p>La plateforme pédagogique AGTM Digital Academy Premium présente une architecture solide et des fonctionnalités avancées. L'English Corner est particulièrement impressionnant avec son système de quiz interactifs et sa classe virtuelle. Les principales améliorations à apporter concernent l'enrichissement du contenu avancé, l'automatisation des workflows et l'optimisation mobile. La conformité avec la politique "Elite Academy" est globalement bonne, avec quelques axes d'amélioration identifiés.</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Document généré le 23 Avril 2026 — AGTM Digital Academy Premium — Rapport de Diagnostic Pédagogique v1.0</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: var(--premium-muted);">
+                Basé sur l'analyse des fichiers : english_corner.html • dashboard.html • guide_utilisation.html • RAPPORT_AUDIT.md
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Animation simple au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Interaction avec les lignes du tableau
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = 'rgba(212, 160, 23, 0.05)';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

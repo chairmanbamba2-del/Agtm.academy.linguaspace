@@ -49,5 +49,13 @@ export default defineConfig({
   ],
   resolve: {
     alias: { '@': '/src' }
+  },
+  server: {
+    port: 8080,
+    host: true
+  },
+  preview: {
+    port: 8081,
+    host: true
   }
 })

@@ -1,0 +1,438 @@
+<!-- ================================================== -->
+<!-- LOT 2 TRANSFORMÉ - MODULES 10-14 (CŒUR PÉDAGOGIQUE) -->
+<!-- ================================================== -->
+<!-- Transformé pour AGTM Digital Academy - Premium Elite Academy -->
+<!-- Respect strict des IDs critiques et logique onclick -->
+
+<!-- MODULE 10: FORMATEUR IDENTITY CARD (TRANSFORMÉ) -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">👨‍🏫 Profil Formateur</div>
+      <div class="premium-card-subtitle">Vos informations et statistiques</div>
+    </div>
+  </div>
+  <div class="premium-card-body" style="padding: 1.5rem; display: flex; align-items: center; gap: 16px;">
+    <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#1C3258,#2C2208);border:2px solid var(--premium-sapphire);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">👨‍🏫</div>
+    <div>
+      <div class="premium-stat-value" style="color: var(--premium-gold); font-size: .95rem; font-weight: 800;">${_fName}</div>
+      <div class="premium-stat-label" style="font-size:.75rem;color:var(--premium-sapphire);margin-top:2px">${_fPoste}${_fCin?` &nbsp;·&nbsp; <span style="font-family:monospace;color:var(--premium-gold);background:rgba(200,150,12,0.1);padding:1px 7px;border-radius:5px">🪪 ${_fCin}</span>`:''}</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 11: PLANIFIER UNE SÉANCE (TRANSFORMÉ) -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">📅 Planifier une Séance</div>
+      <div class="premium-card-subtitle">Créer une séance de groupe ou individuelle</div>
+    </div>
+  </div>
+  
+  <div class="premium-card-body">
+    <!-- Section 1 : Informations générales -->
+    <div style="margin-bottom:22px">
+      <div class="premium-section-title">
+        <span>📋</span> Informations générales
+      </div>
+      
+      <!-- Mode toggle -->
+      <div class="agtm-btn-group" style="margin-bottom:18px">
+        <button id="planBtnGroupe" onclick="planToggleMode('groupe')" 
+          class="plan-mode-btn active">
+          👥 Séance Groupe (Classe)
+        </button>
+        <button id="planBtnIndiv" onclick="planToggleMode('individuel')" 
+          class="plan-mode-btn">
+          👤 Séance Individuelle
+        </button>
+      </div>
+      
+      <!-- Formateur -->
+      <div class="agtm-field-group">
+        <label class="agtm-label">Formateur responsable *</label>
+        <select id="planFmtSel" class="agtm-select">
+          <option value="">- Sélectionner un formateur -</option>
+          ${fmtOpts}
+        </select>
+      </div>
+      
+      <!-- Date + heures -->
+      <div class="agtm-field-grid" style="grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-bottom:14px">
+        <div>
+          <label class="agtm-label">Date *</label>
+          <input id="planDate" type="date" class="agtm-input" value="${today}" onchange="planCheckConflits()">
+        </div>
+        <div>
+          <label class="agtm-label">Heure début *</label>
+          <input id="planHdeb" type="time" class="agtm-input" value="08:00" onchange="planUpdateDuree();planCheckConflits()">
+        </div>
+        <div>
+          <label class="agtm-label">Heure fin *</label>
+          <input id="planHfin" type="time" class="agtm-input" value="10:00" onchange="planUpdateDuree();planCheckConflits()">
+        </div>
+      </div>
+      
+      <!-- Durée calculée -->
+      <div style="margin-bottom:14px">
+        <label class="agtm-label">Durée calculée</label>
+        <div id="planDureeDisplay" style="padding:10px 13px;border-radius:8px;background:rgba(74,144,217,0.1);border:1px solid var(--premium-sapphire);color:#6AABF0;font-size:.85rem">
+          ${_duree || '2h00'}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Alertes de conflits -->
+    <div id="planConflitAlert" style="display:none; padding:12px 16px; border-radius:10px; background:rgba(224,74,74,0.1); border:1px solid var(--agtm-danger); color:#E04A4A; font-size:.82rem; margin-bottom:18px">
+      ⚠️ Conflit détecté : un formateur est déjà occupé sur ce créneau.
+    </div>
+    
+    <!-- Sujet -->
+    <div class="agtm-field-group">
+      <label class="agtm-label">Sujet / Thème *</label>
+      <input id="planSujet" type="text" class="agtm-input" placeholder="Ex: Grammaire - Passé composé" maxlength="200">
+    </div>
+    
+    <!-- Classe (mode groupe) -->
+    <div id="planClasseSection" class="agtm-field-group">
+      <label class="agtm-label">Classe *</label>
+      <select id="planClasseSel" class="agtm-select" onchange="planUpdateEtudiants()">
+        <option value="">- Sélectionner une classe -</option>
+        ${classeOpts}
+      </select>
+    </div>
+    
+    <!-- Étudiant (mode individuel) -->
+    <div id="planEtudSection" class="agtm-field-group" style="display:none">
+      <label class="agtm-label">Étudiant *</label>
+      <select id="planEtudSel" class="agtm-select">
+        <option value="">- Sélectionner un étudiant -</option>
+        ${etudOpts}
+      </select>
+    </div>
+    
+    <!-- Notes optionnelles -->
+    <div class="agtm-field-group">
+      <label class="agtm-label">Notes internes (optionnel)</label>
+      <textarea id="planNotes" class="agtm-textarea" rows="3" placeholder="Informations supplémentaires pour le formateur..."></textarea>
+    </div>
+  </div>
+  
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        ⚠️ Vérifiez les conflits avant de créer la séance
+      </div>
+      <button onclick="planSubmit()" class="agtm-btn agtm-btn-primary">🚀 Créer la séance</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 12: MES CLASSES & ÉTUDIANTS (TRANSFORMÉ) -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">🏫 Mes Classes & Étudiants</div>
+      <div class="premium-card-subtitle">Gestion de vos groupes d'apprenants</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._refreshClassesFormateur()" class="agtm-btn agtm-btn-secondary agtm-btn-sm">🔄 Actualiser</button>
+    </div>
+  </div>
+  
+  <div class="premium-card-body">
+    <div class="premium-card-title" style="margin-bottom: 1rem;">🏫 Mes Classes & Étudiants Inscrits</div>
+    
+    <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:18px">
+      ${(myClasses||[]).map(cl=>{
+        const clInscs = (inscriptions||[]).filter(i=>i.classe_id===cl.id)
+        return `
+        <div style="background:var(--premium-card-bg);border:1px solid var(--premium-border);border-radius:12px;padding:16px 18px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+            <div>
+              <div style="font-weight:800;color:var(--premium-gold);font-size:.9rem">${cl.nom}</div>
+              <div style="font-size:.72rem;color:var(--premium-text-3);margin-top:2px">
+                ${cl.niveau} · ${cl.horaire||'Horaire à définir'}
+              </div>
+            </div>
+            <span style="font-size:.75rem;padding:3px 10px;border-radius:10px;background:rgba(74,144,217,.15);color:var(--premium-sapphire);border:1px solid rgba(74,144,217,.3)">${clInscs.length} étudiant${clInscs.length>1?'s':''}</span>
+          </div>
+          
+          ${clInscs.length ? `
+          <div style="font-size:.75rem;color:var(--premium-text-3);margin-top:8px;margin-bottom:10px">Étudiants inscrits :</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            ${clInscs.map(i=>{
+              const et=i.etudiants||{}
+              return `<span style="padding:3px 9px;border-radius:14px;font-size:.72rem;background:#1A2D42;color:#6AABF0;border:1px solid #2A3F58">${[et.prenom,et.nom].filter(Boolean).join(' ')||'#'+i.etudiant_id}</span>`
+            }).join('')}
+          </div>` : `
+          <div style="padding:12px 16px;font-size:.78rem;color:var(--premium-text-3)">
+            Aucun étudiant inscrit
+          </div>`}
+        </div>`
+      }).join('')}
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 13: ENGLISH CORNER - ÉVALUATIONS (TRANSFORMÉ) -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">🧪 English Corner</div>
+      <div class="premium-card-subtitle">Évaluations et tests de niveau</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._apStartPlacement()" class="agtm-btn agtm-btn-primary agtm-btn-sm">🎯 Test de Placement</button>
+      <button onclick="window._apOpenEval('A1')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">📝 Évaluation</button>
+    </div>
+  </div>
+  
+  <div class="premium-card-body">
+    <div style="min-height: 300px; display: flex; flex-direction: column; gap: 1rem;">
+      <div class="agtm-skeleton" style="height: 50px; border-radius: 10px;"></div>
+      <div class="agtm-skeleton" style="height: 50px; border-radius: 10px;"></div>
+      <div class="agtm-skeleton" style="height: 50px; border-radius: 10px;"></div>
+    </div>
+    <p id="evErr" style="color: var(--agtm-danger); font-size: .82rem; min-height: 18px; margin-top: 1rem;"></p>
+  </div>
+  
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        <span>Timer: <span id="_apEvalTimer">00:00</span></span>
+        <span style="margin-left: 1rem;">Score: <span id="_apEvalScore">0</span></span>
+      </div>
+      <button id="_certBtn" onclick="window._apPrintCert()" class="agtm-btn agtm-btn-primary" style="display: none;">🎓 Générer Certificat</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 14: RAPPORTS PÉDAGOGIQUES (TRANSFORMÉ) -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">📝 Rapports Pédagogiques</div>
+      <div class="premium-card-subtitle">Suivi des séances et honoraires</div>
+    </div>
+  </div>
+  <div class="premium-card-body" style="padding: 0;">
+    <div style="padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.07)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="font-weight:800;color:var(--premium-gold);font-size:.92rem">📊 Statistiques formateur</div>
+        <span style="font-size:.75rem;padding:3px 10px;border-radius:10px;background:rgba(200,150,12,.15);color:var(--premium-gold);border:1px solid rgba(200,150,12,.3)">${_rapsCount||0} rapport${(_rapsCount||0)>1?'s':''}</span>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        <div style="text-align:center">
+          <div class="stat-value" style="color:#4AE090;font-size:1.5rem;font-weight:800">${_fmtStats?.realisees||0}</div>
+          <div class="stat-label" style="font-size:.68rem;color:var(--premium-text-3)">Séances réalisées</div>
+        </div>
+        <div style="text-align:center">
+          <div class="stat-value" style="color:#4A90D9;font-size:1.5rem;font-weight:800">${_fmtStats?.planifiees||0}</div>
+          <div class="stat-label" style="font-size:.68rem;color:var(--premium-text-3)">À venir</div>
+        </div>
+        <div style="text-align:center">
+          <div class="stat-value" style="color:#E8B84B;font-size:1.5rem;font-weight:800">${_fmtStats?.etudiants||0}</div>
+          <div class="stat-label" style="font-size:.68rem;color:var(--premium-text-3)">Étudiants</div>
+        </div>
+        <div style="text-align:center">
+          <div class="stat-value" style="color:#C8960C;font-size:1.5rem;font-weight:800">${_fmtStats?.honoraires||'0'}€</div>
+          <div class="stat-label" style="font-size:.68rem;color:var(--premium-text-3)">Honoraires</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tableau des rapports -->
+    <div style="overflow-x:auto">
+      <table class="agtm-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Classe / Étudiant</th>
+            <th>Thème</th>
+            <th>Progression</th>
+            <th>Honoraires</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rapsTableBody">
+          ${(_raps||[]).slice(0,8).map(r=>{
+            const progColor = r.progression==='Bonne'?'#4AE090':r.progression==='Moyenne'?'#E8B84B':'#E04A4A'
+            const honoStatut = r.honoraires_formateurs?.[0]?.statut||'—'
+            const honoColor = honoStatut==='Payé'?'#4AE090':honoStatut==='En attente'?'#E8B84B':'#E04A4A'
+            return `
+            <tr style="border-top:1px solid rgba(255,255,255,0.05)">
+              <td style="padding:10px 14px;font-size:.78rem">${r.date_seance||'—'}</td>
+              <td style="padding:10px 14px;font-size:.78rem">${r.classe_nom||r.etudiant_nom||'—'}</td>
+              <td style="padding:10px 14px;font-size:.78rem">${r.theme||'—'}</td>
+              <td style="padding:10px 14px">
+                <span style="padding:3px 10px;border-radius:10px;font-size:.7rem;background:${progColor}20;color:${progColor};border:1px solid ${progColor}40">${r.progression||'—'}</span>
+              </td>
+              <td style="padding:10px 14px">
+                <span style="padding:3px 10px;border-radius:10px;font-size:.7rem;background:${honoColor}20;color:${honoColor};border:1px solid ${honoColor}40">${honoStatut}</span>
+              </td>
+              <td style="padding:10px 14px">
+                <button onclick="_openRapportDetail(${r.id})" class="agtm-btn agtm-btn-secondary agtm-btn-sm">👁️ Voir</button>
+              </td>
+            </tr>`
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-top: 1px solid rgba(255,255,255,0.07);">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        ${(_raps||[]).length} rapport${(_raps||[]).length>1?'s':''} au total
+      </div>
+      <button onclick="navigateTo('rapports')" class="agtm-btn agtm-btn-primary">📋 Voir tous les rapports</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================== -->
+<!-- STYLES COMPLÉMENTAIRES POUR LE LOT 2 -->
+<!-- ================================================== -->
+
+<style>
+  /* Classes spécifiques pour les modules pédagogiques */
+  .premium-section-title {
+    font-weight: 800;
+    color: var(--premium-gold);
+    font-size: .9rem;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .agtm-field-grid {
+    display: grid;
+  }
+  
+  .plan-mode-btn {
+    flex: 1;
+    padding: 10px 14px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: .82rem;
+    cursor: pointer;
+    border: 2px solid var(--agtm-border);
+    background: transparent;
+    color: var(--premium-text-3);
+    transition: all .2s;
+  }
+  
+  .plan-mode-btn.active {
+    border-color: var(--premium-sapphire);
+    background: rgba(74,144,217,.15);
+    color: #6AABF0;
+  }
+  
+  /* Inputs et selects */
+  .agtm-input, .agtm-select, .agtm-textarea {
+    width: 100%;
+    padding: 10px 13px;
+    border-radius: 8px;
+    background: var(--input-bg);
+    border: 1.5px solid var(--agtm-border);
+    color: var(--agtm-white);
+    font-size: .85rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color .15s;
+  }
+  
+  .agtm-input:focus, .agtm-select:focus, .agtm-textarea:focus {
+    border-color: var(--premium-gold);
+  }
+  
+  .agtm-label {
+    display: block;
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--premium-text-3);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    margin-bottom: 6px;
+  }
+  
+  /* Tableaux */
+  .agtm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .82rem;
+  }
+  
+  .agtm-table th {
+    background: var(--card-hd);
+    color: var(--premium-gold-lt);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .72rem;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--agtm-border);
+  }
+  
+  .agtm-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--premium-text-3);
+  }
+  
+  .agtm-table tr:hover {
+    background: rgba(255,255,255,0.03);
+  }
+  
+  /* Badges de statut */
+  .badge-statut {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: .7rem;
+    font-weight: 700;
+    display: inline-block;
+  }
+  
+  .badge-actif { background: rgba(74,224,144,0.15); color: #4AE090; border: 1px solid rgba(74,224,144,0.3); }
+  .badge-inactif { background: rgba(224,74,74,0.15); color: #E04A4A; border: 1px solid rgba(224,74,74,0.3); }
+  .badge-attente { background: rgba(232,184,75,0.15); color: #E8B84B; border: 1px solid rgba(232,184,75,0.3); }
+  
+  /* Badges RBAC pour formateurs */
+  .badge-formateur { background: rgba(42,111,212,0.15); color: var(--premium-sapphire-lt); border: 1px solid rgba(42,111,212,0.3); }
+  
+  /* Squelettes de chargement */
+  .agtm-skeleton {
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .agtm-field-grid {
+      grid-template-columns: 1fr !important;
+    }
+    
+    .agtm-table {
+      font-size: .75rem;
+    }
+    
+    .agtm-table th,
+    .agtm-table td {
+      padding: 8px 12px;
+    }
+    
+    .premium-card-body {
+      padding: 1rem !important;
+    }
+  }
+</style>

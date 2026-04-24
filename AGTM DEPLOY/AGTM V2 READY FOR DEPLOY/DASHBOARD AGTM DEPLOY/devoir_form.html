@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGTM Digital Academy — Soumission de Devoir</title>
+
+  <script>
+    const SUPABASE_URL  = "https://fglzovvsyloprokmdadx.supabase.co";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww";
+  </script>
+
+  <style>
+    html { font-size: 17px; }
+    :root {
+      --gold: #C8960C; --gold-light: #E8B84B;
+      --success: #27AE60; --danger: #E04A4A;
+      --panel-bg: linear-gradient(135deg,#152540 0%,#241C08 100%);
+      --card-hd:  linear-gradient(90deg,#1C3258 0%,#2C2208 100%);
+      --input-bg: linear-gradient(135deg,#0B1828 0%,#1C1408 100%);
+      --border-mix: rgba(200,150,12,0.2);
+      --text-main: #E2D8C0; --text-sub: #8AAAC0; --text-muted: #6A8AAA;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(150deg,#09111E 0%,#160E04 40%,#0B1A2E 70%,#160E04 100%);
+      background-attachment: fixed;
+      color: var(--text-main); min-height: 100vh;
+    }
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#09111E}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(#2A3F58,#3A2A10);border-radius:3px}
+
+    .header { background: linear-gradient(90deg,#0E1E34 0%,#1A1408 100%); padding: 16px 28px; display: flex; align-items: center; gap: 14px; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 12px rgba(0,0,0,.5); }
+    .logo-badge { width: 44px; height: 44px; background: linear-gradient(135deg,#C8960C,#E8B84B); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: .9rem; color: #0A1520; flex-shrink: 0; box-shadow: 0 2px 8px rgba(200,150,12,.4); }
+    .logo-text { color: #E8B84B; font-weight: 800; font-size: 1.05rem; line-height: 1.2; }
+    .logo-sub  { color: #6AABF0; font-size: .68rem; letter-spacing: .05em; }
+    .form-badge { margin-left: auto; background: rgba(200,150,12,.15); border: 1px solid rgba(200,150,12,.4); border-radius: 20px; padding: 5px 14px; color: #E8B84B; font-size: .75rem; font-weight: 700; }
+
+    .wrapper { max-width: 760px; margin: 0 auto; padding: 28px 18px 60px; }
+
+    .card { background: var(--panel-bg); border: 1px solid var(--border-mix); border-radius: 14px; overflow: hidden; margin-bottom: 22px; }
+    .card-head { background: var(--card-hd); padding: 14px 20px; border-bottom: 1px solid var(--border-mix); display: flex; align-items: center; justify-content: space-between; }
+    .card-title { font-weight: 700; color: #E8B84B; font-size: .95rem; }
+    .card-body { padding: 22px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .span-2 { grid-column: span 2; }
+
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: .77rem; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 10px 14px; border-radius: 9px;
+      border: 1.5px solid #3A3A28; background: var(--input-bg);
+      font-size: .9rem; color: var(--text-main); outline: none; transition: border .2s, box-shadow .2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: #C8960C; box-shadow: 0 0 0 2px rgba(200,150,12,.2); }
+    .field textarea { resize: vertical; min-height: 120px; }
+    .req { color: var(--danger); }
+    .field-hint { font-size: .73rem; color: var(--text-muted); margin-top: 5px; }
+
+    .btn-primary {
+      display: block; width: 100%; padding: 13px; border-radius: 10px; border: none; cursor: pointer;
+      background: linear-gradient(135deg,#C8960C,#E8B84B); color: #0A1520; font-weight: 800; font-size: .97rem;
+      transition: opacity .15s; margin-top: 10px; box-shadow: 0 3px 12px rgba(200,150,12,.3);
+    }
+    .btn-primary:hover { opacity: .85; }
+    .btn-primary:disabled { opacity: .5; cursor: default; }
+
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: .72rem; font-weight: 700; }
+    .badge-gold { background: rgba(200,150,12,.18); color: #E8B84B; border: 1px solid rgba(200,150,12,.3); }
+
+    .info-box { background: rgba(74,144,217,.08); border: 1px solid rgba(74,144,217,.3); border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; display: flex; gap: 12px; align-items: flex-start; }
+    .info-box-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+    .success-card { background: linear-gradient(135deg,#0A2A18,#181808); border: 2px solid var(--success); border-radius: 14px; padding: 32px; text-align: center; }
+    .err-msg { color: var(--danger); font-size: .8rem; min-height: 18px; margin-top: 8px; }
+
+    footer { text-align: center; font-size: .68rem; color: #3A5070; padding: 20px; border-top: 1px solid var(--border-mix); margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-badge">AG</div>
+    <div>
+      <div class="logo-text">AGTM Digital Academy</div>
+      <div class="logo-sub">EIP — English In Practice · Abidjan, Côte d'Ivoire</div>
+    </div>
+    <div class="form-badge">📚 Soumission de Devoir</div>
+  </header>
+
+  <!-- APP -->
+  <div class="wrapper">
+
+    <!-- FORMULAIRE -->
+    <div id="formView">
+
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="font-size:1.4rem;font-weight:900;color:#E8B84B;margin-bottom:6px">Remettre mon devoir</div>
+        <div style="font-size:.88rem;color:#7A9AB0">Renseignez vos informations et rédigez ou collez votre réponse ci-dessous.</div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-icon">ℹ️</div>
+        <div style="font-size:.83rem;color:#2E5A8A;line-height:1.5">
+          <strong>Comment soumettre un fichier ?</strong><br/>
+          Si votre devoir est dans un document, uploadez-le sur <strong>Google Drive</strong> ou <strong>OneDrive</strong>, activez le partage ("Tout le monde avec le lien") et collez le lien dans le champ <em>Lien du fichier</em> ci-dessous.
+        </div>
+      </div>
+
+      <!-- Section 1 : Identité de l'étudiant -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">👤 Vos informations</span>
+          <span class="badge badge-gold">Étudiant</span>
+        </div>
+        <div class="card-body">
+          <div class="grid-2">
+            <div class="field span-2">
+              <label>Nom complet <span class="req">*</span></label>
+              <input id="eNom" type="text" placeholder="Prénom et Nom" required/>
+            </div>
+            <div class="field">
+              <label>Adresse email</label>
+              <input id="eEmail" type="email" placeholder="votre@email.com"/>
+            </div>
+            <div class="field">
+              <label>Votre niveau</label>
+              <select id="eNiv">
+                <option value="">— Non précisé</option>
+                <option>A1 — Débutant</option>
+                <option>A2 — Élémentaire</option>
+                <option>B1 — Intermédiaire</option>
+                <option>B2 — Avancé</option>
+                <option>C1 — Expert</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Classe / Groupe</label>
+              <input id="eClasse" type="text" placeholder="Ex: Groupe B1 Soir, Cours particulier…"/>
+            </div>
+            <div class="field">
+              <label>Sélectionnez votre formateur <span class="req">*</span></label>
+              <select id="eFmtSelect">
+                <option value="">— Choisir un formateur —</option>
+              </select>
+              <input id="eFmt" type="hidden"/>
+              <div class="field-hint">Sélectionnez votre formateur dans la liste du personnel AGTM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2 : Le devoir -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">📝 Le Devoir</span>
+          <span class="badge badge-gold">Soumission</span>
+        </div>
+        <div class="card-body">
+          <div class="field">
+            <label>Intitulé / Titre du devoir <span class="req">*</span></label>
+            <input id="dTitre" type="text" placeholder="Ex: Exercice Present Perfect, Rédaction Business Email, Dialogue oral…"/>
+          </div>
+
+          <div class="field">
+            <label>Votre réponse / Travail <span class="req">*</span></label>
+            <textarea id="dReponse" placeholder="Rédigez ici votre réponse, votre texte, ou une description de votre travail…"></textarea>
+            <div class="field-hint">Écrivez directement ici OU fournissez un lien vers votre fichier ci-dessous.</div>
+          </div>
+
+          <div class="field">
+            <label>Lien vers le fichier (Google Drive, OneDrive…)</label>
+            <input id="dFichier" type="url" placeholder="https://drive.google.com/…"/>
+            <div class="field-hint">Optionnel — collez un lien de partage.</div>
+          </div>
+
+          <!-- TÉLÉVERSEMENT DIRECT -->
+          <div class="field">
+            <label>OU téléverser directement votre fichier <span style="color:#888;font-weight:400;text-transform:none">(PDF, Word, image — max 20 Mo)</span></label>
+            <div id="devDropZone" style="border:2px dashed var(--input-bd);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:all .2s;background:#F8FAFC"
+              onclick="document.getElementById('devFile').click()"
+              ondragover="event.preventDefault();this.style.borderColor='var(--gold)';this.style.background='rgba(200,150,12,.04)'"
+              ondragleave="this.style.borderColor='var(--input-bd)';this.style.background='#F8FAFC'"
+              ondrop="event.preventDefault();this.style.borderColor='var(--input-bd)';this.style.background='#F8FAFC';handleDevDrop(event.dataTransfer.files[0])">
+              <div style="font-size:1.8rem;margin-bottom:6px">📎</div>
+              <div style="font-size:.85rem;font-weight:600;color:var(--text-sub);margin-bottom:3px">Cliquez ou glissez votre fichier ici</div>
+              <div style="font-size:.73rem;color:var(--text-muted)">PDF, DOC, DOCX, JPG, PNG, MP3, MP4</div>
+            </div>
+            <input id="devFile" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.mp3,.mp4,.ogg,.wav" style="display:none" onchange="handleDevFile(this.files[0])"/>
+            <div id="devPreview" style="display:none;margin-top:10px;padding:10px 14px;background:linear-gradient(135deg,#0A2A18,#181808);border:1px solid #27AE60;border-radius:8px;align-items:center;gap:10px">
+              <span style="font-size:1.1rem">✅</span>
+              <div style="flex:1">
+                <div id="devFileName" style="font-size:.85rem;font-weight:700;color:var(--text-main)"></div>
+                <div id="devFileSize" style="font-size:.72rem;color:var(--text-muted)"></div>
+              </div>
+              <button onclick="clearDev()" style="padding:3px 10px;border-radius:6px;border:1px solid var(--danger);background:transparent;color:var(--danger);font-size:.75rem;cursor:pointer">✕</button>
+            </div>
+            <div id="devUploadProgress" style="display:none;margin-top:8px">
+              <div id="devProgressTxt" style="font-size:.78rem;color:var(--sapphire);margin-bottom:4px">Téléversement en cours…</div>
+              <div style="height:6px;background:#DDE4EF;border-radius:3px;overflow:hidden">
+                <div id="devProgressBar" style="height:6px;background:var(--sapphire);border-radius:3px;width:0%;transition:width .3s"></div>
+              </div>
+            </div>
+          </div>
+
+          <p id="formErr" class="err-msg"></p>
+          <button class="btn-primary" id="submitBtn" onclick="submitDevoir()">📤 Soumettre le Devoir</button>
+        </div>
+      </div>
+
+    </div><!-- /formView -->
+
+    <!-- SUCCÈS -->
+    <div id="successView" style="display:none">
+      <div class="success-card">
+        <div style="font-size:3rem;margin-bottom:16px">🎉</div>
+        <div style="font-size:1.2rem;font-weight:900;color:#4AE090;margin-bottom:8px">Devoir soumis avec succès !</div>
+        <div id="successMsg" style="font-size:.88rem;color:#4A6070;margin-bottom:24px;line-height:1.6"></div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button onclick="location.reload()" style="padding:10px 24px;border-radius:9px;border:1.5px solid #C8960C;background:transparent;color:#C8960C;font-weight:700;font-size:.85rem;cursor:pointer">
+            ➕ Soumettre un autre devoir
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /wrapper -->
+
+  <footer>
+    AGTM Digital Academy &nbsp;·&nbsp; EIP English In Practice &nbsp;·&nbsp; Propriété de <strong style="color:#C8960C">ISSA BAMBA</strong> &nbsp;·&nbsp; © 2026
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
+
+    // ════════════════════════════════════════════════════════════════
+    // RECO ① : CHARGEMENT DES FORMATEURS DEPUIS LA TABLE PERSONNEL
+    // ════════════════════════════════════════════════════════════════
+    async function chargerFormateurs() {
+      try {
+        const { data, error } = await sb
+          .from('personnel')
+          .select('id, nom, prenom, poste')
+          .in('poste', ['Formateur', 'Enseignant', 'Directeur', 'Directeur Adjoint'])
+          .eq('statut', 'Actif')
+          .order('nom')
+        if (error) throw error
+        const select = document.getElementById('eFmtSelect')
+        if (data && data.length > 0) {
+          data.forEach(f => {
+            const opt = document.createElement('option')
+            opt.value = f.id
+            opt.textContent = `${f.prenom} ${f.nom} — ${f.poste}`
+            select.appendChild(opt)
+          })
+        }
+      } catch (err) {
+        console.warn('Impossible de charger les formateurs :', err.message)
+      }
+    }
+
+    // Charger les formateurs au démarrage
+    chargerFormateurs()
+
+    // Mettre à jour le champ caché quand l'étudiant sélectionne un formateur
+    document.getElementById('eFmtSelect').addEventListener('change', function() {
+      const selected = this.options[this.selectedIndex]
+      document.getElementById('eFmt').value = selected.textContent.split(' — ')[0] || ''
+    })
+
+    // ── Fichier devoir helpers ──────────────────────────────────
+    window._devFile = null
+
+    window.handleDevFile = function(file) {
+
+      if (!file) return
+      if (file.size > 20 * 1024 * 1024) { alert('Fichier trop volumineux (max 20 Mo)'); return }
+      window._devFile = file
+      document.getElementById('devFileName').textContent = file.name
+      document.getElementById('devFileSize').textContent = (file.size / 1024).toFixed(1) + ' Ko'
+      document.getElementById('devPreview').style.display = 'flex'
+      document.getElementById('devDropZone').style.borderColor = '#27AE60'
+    }
+
+    window.handleDevDrop = function(file) { if (file) handleDevFile(file) }
+
+    window.clearDev = function() {
+      window._devFile = null
+      document.getElementById('devFile').value = ''
+      document.getElementById('devPreview').style.display = 'none'
+      document.getElementById('devDropZone').style.borderColor = 'var(--input-bd)'
+    }
+
+    async function uploadDevFichier(nom, titre) {
+      if (!window._devFile) return null
+      const file = window._devFile
+      const ext  = file.name.split('.').pop()
+      const path = `${nom}_${titre}_${Date.now()}.${ext}`.replace(/[^a-zA-Z0-9._-]/g,'_').substring(0, 100)
+      document.getElementById('devUploadProgress').style.display = 'block'
+      document.getElementById('devProgressBar').style.width = '30%'
+      const { data, error } = await sb.storage.from('devoirs-fichiers').upload(path, file, { upsert: true })
+      if (error) { console.error(error); return null }
+      document.getElementById('devProgressBar').style.width = '100%'
+      document.getElementById('devProgressTxt').textContent = '✅ Fichier téléversé !'
+      const { data: urlData } = sb.storage.from('devoirs-fichiers').getPublicUrl(path)
+      return urlData?.publicUrl || null
+    }
+
+    window.submitDevoir = async function() {
+      const etudiant_nom   = document.getElementById('eNom').value.trim()
+      const etudiant_email = document.getElementById('eEmail').value.trim()
+      const niveau         = document.getElementById('eNiv').value
+      const classe_nom     = document.getElementById('eClasse').value.trim()
+      const formateur_nom  = document.getElementById('eFmt').value.trim()
+      const titre          = document.getElementById('dTitre').value.trim()
+      const reponse        = document.getElementById('dReponse').value.trim()
+      const fichier_url    = document.getElementById('dFichier').value.trim()
+      const err            = document.getElementById('formErr')
+
+      err.textContent = ''
+      if (!etudiant_nom)         { err.textContent = 'Veuillez renseigner votre nom.'; return }
+      if (!titre)                { err.textContent = "Veuillez renseigner le titre du devoir."; return }
+      if (!reponse && !fichier_url && !window._devFile) { err.textContent = "Veuillez rédiger votre réponse, fournir un lien ou téléverser un fichier."; return }
+
+      const btn = document.getElementById('submitBtn')
+      btn.disabled = true
+      btn.textContent = '⏳ Envoi en cours…'
+
+      // Upload fichier si fourni
+      let uploadedUrl = null
+      if (window._devFile) {
+        uploadedUrl = await uploadDevFichier(etudiant_nom, titre)
+      }
+      // Priorité : fichier uploadé > lien manuel
+      const fichier_final = uploadedUrl || fichier_url || null
+
+      // Récupérer le formateur_id du select
+      const formateurId = document.getElementById('eFmtSelect').value || null
+
+      const { error } = await sb.from('devoirs').insert({
+        etudiant_nom,
+        etudiant_email: etudiant_email || null,
+        classe_nom:     classe_nom     || null,
+        niveau:         niveau         || 'Non précisé',
+        formateur_nom:  formateur_nom  || null,
+        formateur_id:   formateurId    || null,   // RECO ① : liaison avec table personnel
+        titre,
+        reponse:    reponse      || null,
+        fichier_url: fichier_final,
+        statut: 'Soumis',
+      })
+
+
+      if (error) {
+        err.textContent = 'Erreur lors de la soumission : ' + error.message
+        btn.disabled = false
+        btn.textContent = '📤 Soumettre le Devoir'
+        return
+      }
+
+      const dateStr = new Date().toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' })
+      document.getElementById('successMsg').innerHTML =
+        `Votre devoir <strong>« ${titre} »</strong> a été transmis le <strong>${dateStr}</strong>.<br/>
+         Votre formateur${formateur_nom ? ' <strong>'+formateur_nom+'</strong>' : ''} recevra votre travail et vous fera un retour.`
+      document.getElementById('formView').style.display = 'none'
+      document.getElementById('successView').style.display = 'block'
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  </script>
+</body>
+</html>

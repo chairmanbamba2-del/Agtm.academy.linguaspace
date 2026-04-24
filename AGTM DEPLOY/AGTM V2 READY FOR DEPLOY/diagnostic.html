@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGTM — Diagnostic</title>
+  <style>
+    body { font-family: monospace; background: #0D1B2A; color: #E2D8C0; padding: 24px; margin: 0; }
+    h1 { color: #C8960C; margin-bottom: 20px; }
+    .test { background: #152233; border: 1px solid #2A3F58; border-radius: 8px; padding: 14px 18px; margin-bottom: 10px; }
+    .test-name { font-weight: bold; color: #90A4AE; margin-bottom: 6px; font-size: .85rem; }
+    .ok  { color: #4AE090; font-size: .9rem; }
+    .err { color: #E04A4A; font-size: .9rem; }
+    .pending { color: #E8B84B; font-size: .9rem; }
+    .detail { color: #5A7090; font-size: .75rem; margin-top: 4px; word-break: break-all; }
+    #summary { margin-top: 20px; padding: 16px; border-radius: 8px; font-size: .9rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Diagnostic AGTM</h1>
+  <div id="tests"></div>
+  <div id="summary" style="background:#1A2D42;border:1px solid #2A3F58">Analyse en cours…</div>
+
+  <script type="module">
+    const SUPABASE_URL  = 'https://fglzovvsyloprokmdadx.supabase.co'
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww'
+
+    const results = []
+
+    function addTest(name, status, detail = '') {
+      results.push({ name, status, detail })
+      render()
+    }
+
+    function render() {
+      document.getElementById('tests').innerHTML = results.map(r => `
+        <div class="test">
+          <div class="test-name">${r.name}</div>
+          <div class="${r.status === 'ok' ? 'ok' : r.status === 'err' ? 'err' : 'pending'}">
+            ${r.status === 'ok' ? '✅ OK' : r.status === 'err' ? '❌ ÉCHEC' : '⏳ En cours…'}
+          </div>
+          ${r.detail ? `<div class="detail">${r.detail}</div>` : ''}
+        </div>
+      `).join('')
+    }
+
+    async function runDiag() {
+
+      // TEST 1 — Supabase SDK chargement
+      addTest('1. Chargement Supabase SDK (cdn.jsdelivr.net)', 'pending')
+      try {
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm')
+        addTest('1. Chargement Supabase SDK (cdn.jsdelivr.net)', 'ok', 'SDK importé avec succès')
+
+        const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
+
+        // TEST 2 — Connexion Supabase
+        addTest('2. Connexion au projet Supabase', 'pending')
+        try {
+          const { data, error } = await sb.from('classes').select('id').limit(1)
+          if (error) {
+            addTest('2. Connexion au projet Supabase', 'err', 'Erreur: ' + error.message)
+          } else {
+            addTest('2. Connexion au projet Supabase', 'ok', 'Projet accessible (REST API OK)')
+          }
+        } catch(e) {
+          addTest('2. Connexion au projet Supabase', 'err', e.message)
+        }
+
+        // TEST 3 — Session utilisateur
+        addTest('3. Session utilisateur', 'pending')
+        try {
+          const { data: { session }, error } = await sb.auth.getSession()
+          if (error) {
+            addTest('3. Session utilisateur', 'err', 'Erreur session: ' + error.message)
+          } else if (session) {
+            const role = session.user?.app_metadata?.role || session.user?.user_metadata?.role || '(non défini)'
+            addTest('3. Session utilisateur', 'ok', `Connecté: ${session.user.email} | Rôle: ${role}`)
+          } else {
+            addTest('3. Session utilisateur', 'err', 'Aucune session active — vous n\'êtes pas connecté')
+          }
+        } catch(e) {
+          addTest('3. Session utilisateur', 'err', e.message)
+        }
+
+        // TEST 4 — Table utilisateurs accessible
+        addTest('4. Table utilisateurs (RLS)', 'pending')
+        try {
+          const { data, error } = await sb.from('utilisateurs').select('role').limit(1)
+          if (error) {
+            addTest('4. Table utilisateurs (RLS)', 'err', 'Erreur: ' + error.message)
+          } else {
+            addTest('4. Table utilisateurs (RLS)', 'ok', `Table accessible (${data?.length ?? 0} ligne(s) visible(s))`)
+          }
+        } catch(e) {
+          addTest('4. Table utilisateurs (RLS)', 'err', e.message)
+        }
+
+        // TEST 5 — Tables essentielles au dashboard
+        addTest('5. Tables essentielles (etudiants, seances, paiements…)', 'pending')
+        try {
+          const tables = ['etudiants','seances','paiements','depenses','fiches_paie','personnel','classes']
+          const checks = await Promise.all(tables.map(t =>
+            sb.from(t).select('id').limit(1).then(r => ({ table: t, ok: !r.error, err: r.error?.message }))
+          ))
+          const failed = checks.filter(c => !c.ok)
+          if (failed.length) {
+            addTest('5. Tables essentielles (etudiants, seances, paiements…)', 'err',
+              'Tables manquantes ou inaccessibles: ' + failed.map(f => f.table + ' (' + f.err + ')').join(' | '))
+          } else {
+            addTest('5. Tables essentielles (etudiants, seances, paiements…)', 'ok', 'Toutes les tables sont accessibles')
+          }
+        } catch(e) {
+          addTest('5. Tables essentielles (etudiants, seances, paiements…)', 'err', e.message)
+        }
+
+      } catch(e) {
+        addTest('1. Chargement Supabase SDK (cdn.jsdelivr.net)', 'err',
+          'Impossible de charger le SDK: ' + e.message + ' — Vérifiez votre connexion internet ou désactivez votre antivirus')
+      }
+
+      // TEST 6 — Tailwind CDN
+      addTest('6. Tailwind CSS CDN', 'pending')
+      try {
+        const r = await fetch('https://cdn.tailwindcss.com', { mode: 'no-cors' })
+        addTest('6. Tailwind CSS CDN', 'ok', 'CDN accessible')
+      } catch(e) {
+        addTest('6. Tailwind CSS CDN', 'err', 'CDN inaccessible: ' + e.message)
+      }
+
+      // Résumé
+      const errors = results.filter(r => r.status === 'err')
+      const summary = document.getElementById('summary')
+      if (errors.length === 0) {
+        summary.style.background = '#1A4A2A'
+        summary.style.borderColor = '#4AE090'
+        summary.innerHTML = '✅ Tout semble correct. Le problème est peut-être un cache navigateur — essaie Ctrl+Shift+R.'
+      } else {
+        summary.style.background = '#4A1A1A'
+        summary.style.borderColor = '#E04A4A'
+        summary.innerHTML = '❌ ' + errors.length + ' problème(s) détecté(s). Envoie cette page à ton développeur.'
+      }
+    }
+
+    runDiag()
+  </script>
+</body>
+</html>

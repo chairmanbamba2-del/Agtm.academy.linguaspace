@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import Modal from '../components/ui/Modal'
 import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 import { ElasticBubble } from '../components/ui/AIWidgets'
 import { useUserStore } from '../store/userStore'
-import { supabase, markModuleComplete, updateProgress } from '../lib/supabase'
 import { generateQuiz } from '../lib/ai'
 import { LANGUAGES } from '../lib/constants'
+import { useModule, useCompleteModule } from '../hooks/useModules'
 
 export default function Module() {
   const { lang, id } = useParams()
@@ -15,37 +15,28 @@ export default function Module() {
   const user          = useUserStore(s => s.user)
   const progress      = useUserStore(s => s.progress)
 
-  const [module, setModule]     = useState(null)
   const [quiz, setQuiz]         = useState(null)
   const [answers, setAnswers]   = useState({})
   const [showResult, setResult] = useState(false)
-  const [phase, setPhase]       = useState('content') // content | quiz | result
+  const [phase, setPhase]       = useState('content')
   const [loading, setLoading]   = useState(false)
   const [quizModalOpen, setQuizModalOpen] = useState(false)
 
   const prog  = progress.find(p => p.language === lang)
   const level = prog?.current_level || 'A1'
 
-  useEffect(() => {
-    async function load() {
-      const { data } = await supabase.from('lingua_modules').select('*').eq('id', id).single()
-      setModule(data || DEMO_MODULE)
-    }
-    load()
-  }, [id])
+  const { data: module, isLoading: moduleLoading } = useModule(id)
+  const completeMutation = useCompleteModule()
 
   async function startQuiz() {
     setQuizModalOpen(true)
     setPhase('quiz')
-    
-    // Priorité des données : quiz_json en base > génération IA > fallback
+
     if (module.quiz_json && module.quiz_json.questions) {
-      // Utiliser le quiz pré-généré stocké en base
       setQuiz(module.quiz_json.questions)
       return
     }
-    
-    // Fallback : générer via Edge Function AI
+
     setLoading(true)
     try {
       const data = await generateQuiz({
@@ -66,14 +57,15 @@ export default function Module() {
     const score   = Math.round((correct / quiz.length) * 100)
     setPhase('result')
 
-    await markModuleComplete(user.id, module.id, score)
-
-    // Mettre à jour XP
     const xpGain = score >= 80 ? 100 : score >= 60 ? 70 : 40
-    await updateProgress(user.id, lang, {
-      xp_points: (prog?.xp_points || 0) + xpGain,
-      modules_completed: (prog?.modules_completed || 0) + 1,
-      last_activity_at: new Date().toISOString()
+
+    completeMutation.mutate({
+      userId: user.id,
+      moduleId: module.id,
+      score,
+      lang,
+      xpPoints: (prog?.xp_points || 0) + xpGain,
+      modulesCompleted: (prog?.modules_completed || 0) + 1,
     })
   }
 
@@ -90,7 +82,7 @@ export default function Module() {
 
   const score = quiz ? quiz.filter(q => answers[q.id] === q.correct).length : 0
 
-  if (!module) {
+  if (moduleLoading || !module) {
     return (
       <AppLayout>
         <div className="flex items-center justify-center h-64 text-gold font-mono text-xs tracking-widest animate-pulse">
@@ -102,7 +94,6 @@ export default function Module() {
 
   return (
     <AppLayout>
-      {/* Navigation */}
       <div className="flex items-center gap-2 text-xs text-muted mb-6">
         <Link to="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
         <span>/</span>
@@ -111,7 +102,6 @@ export default function Module() {
         <span className="text-white">{module.title}</span>
       </div>
 
-      {/* Header module */}
       <MasterCard variant="corner" padding="lg" className="mb-8">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -127,9 +117,7 @@ export default function Module() {
         </div>
       </MasterCard>
 
-      {/* Contenu du module */}
       <div>
-        {/* Contenu du module */}
         {module.content_url && (
           <MasterCard variant="content" padding="none" className="mb-6 aspect-video overflow-hidden">
             <iframe src={module.content_url} className="w-full h-full" allowFullScreen title={module.title} />
@@ -152,7 +140,6 @@ export default function Module() {
         </div>
       </div>
 
-      {/* Quiz Modal */}
       <Modal
         open={quizModalOpen}
         onClose={handleQuizModalClose}
@@ -229,7 +216,6 @@ export default function Module() {
               </MasterCard>
             </ElasticBubble>
 
-            {/* Corrections */}
             <div className="space-y-3 mb-8">
               {quiz.map(q => {
                 const ok = answers[q.id] === q.correct
@@ -256,32 +242,6 @@ export default function Module() {
       </Modal>
     </AppLayout>
   )
-}
-
-const DEMO_MODULE = {
-  id: 'demo', level: 'A1', order_num: 1, content_type: 'lesson', duration_min: 15,
-  title: 'Greetings and Introductions',
-  description: 'Learn to greet people and introduce yourself in English.',
-  content_text: `# Greetings and Introductions
-
-## Basic Greetings
-- **Hello** / **Hi** — informal greeting
-- **Good morning** — used before noon
-- **Good afternoon** — used from noon to 6pm
-- **Good evening** — used after 6pm
-
-## Introducing Yourself
-- "My name is ___."
-- "I am from ___."
-- "I am ___ years old."
-- "Nice to meet you!"
-
-## Practice Dialogue
-A: Hello! My name is Marie. What's your name?
-B: Hi Marie! I'm Paul. Nice to meet you.
-A: Nice to meet you too! Where are you from?
-B: I'm from Côte d'Ivoire. And you?
-A: I'm from Senegal.`
 }
 
 const FALLBACK_QUIZ = [

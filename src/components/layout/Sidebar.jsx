@@ -15,6 +15,7 @@ const LANG_COLORS = {
   es: { accent: '#F1BF00', glow: 'rgba(241,191,0,0.20)' },
   de: { accent: '#94A3B8', glow: 'rgba(148,163,184,0.20)' },
   fr: { accent: '#4A7FBF', glow: 'rgba(74,127,191,0.20)' },
+  ar: { accent: '#059669', glow: 'rgba(5,150,105,0.20)' },
 }
 
 const NAV_SECTIONS = [
@@ -216,15 +217,30 @@ export default function Sidebar({ open, onClose }) {
             </div>
           )}
 
+          {/* Messagerie */}
+          <div className="mb-2">
+            <SectionLabel>Communication</SectionLabel>
+            <Link to="/messenger" onClick={onClose}
+              className="flex items-center gap-2.5 px-3 py-2 mb-0.5 rounded-sm text-sm text-muted hover:text-white hover:bg-white/4 transition-all duration-200">
+              Messagerie
+            </Link>
+          </div>
+
           {/* Liens admin */}
           {isAdmin && (
             <div className="mb-2">
               <SectionLabel>Administration</SectionLabel>
               {[
-                { path: '/admin',          label: 'Dashboard' },
-                { path: '/admin/users',    label: 'Utilisateurs' },
-                { path: '/admin/finance',  label: 'Finance' },
-                { path: '/admin/marketing',label: 'Marketing' },
+                { path: '/admin',             label: 'Dashboard' },
+                { path: '/admin/users',       label: 'Utilisateurs' },
+                { path: '/admin/subscribers', label: 'Abonnés' },
+                { path: '/admin/finance',     label: 'Finance' },
+                { path: '/admin/marketing',   label: 'Marketing' },
+                { path: '/admin/inbox',       label: 'Boîte de réception' },
+                { path: '/admin/ai-permissions', label: 'Permissions IA' },
+                { path: '/admin/certifications', label: 'Certifications' },
+                { path: '/admin/admin-roles', label: 'Rôles admin' },
+                { path: '/admin/docs',        label: 'Documentation' },
               ].map(({ path, label }) => (
                 <Link
                   key={path}

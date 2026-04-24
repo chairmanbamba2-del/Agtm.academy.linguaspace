@@ -1,0 +1,15 @@
+﻿        <!-- ── KPIs ────────────────────────────────────────────── -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px">
+          ${kpi('👨‍🎓','Étudiants Actifs', nbActifs??'…','#4A90D9')}
+          ${kpi('💰','Revenus du Mois', fmtMoney(revMois),'#C8960C')}
+          ${kpi('🌐','Nouvelles Inscriptions Web', nbWeb??'…','#4AE090')}
+          ${kpi('📅','Séances récentes', (seances5||[]).length,'#E8B84B')}
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px">
+          ${kpi('💸','Charges du Mois', fmtMoney(totalCharges),'#E04A4A')}
+          ${kpi('👔','Salaires Payés (mois)', fmtMoney(salairesPaies),'#9B59B6')}
+          ${kpi('🏦','Solde Net du Mois', fmtMoney(soldeNet), soldeNet>=0?'#4AE090':'#E04A4A')}
+          ${kpi('🏷️','Autres Charges', fmtMoney(totalCharges - salairesPaies < 0 ? 0 : totalCharges - salairesPaies),'#E8B84B')}
+        </div>
+
+        <!-- ── Dossiers Formateurs ─────────────────────────────── -->

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep \"\\\\.js$\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(dir \"C:\\\\Users\\\\ibrah\\\\Desktop\\\\AGTM ACADEMY DESIGN\\\\AGTM_DIGITAL_ACADEMY_Premium\\\\AGTM V2 READY FOR DEPLOY\\\\DASHBOARD AGTM DEPLOY\" /b)"
+    ]
+  }
+}

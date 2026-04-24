@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS lingua_transactions (
 CREATE INDEX IF NOT EXISTS idx_transactions_date    ON lingua_transactions(transaction_date DESC);
 CREATE INDEX IF NOT EXISTS idx_transactions_user    ON lingua_transactions(user_id, direction);
 CREATE INDEX IF NOT EXISTS idx_transactions_type    ON lingua_transactions(type, status);
-CREATE INDEX IF NOT EXISTS idx_transactions_month   ON lingua_transactions(date_trunc('month', transaction_date));
+-- CREATE INDEX IF NOT EXISTS idx_transactions_month   ON lingua_transactions(EXTRACT(YEAR FROM transaction_date), EXTRACT(MONTH FROM transaction_date));
 
 -- Dépenses opérationnelles
 CREATE TABLE IF NOT EXISTS lingua_expenses (
@@ -239,16 +239,19 @@ ALTER TABLE lingua_transactions  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE lingua_expenses      ENABLE ROW LEVEL SECURITY;
 
 -- Tests : accès par le propriétaire uniquement
+DROP POLICY IF EXISTS "Users manage own tests" ON lingua_level_tests;
 CREATE POLICY "Users manage own tests"
   ON lingua_level_tests FOR ALL
   USING (user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid()));
 
 -- Certificats : lecture par le propriétaire + lecture publique via verification_code
+DROP POLICY IF EXISTS "Users see own certificates" ON lingua_certificates;
 CREATE POLICY "Users see own certificates"
   ON lingua_certificates FOR SELECT
   USING (user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid()));
 
 -- Certificats : vérification publique (sans auth) via verification_code
+DROP POLICY IF EXISTS "Public certificate verification" ON lingua_certificates;
 CREATE POLICY "Public certificate verification"
   ON lingua_certificates FOR SELECT
   USING (TRUE);  -- Filtrage par verification_code fait dans l'application

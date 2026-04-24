@@ -1,0 +1,273 @@
+<!-- ================================================== -->
+<!-- LOT 1: Modules Administratifs Core (4-9) -->
+<!-- ================================================== -->
+
+<!-- MODULE 4: Tableau de bord Admin (KPIs) -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">📊 Tableau de Bord Principal</div>
+      <div class="premium-card-subtitle">Indicateurs clés de performance de l'académie</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._refreshKPIs()" class="agtm-btn agtm-btn-secondary agtm-btn-sm">🔄 Actualiser</button>
+    </div>
+  </div>
+
+  <div class="premium-card-body">
+    <!-- Grille de KPIs -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px;">
+      ${kpi('👨‍🎓', 'Étudiants Actifs', nbActifs??'…', '#4A90D9')}
+      ${kpi('💰', 'Revenus du Mois', fmtMoney(revMois), '#C8960C')}
+      ${kpi('🌐', 'Nouvelles Inscriptions Web', nbWeb??'…', '#4AE090')}
+      ${kpi('📅', 'Séances récentes', (seances5||[]).length, '#E8B84B')}
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 0;">
+      ${kpi('💸', 'Charges du Mois', fmtMoney(totalCharges), '#E04A4A')}
+      ${kpi('👔', 'Salaires Payés (mois)', fmtMoney(salairesPaies), '#9B59B6')}
+      ${kpi('🏦', 'Solde Net du Mois', fmtMoney(soldeNet), soldeNet>=0?'#4AE090':'#E04A4A')}
+      ${kpi('🏷️', 'Autres Charges', fmtMoney(totalCharges - salairesPaies < 0 ? 0 : totalCharges - salairesPaies), '#E8B84B')}
+    </div>
+  </div>
+
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">Dernière mise à jour : <span id="kpiLastUpdate">aujourd'hui</span></div>
+      <button onclick="navigateTo('analytics')" class="agtm-btn agtm-btn-ghost agtm-btn-sm">📈 Voir l'analytique détaillée →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 5: Agenda du jour -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">📅 Agenda du Jour</div>
+      <div class="premium-card-subtitle">Séances et événements planifiés pour aujourd'hui</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._refreshAgenda()" class="agtm-btn agtm-btn-secondary agtm-btn-sm">🔄 Actualiser</button>
+      <button onclick="navigateTo('planning')" class="agtm-btn agtm-btn-primary agtm-btn-sm">➕ Planifier</button>
+    </div>
+  </div>
+
+  <div class="premium-card-body">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <div style="font-weight: 800; color: var(--premium-gold); font-size: .92rem; display: flex; align-items: center; gap: 8px;">
+        📅 Agenda du jour - <span id="agendaTodayDate" style="color: var(--premium-text-2); font-weight: 400; font-size: .82rem;"></span>
+      </div>
+    </div>
+    
+    <div id="agendaTodayContainer" style="display: grid; gap: 8px;">
+      <div style="color: var(--premium-text-3); text-align: center; padding: 20px; font-size: .8rem;">Chargement…</div>
+    </div>
+  </div>
+
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        <span id="agendaCount">0</span> séance(s) planifiée(s)
+      </div>
+      <button onclick="navigateTo('calendar')" class="agtm-btn agtm-btn-ghost agtm-btn-sm">🗓️ Voir le calendrier complet →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 6: Dossiers Formateurs -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">👨‍🏫 Dossiers Formateurs</div>
+      <div class="premium-card-subtitle">Gestion des ressources humaines pédagogiques</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="navigateTo('rh')" class="agtm-btn agtm-btn-primary agtm-btn-sm">➕ Ajouter un formateur</button>
+    </div>
+  </div>
+
+  <div class="premium-card-body">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <div style="font-size: .92rem; font-weight: 800; color: var(--premium-gold);">👨‍🏫 Dossiers Formateurs</div>
+      <button onclick="navigateTo('rh')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">
+        Gérer les RH →
+      </button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+      ${formateurs.length ? formateurs.map(f => {
+        const nom = [f.prenom, f.nom].filter(Boolean).join(' ')
+        const isActif = f.statut === 'Actif'
+        const initiales = ((f.prenom||'?')[0] + (f.nom||'?')[0]).toUpperCase()
+        const clsLabel = f.classes.length ? f.classes.map(c=>c.nom).join(', ') : 'Aucune classe'
+        return `
+        <div onclick="navigateTo('rh')" class="agtm-card premium-card stat" style="padding: 12px; cursor: pointer; border-color: ${isActif?'rgba(74,144,217,.4)':'rgba(100,100,100,.3)'};">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #1C3258, #2C2208);
+                    border: 2px solid ${isActif?'var(--premium-sapphire)':'var(--premium-text-3)'}; display: flex; align-items: center; justify-content: center;
+                    font-weight: 900; font-size: .85rem; color: ${isActif?'var(--premium-sapphire)':'var(--premium-text-3)'}; flex-shrink: 0;">
+              ${initiales}
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-weight: 800; color: var(--premium-text-1); font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${nom}</div>
+              <div style="font-size: .68rem; color: var(--premium-sapphire); margin-top: 1px;">${f.poste||'Formateur'}</div>
+              <div style="font-size: .63rem; color: var(--premium-text-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${clsLabel}">
+                📚 ${clsLabel}
+              </div>
+              ${f.cin?`<div style="font-size: .6rem; font-family: monospace; color: var(--premium-gold); margin-top: 2px; background: rgba(212,160,23,.07); padding: 1px 5px; border-radius: 4px; display: inline-block;">🆔 ${f.cin}</div>`:''}
+              <div style="margin-top: 4px;">
+                ${isActif?`<span class="agtm-badge agtm-badge-green">✅ Actif</span>`:`<span class="agtm-badge agtm-badge-red">⛔ Inactif</span>`}
+              </div>
+            </div>
+          </div>
+        </div>`
+      }).join('') : `
+        <div style="background: var(--premium-bg-3); border: 1px solid var(--premium-border-2); border-radius: 12px; padding: 28px; text-align: center; color: var(--premium-text-3); grid-column: 1/-1;">
+          Aucun formateur trouvé. <button onclick="navigateTo('rh')" style="background: none; border: none; color: var(--premium-sapphire); cursor: pointer; font-weight: 700; font-size: .82rem;">➕ Ajouter dans les RH</button>
+        </div>`}
+    </div>
+  </div>
+
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        <span id="formateurCount">${formateurs.length}</span> formateur(s) au total
+      </div>
+      <button onclick="navigateTo('rh')" class="agtm-btn agtm-btn-ghost agtm-btn-sm">👥 Voir toute l'équipe →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 7: Graphique revenus -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">📈 Graphique Revenus - 6 derniers mois</div>
+      <div class="premium-card-subtitle">Évolution des revenus et dépenses sur la période</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._refreshChart()" class="agtm-btn agtm-btn-secondary agtm-btn-sm">🔄 Actualiser</button>
+      <button onclick="window._exportChart()" class="agtm-btn agtm-btn-secondary agtm-btn-sm">📥 Exporter</button>
+    </div>
+  </div>
+
+  <div class="premium-card-body">
+    <div style="padding: 14px;">
+      <canvas id="chartOvw" height="110"></canvas>
+    </div>
+  </div>
+
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        Données mises à jour quotidiennement
+      </div>
+      <button onclick="navigateTo('finance')" class="agtm-btn agtm-btn-ghost agtm-btn-sm">💰 Voir les détails financiers →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 8: Étudiants à risque -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">⚠️ Étudiants à Risque d'Abandon</div>
+      <div class="premium-card-subtitle">Identification proactive des apprenants nécessitant un suivi</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._renderEtudiantsARisque('riskContainer')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">🔄 Actualiser</button>
+      <button onclick="navigateTo('pedagogie')" class="agtm-btn agtm-btn-primary agtm-btn-sm">🎓 Interventions</button>
+    </div>
+  </div>
+
+  <div class="premium-card-body">
+    <div id="riskContainer" style="max-height: 320px; overflow-y: auto;">
+      <div class="agtm-skeleton" style="height: 60px; margin-bottom: 8px; border-radius: 10px;"></div>
+      <div class="agtm-skeleton" style="height: 60px; border-radius: 10px;"></div>
+    </div>
+  </div>
+
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        <span id="riskCount">0</span> étudiant(s) identifié(s)
+      </div>
+      <button onclick="navigateTo('pedagogie')" class="agtm-btn agtm-btn-ghost agtm-btn-sm">📊 Voir les rapports pédagogiques →</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODULE 9: Progression des Cohortes -->
+<div class="agtm-card premium-card">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">📊 Progression des Cohortes</div>
+      <div class="premium-card-subtitle">Suivi de l'avancement des groupes d'apprenants</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="navigateTo('pedagogie')" class="agtm-btn agtm-btn-primary agtm-btn-sm">Voir planning →</button>
+    </div>
+  </div>
+
+  <div class="premium-card-body">
+    <div id="cohortContainer">
+      <div class="agtm-skeleton" style="height: 50px; margin-bottom: 8px; border-radius: 10px;"></div>
+      <div class="agtm-skeleton" style="height: 50px; border-radius: 10px;"></div>
+    </div>
+  </div>
+
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">
+        Données de progression mises à jour hebdomadairement
+      </div>
+      <button onclick="navigateTo('pedagogie')" class="agtm-btn agtm-btn-ghost agtm-btn-sm">📈 Voir les statistiques détaillées →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================== -->
+<!-- CLASSES CSS COMPLÉMENTAIRES POUR LES MODULES LOT 1 -->
+<!-- ================================================== -->
+
+<style>
+  /* Styles spécifiques pour les cartes KPI */
+  .premium-card.stat {
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--premium-transition);
+  }
+  .premium-card.stat:hover {
+    border-color: var(--premium-gold);
+    transform: translateY(-2px);
+  }
+  .premium-card.stat .stat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+  .premium-card.stat .stat-label {
+    font-size: .72rem;
+    color: var(--premium-text-3);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 4px;
+  }
+  .premium-card.stat .stat-value {
+    font-family: var(--premium-font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* Adaptation responsive pour les grilles */
+  @media (max-width: 1024px) {
+    .premium-card-body > div[style*="grid-template-columns: repeat(4, 1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  @media (max-width: 640px) {
+    .premium-card-body > div[style*="grid-template-columns: repeat(4, 1fr)"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

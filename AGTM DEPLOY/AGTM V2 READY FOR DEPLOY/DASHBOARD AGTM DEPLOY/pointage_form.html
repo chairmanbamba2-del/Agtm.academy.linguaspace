@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>AGTM — Pointage de Séance</title>
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       AGTM Digital Academy — Pointage de Séance v2
+       Design Mobile-First · Wizard UX · Notifications IA
+       ═══════════════════════════════════════════════════════ */
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --gold:#d4a12a;--gold-lt:#e8c35a;--gold-dk:#b8860b;
+      --navy:#0a1628;--dark:#080f1a;--card:#0e1a2d;--border:#1a2a44;
+      --text:#e8edf5;--muted:#8899b4;
+      --success:#16a34a;--warning:#f59e0b;--danger:#dc2626;--info:#06b6d4;
+      --radius:12px;--radius-sm:8px;
+    }
+    html{font-size:15px}
+    @media(max-width:480px){html{font-size:14px}}
+    body{
+      background:linear-gradient(150deg,#09111E 0%,#160E04 40%,#0B1A2E 70%,#160E04 100%);
+      background-attachment:fixed;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+      min-height:100vh;color:var(--text);-webkit-tap-highlight-color:transparent
+    }
+    input,select,textarea{
+      outline:none;width:100%;padding:10px 14px;border-radius:var(--radius-sm);
+      background:linear-gradient(135deg,#0B1828,#1C1408);border:1px solid #3A3A28;
+      color:var(--text);font-size:.9rem;font-family:inherit;transition:border-color .2s,box-shadow .2s
+    }
+    input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(212,161,42,.2)}
+    textarea{resize:vertical;min-height:60px}
+    label{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px;font-weight:700}
+    .field{margin-bottom:10px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:480px){.row2{grid-template-columns:1fr}}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    @media(max-width:480px){.row3{grid-template-columns:1fr}}
+    .btn{
+      padding:11px 22px;border-radius:var(--radius-sm);font-weight:700;font-size:.85rem;
+      cursor:pointer;border:none;font-family:inherit;transition:all .2s;display:inline-flex;
+      align-items:center;justify-content:center;gap:7px;width:100%
+    }
+    .btn:active{transform:scale(.97)}
+    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-lt));color:#0D1B2A}
+    .btn-secondary{background:linear-gradient(135deg,rgba(28,50,88,.9),rgba(30,22,5,.9));border:1px solid #4A90D9;color:#6AABF0}
+    .btn-success{background:linear-gradient(135deg,rgba(14,34,24,.9),rgba(10,24,8,.9));border:1px solid var(--success);color:var(--success)}
+    .btn-danger{background:linear-gradient(135deg,rgba(34,14,14,.9),rgba(24,8,8,.9));border:1px solid var(--danger);color:var(--danger)}
+    .card{background:linear-gradient(135deg,#152540 0%,#241C08 100%);border:1px solid rgba(212,161,42,.18);border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
+    .card-head{background:linear-gradient(90deg,#1C3258 0%,#2C2208 100%);padding:12px 16px;border-bottom:1px solid rgba(212,161,42,.2);font-size:.85rem;font-weight:800;color:var(--gold-lt);display:flex;align-items:center;gap:9px}
+    .card-body{padding:16px}
+
+    /* ══ WIZARD STEPS ══ */
+    .wizard-bar{display:flex;gap:0;margin-bottom:20px;overflow-x:auto;padding:0 0 8px}
+    .wiz-step{flex:1;min-width:0;text-align:center;padding:8px 4px;font-size:.65rem;font-weight:600;color:var(--muted);border-bottom:3px solid var(--border);position:relative;white-space:nowrap;transition:all .3s}
+    .wiz-step.active{color:var(--gold);border-bottom-color:var(--gold)}
+    .wiz-step.done{color:var(--success);border-bottom-color:var(--success)}
+    .wiz-step .num{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;margin-right:4px;background:var(--border);color:var(--text);flex-shrink:0}
+    .wiz-step.active .num{background:var(--gold);color:#000}
+    .wiz-step.done .num{background:var(--success);color:#fff}
+
+    .wiz-panel{display:none;animation:fadeIn .25s ease}
+    .wiz-panel.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* ══ STUDENT LIST ══ */
+    .student-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;background:#0D1B2A;border:1.5px solid #1E3050;transition:all .2s;margin-bottom:6px;user-select:none}
+    .student-item.selected{border-color:var(--success);background:rgba(22,163,74,.08)}
+    .student-item:active{transform:scale(.98)}
+    .student-check{width:18px;height:18px;border-radius:4px;border:2px solid #3A5070;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:.6rem}
+    .student-item.selected .student-check{background:var(--success);border-color:var(--success);color:#fff}
+    .student-info{flex:1;min-width:0}
+    .student-name{font-weight:700;font-size:.85rem;color:var(--text)}
+    .student-meta{font-size:.68rem;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;margin-top:1px}
+    .student-badge{font-size:.62rem;padding:1px 6px;border-radius:4px;background:var(--navy);border:1px solid var(--border);color:var(--muted)}
+
+    /* ══ NOTIFICATION TOAST ══ */
+    .toast{position:fixed;bottom:16px;right:16px;z-index:9999;padding:12px 18px;border-radius:10px;font-size:.8rem;font-weight:600;color:#fff;box-shadow:0 4px 18px rgba(0,0,0,.4);max-width:320px;animation:slideInUp .2s ease;pointer-events:none}
+    .toast.ok{background:#1A4A2A;border:1px solid var(--success)}
+    .toast.err{background:#8B1A1A;border:1px solid var(--danger)}
+    @keyframes slideInUp{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+
+    /* ══ LOADING ══ */
+    .pulse{animation:pulse 1.2s infinite}
+    @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+    /* ══ RESULT BOXES ══ */
+    .result-ok{padding:10px 14px;background:#1A3A1A;border:1px solid var(--success);border-radius:var(--radius-sm);display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--success)}
+    .result-err{padding:10px 14px;background:#2A1A1A;border:1px solid var(--danger);border-radius:var(--radius-sm);color:var(--danger);font-size:.82rem;font-weight:600}
+    .result-warn{padding:10px 14px;background:#2A2010;border:1px solid var(--warning);border-radius:var(--radius-sm);color:var(--warning);font-size:.82rem;font-weight:600}
+
+    /* ══ SCROLLBAR ══ */
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#09111E}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(#2A3F58,#3A2A10);border-radius:3px}
+
+    /* ══ SUCCESS ANIMATION ══ */
+    .success-check{font-size:3.5rem;animation:bounceIn .5s ease}
+    @keyframes bounceIn{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+    .success-block{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px;text-align:center}
+    .success-block.show{display:flex}
+
+    /* ══ RESPONSIVE ══ */
+    .app-container{max-width:680px;margin:0 auto;padding:16px 12px 24px}
+    @media(min-width:768px){.app-container{padding:24px 20px 40px}}
+    
+    /* RAPPORT SECTION */
+    .rapport-preview{background:var(--navy);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-top:10px;font-size:.82rem;line-height:1.6;color:var(--muted);white-space:pre-wrap;max-height:200px;overflow-y:auto}
+    .rapport-preview strong{color:var(--text)}
+    .spinner{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* COMPACT HEADER */
+    .app-header{text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid rgba(212,161,42,.4)}
+    .app-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold-lt));border-radius:9px;font-weight:900;font-size:.8rem;color:#0D1B2A;margin-bottom:6px;box-shadow:0 2px 8px rgba(212,161,42,.35)}
+  </style>
+</head>
+<body>
+<script>
+  const SUPABASE_URL  = 'https://fglzovvsyloprokmdadx.supabase.co'
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww'
+</script>
+
+<!-- ══ LOADING ══ -->
+<div id="loading" style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px">
+  <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--gold),var(--gold-lt));border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;color:#0D1B2A">AGTM</div>
+  <div style="color:#6AABF0;font-size:.9rem">Chargement de la feuille de pointage…</div>
+  <div class="pulse" style="width:48px;height:3px;background:var(--gold);border-radius:2px"></div>
+</div>
+
+<!-- ══ ERROR ══ -->
+<div id="errBlock" style="display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:24px;text-align:center">
+  <div style="font-size:2rem;font-weight:900;color:var(--gold)">AGTM</div>
+  <div id="errMsg" style="color:var(--danger);font-size:1rem;font-weight:600;max-width:440px"></div>
+  <div style="color:#6A8AAA;font-size:.8rem">Vérifiez le lien ou contactez l'administration.</div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="mainForm" style="display:none" class="app-container fade-in">
+
+  <!-- Header compact -->
+  <div class="app-header">
+    <div class="app-logo">AG</div>
+    <div style="font-weight:800;font-size:1rem;color:var(--gold);margin-bottom:2px">AGTM Digital Academy</div>
+    <div style="color:var(--muted);font-size:.65rem">Abidjan, Côte d'Ivoire</div>
+  </div>
+
+  <!-- Wizard Progress Bar -->
+  <div class="wizard-bar" id="wizardBar">
+    <div class="wiz-step active" data-step="1"><span class="num">1</span> Enseignant</div>
+    <div class="wiz-step" data-step="2"><span class="num">2</span> Étudiants</div>
+    <div class="wiz-step" data-step="3"><span class="num">3</span> Rapport IA</div>
+    <div class="wiz-step" data-step="4"><span class="num">4</span> Confirmation</div>
+  </div>
+
+  <!-- Session Info -->
+  <div id="seanceInfo" style="background:linear-gradient(135deg,#152540 0%,#241C08 100%);border:1px solid rgba(212,161,42,.35);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;font-size:.82rem;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div><span style="color:var(--muted);font-size:.65rem;display:block">Date</span><span id="siDate" style="font-weight:700;color:var(--gold)">—</span></div>
+    <div><span style="color:var(--muted);font-size:.65rem;display:block">Horaire</span><span id="siTime" style="font-weight:700;color:#6AABF0">—</span></div>
+    <div style="grid-column:1/-1"><span style="color:var(--muted);font-size:.65rem;display:block">Sujet</span><span id="siSujet" style="font-weight:600">—</span></div>
+    <div style="grid-column:1/-1"><span style="color:var(--muted);font-size:.65rem;display:block">Classe</span><span id="siClasse" style="font-weight:600;color:var(--gold-lt)">—</span></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- PANEL 1 : ENSEIGNANT -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="wiz-panel active" id="panel1">
+    <div class="card">
+      <div class="card-head">👨‍🏫 Étape 1 — Qui êtes-vous ?</div>
+      <div class="card-body">
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:12px;line-height:1.5">
+          Saisissez vos informations en 30 secondes. Elles seront vérifiées automatiquement.
+        </p>
+        <div class="row2">
+          <div class="field">
+            <label>Prénom</label>
+            <input id="fmtPrenom" type="text" placeholder="Ex : Kouamé"
+              onkeydown="if(event.key==='Enter')document.getElementById('fmtNom').focus()"/>
+          </div>
+          <div class="field">
+            <label>Nom</label>
+            <input id="fmtNom" type="text" placeholder="Ex : DIALLO"
+              onkeydown="if(event.key==='Enter')document.getElementById('fmtMatricule').focus()"/>
+          </div>
+        </div>
+        <div class="field">
+          <label>N° Matricule</label>
+          <input id="fmtMatricule" type="text" placeholder="Ex : MAT-2026-001"
+            onkeydown="if(event.key==='Enter')document.getElementById('fmtClasse').focus()"/>
+        </div>
+        <div class="field" style="margin-bottom:14px">
+          <label>Classe</label>
+          <select id="fmtClasse"><option value="">— Sélectionner —</option></select>
+        </div>
+        <button class="btn btn-secondary" onclick="_verifyFormateur()" id="btnVerifyFmt">
+          🔍 Vérifier
+        </button>
+        <div id="fmtResult" style="display:none;margin-top:10px"></div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="goStep(2)" id="btnNext1" disabled style="margin-top:4px">
+      Continuer →
+    </button>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- PANEL 2 : ÉTUDIANTS -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="wiz-panel" id="panel2">
+    <div class="card">
+      <div class="card-head">👨‍🎓 Étape 2 — Qui est présent ?</div>
+      <div class="card-body">
+        <!-- Filter + Count -->
+        <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+          <div style="flex:1;position:relative">
+            <input id="etudFilter" type="text" placeholder="🔍 Rechercher un nom..."
+              oninput="_filterEtudiants()" style="padding-left:32px;font-size:.8rem"/>
+          </div>
+          <span id="presentCount" style="font-size:.72rem;color:var(--success);font-weight:700;white-space:nowrap">0 présent</span>
+        </div>
+
+        <!-- Student checkbox list -->
+        <div id="etudCheckboxList" style="max-height:320px;overflow-y:auto;background:#0D1B2A;border:1px solid #1E3050;border-radius:var(--radius-sm);padding:6px;margin-bottom:12px">
+          <div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">Chargement…</div>
+        </div>
+
+        <!-- Manual entry for individual sessions -->
+        <div id="etudManualSection" style="display:none">
+          <div style="font-size:.72rem;color:var(--muted);margin-bottom:10px;background:rgba(22,163,74,.06);border:1px solid rgba(22,163,74,.2);border-radius:var(--radius-sm);padding:8px 10px">
+            ℹ️ Séance individuelle — saisissez les infos de l'étudiant.
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label>Prénom</label>
+              <input id="etudPrenom" type="text" placeholder="Ex : Awa"
+                onkeydown="if(event.key==='Enter')document.getElementById('etudNom').focus()"/>
+            </div>
+            <div class="field">
+              <label>Nom</label>
+              <input id="etudNom" type="text" placeholder="Ex : KOUASSI"
+                onkeydown="if(event.key==='Enter')document.getElementById('etudDossier').focus()"/>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:10px">
+            <label>N° Dossier</label>
+            <div style="display:flex;gap:8px">
+              <input id="etudDossier" type="text" placeholder="Ex : AGTM-2026-001" style="flex:1"
+                onkeydown="if(event.key==='Enter')_verifyEtudiant()"/>
+              <button class="btn btn-success" onclick="_verifyEtudiant()" id="btnVerifyEtud" style="width:auto;padding:10px 16px;white-space:nowrap">✅</button>
+            </div>
+          </div>
+          <div id="etudResult" style="font-size:.78rem;color:var(--muted);min-height:18px"></div>
+        </div>
+
+        <!-- Already verified list -->
+        <div id="etudList" style="margin-top:4px"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-secondary" onclick="goStep(1)" style="width:auto;padding:11px 16px;flex-shrink:0">← Retour</button>
+      <button class="btn btn-primary" onclick="goStep(3)" id="btnNext2" disabled>Continuer →</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- PANEL 3 : RAPPORT IA -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="wiz-panel" id="panel3">
+    <div class="card">
+      <div class="card-head">🤖 Étape 3 — Rapport de séance (IA)</div>
+      <div class="card-body">
+        <p style="font-size:.78rem;color:var(--muted);margin-bottom:10px;line-height:1.5">
+          L'assistante IA peut générer automatiquement un rapport de séance. 
+          Renseignez quelques détails ou cliquez sur <strong>Générer automatiquement</strong>.
+        </p>
+        <div class="field">
+          <label>Points abordés / Résumé</label>
+          <textarea id="rapportResume" placeholder="Ex : Révision du present perfect, exercices de groupe sur les verbes irréguliers..." rows="3"></textarea>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Niveau de participation</label>
+            <select id="rapportParticipation">
+              <option value="excellent">🌟 Excellent</option>
+              <option value="bon" selected>👍 Bon</option>
+              <option value="moyen">👌 Moyen</option>
+              <option value="faible">📉 Faible</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Devoirs / À préparer</label>
+            <input id="rapportDevoirs" type="text" placeholder="Ex : Exercice p.45" />
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+          <button class="btn btn-secondary" onclick="_generateRapportIA()" id="btnGenIA" style="flex:1;min-width:160px">
+            🤖 Générer rapport IA
+          </button>
+        </div>
+        <div id="rapportPreview" style="display:none;margin-top:10px">
+          <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;margin-bottom:4px">📄 Aperçu du rapport</div>
+          <div class="rapport-preview" id="rapportContent"></div>
+        </div>
+        <!-- Hidden field for compiled rapport -->
+        <input type="hidden" id="rapportFinal" value=""/>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-secondary" onclick="goStep(2)" style="width:auto;padding:11px 16px;flex-shrink:0">← Retour</button>
+      <button class="btn btn-primary" onclick="goStep(4)" id="btnNext3" style="flex:1">Continuer →</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- PANEL 4 : CONFIRMATION & NOTIFICATIONS -->
+  <!-- ════════════════════════════════════════════════ -->
+  <div class="wiz-panel" id="panel4">
+    <div class="card">
+      <div class="card-head">✅ Étape 4 — Confirmation & Notifications</div>
+      <div class="card-body">
+        <div id="confirmSummary" style="margin-bottom:14px"></div>
+        
+        <!-- Notification recipients -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:8px">🔔 Notifications automatiques</div>
+          <label class="student-item" style="cursor:default;background:rgba(22,163,74,.04);border-color:rgba(22,163,74,.2)">
+            <span style="font-size:1.1rem">📱</span>
+            <div class="student-info">
+              <div class="student-name" style="font-size:.8rem">WhatsApp — Administration AGTM</div>
+              <div class="student-meta">Notification de pointage envoyée automatiquement</div>
+            </div>
+            <span id="notifStatus" style="font-size:.72rem;color:var(--success);font-weight:700">✅ Active</span>
+          </label>
+          <label class="student-item" style="cursor:default;margin-top:4px;background:rgba(6,182,212,.04);border-color:rgba(6,182,212,.2)">
+            <span style="font-size:1.1rem">🤖</span>
+            <div class="student-info">
+              <div class="student-name" style="font-size:.8rem">Rapport IA — Généré automatiquement</div>
+              <div class="student-meta">Rapport de séance stocké dans la base de données</div>
+            </div>
+            <span id="rapportNotifStatus" style="font-size:.72rem;color:var(--info);font-weight:700">🔄 À générer</span>
+          </label>
+        </div>
+
+        <button class="btn btn-primary" onclick="_submitPointage()" id="btnSubmit" style="padding:14px;font-size:.95rem">
+          💾 Valider le pointage
+        </button>
+        <button class="btn btn-secondary" onclick="goStep(3)" style="margin-top:6px">
+          ← Modifier le rapport
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;font-size:.6rem;color:#3A5070;padding-top:16px">
+    AGTM Digital Academy · Propriété de <strong style="color:var(--gold)">ISSA BAMBA</strong> · © 2026
+  </div>
+</div>
+
+<!-- ══ SUCCESS ══ -->
+<div class="success-block" id="successBlock">
+  <div class="success-check">✅</div>
+  <div style="font-size:1.3rem;font-weight:900;color:var(--success)">Pointage enregistré !</div>
+  <div id="successMsg" style="font-size:.85rem;color:#90A4AE;max-width:400px;line-height:1.6"></div>
+  <div id="successNotif" style="font-size:.78rem;color:var(--muted);margin-top:6px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;max-width:400px;display:none"></div>
+  <div style="margin-top:10px;font-size:.68rem;color:#2A4060">AGTM Digital Academy · © 2026</div>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
+  
+  // ── Helpers ──
+  const $ = id => document.getElementById(id)
+
+  function toast(msg, type = 'ok') {
+    const t = document.createElement('div')
+    t.className = `toast ${type}`
+    t.textContent = msg
+    document.body.appendChild(t)
+    setTimeout(() => t.remove(), 3500)
+  }
+
+  function norm(s) {
+    return (s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  }
+
+  function fmtDate(d) {
+    if (!d) return '—'
+    return new Date(d).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'})
+  }
+
+  // ── State ──
+  let seanceId = null, seanceData = null, classeData = null
+  let allClasses = [], verifiedFormateur = null, verifiedEtudiants = []
+  let inscritsClasse = [], currentStep = 1, rapportGenere = false
+
+  // ── Wizard Navigation ──
+  window.goStep = function(step) {
+    // Validate current step before moving forward
+    if (step > currentStep) {
+      if (step === 2 && !verifiedFormateur) { toast('Vérifiez d\'abord l\'enseignant.', 'err'); return }
+      if (step === 3 && !verifiedEtudiants.length) { toast('Ajoutez au moins un étudiant.', 'err'); return }
+      if (step === 4) { _buildConfirmSummary(); return }
+    }
+    currentStep = step
+    document.querySelectorAll('.wiz-panel').forEach(p => p.classList.remove('active'))
+    document.getElementById(`panel${step}`).classList.add('active')
+    document.querySelectorAll('.wiz-step').forEach(s => {
+      const num = Number(s.dataset.step)
+      s.classList.toggle('active', num === step)
+      s.classList.toggle('done', num < step)
+    })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // ── Init ──
+  async function init() {
+    seanceId = new URLSearchParams(location.search).get('seance_id')
+      || new URLSearchParams(location.search).get('pointage')
+    if (!seanceId) {
+      const h = location.hash.replace('#','')
+      if (h && !isNaN(Number(h))) seanceId = h
+    }
+    if (!seanceId) {
+      const hp = new URLSearchParams(location.hash.replace('#',''))
+      seanceId = hp.get('seance_id') || hp.get('pointage')
+    }
+    if (!seanceId) {
+      const lsId = localStorage.getItem('agtm_seance_id')
+      if (lsId && !isNaN(Number(lsId)) && (Date.now() - Number(localStorage.getItem('agtm_seance_ts')||0)) < 600000) seanceId = lsId
+    }
+
+    if (!seanceId || isNaN(Number(seanceId))) {
+      $('loading').style.display = 'none'
+      $('errBlock').style.display = 'flex'
+      $('errMsg').innerHTML = `Lien invalide : aucun identifiant de séance fourni.`
+      return
+    }
+
+    const { data: seance, error } = await sb.from('seances').select('*').eq('id', seanceId).maybeSingle()
+    if (error || !seance) {
+      $('loading').style.display = 'none'
+      $('errBlock').style.display = 'flex'
+      $('errMsg').textContent = `Séance introuvable (ID: ${seanceId}).`
+      return
+    }
+    seanceData = seance
+
+    // Load class
+    if (seance.classe_id) {
+      const { data: cl } = await sb.from('classes').select('id,nom,niveau,formateur_nom').eq('id', seance.classe_id).maybeSingle()
+      classeData = cl
+      const { data: inscrits } = await sb.from('inscriptions_classes')
+        .select('etudiant_id, etudiants(id,nom,prenom,niveau,numero_dossier,statut,formations)')
+        .eq('classe_id', seance.classe_id).order('etudiants(nom)')
+      inscritsClasse = (inscrits || []).map(i => i.etudiants).filter(Boolean)
+      _renderEtudCheckboxes()
+    } else {
+      $('etudManualSection').style.display = 'block'
+    }
+
+    // Load classes for select
+    const { data: classes } = await sb.from('classes').select('id,nom,niveau').order('nom')
+    allClasses = classes || []
+    const sel = $('fmtClasse')
+    allClasses.forEach(cl => {
+      const opt = document.createElement('option')
+      opt.value = cl.id
+      opt.textContent = cl.nom + (cl.niveau ? ' — ' + cl.niveau : '')
+      if (classeData && cl.id === classeData.id) opt.selected = true
+      sel.appendChild(opt)
+    })
+
+    // Display session info
+    $('siDate').textContent = fmtDate(seance.date_seance)
+    $('siTime').textContent = `${seance.heure_debut||'—'}${seance.heure_fin?' – '+seance.heure_fin:''}`
+    $('siSujet').textContent = seance.sujet || seance.titre || '—'
+    $('siClasse').textContent = `${classeData?.nom||seance.format||'—'}${classeData?.niveau?' · '+classeData.niveau:''}`
+
+    $('loading').style.display = 'none'
+    $('mainForm').style.display = 'block'
+  }
+
+  // ── Step 1: Verify Formateur ──
+  window._verifyFormateur = async function() {
+    const prenom = $('fmtPrenom').value.trim(), nom = $('fmtNom').value.trim()
+    const mat = $('fmtMatricule').value.trim(), classeId = Number($('fmtClasse').value)
+    if (!prenom || !nom || !mat) { toast('Remplissez prénom, nom et matricule.', 'err'); return }
+    if (!classeId) { toast('Sélectionnez la classe.', 'err'); return }
+
+    $('btnVerifyFmt').disabled = true; $('btnVerifyFmt').innerHTML = '<span class="spinner"></span> Vérification…'
+    $('fmtResult').style.display = 'none'
+
+    const { data: pers, error } = await sb.from('personnel')
+      .select('id,nom,prenom,cin,matricule,poste,statut,telephone').ilike('matricule', mat).maybeSingle()
+
+    $('btnVerifyFmt').disabled = false; $('btnVerifyFmt').innerHTML = '🔍 Vérifier'
+
+    if (error || !pers) {
+      $('fmtResult').style.display = 'block'
+      $('fmtResult').innerHTML = `<div class="result-err">❌ Matricule <strong>${mat}</strong> introuvable.</div>`
+      verifiedFormateur = null; return
+    }
+    if (norm(pers.nom) !== norm(nom) || norm(pers.prenom) !== norm(prenom)) {
+      $('fmtResult').style.display = 'block'
+      $('fmtResult').innerHTML = `<div class="result-err">❌ Nom/prénom ne correspondent pas au matricule.</div>`
+      verifiedFormateur = null; return
+    }
+    if (pers.statut && pers.statut !== 'Actif') {
+      $('fmtResult').style.display = 'block'
+      $('fmtResult').innerHTML = `<div class="result-warn">⚠️ Compte inactif — contactez l'administration.</div>`
+      verifiedFormateur = null; return
+    }
+    if (seanceData?.classe_id && classeId !== seanceData.classe_id) {
+      $('fmtResult').style.display = 'block'
+      $('fmtResult').innerHTML = `<div class="result-err">❌ La classe sélectionnée ne correspond pas à la séance.</div>`
+      verifiedFormateur = null; return
+    }
+
+    verifiedFormateur = { ...pers, classeId }
+    $('fmtResult').style.display = 'block'
+    $('fmtResult').innerHTML = `<div class="result-ok">
+      ✅ <strong style="color:var(--success)">${pers.prenom} ${pers.nom}</strong>
+      <span style="font-size:.72rem;color:var(--muted)">${pers.poste||'Enseignant'} · ${pers.matricule||mat}</span>
+    </div>`
+    $('btnNext1').disabled = false
+    toast(`✅ Enseignant vérifié : ${pers.prenom} ${pers.nom}`)
+  }
+
+  // ── Step 2: Student verification ──
+  window._verifyEtudiant = async function() {
+    const prenom = $('etudPrenom').value.trim(), nom = $('etudNom').value.trim()
+    const dossier = $('etudDossier').value.trim()
+    if (!prenom || !nom || !dossier) { toast('Remplissez tous les champs.', 'err'); return }
+    if (verifiedEtudiants.find(e => norm(e.numero_dossier) === norm(dossier))) {
+      toast('Déjà dans la liste !', 'err'); $('etudDossier').value = ''; return
+    }
+
+    $('btnVerifyEtud').disabled = true; $('btnVerifyEtud').textContent = '⏳'
+
+    const { data: etud, error } = await sb.from('etudiants')
+      .select('id,nom,prenom,niveau,numero_dossier,statut,formations,telephone_parent')
+      .ilike('numero_dossier', dossier).maybeSingle()
+
+    $('btnVerifyEtud').disabled = false; $('btnVerifyEtud').innerHTML = '✅'
+
+    if (error || !etud) {
+      $('etudResult').innerHTML = `❌ Dossier <strong style="color:var(--danger)">${dossier}</strong> introuvable.`
+      $('etudResult').style.color = 'var(--danger)'; return
+    }
+    if (norm(etud.nom) !== norm(nom) || norm(etud.prenom) !== norm(prenom)) {
+      $('etudResult').innerHTML = `❌ Nom ne correspond pas au dossier ${dossier}.`
+      $('etudResult').style.color = 'var(--danger)'; return
+    }
+    if (etud.statut && etud.statut !== 'Actif') {
+      $('etudResult').innerHTML = `⚠️ ${etud.prenom} ${etud.nom} — statut : ${etud.statut}.`
+      $('etudResult').style.color = 'var(--warning)'; return
+    }
+
+    verifiedEtudiants.push(etud)
+    $('etudPrenom').value = ''; $('etudNom').value = ''; $('etudDossier').value = ''
+    $('etudResult').innerHTML = `✅ <strong style="color:var(--success)">${etud.prenom} ${etud.nom}</strong> ajouté(e).`
+    $('etudResult').style.color = 'var(--success)'
+    _renderEtudList(); _updatePresentCount(); $('etudPrenom').focus()
+    toast(`✅ ${etud.prenom} ${etud.nom} — présent(e)`)
+  }
+
+  // ── Student list rendering ──
+  function _renderEtudList() {
+    if (!verifiedEtudiants.length) {
+      $('etudList').innerHTML = '<div style="font-size:.75rem;color:var(--muted);font-style:italic">Aucun étudiant pointé.</div>'
+      $('btnNext2').disabled = true; return
+    }
+    $('btnNext2').disabled = false
+    $('etudList').innerHTML = `
+      <div style="font-size:.7rem;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:700">
+        ${verifiedEtudiants.length} étudiant(s) présent(s)
+      </div>
+      ${verifiedEtudiants.map((e,i) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;background:rgba(22,163,74,.04);border:1px solid rgba(22,163,74,.15);margin-bottom:4px">
+          <span style="color:var(--success);font-weight:700;font-size:.72rem">✅</span>
+          <span style="flex:1;font-size:.82rem;font-weight:600">${e.prenom} ${e.nom}</span>
+          <span style="font-size:.68rem;color:var(--muted)">${e.niveau||'—'}</span>
+          <button onclick="_removeEtud(${i})" style="padding:2px 6px;border-radius:4px;font-size:.7rem;cursor:pointer;background:rgba(42,10,10,.8);border:1px solid var(--danger);color:var(--danger)">✕</button>
+        </div>`).join('')}`
+  }
+
+  window._removeEtud = function(idx) { verifiedEtudiants.splice(idx, 1); _renderEtudList(); _updatePresentCount() }
+
+  function _updatePresentCount() {
+    $('presentCount').textContent = `${verifiedEtudiants.length} présent`
+  }
+
+  function _renderEtudCheckboxes(filter = '') {
+    const container = $('etudCheckboxList')
+    if (!inscritsClasse.length) { container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">Aucun étudiant inscrit.</div>'; return }
+    const filterNorm = norm(filter)
+    const filtered = inscritsClasse.filter(e => !filterNorm || norm(e.nom).includes(filterNorm) || norm(e.prenom).includes(filterNorm) || norm(e.numero_dossier||'').includes(filterNorm))
+    if (!filtered.length) { container.innerHTML = `<div style="padding:20px;text-align:center;color:var(--muted);font-size:.8rem">Aucun résultat pour "${filter}".</div>`; return }
+
+    container.innerHTML = filtered.map(e => {
+      const sel = verifiedEtudiants.some(v => v.id === e.id)
+      return `<div class="student-item ${sel?'selected':''}" onclick="_toggleEtudiant(${e.id},'${e.prenom.replace(/'/g,"\\'")}','${e.nom.replace(/'/g,"\\'")}','${e.numero_dossier||''}','${e.niveau||''}',${!sel})">
+        <div class="student-check">${sel?'✓':''}</div>
+        <div class="student-info">
+          <div class="student-name">${e.prenom} ${e.nom}</div>
+          <div class="student-meta"><span>📁 ${e.numero_dossier||'—'}</span><span>🎓 ${e.niveau||'—'}</span></div>
+        </div>
+      </div>`
+    }).join('')
+  }
+
+  window._toggleEtudiant = function(id, prenom, nom, dossier, niveau, add) {
+    if (add) {
+      if (!verifiedEtudiants.some(e => e.id === id)) {
+        verifiedEtudiants.push({ id, prenom, nom, numero_dossier: dossier, niveau })
+      }
+    } else {
+      const idx = verifiedEtudiants.findIndex(e => e.id === id)
+      if (idx !== -1) verifiedEtudiants.splice(idx, 1)
+    }
+    _renderEtudList(); _updatePresentCount()
+    _renderEtudCheckboxes($('etudFilter')?.value || '')
+  }
+
+  window._filterEtudiants = function() { _renderEtudCheckboxes($('etudFilter')?.value || '') }
+
+  // ── Step 3: IA Rapport Generation ──
+  window._generateRapportIA = async function() {
+    const btn = $('btnGenIA')
+    btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Génération…'
+    
+    const resume = $('rapportResume').value.trim() || 'Non spécifié'
+    const participation = $('rapportParticipation').value
+    const devoirs = $('rapportDevoirs').value.trim() || 'Non spécifié'
+    const niveau = classeData?.niveau || seanceData?.format || 'Général'
+    const nbEtudiants = verifiedEtudiants.length
+    const etudiantsList = verifiedEtudiants.map(e => `${e.prenom} ${e.nom}`).join(', ')
+    const enseignant = verifiedFormateur ? `${verifiedFormateur.prenom} ${verifiedFormateur.nom}` : 'Non spécifié'
+    const sujet = seanceData?.sujet || seanceData?.titre || 'Non spécifié'
+
+    try {
+      // Try DeepSeek API via proxy
+      let rapport = ''
+      const apiUrl = '/.netlify/functions/deepseek-proxy'
+      const payload = {
+        messages: [{
+          role: 'user',
+          content: `Génère un rapport de séance professionnel pour AGTM Digital Academy en français.
+Séance: ${sujet} | Date: ${fmtDate(seanceData?.date_seance)}
+Classe: ${classeData?.nom||'—'} (Niveau: ${niveau})
+Enseignant: ${enseignant}
+Étudiants présents (${nbEtudiants}): ${etudiantsList}
+Points abordés: ${resume}
+Participation: ${participation}
+Devoirs: ${devoirs}
+
+Format du rapport (max 150 mots):
+- Résumé de la séance
+- Participation et progrès
+- Devoirs et prochaines étapes`
+        }],
+        max_tokens: 600,
+        temperature: 0.5
+      }
+      
+      const resp = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      const data = await resp.json()
+      rapport = data.reply || ''
+
+      if (!rapport) throw new Error('Réponse vide')
+
+      $('rapportContent').textContent = rapport
+      $('rapportPreview').style.display = 'block'
+      $('rapportFinal').value = rapport
+      rapportGenere = true
+      $('rapportNotifStatus').textContent = '✅ Généré'
+      $('rapportNotifStatus').style.color = 'var(--success)'
+      toast('✅ Rapport IA généré avec succès')
+    } catch (err) {
+      console.error('IA generation error:', err)
+      // Fallback: generate simple template
+      const fallbackRapport = `Rapport de Séance — ${fmtDate(seanceData?.date_seance)}
+━━━━━━━━━━━━━━━━━━━━━━
+📌 Sujet : ${sujet}
+👨‍🏫 Enseignant : ${enseignant}
+👨‍🎓 Présents : ${nbEtudiants} étudiant(s)
+
+📝 Résumé : ${resume}
+⭐ Participation : ${participation === 'excellent' ? '🌟 Excellent' : participation === 'bon' ? '👍 Bon' : participation === 'moyen' ? '👌 Moyen' : '📉 Faible'}
+📚 Devoirs : ${devoirs}
+
+🤖 Rapport généré par l'assistant AGTM.`
+      $('rapportContent').textContent = fallbackRapport
+      $('rapportPreview').style.display = 'block'
+      $('rapportFinal').value = fallbackRapport
+      rapportGenere = true
+      $('rapportNotifStatus').textContent = '✅ Généré (template)'
+      $('rapportNotifStatus').style.color = 'var(--warning)'
+      toast('⚠️ Rapport généré en mode dégradé')
+    }
+    
+    btn.disabled = false; btn.innerHTML = '🤖 Régénérer'
+  }
+
+  // ── Step 4: Confirmation summary ──
+  function _buildConfirmSummary() {
+    const enseignant = verifiedFormateur ? `${verifiedFormateur.prenom} ${verifiedFormateur.nom}` : '—'
+    const rapportText = $('rapportFinal').value || 'Non généré'
+    $('confirmSummary').innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center">
+          <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase">👨‍🏫 Enseignant</div>
+          <div style="font-weight:700;font-size:.85rem;color:var(--gold-lt)">${enseignant}</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;text-align:center">
+          <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase">👨‍🎓 Présents</div>
+          <div style="font-weight:700;font-size:.85rem;color:var(--success)">${verifiedEtudiants.length}</div>
+        </div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;margin-bottom:8px">
+        <div style="font-size:.65rem;color:var(--muted);text-transform:uppercase;margin-bottom:4px">📄 Rapport</div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.5;max-height:100px;overflow-y:auto">${rapportText.length > 150 ? rapportText.slice(0,150)+'…' : rapportText}</div>
+      </div>
+      ${rapportGenere && rapportText !== 'Non généré' ? `<div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:var(--radius-sm);padding:8px 10px;font-size:.72rem;color:var(--info)">
+        🤖 Rapport IA inclus — notification administrateur envoyée
+      </div>` : ''}
+    `
+  }
+
+  // ── Submit ──
+  window._submitPointage = async function() {
+    if (!verifiedFormateur) { toast('Enseignant non vérifié.', 'err'); return }
+    if (!verifiedEtudiants.length) { toast('Ajoutez au moins un étudiant.', 'err'); return }
+    if (!confirm(`Confirmer le pointage ?\n• ${verifiedFormateur.prenom} ${verifiedFormateur.nom}\n• ${verifiedEtudiants.length} étudiant(s)`)) return
+
+    $('btnSubmit').disabled = true; $('btnSubmit').innerHTML = '<span class="spinner"></span> Enregistrement…'
+
+    // 1. Update seance
+    const { error: seanceErr } = await sb.from('seances').update({
+      statut: 'Réalisée',
+      enseignant: `${verifiedFormateur.prenom} ${verifiedFormateur.nom}`,
+    }).eq('id', seanceId)
+
+    if (seanceErr) { toast('Erreur séance: ' + seanceErr.message, 'err'); $('btnSubmit').disabled = false; $('btnSubmit').innerHTML = '💾 Valider le pointage'; return }
+
+    // 2. Insert presences
+    const presences = verifiedEtudiants.map(e => ({
+      seance_id: Number(seanceId), etudiant_id: e.id, present: 1,
+      notes: `Pointage — ${new Date().toLocaleString('fr-FR')}`,
+    }))
+    const { error: presErr } = await sb.from('presences').upsert(presences, { onConflict: 'seance_id,etudiant_id' })
+    if (presErr) { toast('Erreur présences: ' + presErr.message, 'err'); $('btnSubmit').disabled = false; $('btnSubmit').innerHTML = '💾 Valider le pointage'; return }
+
+    // 3. Save IA rapport if generated
+    const rapportText = $('rapportFinal').value
+    if (rapportGenere && rapportText) {
+      await sb.from('rapports_seances').upsert({
+        seance_id: Number(seanceId),
+        contenu: rapportText,
+        genere_par_ia: true,
+        formateur_id: verifiedFormateur.id,
+      }, { onConflict: 'seance_id' }).catch(err => console.error('Rapport save error:', err))
+    }
+
+    // 4. Send WhatsApp notification via Twilio
+    let notifMsg = ''
+    try {
+      const notifPayload = {
+        to: '+2250101020304', // Default admin number
+        message: `📋 *Pointage AGTM*\nEnseignant: ${verifiedFormateur.prenom} ${verifiedFormateur.nom}\nSéance: ${seanceData?.sujet||'—'}\nDate: ${fmtDate(seanceData?.date_seance)}\nÉtudiants présents: ${verifiedEtudiants.length}\n${rapportGenese ? '🤖 Rapport IA inclus' : ''}`
+      }
+      // Fire and forget - don't block on notification failure
+      fetch('/.netlify/functions/whatsapp-send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(notifPayload)
+      }).then(r => r.json()).then(d => {
+        if (d.success) notifMsg = '📱 Notification WhatsApp envoyée à l\'administration.'
+        else notifMsg = '⚠️ Notification non envoyée (API indisponible)'
+      }).catch(() => { notifMsg = '⚠️ Service WhatsApp temporairement indisponible' })
+    } catch(_) {}
+
+    // Show success
+    $('mainForm').style.display = 'none'
+    $('successBlock').classList.add('show')
+    $('successMsg').innerHTML = `
+      Séance du <strong style="color:var(--gold)">${fmtDate(seanceData?.date_seance)}</strong> marquée <strong style="color:var(--success)">Réalisée</strong>.<br/>
+      <strong style="color:#4A90D9">${verifiedEtudiants.length} étudiant(s)</strong> présent(s).<br/>
+      <span style="color:var(--muted);font-size:.78rem">${verifiedFormateur.prenom} ${verifiedFormateur.nom}</span>
+    `
+    if (rapportGenere) {
+      $('successNotif').style.display = 'block'
+      $('successNotif').innerHTML = `🤖 Rapport de séance généré par l'IA et enregistré.<br/>${notifMsg || '📱 Notification en cours d\'envoi…'}`
+    }
+  }
+
+  init()
+</script>
+</body>
+</html>

@@ -10,6 +10,7 @@ const LANG_STYLES = {
   es: { accent: '#F1BF00', glow: 'rgba(241,191,0,0.18)', bg: 'rgba(241,191,0,0.07)' },
   de: { accent: '#94A3B8', glow: 'rgba(148,163,184,0.18)', bg: 'rgba(148,163,184,0.07)' },
   fr: { accent: '#4A7FBF', glow: 'rgba(74,127,191,0.18)', bg: 'rgba(74,127,191,0.07)' },
+  ar: { accent: '#059669', glow: 'rgba(5,150,105,0.18)', bg: 'rgba(5,150,105,0.07)' },
 }
 
 // ── Variants de carte ───────────────────────────────────────

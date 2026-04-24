@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AGTM Digital Academy — Dossier de Présentation Institutionnel 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C8960C;--gold-lt:#E8B84B;--gold-dim:rgba(200,150,12,.12);
+  --blue:#4A90D9;--green:#4AE090;--purple:#9B59B6;
+  --navy:#0D1B2A;--navy-mid:#152233;--navy-dk:#07101C;
+  --text:#1A2030;--muted:#4A6080;--border:#D8E4F0;
+  --accent-bg:#F5F8FA;
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'Segoe UI',Arial,system-ui,sans-serif;color:var(--text);background:#fff;line-height:1.7}
+
+/* ── TYPOGRAPHY ── */
+h1{font-size:2.6rem;font-weight:900;line-height:1.1}
+h2{font-size:1.6rem;font-weight:800;line-height:1.2}
+h3{font-size:1.1rem;font-weight:700}
+h4{font-size:.9rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.07em}
+p{margin-bottom:12px;color:#2A3A4A}
+ul{padding-left:22px;margin-bottom:12px}
+li{margin-bottom:6px;color:#2A3A4A;font-size:.9rem}
+strong{color:var(--navy)}
+a{color:var(--gold);text-decoration:none}
+
+/* ── LAYOUT ── */
+.page-break{page-break-before:always}
+.container{max-width:1000px;margin:0 auto;padding:0 32px}
+.section{padding:56px 0}
+.section-alt{background:var(--accent-bg)}
+
+/* ── COVER ── */
+.cover{
+  background:linear-gradient(135deg,#07101C 0%,#160E04 45%,#071828 100%);
+  color:#fff;min-height:100vh;display:flex;flex-direction:column;
+  padding:0;position:relative;overflow:hidden;page-break-after:always
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 60%,rgba(200,150,12,.08) 0%,transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(74,144,217,.05) 0%,transparent 50%);
+  pointer-events:none
+}
+.cover-top{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;text-align:center;position:relative;z-index:1}
+.cover-logo{width:90px;height:90px;background:linear-gradient(135deg,#C8960C,#E8B84B);border-radius:22px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.5rem;color:#0D1B2A;margin:0 auto 28px;box-shadow:0 8px 32px rgba(200,150,12,.4)}
+.cover-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.4);border-radius:20px;padding:5px 18px;font-size:.72rem;font-weight:800;color:#E8B84B;letter-spacing:.08em;margin-bottom:18px}
+.cover-title{font-size:3.2rem;font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
+.cover-title span{color:#E8B84B}
+.cover-sub{font-size:1.1rem;color:#90A4AE;font-weight:400;margin-bottom:36px;max-width:600px;line-height:1.7}
+.cover-stats{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.cstat{background:rgba(255,255,255,.06);border:1px solid rgba(200,150,12,.25);border-radius:14px;padding:16px 24px;text-align:center;min-width:100px}
+.cstat-num{font-size:2rem;font-weight:900;color:#E8B84B;line-height:1}
+.cstat-lbl{font-size:.62rem;color:#90A4AE;margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.cover-bottom{background:rgba(200,150,12,.1);border-top:1px solid rgba(200,150,12,.25);padding:20px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;position:relative;z-index:1}
+.cover-info{font-size:.72rem;color:#90A4AE}
+.cover-info strong{color:#C8960C}
+.cover-confidential{background:rgba(200,150,12,.2);border:1px solid rgba(200,150,12,.4);border-radius:6px;padding:4px 14px;font-size:.68rem;font-weight:800;color:#E8B84B;text-transform:uppercase;letter-spacing:.08em}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{display:flex;align-items:flex-start;gap:16px;margin-bottom:32px;padding-bottom:16px;border-bottom:2px solid var(--border)}
+.sec-hdr-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.sec-num{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:800;margin-bottom:4px}
+.sec-title{font-size:1.5rem;font-weight:900;color:var(--navy)}
+.sec-sub{font-size:.85rem;color:var(--muted);margin-top:4px}
+
+/* ── CARDS ── */
+.card-grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;transition:border-color .2s,box-shadow .2s}
+.card:hover{border-color:rgba(200,150,12,.4);box-shadow:0 4px 20px rgba(200,150,12,.08)}
+.card-icon{font-size:1.8rem;margin-bottom:10px}
+.card-title{font-size:.92rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.card-desc{font-size:.78rem;color:var(--muted);line-height:1.6}
+.card-gold{border-color:rgba(200,150,12,.3);background:linear-gradient(135deg,#FFFDF5,#FFF8E8)}
+.card-blue{border-color:rgba(74,144,217,.3);background:linear-gradient(135deg,#F5F8FF,#EEF4FF)}
+.card-green{border-color:rgba(74,224,144,.3);background:linear-gradient(135deg,#F5FFF8,#EEFFF5)}
+.card-navy{background:var(--navy);color:#fff;border:none}
+.card-navy .card-title{color:#E8B84B}.card-navy .card-desc{color:#90A4AE}
+
+/* ── MODULES GRID ── */
+.mod{background:var(--accent-bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center;font-size:.73rem;font-weight:700;color:var(--navy);line-height:1.4;transition:all .18s}
+.mod:hover{background:#EEF2F8;border-color:rgba(200,150,12,.3)}
+.mod-icon{font-size:1.1rem;display:block;margin-bottom:4px}
+.mod-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:24px}
+
+/* ── FEATURE ROW ── */
+.feat-row{display:flex;gap:14px;align-items:flex-start;padding:16px;background:var(--accent-bg);border:1px solid var(--border);border-radius:10px;margin-bottom:10px}
+.feat-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px;width:36px;text-align:center}
+.feat-title{font-size:.88rem;font-weight:800;color:var(--navy);margin-bottom:3px}
+.feat-desc{font-size:.77rem;color:var(--muted);line-height:1.5}
+
+/* ── ROLE CARD ── */
+.role-card{border-radius:14px;padding:20px;border:1px solid var(--border);background:#fff}
+.role-icon{font-size:2rem;margin-bottom:10px}
+.role-name{font-size:.95rem;font-weight:900;color:var(--navy);margin-bottom:8px}
+.role-item{font-size:.75rem;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:5px}
+.role-item::before{content:'›';color:var(--gold);font-weight:900;font-size:.9rem}
+
+/* ── TECH CARD ── */
+.tech-card{background:var(--navy);color:#fff;border-radius:14px;padding:18px;text-align:center}
+.tech-icon{font-size:2.2rem;margin-bottom:10px}
+.tech-name{font-size:.88rem;font-weight:800;color:#E8B84B;margin-bottom:6px}
+.tech-desc{font-size:.72rem;color:#90A4AE;line-height:1.5}
+
+/* ── BADGES ── */
+.badge{display:inline-block;padding:3px 12px;border-radius:12px;font-size:.68rem;font-weight:800;letter-spacing:.03em}
+.badge-gold{background:rgba(200,150,12,.12);color:#A07008;border:1px solid rgba(200,150,12,.3)}
+.badge-blue{background:rgba(74,144,217,.12);color:#1A60A0;border:1px solid rgba(74,144,217,.3)}
+.badge-green{background:rgba(74,224,144,.12);color:#1A6040;border:1px solid rgba(74,224,144,.3)}
+.badge-purple{background:rgba(155,89,182,.12);color:#6A2A9A;border:1px solid rgba(155,89,182,.3)}
+.badge-red{background:rgba(224,74,74,.1);color:#A02020;border:1px solid rgba(224,74,74,.3)}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:20px 0}
+.kpi{text-align:center;padding:18px 10px;background:var(--accent-bg);border:1px solid var(--border);border-radius:12px}
+.kpi-num{font-size:2rem;font-weight:900;color:var(--gold);line-height:1}
+.kpi-lbl{font-size:.65rem;color:var(--muted);margin-top:6px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;line-height:1.3}
+
+/* ── FOUNDER ── */
+.founder-card{background:linear-gradient(135deg,#0D1B2A,#1A2D42);color:#fff;border-radius:20px;padding:32px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start;margin:20px 0}
+.founder-avatar{width:90px;height:90px;background:linear-gradient(135deg,#C8960C,#E8B84B);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:900;color:#0D1B2A;flex-shrink:0}
+.founder-name{font-size:1.4rem;font-weight:900;color:#E8B84B;margin-bottom:4px}
+.founder-title{font-size:.82rem;color:#90A4AE;margin-bottom:16px}
+.founder-item{display:flex;align-items:center;gap:8px;font-size:.78rem;color:#C8D8E8;margin-bottom:8px}
+.founder-item span{color:#E8B84B;font-weight:700}
+.founder-bio{font-size:.82rem;color:#A8C0D8;line-height:1.7;margin-top:12px;border-top:1px solid rgba(200,150,12,.2);padding-top:12px}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight{background:linear-gradient(135deg,#FFFBEE,#FFF5D0);border:2px solid rgba(200,150,12,.4);border-radius:14px;padding:20px 24px;margin:20px 0}
+.highlight.blue{background:linear-gradient(135deg,#F0F6FF,#E8F0FF);border-color:rgba(74,144,217,.4)}
+.highlight.green{background:linear-gradient(135deg,#F0FFF8,#E8FFF0);border-color:rgba(74,224,144,.4)}
+.highlight-title{font-size:.82rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.highlight.blue .highlight-title{color:#1A60A0}
+.highlight.green .highlight-title{color:#1A6040}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+thead th{background:var(--navy);color:#E8B84B;padding:10px 14px;text-align:left;font-size:.75rem;font-weight:800;letter-spacing:.03em}
+tbody tr:nth-child(even){background:var(--accent-bg)}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--border);color:#2A3A4A;vertical-align:top}
+
+/* ── CTA SECTION ── */
+.cta-section{background:linear-gradient(135deg,#07101C,#160E04);color:#fff;padding:60px 32px;text-align:center;page-break-before:always}
+.cta-title{font-size:2rem;font-weight:900;color:#E8B84B;margin-bottom:12px}
+.cta-sub{font-size:1rem;color:#90A4AE;margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto}
+.cta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:800px;margin:0 auto}
+.cta-item{background:rgba(255,255,255,.06);border:1px solid rgba(200,150,12,.25);border-radius:12px;padding:18px 14px;text-align:center}
+.cta-item-icon{font-size:1.4rem;margin-bottom:8px}
+.cta-item-lbl{font-size:.72rem;color:#90A4AE;margin-bottom:4px}
+.cta-item-val{font-size:.85rem;font-weight:800;color:#E8B84B}
+
+/* ── DIVIDER ── */
+.divider{border:none;border-top:1px solid var(--border);margin:28px 0}
+hr.gold{border-color:rgba(200,150,12,.3)}
+
+/* ── PAGE HEADER (interior) ── */
+.int-header{background:linear-gradient(135deg,var(--navy),#152540);color:#fff;padding:12px 32px;display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:#5A7090;border-bottom:2px solid var(--gold)}
+.int-header strong{color:#C8960C}
+
+/* ── PRINT ── */
+@media print{
+  body{font-size:13px}
+  .cover{min-height:auto;padding-bottom:0}
+  .section{padding:36px 0}
+  .container{max-width:100%;padding:0 24px}
+  h1{font-size:2rem}
+  h2{font-size:1.3rem}
+  .mod-grid{grid-template-columns:repeat(5,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .kpi-row{grid-template-columns:repeat(5,1fr)}
+  .cta-grid{grid-template-columns:repeat(3,1fr)}
+  a{color:var(--navy)}
+  .no-print{display:none}
+}
+@page{margin:15mm}
+
+@media(max-width:800px){
+  .g3,.g4,.mod-grid{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:repeat(3,1fr)}
+  .founder-card{grid-template-columns:1fr;text-align:center}
+  .cta-grid{grid-template-columns:1fr}
+  .cover-title{font-size:2.2rem}
+  .cta-section{padding:40px 20px}
+}
+@media(max-width:500px){
+  .g3,.g4,.mod-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     COUVERTURE
+══════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-logo">AGTM</div>
+    <div class="cover-badge">✦ DOSSIER DE PRÉSENTATION INSTITUTIONNEL 2026 ✦</div>
+    <h1 class="cover-title">AGTM <span>Digital</span> Academy</h1>
+    <p class="cover-sub">La première plateforme EdTech tout-en-un dédiée à l'enseignement de l'anglais en Côte d'Ivoire — gestion pédagogique, administrative, financière et communication en temps réel, 100% cloud.</p>
+
+    <div class="cover-stats">
+      <div class="cstat"><div class="cstat-num">38+</div><div class="cstat-lbl">Modules</div></div>
+      <div class="cstat"><div class="cstat-num">6</div><div class="cstat-lbl">Rôles</div></div>
+      <div class="cstat"><div class="cstat-num">A1→C2</div><div class="cstat-lbl">Niveaux CECRL</div></div>
+      <div class="cstat"><div class="cstat-num">100%</div><div class="cstat-lbl">Cloud</div></div>
+      <div class="cstat"><div class="cstat-num">🤖</div><div class="cstat-lbl">IA intégrée</div></div>
+      <div class="cstat"><div class="cstat-num">🎓</div><div class="cstat-lbl">Live Class</div></div>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+      <div style="background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.4);border-radius:8px;padding:8px 18px;font-size:.75rem;color:#E8B84B;font-weight:700">📍 Abidjan, Côte d'Ivoire 🇨🇮</div>
+      <div style="background:rgba(74,224,144,.1);border:1px solid rgba(74,224,144,.3);border-radius:8px;padding:8px 18px;font-size:.75rem;color:#4AE090;font-weight:700">🌍 Accessible monde entier</div>
+      <div style="background:rgba(74,144,217,.1);border:1px solid rgba(74,144,217,.3);border-radius:8px;padding:8px 18px;font-size:.75rem;color:#4A90D9;font-weight:700">⚡ Supabase · Netlify · Claude AI</div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-info">
+      <strong>Fondateur & Directeur :</strong> ISSA BAMBA &nbsp;·&nbsp;
+      <strong>Contact :</strong> contact@africaglobaltraining.com &nbsp;·&nbsp;
+      <strong>Web :</strong> africaglobaltraining.com
+    </div>
+    <div class="cover-confidential">Document Confidentiel — Usage Partenaires & Investisseurs</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     EN-TÊTE INTÉRIEUR
+══════════════════════════════════════════════════════════ -->
+<div class="int-header">
+  <div><strong>AGTM Digital Academy</strong> — Dossier de Présentation Institutionnel</div>
+  <div>© 2026 ISSA BAMBA · Abidjan, Côte d'Ivoire · Document Confidentiel</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     1. RÉSUMÉ EXÉCUTIF
+══════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#C8960C,#E8B84B)">🎯</div>
+      <div>
+        <div class="sec-num">Section 01</div>
+        <div class="sec-title">Résumé Exécutif</div>
+        <div class="sec-sub">Vue d'ensemble de la proposition de valeur AGTM Digital Academy</div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-bottom:24px">
+      <div class="highlight-title">Notre Mission</div>
+      <p style="font-size:.92rem;color:#3A2800;line-height:1.7;margin:0"><strong>AGTM Digital Academy</strong> est une plateforme numérique de nouvelle génération dédiée à l'enseignement de l'anglais en Afrique de l'Ouest. Elle réunit dans un seul écosystème cloud l'administration académique, la pédagogie, la gestion financière, les ressources humaines et la communication — permettant à l'académie d'opérer avec la rigueur et l'efficacité d'une institution internationale.</p>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="kpi-num">38+</div><div class="kpi-lbl">Modules fonctionnels</div></div>
+      <div class="kpi"><div class="kpi-num">6</div><div class="kpi-lbl">Rôles utilisateurs</div></div>
+      <div class="kpi"><div class="kpi-num">8</div><div class="kpi-lbl">Formations</div></div>
+      <div class="kpi"><div class="kpi-num">A1→C2</div><div class="kpi-lbl">Niveaux CECRL</div></div>
+      <div class="kpi"><div class="kpi-num">100%</div><div class="kpi-lbl">Cloud · 0 serveur</div></div>
+    </div>
+
+    <div class="card-grid g3">
+      <div class="card card-gold">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Gestion complète en temps réel</div>
+        <div class="card-desc">Étudiants, finances, séances, présences, évaluations, honoraires — tout synchronisé instantanément.</div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">Intelligence Artificielle intégrée</div>
+        <div class="card-desc">Assistant pédagogique IA (Claude Anthropic) pour chaque apprenant, 24h/24. 3 niveaux de service.</div>
+      </div>
+      <div class="card card-green">
+        <div class="card-icon">🎓</div>
+        <div class="card-title">Classe Virtuelle Synchronisée</div>
+        <div class="card-desc">Technologie propriétaire : synchronisation YouTube en temps réel entre enseignant et apprenants.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     2. LE FONDATEUR
+══════════════════════════════════════════════════════════ -->
+<div class="section section-alt page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#1A2D42,#2A4060)">👨‍💼</div>
+      <div>
+        <div class="sec-num">Section 02</div>
+        <div class="sec-title">Le Fondateur</div>
+        <div class="sec-sub">Profil et vision du créateur d'AGTM Digital Academy</div>
+      </div>
+    </div>
+
+    <div class="founder-card">
+      <div>
+        <div class="founder-avatar">IB</div>
+      </div>
+      <div>
+        <div class="founder-name">ISSA BAMBA</div>
+        <div class="founder-title">Fondateur & Directeur Général — AGTM Digital Academy</div>
+
+        <div class="founder-item">📍 <span>Abidjan, Côte d'Ivoire 🇨🇮</span></div>
+        <div class="founder-item">📧 <span>contact@africaglobaltraining.com</span></div>
+        <div class="founder-item">🌐 <span>africaglobaltraining.com</span></div>
+        <div class="founder-item">📲 <span>WhatsApp : +225 07 07 96 72 50</span></div>
+        <div class="founder-item">🎓 <span>Spécialiste en formation linguistique et transformation numérique</span></div>
+
+        <div class="founder-bio">
+          <strong style="color:#E8B84B">Vision :</strong> Issa Bamba a fondé AGTM Digital Academy avec une conviction claire : l'Afrique de l'Ouest mérite des outils de formation aussi performants que ceux des meilleures institutions mondiales. Face à la fragmentation des outils de gestion académique (tableurs, groupes WhatsApp, papier), il a conçu et développé une plateforme numérique entièrement intégrée — de l'inscription de l'étudiant au paiement de l'enseignant, en passant par le suivi pédagogique, la génération de documents officiels et la communication.<br/><br/>
+          <strong style="color:#E8B84B">AGTM</strong> — <em>Africa Global Training Management</em> — porte cette ambition de placer la formation professionnelle africaine au rang international, en s'appuyant sur les technologies les plus avancées disponibles aujourd'hui.
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid g3" style="margin-top:20px">
+      <div class="card" style="text-align:center">
+        <div class="card-icon">🏗️</div>
+        <div class="card-title">Concepteur & Architecte</div>
+        <div class="card-desc">A conçu l'intégralité de l'architecture technique, des workflows pédagogiques et des flux financiers de la plateforme.</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="card-icon">🌍</div>
+        <div class="card-title">Vision Africaine</div>
+        <div class="card-desc">Plateforme pensée pour les réalités du marché ouest-africain : mobile first, WhatsApp intégré, paiement local, langues locales.</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div class="card-icon">🚀</div>
+        <div class="card-title">Innovateur EdTech</div>
+        <div class="card-desc">Intégration de l'IA (Anthropic), de la classe virtuelle synchronisée, des quiz automatiques et du screen recording en contexte éducatif.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     3. OFFRES DE FORMATION
+══════════════════════════════════════════════════════════ -->
+<div class="section page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#27AE60,#4AE090)">📚</div>
+      <div>
+        <div class="sec-num">Section 03</div>
+        <div class="sec-title">Offres de Formation</div>
+        <div class="sec-sub">8 programmes structurés selon le Cadre Européen Commun de Référence pour les Langues (CECRL)</div>
+      </div>
+    </div>
+
+    <div class="card-grid g3" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-icon">🗣️</div>
+        <div class="card-title">Anglais Général</div>
+        <div class="card-desc">Programme complet du vocabulaire quotidien à la maîtrise professionnelle. Grammaire, expression orale et écrite.</div>
+        <div style="margin-top:10px;display:flex;gap:4px;flex-wrap:wrap">
+          <span class="badge badge-blue">A1</span><span class="badge badge-blue">A2</span>
+          <span class="badge badge-gold">B1</span><span class="badge badge-gold">B2</span>
+          <span class="badge badge-green">C1</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💼</div>
+        <div class="card-title">Business English</div>
+        <div class="card-desc">Anglais professionnel pour le monde des affaires : emails, réunions, négociations, présentations, commerce international.</div>
+        <div style="margin-top:10px;display:flex;gap:4px;flex-wrap:wrap">
+          <span class="badge badge-gold">B1</span><span class="badge badge-gold">B2</span><span class="badge badge-green">C1</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Préparation TOEIC</div>
+        <div class="card-desc">Préparation intensive à la certification TOEIC. Stratégies, exercices types, simulations chronométrées.</div>
+        <div style="margin-top:10px;display:flex;gap:4px;flex-wrap:wrap">
+          <span class="badge badge-gold">Score 500+</span><span class="badge badge-green">Score 785+</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏫</div>
+        <div class="card-title">Préparation TOEFL</div>
+        <div class="card-desc">Préparation complète au TOEFL iBT. Reading, Listening, Speaking, Writing — méthodologie officielle ETS.</div>
+        <div style="margin-top:10px;display:flex;gap:4px;flex-wrap:wrap">
+          <span class="badge badge-gold">iBT</span><span class="badge badge-green">B2→C1</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📝</div>
+        <div class="card-title">Préparation BAC / BEPC</div>
+        <div class="card-desc">Programme spécialisé pour les élèves ivoiriens. Méthode AGTM en 4 étapes, compréhension, expression écrite.</div>
+        <div style="margin-top:10px;display:flex;gap:4px;flex-wrap:wrap">
+          <span class="badge badge-blue">A2</span><span class="badge badge-gold">B1</span>
+          <span class="badge badge-red">Examen</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌟</div>
+        <div class="card-title">Kids &amp; Teens English</div>
+        <div class="card-desc">Apprentissage adapté aux enfants et adolescents (6–17 ans). Pédagogie ludique, interactive et motivante.</div>
+        <div style="margin-top:10px;display:flex;gap:4px;flex-wrap:wrap">
+          <span class="badge badge-purple">6–17 ans</span>
+          <span class="badge badge-blue">A1</span><span class="badge badge-gold">B1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-grid g2">
+      <div class="card card-gold">
+        <div class="card-icon">🏢</div>
+        <div class="card-title">Formation Entreprise (B2B)</div>
+        <div class="card-desc">Programme intra-entreprise sur mesure : audit du niveau des équipes, conception du programme adapté, sessions en présentiel ou en ligne, rapport de suivi mensuel.</div>
+        <div style="margin-top:10px">
+          <span class="badge badge-gold">Sur devis</span>
+          <span class="badge badge-blue">Groupes 4–20 pers.</span>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">🔀</div>
+        <div class="card-title">Cours Hybrides</div>
+        <div class="card-desc">Combinaison optimale présentiel + distanciel. L'apprenant assiste en salle certains jours, et en ligne d'autres jours — même progression, même suivi.</div>
+        <div style="margin-top:10px">
+          <span class="badge badge-blue">Présentiel</span>
+          <span class="badge badge-green">En ligne</span>
+          <span class="badge badge-gold">Hybride</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight green" style="margin-top:20px">
+      <div class="highlight-title">📊 Cadre Pédagogique CECRL</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px">
+        <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;border:1px solid rgba(74,224,144,.3)"><div style="font-size:1.2rem;font-weight:900;color:#5A7090">A1</div><div style="font-size:.65rem;color:#4A6080;font-weight:700">Débutant</div></div>
+        <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;border:1px solid rgba(74,224,144,.3)"><div style="font-size:1.2rem;font-weight:900;color:#4AE090">A2</div><div style="font-size:.65rem;color:#4A6080;font-weight:700">Élémentaire</div></div>
+        <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;border:1px solid rgba(74,224,144,.3)"><div style="font-size:1.2rem;font-weight:900;color:#C8960C">B1</div><div style="font-size:.65rem;color:#4A6080;font-weight:700">Intermédiaire</div></div>
+        <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;border:1px solid rgba(74,224,144,.3)"><div style="font-size:1.2rem;font-weight:900;color:#E8B84B">B2</div><div style="font-size:.65rem;color:#4A6080;font-weight:700">Indépendant</div></div>
+        <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;border:1px solid rgba(74,224,144,.3)"><div style="font-size:1.2rem;font-weight:900;color:#27AE60">C1</div><div style="font-size:.65rem;color:#4A6080;font-weight:700">Avancé</div></div>
+        <div style="text-align:center;padding:10px;background:#fff;border-radius:8px;border:1px solid rgba(74,224,144,.3)"><div style="font-size:1.2rem;font-weight:900;color:#1A8050">C2</div><div style="font-size:.65rem;color:#4A6080;font-weight:700">Maîtrise</div></div>
+      </div>
+      <p style="font-size:.75rem;color:#1A6040;margin:10px 0 0">Tous les apprenants sont positionnés sur ce cadre dès l'inscription via un <strong>test de placement automatique</strong>. La progression est mesurée et documentée tout au long de la formation.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     4. MODULES FONCTIONNELS
+══════════════════════════════════════════════════════════ -->
+<div class="section section-alt page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#4A90D9,#6AA8E8)">🧩</div>
+      <div>
+        <div class="sec-num">Section 04</div>
+        <div class="sec-title">38+ Modules Fonctionnels</div>
+        <div class="sec-sub">Couverture complète de toutes les fonctions d'une institution de formation</div>
+      </div>
+    </div>
+
+    <h4 style="margin-bottom:12px;color:#0D1B2A">Administration & Gestion Académique</h4>
+    <div class="mod-grid">
+      <div class="mod"><span class="mod-icon">👥</span>Étudiants</div>
+      <div class="mod"><span class="mod-icon">🏫</span>Classes</div>
+      <div class="mod"><span class="mod-icon">📅</span>Séances</div>
+      <div class="mod"><span class="mod-icon">📋</span>Présences</div>
+      <div class="mod"><span class="mod-icon">🌐</span>Inscriptions Web</div>
+      <div class="mod"><span class="mod-icon">📁</span>Dossiers</div>
+      <div class="mod"><span class="mod-icon">🗓️</span>Emploi du temps</div>
+      <div class="mod"><span class="mod-icon">📊</span>Dashboard KPI</div>
+      <div class="mod"><span class="mod-icon">🔍</span>Test Placement</div>
+      <div class="mod"><span class="mod-icon">🏅</span>Certificats</div>
+      <div class="mod"><span class="mod-icon">📝</span>Évaluations</div>
+      <div class="mod"><span class="mod-icon">⭐</span>Quiz & Notes</div>
+    </div>
+
+    <h4 style="margin:20px 0 12px;color:#0D1B2A">Finance & Comptabilité</h4>
+    <div class="mod-grid">
+      <div class="mod"><span class="mod-icon">💰</span>Encaissements</div>
+      <div class="mod"><span class="mod-icon">📉</span>Dépenses</div>
+      <div class="mod"><span class="mod-icon">🏦</span>Caisse</div>
+      <div class="mod"><span class="mod-icon">📆</span>Échéancier</div>
+      <div class="mod"><span class="mod-icon">📄</span>Proforma</div>
+      <div class="mod"><span class="mod-icon">💼</span>Finances Perso</div>
+      <div class="mod"><span class="mod-icon">💵</span>Honoraires</div>
+      <div class="mod"><span class="mod-icon">🖨️</span>Rapports PDF</div>
+    </div>
+
+    <h4 style="margin:20px 0 12px;color:#0D1B2A">Pédagogie & Suivi</h4>
+    <div class="mod-grid">
+      <div class="mod"><span class="mod-icon">📋</span>Rapports Séance</div>
+      <div class="mod"><span class="mod-icon">📈</span>Progression</div>
+      <div class="mod"><span class="mod-icon">🎯</span>Devoirs</div>
+      <div class="mod"><span class="mod-icon">💬</span>Messagerie</div>
+      <div class="mod"><span class="mod-icon">😊</span>Satisfaction</div>
+      <div class="mod"><span class="mod-icon">🗂️</span>Catalogue</div>
+    </div>
+
+    <h4 style="margin:20px 0 12px;color:#0D1B2A">Ressources Humaines</h4>
+    <div class="mod-grid">
+      <div class="mod"><span class="mod-icon">👔</span>Personnel</div>
+      <div class="mod"><span class="mod-icon">🧾</span>Fiches de Paie</div>
+      <div class="mod"><span class="mod-icon">🏖️</span>Congés</div>
+      <div class="mod"><span class="mod-icon">📩</span>Recrutement</div>
+    </div>
+
+    <h4 style="margin:20px 0 12px;color:#0D1B2A">Technologies Avancées & English Corner</h4>
+    <div class="mod-grid">
+      <div class="mod"><span class="mod-icon">🤖</span>Assistant IA</div>
+      <div class="mod"><span class="mod-icon">🎓</span>Classe Virtuelle</div>
+      <div class="mod"><span class="mod-icon">❓</span>Quiz Triggers</div>
+      <div class="mod"><span class="mod-icon">🔴</span>Screen Rec.</div>
+      <div class="mod"><span class="mod-icon">🎬</span>Vidéos CEFR</div>
+      <div class="mod"><span class="mod-icon">🎧</span>Podcasts</div>
+      <div class="mod"><span class="mod-icon">📚</span>Grammaire</div>
+      <div class="mod"><span class="mod-icon">🔤</span>Vocabulaire</div>
+      <div class="mod"><span class="mod-icon">📲</span>WhatsApp</div>
+      <div class="mod"><span class="mod-icon">📣</span>Marketing</div>
+      <div class="mod"><span class="mod-icon">🏆</span>Leaderboard</div>
+      <div class="mod"><span class="mod-icon">📱</span>App PWA</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     5. FONCTIONNALITÉS TECHNOLOGIQUES CLÉS
+══════════════════════════════════════════════════════════ -->
+<div class="section page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#9B59B6,#C880F0)">⚡</div>
+      <div>
+        <div class="sec-num">Section 05</div>
+        <div class="sec-title">Fonctionnalités Technologiques Clés</div>
+        <div class="sec-sub">Les innovations distinctives qui différencient AGTM Digital Academy</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">🎓</div>
+      <div>
+        <div class="feat-title">Classe Virtuelle Synchronisée — Technologie Propriétaire</div>
+        <div class="feat-desc">Synchronisation en temps réel de lecteurs YouTube entre l'enseignant et les apprenants via <strong>Supabase Realtime Broadcast</strong>. Le professeur contrôle la vidéo depuis son appareil, chaque apprenant suit exactement au même instant — sans partage d'écran, sans dépendance à Google Meet ou Zoom. L'audio est lu localement sur chaque appareil pour une qualité optimale. Sessions isolées par code unique.</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">❓</div>
+      <div>
+        <div class="feat-title">Quiz Triggers Automatiques — Évaluation Inline</div>
+        <div class="feat-desc">Pendant la lecture d'une vidéo, lorsque le lecteur atteint un <strong>moment clé prédéfini</strong> (trigger_time), la lecture se suspend automatiquement et un quiz plein écran s'affiche. L'apprenant répond (MCQ ou question ouverte), reçoit un feedback immédiat et reprend la vidéo. Les quiz sont liés aux vidéos par leur ID YouTube et configurables par niveau CEFR.</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">🤖</div>
+      <div>
+        <div class="feat-title">Assistant IA Pédagogique — AGTM AI (Claude Anthropic)</div>
+        <div class="feat-desc">Chaque apprenant dispose d'une assistante IA personnalisée, disponible 24h/24, propulsée par les modèles <strong>Claude (Anthropic)</strong>. Elle répond aux questions d'anglais, propose des exercices adaptés, corrige des textes, explique des règles grammaticales et peut effectuer des recherches web en temps réel. 3 niveaux de service : Essentiel (Haiku), Recommandé (Sonnet), Premium (Opus).</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">🔴</div>
+      <div>
+        <div class="feat-title">Screen Recording & Web Share — Capture de cours</div>
+        <div class="feat-desc">Les apprenants peuvent enregistrer des extraits de cours directement depuis le navigateur (API <strong>MediaRecorder + getDisplayMedia</strong>), incluant l'audio système (son YouTube inclus). Un point rouge clignotant signale l'enregistrement actif. Le fichier <code>.webm</code> se télécharge automatiquement. Le bouton "Partager" utilise le <strong>Web Share API natif</strong> pour envoyer le lien de session via WhatsApp, Email ou SMS en un tap.</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">📄</div>
+      <div>
+        <div class="feat-title">Génération PDF Intelligente — Rapports & Honoraires Synchronisés</div>
+        <div class="feat-desc">L'admin, la direction et les formateurs génèrent des <strong>rapports PDF complets</strong> directement depuis le tableau de bord. Chaque rapport inclut le contenu pédagogique ET les honoraires calculés automatiquement (présents × tarif, absents NJ × 50% tarif). La vue <code>v_rapport_honoraires_sync</code> (base de données) garantit une cohérence temps réel entre les deux.</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">📊</div>
+      <div>
+        <div class="feat-title">Suivi Financier Temps Réel — Finance & Honoraires</div>
+        <div class="feat-desc">Tableau de bord financier complet : encaissements, dépenses, caisse, échéanciers, proforma, finances personnelles de la direction. Honoraires des formateurs calculés automatiquement à chaque rapport soumis — avec statut <em>En attente → Validé → Payé</em>. Toutes les données sont isolées par rôle via les politiques RLS PostgreSQL.</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">📲</div>
+      <div>
+        <div class="feat-title">Intégration WhatsApp Business</div>
+        <div class="feat-desc">Envoi de messages automatiques via l'API WhatsApp Cloud pour les confirmations d'inscription, rappels de séance, notifications de paiement et communication marketing. Webhook entrant pour centraliser les demandes des prospects directement dans le tableau de bord admin.</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">📱</div>
+      <div>
+        <div class="feat-title">Progressive Web App (PWA) — Installable sans App Store</div>
+        <div class="feat-desc">La plateforme est installable sur Android, iOS et PC depuis le navigateur, sans passer par Google Play ou l'App Store. Mode hors-ligne pour les pages visitées, mise à jour automatique, notifications push (infrastructure en place), icône sur l'écran d'accueil. Expérience native sans développement mobile natif.</div>
+      </div>
+    </div>
+
+    <div class="feat-row">
+      <div class="feat-icon">🔐</div>
+      <div>
+        <div class="feat-title">Sécurité Multi-couche — RLS & JWT</div>
+        <div class="feat-desc">Chaque utilisateur ne voit que ses propres données : les politiques <strong>Row Level Security (RLS)</strong> de PostgreSQL sont appliquées au niveau de la base de données — pas seulement dans le code applicatif. Authentification par token JWT (Supabase Auth), clés API protégées côté serveur (proxy Netlify Functions), HTTPS obligatoire.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     6. RÔLES & ACCÈS
+══════════════════════════════════════════════════════════ -->
+<div class="section section-alt page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#C8960C,#E8B84B)">👥</div>
+      <div>
+        <div class="sec-num">Section 06</div>
+        <div class="sec-title">Rôles & Niveaux d'Accès</div>
+        <div class="sec-sub">6 profils utilisateurs avec des droits finement contrôlés</div>
+      </div>
+    </div>
+
+    <div class="card-grid g3">
+      <div class="role-card" style="border-color:rgba(200,150,12,.4)">
+        <div class="role-icon">👑</div>
+        <div class="role-name" style="color:#A07008">Administrateur</div>
+        <div class="role-item">Accès complet à tous les modules</div>
+        <div class="role-item">Gestion étudiants, finances, RH</div>
+        <div class="role-item">Configuration système & IA</div>
+        <div class="role-item">Création et gestion des utilisateurs</div>
+        <div class="role-item">Rapports et exports PDF</div>
+        <div class="role-item">Validation honoraires formateurs</div>
+      </div>
+      <div class="role-card" style="border-color:rgba(74,144,217,.4)">
+        <div class="role-icon">👩‍🏫</div>
+        <div class="role-name" style="color:#1A60A0">Formateur</div>
+        <div class="role-item">Planning et séances du formateur</div>
+        <div class="role-item">Feuilles de présence numériques</div>
+        <div class="role-item">Soumission rapports de séance</div>
+        <div class="role-item">Suivi progression des apprenants</div>
+        <div class="role-item">Mes honoraires en temps réel</div>
+        <div class="role-item">Classe Virtuelle (Teacher)</div>
+      </div>
+      <div class="role-card" style="border-color:rgba(74,224,144,.4)">
+        <div class="role-icon">🎓</div>
+        <div class="role-name" style="color:#1A6040">Étudiant</div>
+        <div class="role-item">Mon espace personnel complet</div>
+        <div class="role-item">Séances, notes, quiz, devoirs</div>
+        <div class="role-item">Emploi du temps & ressources</div>
+        <div class="role-item">Messagerie avec formateurs</div>
+        <div class="role-item">English Corner & IA pédagogique</div>
+        <div class="role-item">Classe Virtuelle (Student)</div>
+      </div>
+      <div class="role-card" style="border-color:rgba(155,89,182,.4)">
+        <div class="role-icon">🗂️</div>
+        <div class="role-name" style="color:#6A2A9A">Secrétaire</div>
+        <div class="role-item">Gestion inscriptions & dossiers</div>
+        <div class="role-item">Suivi des étudiants & classes</div>
+        <div class="role-item">Emplois du temps</div>
+        <div class="role-item">Messagerie & communication</div>
+        <div class="role-item">Consultation rapports de séance</div>
+      </div>
+      <div class="role-card" style="border-color:rgba(74,144,217,.4)">
+        <div class="role-icon">🏫</div>
+        <div class="role-name" style="color:#1A5A90">Direction Pédagogique</div>
+        <div class="role-item">Visa et validation des séances</div>
+        <div class="role-item">Lecture des rapports formateurs</div>
+        <div class="role-item">Suivi honoraires et paiements</div>
+        <div class="role-item">Rapports de performance PDF</div>
+        <div class="role-item">Vue consolidée temps réel</div>
+      </div>
+      <div class="role-card" style="border-color:rgba(74,224,144,.4)">
+        <div class="role-icon">🌐</div>
+        <div class="role-name" style="color:#1A6040">Public / Accès sans connexion</div>
+        <div class="role-item">Pointage numérique séances</div>
+        <div class="role-item">Formulaire satisfaction</div>
+        <div class="role-item">Test de placement gratuit</div>
+        <div class="role-item">Formulaire inscription</div>
+        <div class="role-item">Brochure marketing</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     7. ARCHITECTURE TECHNIQUE
+══════════════════════════════════════════════════════════ -->
+<div class="section page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#2980B9,#5BA8D4)">⚙️</div>
+      <div>
+        <div class="sec-num">Section 07</div>
+        <div class="sec-title">Architecture Technique</div>
+        <div class="sec-sub">Stack cloud de niveau professionnel — 0 serveur à gérer, scalable à l'infini</div>
+      </div>
+    </div>
+
+    <div class="card-grid g4" style="margin-bottom:24px">
+      <div class="tech-card">
+        <div class="tech-icon">🟢</div>
+        <div class="tech-name">Supabase</div>
+        <div class="tech-desc">PostgreSQL managé · Authentification JWT · Row Level Security · Realtime Broadcast · Storage</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🔷</div>
+        <div class="tech-name">Netlify</div>
+        <div class="tech-desc">Hébergement statique · CDN mondial · Serverless Functions · CI/CD automatique · HTTPS</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🟣</div>
+        <div class="tech-name">Claude (Anthropic)</div>
+        <div class="tech-desc">IA conversationnelle · Haiku / Sonnet / Opus · Proxy sécurisé · Base de connaissances</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-icon">🔴</div>
+        <div class="tech-name">YouTube IFrame API</div>
+        <div class="tech-desc">Lecteurs synchronisés · Contrôle programmatique · Quiz triggers · Screen Recording</div>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>Technologie</th><th>Rôle dans la plateforme</th><th>Avantage</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Supabase Realtime</strong></td>
+          <td>Synchronisation Classe Virtuelle Teacher → Student</td>
+          <td>Latence &lt; 100ms — temps réel garanti</td>
+        </tr>
+        <tr>
+          <td><strong>PostgreSQL RLS</strong></td>
+          <td>Isolation des données par utilisateur</td>
+          <td>Sécurité au niveau base de données, inviolable côté client</td>
+        </tr>
+        <tr>
+          <td><strong>MediaRecorder API</strong></td>
+          <td>Screen Recording des cours</td>
+          <td>Natif navigateur, aucune extension, audio YouTube inclus</td>
+        </tr>
+        <tr>
+          <td><strong>Web Share API</strong></td>
+          <td>Partage de liens de session</td>
+          <td>Menu de partage natif mobile (WhatsApp, SMS, Email)</td>
+        </tr>
+        <tr>
+          <td><strong>Netlify Functions</strong></td>
+          <td>Proxy API Claude, WhatsApp, podcasts</td>
+          <td>Clés API jamais exposées au navigateur client</td>
+        </tr>
+        <tr>
+          <td><strong>PWA (Service Worker)</strong></td>
+          <td>Mode hors-ligne, installation sur appareil</td>
+          <td>Expérience app native sans App Store</td>
+        </tr>
+        <tr>
+          <td><strong>HTML/JS natif (SPA)</strong></td>
+          <td>Interface utilisateur</td>
+          <td>Aucune dépendance framework — chargement ultra-rapide</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight blue" style="margin-top:20px">
+      <div class="highlight-title">Politique de déploiement continu</div>
+      <p style="font-size:.82rem;color:#0A2040;margin:0">Chaque mise à jour du code est poussée sur <strong>GitHub (branche main)</strong> → <strong>Netlify détecte automatiquement</strong> le changement et redéploie en moins de 2 minutes → Les migrations SQL sont appliquées indépendamment dans <strong>Supabase Dashboard (SQL Editor)</strong>. Zéro interruption de service lors des mises à jour.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     8. EFFICACITÉ DU SYSTÈME
+══════════════════════════════════════════════════════════ -->
+<div class="section section-alt page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#27AE60,#4AE090)">📈</div>
+      <div>
+        <div class="sec-num">Section 08</div>
+        <div class="sec-title">Efficacité du Système</div>
+        <div class="sec-sub">Gains concrets pour l'administration, les formateurs et les apprenants</div>
+      </div>
+    </div>
+
+    <div class="card-grid g3" style="margin-bottom:24px">
+      <div class="card card-gold">
+        <div class="card-icon">⏱️</div>
+        <div class="card-title">Gain de temps administratif</div>
+        <div class="card-desc">Génération de documents (contrats, fiches d'engagement, emplois du temps, certificats) en 1 clic. Inscription en ligne : conversion dossier automatique. Calcul honoraires : immédiat à la soumission du rapport.</div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Précision pédagogique</div>
+        <div class="card-desc">Suivi individuel de chaque apprenant : présences, notes, progression CECRL, devoirs rendus. Historique complet accessible en temps réel par l'admin, les formateurs et les parents.</div>
+      </div>
+      <div class="card card-green">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Contrôle financier rigoureux</div>
+        <div class="card-desc">Zéro paiement non tracé : chaque encaissement est enregistré avec date, montant, mode de paiement. Alertes automatiques pour les paiements en retard. Tableau de bord financier en temps réel.</div>
+      </div>
+    </div>
+
+    <div class="card-grid g2" style="margin-bottom:20px">
+      <div class="card">
+        <h4 style="margin-bottom:12px">Avant AGTM Digital Academy</h4>
+        <ul style="list-style:none;padding:0">
+          <li style="padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:#C0392B">❌ Tableurs Excel pour les présences</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:#C0392B">❌ WhatsApp pour communiquer les notes</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:#C0392B">❌ Documents papier pour les contrats</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:#C0392B">❌ Calcul manuel des honoraires</li>
+          <li style="padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:#C0392B">❌ Partage d'écran Zoom pour les cours en ligne</li>
+          <li style="padding:6px 0;font-size:.82rem;color:#C0392B">❌ Aucune traçabilité des paiements en retard</li>
+        </ul>
+      </div>
+      <div class="card card-gold">
+        <h4 style="margin-bottom:12px">Avec AGTM Digital Academy</h4>
+        <ul style="list-style:none;padding:0">
+          <li style="padding:6px 0;border-bottom:1px solid rgba(200,150,12,.2);font-size:.82rem;color:#27AE60">✅ Présences numériques avec lien de pointage QR</li>
+          <li style="padding:6px 0;border-bottom:1px solid rgba(200,150,12,.2);font-size:.82rem;color:#27AE60">✅ Messagerie interne sécurisée + notifications</li>
+          <li style="padding:6px 0;border-bottom:1px solid rgba(200,150,12,.2);font-size:.82rem;color:#27AE60">✅ PDF générés en 1 clic, signés numériquement</li>
+          <li style="padding:6px 0;border-bottom:1px solid rgba(200,150,12,.2);font-size:.82rem;color:#27AE60">✅ Honoraires calculés automatiquement</li>
+          <li style="padding:6px 0;border-bottom:1px solid rgba(200,150,12,.2);font-size:.82rem;color:#27AE60">✅ Classe Virtuelle synchronisée YouTube</li>
+          <li style="padding:6px 0;font-size:.82rem;color:#27AE60">✅ Alertes paiement retard en temps réel</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="highlight-title">Impact Mesurable — Indicateurs de Performance</div>
+      <div class="kpi-row" style="margin:12px 0 0">
+        <div class="kpi"><div class="kpi-num">-90%</div><div class="kpi-lbl">Temps de gestion administrative</div></div>
+        <div class="kpi"><div class="kpi-num">100%</div><div class="kpi-lbl">Traçabilité des paiements</div></div>
+        <div class="kpi"><div class="kpi-num">0</div><div class="kpi-lbl">Erreur calcul honoraires</div></div>
+        <div class="kpi"><div class="kpi-num">24/7</div><div class="kpi-lbl">Disponibilité assistant IA</div></div>
+        <div class="kpi"><div class="kpi-num">&lt;2s</div><div class="kpi-lbl">Temps chargement pages</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     9. SÉCURITÉ & CONFORMITÉ
+══════════════════════════════════════════════════════════ -->
+<div class="section page-break">
+  <div class="container">
+    <div class="sec-hdr">
+      <div class="sec-hdr-icon" style="background:linear-gradient(135deg,#2C3E50,#4A6080)">🔐</div>
+      <div>
+        <div class="sec-num">Section 09</div>
+        <div class="sec-title">Sécurité & Conformité</div>
+        <div class="sec-sub">Protection des données à tous les niveaux de la plateforme</div>
+      </div>
+    </div>
+
+    <div class="card-grid g3">
+      <div class="card card-blue">
+        <div class="card-icon">🔑</div>
+        <div class="card-title">Authentification JWT</div>
+        <div class="card-desc">Chaque session utilisateur est protégée par un token JSON Web Token signé côté serveur (Supabase Auth). Expiration automatique, révocation possible à tout moment par l'admin.</div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">🛡️</div>
+        <div class="card-title">Row Level Security (RLS)</div>
+        <div class="card-desc">Sécurité au niveau base de données PostgreSQL. Un étudiant ne peut jamais lire les données d'un autre — même si le code applicatif avait un bug. Politique définie par rôle pour chaque table.</div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">🔒</div>
+        <div class="card-title">HTTPS & Clés Protégées</div>
+        <div class="card-desc">Toutes les communications sont chiffrées HTTPS (fourni par Netlify). Les clés API (Anthropic, WhatsApp) ne sont jamais exposées au navigateur — elles transitent uniquement via les fonctions serverless.</div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">👥</div>
+        <div class="card-title">Système de Rôles RBAC</div>
+        <div class="card-desc">6 rôles avec permissions granulaires. L'administrateur peut créer des rôles personnalisés et en assigner à n'importe quel utilisateur. Modification des accès en temps réel sans redémarrage.</div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">CDN Mondial</div>
+        <div class="card-desc">La plateforme est servie depuis les points de présence Netlify les plus proches de chaque utilisateur. Disponibilité &gt;99.9%, protection DDoS intégrée.</div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Audit & Traçabilité</div>
+        <div class="card-desc">Toutes les actions critiques (inscriptions, paiements, modifications de notes) sont horodatées et attribuées à l'utilisateur qui les a effectuées. Historique complet consultable par l'admin.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CTA FINAL — CONTACT & PARTENARIAT
+══════════════════════════════════════════════════════════ -->
+<div class="cta-section">
+  <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.4);border-radius:20px;padding:6px 20px;font-size:.72rem;font-weight:800;color:#E8B84B;letter-spacing:.08em;margin-bottom:20px">
+    ✦ PARTENARIAT & INVESTISSEMENT ✦
+  </div>
+  <div class="cta-title">Construisons ensemble l'avenir<br/>de la formation en Afrique de l'Ouest</div>
+  <div class="cta-sub">AGTM Digital Academy est une plateforme opérationnelle, évolutive et ouverte aux partenariats stratégiques. Nous recherchons des partenaires qui partagent notre vision : une formation de qualité internationale, accessible depuis l'Afrique.</div>
+
+  <div class="cta-grid">
+    <div class="cta-item">
+      <div class="cta-item-icon">👨‍💼</div>
+      <div class="cta-item-lbl">Directeur & Fondateur</div>
+      <div class="cta-item-val">ISSA BAMBA</div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-item-icon">📧</div>
+      <div class="cta-item-lbl">Email</div>
+      <div class="cta-item-val">contact@africaglobaltraining.com</div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-item-icon">📲</div>
+      <div class="cta-item-lbl">WhatsApp</div>
+      <div class="cta-item-val">+225 07 07 96 72 50</div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-item-icon">🌐</div>
+      <div class="cta-item-lbl">Site Web</div>
+      <div class="cta-item-val">africaglobaltraining.com</div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-item-icon">📍</div>
+      <div class="cta-item-lbl">Localisation</div>
+      <div class="cta-item-val">Abidjan, Côte d'Ivoire 🇨🇮</div>
+    </div>
+    <div class="cta-item">
+      <div class="cta-item-icon">💻</div>
+      <div class="cta-item-lbl">Plateforme</div>
+      <div class="cta-item-val">AGTM Digital Academy</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;padding-top:20px;border-top:1px solid rgba(200,150,12,.25);font-size:.68rem;color:#3A5070">
+    <strong style="color:#C8960C">AGTM Digital Academy</strong> — Africa Global Training Management · © 2026 ISSA BAMBA · Abidjan, Côte d'Ivoire<br/>
+    Document confidentiel — Usage exclusif partenaires, investisseurs et relations institutionnelles
+  </div>
+</div>
+
+<div class="no-print" style="text-align:center;padding:12px;background:#F4F6F9;font-size:.72rem;color:#8A9AB0">
+  Pour imprimer / enregistrer en PDF : Ctrl+P (Windows) · Cmd+P (Mac) · Format A4, orientation Portrait
+</div>
+
+</body>
+</html>

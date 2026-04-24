@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapport d'Optimisation & Résilience — AGTM Digital Academy Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   RAPPORT OPTIMISATION RÉSILIENCE — AGTM Digital Academy Premium
+   Design Système Premium / Print-Ready / PDF-Friendly
+   ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --gold:  #d4a12a;
+  --gold-lt: #e8c35a;
+  --gold-dk: #b8860b;
+  --navy:  #0a1628;
+  --dark:  #080f1a;
+  --card:  #0e1a2d;
+  --border:#1a2a44;
+  --text:  #e8edf5;
+  --muted: #8899b4;
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+  --info: #06b6d4;
+  --radius: 12px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── COVER PAGE ─────────────────────────────── */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--dark) 40%, #0d1a2e 100%);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 40%, rgba(212,161,42,0.04) 0%, transparent 50%),
+              radial-gradient(circle at 70% 60%, rgba(6,182,212,0.03) 0%, transparent 50%);
+  animation: coverGlow 8s ease-in-out infinite alternate;
+}
+@keyframes coverGlow {
+  0%{transform:translate(0,0)}
+  100%{transform:translate(5%,3%)}
+}
+.cover > *{position:relative;z-index:1}
+.cover-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  font-family: 'Syne', sans-serif;
+}
+.cover h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: var(--gold);
+  max-width: 720px;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.cover h1 span{color:var(--text)}
+.cover .subtitle {
+  font-size: clamp(.95rem, 2vw, 1.15rem);
+  color: var(--muted);
+  max-width: 560px;
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+.cover-meta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: .82rem;
+  color: var(--muted);
+}
+.cover-meta span{display:flex;align-items:center;gap:6px}
+.cover-meta .label{color:var(--gold-lt);font-weight:600}
+.cover-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 20px auto;
+}
+.cover-version {
+  font-family: 'Space Mono', monospace;
+  font-size: .75rem;
+  color: var(--gold);
+  border: 1px solid rgba(212,161,42,0.25);
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(212,161,42,0.06);
+}
+
+/* ── MAIN CONTENT ──────────────────────────── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* Section headers */
+.section {
+  margin-bottom: 48px;
+  page-break-inside: avoid;
+}
+.section-number {
+  font-family: 'Space Mono', monospace;
+  font-size: .7rem;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.section h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.section h2 .highlight{color:var(--gold)}
+.section h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold-lt);
+  margin: 24px 0 12px;
+}
+.section p {
+  color: var(--muted);
+  margin-bottom: 14px;
+  font-size: .92rem;
+  line-height: 1.8;
+}
+
+/* Problem/Solution boxes */
+.problem-box {
+  background: rgba(220,38,38,0.06);
+  border-left: 3px solid var(--danger);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 16px;
+}
+.problem-box .label{color:var(--danger);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+.problem-box p{color:var(--muted);margin:4px 0 0;font-size:.88rem}
+
+.solution-box {
+  background: rgba(22,163,74,0.06);
+  border-left: 3px solid var(--success);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 16px;
+}
+.solution-box .label{color:var(--success);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+
+/* Lists */
+.section ul, .section ol {
+  padding-left: 22px;
+  margin-bottom: 16px;
+}
+.section li {
+  color: var(--muted);
+  font-size: .9rem;
+  margin-bottom: 6px;
+  line-height: 1.7;
+}
+.section li strong{color:var(--text)}
+
+/* Check marks */
+.check{color:var(--success);font-weight:700}
+
+/* Tables */
+.table-wrap {
+  overflow-x: auto;
+  margin: 16px 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+table th {
+  background: var(--navy);
+  color: var(--gold);
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--gold);
+}
+table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+table tr:last-child td{border-bottom:none}
+table tr:hover td{background: rgba(212,161,42,0.03)}
+table td:first-child{font-weight:500;color:var(--text)}
+
+/* Code blocks */
+.code-block {
+  background: var(--navy);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+.code-block code {
+  font-family: 'Space Mono', monospace;
+  font-size: .78rem;
+  color: var(--gold-lt);
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.code-comment{color:#6b7280;font-style:italic}
+
+/* Benefits grid */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.benefit-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+}
+.benefit-card .icon{font-size:1.6rem;margin-bottom:6px}
+.benefit-card p{font-size:.8rem;color:var(--muted);margin:0}
+
+/* Priority list */
+.priority-list {
+  list-style: none;
+  padding: 0 !important;
+}
+.priority-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: .88rem;
+}
+.priority-list li .p-icon{flex-shrink:0;font-size:1.1rem;width:24px;text-align:center}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 36px 0;
+  opacity: .3;
+}
+
+/* Footer */
+.report-footer {
+  text-align: center;
+  padding: 32px 24px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: .78rem;
+}
+.report-footer .brand{color:var(--gold);font-weight:600}
+
+/* ── PRINT / PDF STYLES ─────────────────────────── */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 20mm;
+  }
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #0a1628 0%, #080f1a 100%) !important;
+    page-break-after: always;
+  }
+  .cover h1{color:#d4a12a!important}
+  .cover .subtitle{color:#8899b4!important}
+  .cover-meta{color:#8899b4!important}
+  
+  .container{max-width:100%!important;padding:0!important}
+  
+  .section{page-break-inside:avoid}
+  .section h2{color:#111!important;border-bottom-color:#d4a12a!important}
+  .section h3{color:#b8860b!important}
+  .section p,.section li{color:#333!important}
+  
+  table th{background:#0a1628!important;color:#d4a12a!important;-webkit-print-color-adjust:exact}
+  table td{color:#333!important;border-bottom-color:#ddd!important}
+  
+  .code-block{background:#f5f5f5!important;border-color:#ddd!important}
+  .code-block code{color:#b8860b!important}
+  .code-comment{color:#999!important}
+  
+  .benefit-card{background:#fafafa!important;border-color:#ddd!important}
+  .benefit-card p{color:#333!important}
+  
+  .priority-list li{background:#fafafa!important;border-color:#ddd!important;color:#111!important}
+  
+  .problem-box{background:#fef2f2!important}
+  .solution-box{background:#f0fdf4!important}
+  .problem-box p,.solution-box p{color:#333!important}
+  
+  .report-footer{border-top-color:#ddd!important;color:#666!important}
+  
+  .divider{opacity:.5!important}
+  
+  .table-wrap{border-color:#ddd!important}
+  
+  .cover::before{display:none}
+  .cover-version{background:rgba(212,161,42,0.06)!important}
+  
+  /* Prevent orphan headers */
+  h2, h3{page-break-after:avoid}
+  .benefits-grid{page-break-inside:avoid}
+  table{page-break-inside:avoid}
+}
+
+/* ── RESPONSIVE ─────────────────────────────── */
+@media(max-width:640px){
+  .container{padding:28px 16px 60px}
+  .section h2{font-size:1.3rem}
+  .benefits-grid{grid-template-columns:1fr 1fr}
+  .cover-meta{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER PAGE ═══ -->
+<div class="cover">
+  <div class="cover-badge">Rapport Technique</div>
+  <h1>Optimisation & <span>Résilience</span></h1>
+  <p class="subtitle">
+    AGTM Digital Academy Premium — Infrastructure de cache multi-niveaux, 
+    redondance LLM, optimisation des timeouts et contenu pédagogique C2/Business English.
+  </p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <span><span class="label">Date</span> 23 Avril 2026</span>
+    <span><span class="label">Auteur</span> Issa Bamba</span>
+    <span><span class="label">Version</span> 2.0</span>
+  </div>
+  <div style="margin-top:24px">
+    <span class="cover-version">v2.0 — Optimisation Résilience</span>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<div class="container">
+
+  <!-- Résumé Exécutif -->
+  <div class="section" id="resume">
+    <div class="section-number">Aperçu</div>
+    <h2>Résumé <span class="highlight">Exécutif</span></h2>
+    <p>
+      Ce rapport détaille les améliorations apportées à la plateforme AGTM Digital Academy 
+      Premium pour renforcer la résilience, optimiser les performances et améliorer 
+      l'expérience utilisateur. Les correctifs couvrent <strong>5 axes stratégiques</strong> 
+      allant de l'infrastructure de cache Supabase à la redondance multi-LLM, en passant 
+      par la génération de contenu pédagogique avancé.
+    </p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Axe 1 -->
+  <div class="section" id="axe1">
+    <div class="section-number">Axe 1</div>
+    <h2>Infrastructure de Cache & <span class="highlight">Fallback</span></h2>
+    
+    <h3>Migration v45 — <code>supabase_MIGRATION_v45_resilience_cache.sql</code></h3>
+    
+    <div class="problem-box">
+      <div class="label">🔴 Problème</div>
+      <p>Les quotas API YouTube et Listen Notes sont rapidement épuisés, causant des pages vides sur English Corner.</p>
+    </div>
+    
+    <div class="solution-box">
+      <div class="label">🟢 Solution</div>
+      <p>Mise en place d'un système de cache multi-niveaux avec fallback automatique</p>
+    </div>
+    
+    <ol>
+      <li><strong>Table <code>ec_api_cache</code> améliorée</strong> : ajout de colonnes <code>fallback_data</code>, <code>last_success</code>, <code>error_count</code>, <code>fallback_used</code></li>
+      <li><strong>Table <code>ai_generated_content</code></strong> : contenu C2 et Business English généré par IA avec cache</li>
+      <li><strong>Table <code>youtube_fallback_metadata</code></strong> : 7 vidéos de secours pré-remplies (BBC, TED, Business English Pod)</li>
+      <li><strong>Fonction <code>get_content_with_fallback()</code></strong> : logique de fallback intelligente avec dégradation progressive</li>
+      <li><strong>Vue <code>cache_monitoring</code></strong> : surveillance en temps réel du cache et des erreurs</li>
+    </ol>
+    
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="icon">✅</div>
+        <p>Plus jamais de pages vides — fallback local activé</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">📚</div>
+        <p>Contenu C2 & Business English toujours disponible</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">💰</div>
+        <p>Économie de quotas API — cache 24h</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">📊</div>
+        <p>Monitoring transparent avec <code>cache_monitoring</code></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Axe 2 -->
+  <div class="section" id="axe2">
+    <div class="section-number">Axe 2</div>
+    <h2>Multi-LLM Fallback & <span class="highlight">Timeouts</span></h2>
+    
+    <h3>Fichier : <code>netlify_optimized.toml</code></h3>
+    
+    <div class="problem-box">
+      <div class="label">🔴 Problème</div>
+      <p>Timeouts trop courts (6s) et pas de redondance entre fournisseurs LLM.</p>
+    </div>
+    
+    <div class="solution-box">
+      <div class="label">🟢 Solution</div>
+      <p>Augmentation des timeouts et configuration de redondance pour chaque fournisseur</p>
+    </div>
+    
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Paramètre</th><th>Ancien</th><th>Nouveau</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Default timeout</td><td>6s</td><td><strong>20s</strong></td></tr>
+        <tr><td>Groq timeout</td><td>6s</td><td><strong>15s</strong></td></tr>
+        <tr><td>Claude timeout</td><td>8s</td><td><strong>20s</strong></td></tr>
+        <tr><td>DeepSeek timeout</td><td>10s</td><td><strong>15s</strong></td></tr>
+        <tr><td>Max retries</td><td>1</td><td><strong>3</strong></td></tr>
+        <tr><td>Retry delay</td><td>0</td><td><strong>1s</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+    
+    <h3>Clés API avec redondance</h3>
+    <ul>
+      <li><code>ANTHROPIC_API_KEY</code> + <code>ANTHROPIC_API_KEY_BACKUP</code></li>
+      <li><code>GROQ_API_KEY</code> + <code>GROQ_API_KEY_BACKUP</code></li>
+      <li><code>DEEPSEEK_API_KEY</code> + <code>DEEPSEEK_API_KEY_BACKUP</code></li>
+      <li><code>YOUTUBE_API_KEY</code> + <code>YOUTUBE_API_KEY_BACKUP</code></li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Axe 3 -->
+  <div class="section" id="axe3">
+    <div class="section-number">Axe 3</div>
+    <h2>Contenu C2 & <span class="highlight">Business English</span></h2>
+    
+    <h3>Contenu généré dans <code>ai_generated_content</code></h3>
+    
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Module</th><th>Niveau</th><th>Catégorie</th><th>Statut</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>c2-advanced-idioms</code> — Advanced Business Idioms</td>
+          <td><strong>C2</strong></td>
+          <td>Vocabulary</td>
+          <td><span class="check">✅ Publié</span></td>
+        </tr>
+        <tr>
+          <td><code>c2-academic-writing</code> — Complex Sentence Structures</td>
+          <td><strong>C2</strong></td>
+          <td>Writing</td>
+          <td><span class="check">✅ Publié</span></td>
+        </tr>
+        <tr>
+          <td><code>business-negotiation</code> — Advanced Negotiation Techniques</td>
+          <td><strong>Business</strong></td>
+          <td>Business</td>
+          <td><span class="check">✅ Publié</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    
+    <p>Chaque module inclut :</p>
+    <ul>
+      <li><strong>Objectifs pédagogiques</strong> — compétences visées et prérequis</li>
+      <li><strong>Sections de contenu structurées</strong> — leçons progressives</li>
+      <li><strong>Quiz interactif (QCM)</strong> — validation des acquis avec correction</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Axe 4 -->
+  <div class="section" id="axe4">
+    <div class="section-number">Axe 4</div>
+    <h2>YouTube <span class="highlight">Fallback</span> Metadata</h2>
+    
+    <h3>7 vidéos de secours pré-chargées</h3>
+    
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Chaîne</th><th>Vidéos</th><th>Niveaux</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>BBC Learning English</td><td>Grammar Gameshow, 6 Minute English, English at Work</td><td>B1 → C1</td></tr>
+        <tr><td>Business English Pod</td><td>Negotiation Techniques</td><td>C1</td></tr>
+        <tr><td>TED Talks</td><td>Presentations Structure</td><td>C1</td></tr>
+        <tr><td>Advanced English</td><td>Business Idioms</td><td>C2</td></tr>
+        <tr><td>Academic English</td><td>Complex Sentences</td><td>C2</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Axe 5 -->
+  <div class="section" id="axe5">
+    <div class="section-number">Axe 5</div>
+    <h2>Recommandations Interface <span class="highlight">English Corner</span></h2>
+    
+    <h3>Simplification Mobile</h3>
+    
+    <div class="problem-box">
+      <div class="label">🔴 Constat</div>
+      <p>L'interface actuelle (5 534 lignes) est trop complexe — sidebar riche, widgets multiples, navigation lourde.</p>
+    </div>
+    
+    <ol>
+      <li><strong>Sidebar simplifiée</strong> : fusionner "Videos" et "Listening" en "Watch & Listen"</li>
+      <li><strong>Mobile-first</strong> : réduire les widgets latéraux (Word of the Day, Quick Links)</li>
+      <li><strong>Barre de recherche globale</strong> : chercher par mot-clé, niveau, catégorie</li>
+      <li><strong>Lazy loading</strong> : charger les vidéos/podcasts en scroll infini</li>
+      <li><strong>Cache local</strong> : stocker les 20 dernières vidéos en localStorage</li>
+    </ol>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Plan d'Exécution -->
+  <div class="section" id="plan">
+    <div class="section-number">Exécution</div>
+    <h2>Plan d'<span class="highlight">Exécution</span></h2>
+    
+    <div class="code-block">
+      <code>
+        <span class="code-comment"># 1. Exécuter la migration SQL dans Supabase Dashboard</span>
+        <span style="color:#06b6d4">Aller dans SQL Editor > coller v45 > Run</span>
+        
+        <span class="code-comment"># 2. Remplacer netlify.toml</span>
+        <span style="color:#84cc16">cp</span> netlify_optimized.toml netlify.toml
+        
+        <span class="code-comment"># 3. Déployer sur Netlify</span>
+        <span style="color:#84cc16">git add</span> .
+        <span style="color:#84cc16">git commit -m</span> "feat: optimisation résilience v2.0 - cache fallback, multi-LLM, timeouts"
+        <span style="color:#84cc16">git push</span>
+      </code>
+    </div>
+    
+    <h3>Priorités</h3>
+    <ul class="priority-list">
+      <li><span class="p-icon">⚡</span> <strong>Exécuter la migration SQL v45</strong> dans Supabase SQL Editor</li>
+      <li><span class="p-icon">⚡</span> <strong>Remplacer <code>netlify.toml</code></strong> par <code>netlify_optimized.toml</code></li>
+      <li><span class="p-icon">⚡</span> <strong>Redéployer</strong> sur Netlify</li>
+      <li><span class="p-icon">🎯</span> <strong>Tester</strong> : English Corner doit charger même sans API YouTube</li>
+      <li><span class="p-icon">🎯</span> <strong>Vérifier</strong> : chat IA doit basculer entre Groq/Claude/DeepSeek</li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Métriques -->
+  <div class="section" id="metriques">
+    <div class="section-number">Métriques</div>
+    <h2>Indicateurs de <span class="highlight">Succès</span></h2>
+    
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="icon">⚡</div>
+        <p><strong>Temps de réponse chat IA</strong> < 5s (timeouts passés de 6s à 20s)</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">📺</div>
+        <p><strong>Disponibilité YouTube</strong> 100% même sans clé API (fallback local)</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">📖</div>
+        <p><strong>Contenu C2/Business</strong> 3 modules immédiatement disponibles</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">🗄️</div>
+        <p><strong>Cache</strong> 24h de TTL pour YouTube, 12h pour podcasts</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">🔄</div>
+        <p><strong>Redondance</strong> 3 fournisseurs LLM, 2 clés par fournisseur</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">📊</div>
+        <p><strong>Monitoring</strong> Vue <code>cache_monitoring</code> en temps réel</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="report-footer">
+  <p class="brand">AGTM Academy — Issa Bamba</p>
+  <p>© 2026 AGTM Digital Academy Premium. Tous droits réservés.</p>
+  <p style="font-size:.68rem;margin-top:4px;opacity:.6">Version 2.0 — Optimisation Résilience — Généré le 23 Avril 2026</p>
+</div>
+
+</body>
+</html>

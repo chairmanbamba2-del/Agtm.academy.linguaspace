@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guide d'utilisation Premium v2026 Premium v2026 — AGTM Digital Academy</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,sans-serif;color:#1A2A3A;background:#F4F6F9;font-size:14px;line-height:1.65}
+    /* COVER */
+    .cover{background:linear-gradient(135deg,#0D1B2A 0%,#1C1408 50%,#0A1A30 100%);color:#fff;padding:80px 60px;text-align:center;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;page-break-after:always}
+    .cover-badge{display:inline-flex;align-items:center;gap:14px;margin-bottom:32px}
+    .cover-logo{width:72px;height:72px;background:#C8960C;border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.3rem;color:#0D1B2A}
+    .cover-title{font-size:2.6rem;font-weight:900;color:#E8B84B;letter-spacing:-.01em;margin-bottom:10px}
+    .cover-sub{font-size:1.1rem;color:#8AAAC0;font-style:italic;margin-bottom:40px}
+    .cover-doc{background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.4);border-radius:14px;padding:22px 40px;display:inline-block;margin-bottom:30px}
+    .cover-doc-title{font-size:1.6rem;font-weight:900;color:#C8960C;margin-bottom:6px}
+    .cover-doc-sub{font-size:.88rem;color:#90A4AE}
+    .cover-info{font-size:.8rem;color:#5A7090;margin-top:24px}
+    /* TOC */
+    .toc{background:#fff;padding:50px 60px;page-break-after:always;max-width:960px;margin:0 auto}
+    .toc h2{font-size:1.4rem;font-weight:900;color:#0D1B2A;border-bottom:3px solid #C8960C;padding-bottom:10px;margin-bottom:24px}
+    .toc-section{margin-bottom:6px}
+    .toc-section a{color:#0D1B2A;text-decoration:none;font-size:.9rem}
+    .toc-section a:hover{color:#C8960C}
+    .toc-num{display:inline-block;width:32px;color:#C8960C;font-weight:700}
+    .toc-sub{padding-left:32px;font-size:.82rem;color:#5A7090;margin-top:2px}
+    /* PAGE */
+    .page{background:#fff;max-width:960px;margin:0 auto;padding:50px 60px;page-break-before:always}
+    .page-header{background:linear-gradient(135deg,#0D1B2A,#1C2840);color:#fff;border-radius:12px;padding:22px 28px;margin-bottom:32px;display:flex;align-items:center;gap:18px}
+    .page-icon{font-size:2rem}
+    .page-title{font-size:1.5rem;font-weight:900;color:#E8B84B}
+    .page-desc{font-size:.82rem;color:#8AAAC0;margin-top:4px}
+    /* SECTIONS */
+    h2.section{font-size:1.15rem;font-weight:800;color:#0D1B2A;margin:28px 0 12px;padding-left:12px;border-left:4px solid #C8960C}
+    h3.sub{font-size:.98rem;font-weight:700;color:#1A3050;margin:20px 0 8px}
+    h4.step{font-size:.88rem;font-weight:700;color:#C8960C;margin:14px 0 6px}
+    p{margin-bottom:10px;color:#2A3A4A}
+    ul{padding-left:22px;margin-bottom:12px}
+    li{margin-bottom:5px;color:#2A3A4A;font-size:.9rem}
+    /* BLOCKS */
+    .tip{background:#E8F8EF;border-left:4px solid #4AE090;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.85rem;color:#1A3A2A}
+    .warn{background:#FFF8E0;border-left:4px solid #C8960C;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.85rem;color:#3A2A00}
+    .info{background:#E8F0FF;border-left:4px solid #4A90D9;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.85rem;color:#0A1A3A}
+    .danger{background:#FFE8E8;border-left:4px solid #E04A4A;border-radius:0 8px 8px 0;padding:12px 16px;margin:14px 0;font-size:.85rem;color:#3A0A0A}
+    /* TABLE */
+    table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem}
+    thead th{background:#0D1B2A;color:#C8960C;padding:9px 12px;text-align:left;font-size:.78rem;font-weight:700}
+    tbody tr:nth-child(even){background:#F6F8FC}
+    tbody td{padding:9px 12px;border-bottom:1px solid #E5EAF2;vertical-align:top}
+    /* ROLE BADGE */
+    .role{display:inline-block;padding:2px 10px;border-radius:10px;font-size:.72rem;font-weight:700}
+    .r-admin{background:#C8960C22;color:#A07008;border:1px solid #C8960C}
+    .r-form{background:#4A90D922;color:#1A60A0;border:1px solid #4A90D9}
+    .r-etud{background:#4AE09022;color:#1A6040;border:1px solid #4AE090}
+    .r-pub{background:#9A5A9022;color:#6A2A6A;border:1px solid #9A5AB0}
+    /* STEP BLOCK */
+    .steps{counter-reset:s;padding-left:0;list-style:none}
+    .steps li{counter-increment:s;padding:10px 14px 10px 52px;margin-bottom:8px;position:relative;background:#F6F8FC;border-radius:8px;border:1px solid #E5EAF2;font-size:.88rem}
+    .steps li::before{content:counter(s);position:absolute;left:14px;top:50%;transform:translateY(-50%);width:26px;height:26px;background:#C8960C;color:#0D1B2A;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.78rem}
+    /* URL */
+    .url{font-family:monospace;background:#0D1B2A;color:#4AE090;padding:3px 8px;border-radius:5px;font-size:.82rem}
+    /* KEY */
+    .key{display:inline-block;background:#E5EAF2;border:1px solid #C5CAD2;border-radius:4px;padding:1px 7px;font-size:.8rem;font-weight:700;color:#2A3A4A}
+    /* DIVIDER */
+    hr{border:none;border-top:2px dashed #E5EAF2;margin:28px 0}
+    /* PRINT */
+    @media print{
+      body{background:#fff}
+      .cover{min-height:auto;padding:60px 40px}
+      .page,.toc{padding:36px 40px}
+      a{color:inherit;text-decoration:none}
+    }
+    @page{margin:20mm}
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     COUVERTURE
+     ════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-badge">
+    <div class="cover-logo">AGTM</div>
+    <div style="text-align:left">
+      <div style="font-weight:900;font-size:1.3rem;color:#C8960C">AGTM Digital Academy</div>
+      <div style="font-size:.82rem;color:#8AAAC0">Language &amp; Professional Development</div>
+    </div>
+  </div>
+  <div class="cover-title">AGTM Digital Academy</div>
+  <div class="cover-sub">Plateforme numérique de gestion pédagogique et administrative</div>
+  <div class="cover-doc">
+    <div class="cover-doc-title">📘 Guide d'utilisation Premium v2026 Premium v2026 complet</div>
+    <div class="cover-doc-sub">Manuel de référence — Toutes fonctionnalités détaillées</div>
+  </div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:20px">
+    <div style="background:rgba(200,150,12,.12);border:1px solid rgba(200,150,12,.3);border-radius:10px;padding:10px 20px;text-align:center">
+      <div style="font-size:1.3rem;font-weight:900;color:#C8960C">5</div>
+      <div style="font-size:.72rem;color:#8AAAC0">Rôles utilisateurs</div>
+    </div>
+    <div style="background:rgba(74,144,217,.12);border:1px solid rgba(74,144,217,.3);border-radius:10px;padding:10px 20px;text-align:center">
+      <div style="font-size:1.3rem;font-weight:900;color:#4A90D9">36+</div>
+      <div style="font-size:.72rem;color:#8AAAC0">Modules fonctionnels</div>
+    </div>
+    <div style="background:rgba(74,224,144,.12);border:1px solid rgba(74,224,144,.3);border-radius:10px;padding:10px 20px;text-align:center">
+      <div style="font-size:1.3rem;font-weight:900;color:#4AE090">7</div>
+      <div style="font-size:.72rem;color:#8AAAC0">Accès publics sans connexion</div>
+    </div>
+  </div>
+  <div class="cover-info">
+    Propriété de <strong style="color:#C8960C">ISSA BAMBA</strong> · AGTM Digital Academy · Abidjan, Côte d'Ivoire · © 2026
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     TABLE DES MATIÈRES
+     ════════════════════════════════════════════════════════════ -->
+<div class="toc">
+  <h2>📋 Table des matières</h2>
+
+  <div class="toc-section"><a href="#ch1"><span class="toc-num">1.</span> Présentation générale</a>
+    <div class="toc-sub">Rôles • Connexion • Navigation • Barre de recherche • Déconnexion</div>
+  </div>
+  <div class="toc-section"><a href="#ch2"><span class="toc-num">2.</span> Module Administration (Admin)</a>
+    <div class="toc-sub">Vue d'ensemble • Inscription d'un étudiant (étapes complètes) • Inscriptions Web • Classes • Synchronisation programmes</div>
+  </div>
+  <div class="toc-section"><a href="#ch3"><span class="toc-num">3.</span> Finance & Comptabilité</a>
+    <div class="toc-sub">Vue financière • Encaissements • Dépenses • Caisse • Échéancier • Proforma • Finances Perso • Rapport PDF</div>
+  </div>
+  <div class="toc-section"><a href="#ch4"><span class="toc-num">4.</span> Suivi Pédagogique <span style="color:#C8960C;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Feuille de séance • Séances planifiées • Présences • Évaluations • Satisfactions • Rapports coaching • Rapports de séance formateur + Honoraires PDF</div>
+  </div>
+  <div class="toc-section"><a href="#ch5"><span class="toc-num">5.</span> Ressources Humaines</a>
+    <div class="toc-sub">Personnel • Fiches de paie • Congés • Recrutement</div>
+  </div>
+  <div class="toc-section"><a href="#ch6"><span class="toc-num">6.</span> Activités Pédagogiques</a>
+    <div class="toc-sub">Catalogue de cours • Tests • Évaluations en ligne • Test de placement</div>
+  </div>
+  <div class="toc-section"><a href="#ch7"><span class="toc-num">7.</span> Espace Marketing <span style="color:#C8960C;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Présentation • Formations • Brochures PDF • Supports com • Liens publics • Éditeur Contenu & Tarifs (admin)</div>
+  </div>
+  <div class="toc-section"><a href="#ch8"><span class="toc-num">8.</span> Espace Client (public)</a>
+    <div class="toc-sub">Formulaire de contact • Gestion des demandes (admin)</div>
+  </div>
+  <div class="toc-section"><a href="#ch9"><span class="toc-num">9.</span> Espace Formateur <span style="color:#C8960C;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Planning • Carte identité (CIN/matricule) • Classes • Séances • Présences • Progression • Rapports de séance + PDF • Honoraires temps réel • Tests</div>
+  </div>
+  <div class="toc-section"><a href="#ch10"><span class="toc-num">10.</span> Espace Étudiant <span style="color:#C8960C;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Mon Espace • Mes Séances & Cours • Emploi du Temps • Ressources & Documents • Messages (bidirectionnel) • Mes Notes & Bulletin • Quiz • Devoirs • Nos Formations • Service Client</div>
+  </div>
+  <div class="toc-section"><a href="#ch11"><span class="toc-num">11.</span> Documents & PDF générés</a>
+    <div class="toc-sub">Feuille de présence • Emploi du temps • Fiches d'engagement • Contrat formateur • Dossier complet</div>
+  </div>
+  <div class="toc-section"><a href="#ch12"><span class="toc-num">12.</span> Accès publics (sans connexion)</a>
+    <div class="toc-sub">Pointage + Redirection Meet • Satisfaction • Marketing • Client • Test de placement • Évaluation</div>
+  </div>
+  <div class="toc-section"><a href="#ch13"><span class="toc-num">13.</span> Paramètres système (Admin) <span style="color:#C8960C;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Configuration académie • Création utilisateur (2 modes) • Gestion utilisateurs & tiers IA • Rôles personnalisés • Sécurité</div>
+  </div>
+  <div class="toc-section"><a href="#ch14"><span class="toc-num">14.</span> Questions fréquentes & dépannage</a></div>
+  <div class="toc-section"><a href="#ch15"><span class="toc-num">15.</span> Assistant IA — AGTM AI <span style="color:#9B59B6;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Présentation · Tiers (Essentiel / Recommandé / Premium) · Utilisation · Upgrade · Administration IA · Technologie</div>
+  </div>
+  <div class="toc-section"><a href="#ch16"><span class="toc-num">16.</span> Technologie & Architecture <span style="color:#4A90D9;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Stack technique · Supabase · Netlify · Claude (Anthropic) · YouTube IFrame · MediaRecorder · PWA · Sécurité</div>
+  </div>
+  <div class="toc-section"><a href="#ch17"><span class="toc-num">17.</span> English Corner & Classe Virtuelle <span style="color:#4AE090;font-weight:700">★ Mis à jour</span></a>
+    <div class="toc-sub">Navigation • Vidéos & BBC • Podcasts • Grammaire & Vocabulaire • Classe Virtuelle synchronisée • Identification apprenants • Mode Suivi • Évaluation temps réel • Quiz Formateur • Enregistrement mobile</div>
+  </div>
+  <div class="toc-section"><a href="#ch18"><span class="toc-num">18.</span> Assistant IA Vocal <span style="color:#9B59B6;font-weight:700">★ Nouveau</span></a>
+    <div class="toc-sub">Activer le micro • Reconnaissance vocale (Web Speech + Whisper) • Synthèse vocale TTS • Langue EN/FR • Score de prononciation • Journal des interactions</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 1 — PRÉSENTATION GÉNÉRALE
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch1">
+  <div class="page-header">
+    <div class="page-icon">🏠</div>
+    <div>
+      <div class="page-title">1. Présentation générale</div>
+      <div class="page-desc">Vue d'ensemble de la plateforme, rôles et navigation</div>
+    </div>
+  </div>
+
+  <h2 class="section">1.1 Qu'est-ce qu'AGTM Digital Academy ?</h2>
+  <p>AGTM Digital Academy est une <strong>plateforme numérique tout-en-un</strong> de gestion pédagogique et administrative pour l'académie AGTM. Elle permet de gérer en temps réel les étudiants, les finances, les séances de cours, les ressources humaines, les documents officiels et la communication externe — le tout depuis un seul tableau de bord sécurisé, accessible depuis n'importe quel navigateur web.</p>
+
+  <h2 class="section">1.2 Rôles et niveaux d'accès</h2>
+  <table>
+    <thead><tr><th>Rôle</th><th>Accès</th><th>Fonctions clés</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="role r-admin">Admin</span></td>
+        <td>Accès complet à tous les modules</td>
+        <td>Gestion globale : étudiants, finances, RH, paramètres, marketing, espace client</td>
+      </tr>
+      <tr>
+        <td><span class="role r-form">Formateur</span></td>
+        <td>Accès aux modules pédagogiques</td>
+        <td>Planning, feuilles de séance, présences, rapports, tests, progression étudiants</td>
+      </tr>
+      <tr>
+        <td><span class="role r-etud">Étudiant</span></td>
+        <td>Accès à son espace personnel</td>
+        <td>Ses notes, quiz, devoirs, activités pédagogiques, évaluation de séances</td>
+      </tr>
+      <tr>
+        <td><span class="role" style="background:#9A5A9022;color:#6A2A6A;border:1px solid #9A5AB0">Secrétaire</span></td>
+        <td>Accès administratif partiel</td>
+        <td>Gestion des inscriptions, étudiants, classes, emplois du temps, messagerie</td>
+      </tr>
+      <tr>
+        <td><span class="role" style="background:#2E7DD122;color:#1A5A90;border:1px solid #2E7DD1">Investisseur</span></td>
+        <td>Accès lecture seule aux rapports</td>
+        <td>Tableau de bord financier, statistiques académie, rapports de performance</td>
+      </tr>
+      <tr>
+        <td><span class="role r-pub">Public (sans connexion)</span></td>
+        <td>Pages publiques via lien partagé</td>
+        <td>Pointage, satisfaction, test de placement, marketing, espace client</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section">1.3 Connexion à la plateforme</h2>
+  <ol class="steps">
+    <li>Ouvrez votre navigateur et allez sur la page de connexion (<span class="url">index.html</span>)</li>
+    <li>Saisissez votre <strong>adresse email</strong> et votre <strong>mot de passe</strong></li>
+    <li>Cliquez sur <strong>"Se connecter"</strong> — le tableau de bord s'ouvre automatiquement selon votre rôle</li>
+    <li>Si vous avez oublié votre mot de passe, contactez l'administrateur (ISSA BAMBA)</li>
+  </ol>
+  <div class="tip">💡 Si vous êtes déjà connecté, la plateforme vous redirige automatiquement vers le tableau de bord sans avoir à ressaisir vos identifiants.</div>
+  <div class="warn">⚠️ Le bouton <strong>"Voir"</strong> à côté du champ mot de passe permet d'afficher/masquer les caractères pour vérifier la saisie.</div>
+
+  <h2 class="section">1.4 Navigation</h2>
+  <p>La plateforme est organisée autour d'un <strong>menu latéral gauche</strong> (sidebar) et d'une <strong>zone de contenu principale</strong> à droite.</p>
+  <ul>
+    <li><strong>Sidebar</strong> : liste les modules accessibles selon votre rôle. Cliquez sur un module pour l'ouvrir.</li>
+    <li><strong>Titre de page</strong> : indique la section active en haut de l'écran.</li>
+    <li><strong>Bouton Retour (←)</strong> : apparaît après navigation, permet de revenir à la page précédente.</li>
+    <li><strong>Historique de navigation</strong> : la plateforme mémorise vos 10 derniers écrans dans la session.</li>
+    <li><strong>Notifications toast</strong> : des messages de confirmation (vert) ou d'erreur (rouge) s'affichent en bas à droite lors de chaque action.</li>
+  </ul>
+
+  <h2 class="section">1.5 Barre de recherche globale 🔍 <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Une barre de recherche est intégrée dans la barre supérieure du tableau de bord, à droite du titre de page. Elle permet de <strong>naviguer rapidement entre les onglets sans parcourir le menu latéral</strong>.</p>
+  <h4 class="step">Comment l'utiliser</h4>
+  <ol class="steps">
+    <li>Cliquez dans le champ <strong>"Rechercher un onglet, une section…"</strong> dans le bandeau supérieur</li>
+    <li>Tapez le nom de la section souhaitée (ex : "Notes", "Planning", "Finance", "Messages"…)</li>
+    <li>Une liste déroulante affiche les correspondances en temps réel</li>
+    <li>Cliquez sur l'entrée voulue — la navigation s'effectue immédiatement</li>
+    <li>Appuyez sur <span class="key">Echap</span> ou cliquez ailleurs pour fermer sans naviguer</li>
+  </ol>
+  <div class="tip">💡 La recherche est filtrée par votre rôle : un étudiant ne voit que les sections de son espace, un admin voit tous les modules.</div>
+
+  <h2 class="section">1.6 Déconnexion</h2>
+  <p>Cliquez sur le bouton <strong>"Déconnexion"</strong> en bas de la sidebar. Vous êtes automatiquement redirigé vers la page de connexion. Votre session est sécurisée par Supabase Auth.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 2 — ADMINISTRATION
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch2">
+  <div class="page-header">
+    <div class="page-icon">📊</div>
+    <div>
+      <div class="page-title">2. Module Administration (Admin)</div>
+      <div class="page-desc">Vue d'ensemble, gestion des étudiants, classes et inscriptions web</div>
+    </div>
+  </div>
+
+  <h2 class="section">2.1 Vue d'ensemble (Dashboard Admin)</h2>
+  <p>La page d'accueil admin présente un tableau de bord en temps réel avec :</p>
+  <ul>
+    <li><strong>KPIs principaux</strong> : nombre d'étudiants actifs, chiffre d'affaires du mois en cours, inscriptions web en attente, nombre de formateurs actifs, séances de la semaine, dépenses du mois</li>
+    <li><strong>Graphique financier</strong> : évolution encaissements vs dépenses sur 6 mois</li>
+    <li><strong>Dernières séances</strong> : les 5 séances les plus récentes avec statut</li>
+    <li><strong>Alertes</strong> : paiements en retard, inscriptions web non traitées</li>
+    <li><strong>Assistant IA intégré</strong> : chatbot en bas de page pour poser des questions sur les données (navigation, statistiques, aide à la décision)</li>
+  </ul>
+  <div class="tip">💡 Cliquez sur n'importe quel KPI pour naviguer directement vers le module correspondant.</div>
+
+  <h2 class="section">2.2 Inscription complète d'un étudiant — Étapes à suivre</h2>
+  <p><span class="role r-admin">Admin</span> — Processus complet depuis la première prise de contact jusqu'à l'accès à la plateforme.</p>
+
+  <div class="info">ℹ️ Il existe deux parcours d'inscription : <strong>en ligne</strong> (prospect remplit le formulaire public) et <strong>manuelle</strong> (admin crée directement le dossier). Les étapes 1 à 6 sont communes aux deux parcours.</div>
+
+  <h3 class="sub">📋 Parcours A — Inscription directe (admin)</h3>
+  <ol class="steps">
+    <li><strong>Aller dans Étudiants → "+ Nouvel Étudiant"</strong><br/>Saisissez : prénom, nom, email, téléphone, niveau CECRL (A1 → C2), formation(s), mode de cours (Présentiel / En ligne / Hybride)</li>
+    <li><strong>Renseigner le plan financier</strong><br/>Montant total de la formation, plan de paiement (en 1 fois, 2 tranches, mensuel…)</li>
+    <li><strong>Enregistrer le dossier</strong><br/>Cliquez <strong>"Enregistrer"</strong> — un <strong>numéro de dossier unique</strong> (ex : <span class="url">DOS-0042</span>) est généré automatiquement</li>
+    <li><strong>Inscrire à une classe</strong><br/>Ouvrez le dossier étudiant → section <em>Classes</em> → sélectionnez la classe adaptée au niveau → cliquez <strong>"Inscrire"</strong></li>
+    <li><strong>Configurer l'échéancier</strong><br/>Allez dans Finance → Échéancier → créez les échéances de paiement pour cet étudiant avec dates et montants</li>
+    <li><strong>Créer le compte d'accès à la plateforme</strong><br/>Allez dans <strong>Paramètres → Utilisateurs → "+ Créer"</strong><br/>Choisissez le mode :<br/>
+      &nbsp;&nbsp;• <strong>Accès immédiat</strong> : compte actif sans email — partagez email + mot de passe directement à l'étudiant<br/>
+      &nbsp;&nbsp;• <strong>Avec confirmation email</strong> : Supabase envoie un lien — l'étudiant confirme avant de se connecter</li>
+    <li><strong>Communiquer les accès</strong><br/>Envoyez à l'étudiant via WhatsApp : son email, son mot de passe temporaire, l'URL de connexion (<span class="url">index.html</span>), et le lien de pointage de sa prochaine séance</li>
+    <li><strong>Générer les documents contractuels</strong><br/>Dans le dossier étudiant : <strong>📋 Fiche d'engagement</strong> (à signer), <strong>📅 Emploi du temps</strong> (à remettre), <strong>📁 Dossier complet</strong></li>
+  </ol>
+
+  <h3 class="sub">🌐 Parcours B — Inscription via formulaire public</h3>
+  <ol class="steps">
+    <li>Le prospect remplit le formulaire public (<span class="url">?inscription=1</span> ou lien Marketing)</li>
+    <li>La demande apparaît dans <strong>Inscriptions Web</strong> avec statut <em>"Nouveau"</em></li>
+    <li>Cliquez <strong>"✅ Valider"</strong> — un dossier étudiant est créé automatiquement</li>
+    <li>Reprenez depuis l'<strong>étape 4</strong> du Parcours A (inscription classe, échéancier, compte accès)</li>
+  </ol>
+
+  <div class="tip">💡 <strong>N° de dossier visible partout :</strong> une fois le dossier créé, le numéro apparaît sous le nom de l'étudiant dans sa sidebar (espace étudiant), sur sa page d'accueil, et dans tous les documents générés.</div>
+  <div class="warn">⚠️ L'email doit être identique dans le dossier étudiant ET dans le compte utilisateur Supabase — c'est ce qui permet à la plateforme de lier automatiquement le compte à son dossier.</div>
+
+  <h2 class="section">2.3 Module Étudiants</h2>
+  <p><span class="role r-admin">Admin</span></p>
+
+  <h3 class="sub">Consulter la liste des étudiants</h3>
+  <p>Le tableau liste tous les étudiants avec : numéro de dossier, nom, prénom, niveau, statut (Actif / Inactif / Suspendu), formations inscrites, mode de cours et solde financier.</p>
+  <ul>
+    <li><strong>Barre de recherche</strong> : filtrez par nom, prénom, numéro de dossier ou email</li>
+    <li><strong>Filtre par statut</strong> : Tous / Actif / Inactif / Suspendu</li>
+    <li><strong>Tri par colonne</strong> : cliquez sur l'en-tête pour trier</li>
+  </ul>
+
+  <h3 class="sub">Modifier / Supprimer un étudiant</h3>
+  <ul>
+    <li>Cliquez sur <strong>✏️ Modifier</strong> à droite de la ligne pour éditer les informations</li>
+    <li>Cliquez sur <strong>🗑️ Supprimer</strong> pour supprimer (confirmation demandée)</li>
+    <li>Cliquez sur <strong>📁 Dossier</strong> pour accéder au dossier complet de l'étudiant</li>
+  </ul>
+
+  <h3 class="sub">Dossier étudiant (fiche complète)</h3>
+  <p>Le dossier complet contient :</p>
+  <ul>
+    <li>Informations personnelles et pédagogiques</li>
+    <li>Plan de paiement et historique des versements</li>
+    <li>Présences et taux d'assiduité</li>
+    <li>Évaluations et notes</li>
+    <li>Classes inscrites</li>
+    <li>Boutons de génération PDF : <strong>Fiche d'engagement</strong>, <strong>Emploi du temps personnalisé</strong>, <strong>Dossier complet</strong>, <strong>Certificat de formation</strong></li>
+  </ul>
+
+  <h2 class="section">2.5 Inscriptions Web</h2>
+  <p><span class="role r-admin">Admin</span> — Gestion des demandes d'inscription reçues via le formulaire public.</p>
+  <table>
+    <thead><tr><th>Action</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Voir la demande</strong></td><td>Cliquez sur une ligne pour voir tous les détails du prospect</td></tr>
+      <tr><td><strong>✅ Valider</strong></td><td>Convertit la demande en étudiant actif + crée la fiche dans la base</td></tr>
+      <tr><td><strong>❌ Refuser</strong></td><td>Marque la demande comme refusée</td></tr>
+      <tr><td><strong>🗑️ Supprimer</strong></td><td>Supprime définitivement la demande</td></tr>
+    </tbody>
+  </table>
+  <div class="info">ℹ️ Le formulaire d'inscription public est accessible via le lien <span class="url">?inscription=1</span> ou depuis Espace Marketing → Liens.</div>
+
+  <h2 class="section">2.6 Gestion des Classes</h2>
+  <p><span class="role r-admin">Admin</span></p>
+  <ul>
+    <li><strong>Créer une classe</strong> : nom, niveau, horaire récurrent, formateur assigné, nombre max d'élèves</li>
+    <li><strong>Modifier une classe</strong> : cliquez sur ✏️ — tous les champs sont éditables</li>
+    <li><strong>Supprimer une classe</strong> : cliquez sur 🗑️ (supprime aussi les inscriptions liées)</li>
+    <li><strong>Inscrire des étudiants</strong> : via le dossier étudiant → Classes</li>
+  </ul>
+
+  <h2 class="section">2.7 Synchronisation Programmes ↔ Séances ↔ EDT <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Le programme d'une classe est <strong>automatiquement synchronisé</strong> avec les séances planifiées. Toute modification d'une séance (date, sujet, statut) met à jour le programme de la classe en temps réel.</p>
+  <ul>
+    <li>✅ <strong>Séance marquée "Réalisée"</strong> → le programme affiche ✅ devant la séance correspondante</li>
+    <li>❌ <strong>Séance annulée</strong> → le programme affiche ❌</li>
+    <li>📅 <strong>Séance planifiée</strong> → le programme affiche 📅 avec la date et l'heure</li>
+    <li>Les emplois du temps affichés dans l'espace étudiant reflètent automatiquement ces mises à jour</li>
+  </ul>
+  <div class="tip">💡 Vous n'avez pas à mettre à jour manuellement le programme d'une classe — il se reconstruit automatiquement depuis la liste des séances.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 3 — FINANCE
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch3">
+  <div class="page-header">
+    <div class="page-icon">💰</div>
+    <div>
+      <div class="page-title">3. Finance & Comptabilité</div>
+      <div class="page-desc">Encaissements, dépenses, caisse, échéancier, proforma, rapport PDF</div>
+    </div>
+  </div>
+
+  <div class="info">ℹ️ Le module Finance est accessible uniquement aux rôles <span class="role r-admin">Admin</span>. Les onglets sont accessibles via la barre en haut de la section.</div>
+
+  <h2 class="section">3.1 Vue d'ensemble financière</h2>
+  <p>Résumé complet du mois en cours :</p>
+  <ul>
+    <li>Total encaissé vs total dépensé</li>
+    <li>Solde de caisse disponible</li>
+    <li>Nombre de paiements reçus ce mois</li>
+    <li>Impayés en cours (étudiants avec solde négatif)</li>
+    <li>Graphique d'évolution mensuelle sur 6 mois</li>
+  </ul>
+
+  <h2 class="section">3.2 Encaissements</h2>
+  <p>Enregistre tous les paiements reçus des étudiants.</p>
+  <h4 class="step">Ajouter un paiement</h4>
+  <ol class="steps">
+    <li>Sélectionnez l'étudiant dans le menu déroulant</li>
+    <li>Saisissez le montant, le mode de paiement (Cash / Virement / Orange Money / Wave), la date et une note facultative</li>
+    <li>Cliquez <strong>"Enregistrer le paiement"</strong></li>
+    <li>Le solde de l'étudiant est mis à jour automatiquement</li>
+  </ol>
+  <div class="tip">💡 Vous pouvez filtrer les encaissements par mois et exporter le tableau.</div>
+
+  <h2 class="section">3.3 Dépenses</h2>
+  <p>Enregistre toutes les sorties d'argent de l'académie.</p>
+  <ul>
+    <li><strong>Catégories</strong> : Loyer, Salaires, Fournitures, Communication, Maintenance, Autre…</li>
+    <li><strong>Justificatif</strong> : référence de facture ou pièce jointe</li>
+    <li><strong>Synchronisation RH</strong> : les fiches de paie générées dans RH créent automatiquement une dépense de type "Salaires" — statut <em>[En attente]</em> puis <em>Payé</em> une fois validée</li>
+  </ul>
+
+  <h2 class="section">3.4 Journal de Caisse</h2>
+  <p>Historique chronologique de toutes les opérations (entrées et sorties). Filtrable par période. Affiche le solde cumulatif jour par jour.</p>
+
+  <h2 class="section">3.5 Échéancier</h2>
+  <p>Planification des paiements à recevoir par étudiant :</p>
+  <ul>
+    <li>Crée un plan de paiement en N tranches pour un étudiant</li>
+    <li>Suit les échéances avec statut (En attente / Payé / En retard)</li>
+    <li>Génère des alertes pour les impayés</li>
+    <li>Marquer une échéance comme payée la convertit en encaissement</li>
+  </ul>
+
+  <h2 class="section">3.6 Factures Proforma</h2>
+  <p>Création de devis / factures proforma professionnelles :</p>
+  <ol class="steps">
+    <li>Renseignez le client (nom, contact), les lignes de service (intitulé, quantité, prix unitaire)</li>
+    <li>La TVA et le total sont calculés automatiquement</li>
+    <li>Cliquez <strong>"Générer PDF"</strong> pour obtenir une facture imprimable au format AGTM</li>
+    <li>Sauvegardez la facture dans la base pour suivi ultérieur</li>
+  </ol>
+
+  <h2 class="section">3.7 Finances Personnelles <span class="role r-admin">Admin uniquement</span></h2>
+  <p>Section privée réservée à l'administrateur uniquement (ISSA BAMBA). Non visible des autres rôles.</p>
+  <ul>
+    <li>Suivi des revenus et dépenses personnels (distincts de la finance de l'académie)</li>
+    <li>Protégé par politique RLS Supabase : seul l'admin peut lire ou écrire ces données</li>
+  </ul>
+  <div class="danger">🔒 Cette section ne s'affiche pas dans la barre d'onglets pour les formateurs et étudiants — accès impossible même en testant l'URL directement.</div>
+
+  <h2 class="section">3.8 Rapport PDF Financier</h2>
+  <p>Génère un rapport complet au format PDF comprenant :</p>
+  <ul>
+    <li>Bilan du mois sélectionné (encaissements, dépenses, solde net)</li>
+    <li>Détail par catégorie de dépenses</li>
+    <li>Liste des impayés</li>
+    <li>Graphiques intégrés</li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 4 — SUIVI PÉDAGOGIQUE
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch4">
+  <div class="page-header">
+    <div class="page-icon">📚</div>
+    <div>
+      <div class="page-title">4. Suivi Pédagogique</div>
+      <div class="page-desc">Feuilles de séance, présences, évaluations, satisfactions</div>
+    </div>
+  </div>
+
+  <div class="info">ℹ️ Accessible aux rôles <span class="role r-admin">Admin</span>. Les formateurs ont leur propre vue via <strong>Séances</strong> et <strong>Présences</strong>.</div>
+
+  <h2 class="section">4.1 Feuille de Séance (Création)</h2>
+  <p>La feuille de séance est le document central qui déclenche l'ensemble du suivi : présences, pointage en ligne, rapports.</p>
+
+  <h4 class="step">Créer une feuille de séance</h4>
+  <ol class="steps">
+    <li>Allez dans <strong>Suivi Pédagogique → Feuille de Séance</strong></li>
+    <li>Remplissez : date, plage horaire (ex : 17h–19h), sujet / thème du cours, classe, formateur, format (Présentiel / En ligne / Hybride), programme, module, objectifs</li>
+    <li>Si le cours est en ligne : renseignez le lien Google Meet</li>
+    <li>Chargez les étudiants de la classe via <strong>"Charger la classe"</strong> ou ajoutez-les manuellement par numéro de dossier</li>
+    <li>Cochez la présence de chaque étudiant (Présent / Absent / Retard)</li>
+    <li>Cliquez <strong>"💾 Créer la Séance & Enregistrer"</strong></li>
+  </ol>
+
+  <p>Après enregistrement, un <strong>bloc vert apparaît</strong> avec :</p>
+  <ul>
+    <li>Le <strong>lien de pointage partageable</strong> (à copier/envoyer aux étudiants via WhatsApp)</li>
+    <li>Le bouton <strong>"📋 Pointer cette séance maintenant"</strong> pour ouvrir le formulaire inline</li>
+  </ul>
+
+  <h4 class="step">Imprimer la feuille</h4>
+  <ol class="steps">
+    <li>Cliquez sur <strong>"🖨️ Imprimer la feuille"</strong> avant ou après l'enregistrement</li>
+    <li>Une fenêtre d'impression s'ouvre avec la feuille officielle AGTM</li>
+    <li>Si la séance est déjà enregistrée, le <strong>lien de pointage</strong> apparaît dans l'entête de la feuille imprimée</li>
+  </ol>
+  <div class="tip">💡 Imprimez la feuille APRÈS avoir cliqué sur "Créer la Séance" pour que le lien de pointage figure sur le document physique.</div>
+
+  <h2 class="section">4.2 Séances Planifiées</h2>
+  <p>Vue tableau de toutes les séances enregistrées dans le système :</p>
+  <ul>
+    <li>Filtres par statut : Planifiée / Réalisée / Annulée</li>
+    <li>Pour chaque séance <em>Planifiée</em> :
+      <ul>
+        <li><strong>🔗 Lien</strong> : copie le lien de pointage public dans le presse-papiers</li>
+        <li><strong>✅</strong> : marque la séance comme "Réalisée"</li>
+        <li><strong>🗑️</strong> : supprime la séance</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2 class="section">4.3 Présences</h2>
+  <p>Consulter et modifier le registre des présences :</p>
+  <ul>
+    <li>Filtrez par séance, étudiant, période ou classe</li>
+    <li>Modifiez le statut directement dans le tableau (Présent ✅ / Absent ❌)</li>
+    <li>Exportez le rapport d'assiduité global</li>
+  </ul>
+
+  <h2 class="section">4.4 Évaluations</h2>
+  <p>Enregistrement des notes et évaluations des étudiants :</p>
+  <ol class="steps">
+    <li>Choisissez l'étudiant, le type d'évaluation (DS / Examen / Quiz / Devoir / Oral)</li>
+    <li>Saisissez la note obtenue et la note maximale</li>
+    <li>Ajoutez un commentaire pédagogique (facultatif)</li>
+    <li>Cliquez <strong>"Enregistrer"</strong></li>
+  </ol>
+  <div class="tip">💡 Les notes apparaissent automatiquement dans l'espace étudiant (Mon Espace → Mes Notes).</div>
+
+  <h2 class="section">4.5 Satisfactions Apprenants</h2>
+  <p>Collecte et analyse des retours de satisfaction des étudiants.</p>
+
+  <h3 class="sub">Liens de satisfaction (à partager)</h3>
+  <p>En haut de la section Satisfactions, un bloc vert affiche des boutons de copie de lien pour chaque séance récente. Cliquez sur un bouton pour copier le lien dans le presse-papiers et l'envoyer aux étudiants via WhatsApp ou email.</p>
+  <p>Le lien fonctionne <strong>sans connexion</strong> — l'étudiant clique, choisit sa note (1 à 5 étoiles) et laisse un commentaire.</p>
+
+  <h3 class="sub">Soumettre manuellement</h3>
+  <p>L'admin peut aussi saisir une évaluation directement : séance, apprenant, note, commentaire → <strong>"💾 Soumettre"</strong>.</p>
+
+  <h3 class="sub">Historique</h3>
+  <p>Tableau de toutes les évaluations reçues avec : note en étoiles, commentaire, date. KPIs : note moyenne, nombre d'évaluations, notes parfaites 5/5.</p>
+
+  <h2 class="section">4.6 Rapports de Coaching</h2>
+  <p>Compte-rendus hebdomadaires par étudiant rédigés par les formateurs. Accessibles en lecture par l'admin. Filtrage par étudiant et par période.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 5 — RESSOURCES HUMAINES
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch5">
+  <div class="page-header">
+    <div class="page-icon">👥</div>
+    <div>
+      <div class="page-title">5. Ressources Humaines</div>
+      <div class="page-desc">Personnel, fiches de paie, congés, recrutement</div>
+    </div>
+  </div>
+
+  <div class="info">ℹ️ Module réservé à l'<span class="role r-admin">Admin</span>.</div>
+
+  <h2 class="section">5.1 Vue d'ensemble RH</h2>
+  <p>Tableau de bord RH avec :</p>
+  <ul>
+    <li>Effectif total, formateurs actifs, masse salariale mensuelle</li>
+    <li>Répartition par poste (graphique)</li>
+    <li>Congés en attente de validation</li>
+    <li>Total des fiches de paie du mois en cours</li>
+  </ul>
+
+  <h2 class="section">5.2 Personnel</h2>
+  <p>Registre complet de tout le personnel de l'académie.</p>
+  <h4 class="step">Ajouter un membre du personnel</h4>
+  <ol class="steps">
+    <li>Cliquez <strong>"+ Ajouter un membre"</strong></li>
+    <li>Remplissez : nom, prénom, poste (Formateur / Secrétaire / Direction / Technicien…), type de contrat (CDI / CDD / Freelance / Stage), salaire de base, date d'embauche, téléphone, email, numéro CIN / matricule</li>
+    <li>Cliquez <strong>"Enregistrer"</strong></li>
+  </ol>
+  <ul>
+    <li><strong>✏️ Modifier</strong> : édite les informations du membre</li>
+    <li><strong>🗑️ Supprimer</strong> : supprime le profil</li>
+    <li><strong>📄 Contrat</strong> : génère le contrat formateur en PDF (voir section 11)</li>
+  </ul>
+
+  <h2 class="section">5.3 Apprenants RH</h2>
+  <p>Vue synthétique des apprenants depuis la perspective RH (taux de présence global, formateur assigné).</p>
+
+  <h2 class="section">5.4 Fiches de Paie</h2>
+  <p>Génération et suivi des fiches de paie mensuelles.</p>
+  <h4 class="step">Générer une fiche de paie</h4>
+  <ol class="steps">
+    <li>Sélectionnez le membre du personnel</li>
+    <li>Choisissez la période (mois/année)</li>
+    <li>La plateforme pré-remplit le salaire de base ; ajustez les primes, heures sup., retenues et avances si nécessaire</li>
+    <li>Cliquez <strong>"Générer la Fiche de Paie"</strong></li>
+    <li>Une entrée <em>Dépense — Salaires [En attente]</em> est automatiquement créée en Finance</li>
+    <li>Une fois le paiement effectué, cliquez <strong>"✅ Marquer Payé"</strong> — la dépense est mise à jour</li>
+  </ol>
+  <div class="tip">💡 Cliquez sur <strong>"🖨️ Imprimer la fiche"</strong> pour générer le bulletin de paie PDF officiel.</div>
+
+  <h2 class="section">5.5 Congés</h2>
+  <ul>
+    <li>Soumission d'une demande de congé : membre, dates, motif</li>
+    <li>Validation ou refus par l'admin</li>
+    <li>Compteur de jours de congé utilisés par membre</li>
+  </ul>
+
+  <h2 class="section">5.6 Recrutement</h2>
+  <p>Suivi des candidatures reçues via le formulaire public de candidature formateur :</p>
+  <ul>
+    <li>Liste des candidatures avec CV et informations</li>
+    <li>Statuts : Nouveau / En cours / Accepté / Refusé</li>
+    <li>Conversion directe en membre du personnel si accepté</li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 6 — ACTIVITÉS PÉDAGOGIQUES
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch6">
+  <div class="page-header">
+    <div class="page-icon">📖</div>
+    <div>
+      <div class="page-title">6. Activités Pédagogiques</div>
+      <div class="page-desc">Catalogue de cours, tests, évaluations en ligne, test de placement</div>
+    </div>
+  </div>
+
+  <div class="info">ℹ️ Accessible aux rôles <span class="role r-admin">Admin</span>, <span class="role r-form">Formateur</span> et <span class="role r-etud">Étudiant</span>.</div>
+
+  <h2 class="section">6.1 Catalogue de Cours</h2>
+  <p>Bibliothèque numérique de tous les contenus pédagogiques de l'académie.</p>
+  <ul>
+    <li><strong>Barre de recherche</strong> : tapez un mot-clé pour filtrer les cours par titre ou contenu</li>
+    <li><strong>Filtres</strong> : par niveau (A1–C2), pilier (Grammaire / Vocabulaire / Compréhension / Expression / TOEIC…)</li>
+    <li><strong>Ouvrir un cours</strong> : cliquez pour accéder au contenu complet avec exercices</li>
+    <li><strong>Ajouter un cours</strong> (admin/formateur) : titre, pilier, niveau, contenu HTML, exercices</li>
+  </ul>
+
+  <h2 class="section">6.2 Tests & Évaluations</h2>
+  <p>Création et gestion des tests en ligne.</p>
+  <h4 class="step">Créer un test (Admin / Formateur)</h4>
+  <ol class="steps">
+    <li>Cliquez <strong>"+ Créer un test"</strong></li>
+    <li>Renseignez : titre, niveau, type (QCM / Rédaction / Oral)</li>
+    <li>Ajoutez les questions : énoncé, options de réponse, réponse correcte, explication</li>
+    <li>Sauvegardez — le test reçoit un <strong>lien partageable</strong> (<span class="url">?test_id=xxx</span>)</li>
+    <li>Partagez le lien aux étudiants via WhatsApp</li>
+  </ol>
+
+  <h3 class="sub">Passer un test (Étudiant)</h3>
+  <p>L'étudiant clique sur le lien, répond aux questions, valide. Le résultat s'affiche immédiatement avec le score et les corrections.</p>
+
+  <h2 class="section">6.3 Évaluations en ligne</h2>
+  <p>Fiches d'évaluation avec notation directe par le formateur ou via lien partageable (<span class="url">?eval_id=xxx</span>). Résultats synchronisés dans le dossier étudiant.</p>
+  <ul>
+    <li><strong>Recherche</strong> : filtrez les évaluations par nom d'étudiant ou titre</li>
+    <li><strong>🔗 Lien</strong> : copie le lien direct vers l'évaluation</li>
+  </ul>
+
+  <h2 class="section">6.4 Test de Placement</h2>
+  <p>Test de niveau gratuit accessible sans connexion (<span class="url">?placement=1</span>). Utilisé pour évaluer le niveau d'un nouveau prospect.</p>
+  <ul>
+    <li>Couvre toutes les compétences : grammaire, vocabulaire, compréhension</li>
+    <li>Résultat automatique avec niveau CECRL recommandé (A1 à C2)</li>
+    <li>Idéal à partager via WhatsApp ou email lors des séances découvertes</li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 7 — ESPACE MARKETING
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch7">
+  <div class="page-header">
+    <div class="page-icon">🎯</div>
+    <div>
+      <div class="page-title">7. Espace Marketing</div>
+      <div class="page-desc">Présentation, formations, brochures, supports de communication, liens publics, éditeur de contenu & tarifs</div>
+    </div>
+  </div>
+
+  <div class="info">ℹ️ Réservé à l'<span class="role r-admin">Admin</span> dans le tableau de bord. Les prospects y accèdent via le lien public <span class="url">?marketing=1</span>.</div>
+
+  <h2 class="section">7.1 Onglet Présentation</h2>
+  <p>Page vitrine complète de l'académie :</p>
+  <ul>
+    <li>Bannière hero avec chiffres clés (500+ apprenants, 95% satisfaction, 8+ formateurs…)</li>
+    <li>Carte "Pourquoi choisir AGTM ?" avec arguments différenciants</li>
+    <li>Bouton "Séance découverte gratuite" lié au Google Meet officiel</li>
+    <li>Bouton "Découvrir nos formations" qui navigue vers l'onglet Formations</li>
+  </ul>
+
+  <h2 class="section">7.2 Onglet Nos Formations</h2>
+  <p>Catalogue complet des offres de formation avec pour chaque programme :</p>
+  <ul>
+    <li>Icône, titre, niveaux couverts, durée estimée, fourchette de prix</li>
+    <li>Description détaillée et objectifs pédagogiques</li>
+    <li>Bouton "Demander un devis" / "S'inscrire"</li>
+  </ul>
+  <p>Formations disponibles : Anglais Général, Business English, Préparation TOEIC, TOEFL, Anglais pour enfants, Formation en entreprise.</p>
+
+  <h2 class="section">7.3 Onglet Brochures PDF</h2>
+  <p>Génération à la demande de documents marketing imprimables :</p>
+  <ul>
+    <li><strong>Plaquette Générale</strong> : présentation complète de l'académie</li>
+    <li><strong>Tarifs détaillés</strong> : grille complète des forfaits</li>
+    <li><strong>Brochure TOEIC/TOEFL</strong> : programme de préparation aux certifications</li>
+  </ul>
+  <div class="tip">💡 Cliquez sur <strong>"🖨️ Générer PDF"</strong> à côté de chaque brochure — une fenêtre d'impression s'ouvre.</div>
+
+  <h2 class="section">7.4 Onglet Supports de Communication</h2>
+  <p>Outils de communication digitale prêts à l'emploi :</p>
+  <ul>
+    <li><strong>Images sociales</strong> : visuels optimisés pour Facebook, Instagram, WhatsApp</li>
+    <li><strong>Export PNG</strong> : téléchargez les visuels directement (via html2canvas)</li>
+    <li><strong>Messages WhatsApp</strong> : modèles de messages prêts à copier (prospection, rappel de séance)</li>
+  </ul>
+
+  <h2 class="section">7.5 Onglet Liens & Contacts</h2>
+  <p>Centrale de tous les liens publics de la plateforme :</p>
+  <table>
+    <thead><tr><th>Lien</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td><span class="url">?marketing=1</span></td><td>Espace marketing public (sans connexion) — à partager aux prospects</td></tr>
+      <tr><td><span class="url">?client=1</span></td><td>Formulaire de prise de contact public</td></tr>
+      <tr><td><span class="url">?placement=1</span></td><td>Test de placement gratuit</td></tr>
+      <tr><td><span class="url">?pointage=ID</span></td><td>Formulaire de présence d'une séance spécifique</td></tr>
+      <tr><td><span class="url">?satisfaction=ID</span></td><td>Formulaire d'évaluation d'une séance</td></tr>
+      <tr><td><span class="url">?eval_id=ID</span></td><td>Évaluation en ligne spécifique</td></tr>
+      <tr><td><span class="url">?test_id=ID</span></td><td>Test d'entraînement spécifique</td></tr>
+    </tbody>
+  </table>
+  <p>Pour chaque lien : un champ texte affiche l'URL complète, un bouton <strong>📋</strong> la copie, et un bouton <strong>↗</strong> l'ouvre dans un nouvel onglet.</p>
+  <div class="tip">💡 Partagez le lien <span class="url">?marketing=1</span> dans vos groupes WhatsApp, sur Facebook ou par email pour que les prospects découvrent vos offres sans avoir à créer un compte.</div>
+
+  <h2 class="section">7.6 Onglet Contenu & Tarifs <span class="badge-new" style="background:rgba(200,150,12,.15);color:#C8960C;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700;margin-left:8px">NOUVEAU</span></h2>
+  <div class="info">ℹ️ Visible uniquement pour l'<span class="role r-admin">Admin</span> et la <span class="role" style="background:rgba(74,224,144,.1);color:#1A6040;border:1px solid rgba(74,224,144,.3)">Secrétaire</span>.</div>
+  <p>Cet onglet permet de gérer tout le contenu marketing en ligne, <strong>sans toucher au code ni à la base de données</strong>. Les modifications sont appliquées immédiatement sur toutes les pages.</p>
+  <h3 class="sub">Sections éditables</h3>
+  <table>
+    <thead><tr><th>Section</th><th>Champs éditables</th></tr></thead>
+    <tbody>
+      <tr><td><strong>📅 Inscriptions & Dates</strong></td><td>Statut (ouvertes/fermées) · Texte de la période · Date de rentrée · Numéro de contact · Offre spéciale</td></tr>
+      <tr><td><strong>💬 Messages Marketing</strong></td><td>Slogan principal · Texte d'appel à l'action</td></tr>
+      <tr><td><strong>📊 Statistiques</strong></td><td>Nombre d'apprenants · Taux de satisfaction · Nombre de formateurs</td></tr>
+      <tr><td><strong>💰 Tarifs des formations</strong></td><td>Prix de départ · Prix Anglais Général · Business English · TOEIC · TOEFL · BAC/BEPC · Kids & Teens · Tiers IA</td></tr>
+    </tbody>
+  </table>
+  <ol class="steps">
+    <li>Accédez à <strong>Espace Marketing → ⚙️ Contenu & Tarifs</strong></li>
+    <li>Modifiez les champs souhaités dans les sections correspondantes</li>
+    <li>Cliquez sur <strong>"💾 Enregistrer tout"</strong> pour appliquer les changements</li>
+    <li>Les nouvelles valeurs s'affichent immédiatement sur la page de présentation et dans les brochures</li>
+  </ol>
+  <div class="warn">⚠️ Si vous fermez les inscriptions (statut = Fermées), pensez à mettre un message informatif dans le champ "Offre spéciale" ou "Texte période d'inscription" pour guider les prospects.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 8 — ESPACE CLIENT
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch8">
+  <div class="page-header">
+    <div class="page-icon">📞</div>
+    <div>
+      <div class="page-title">8. Espace Client</div>
+      <div class="page-desc">Formulaire public de contact et gestion des demandes (admin)</div>
+    </div>
+  </div>
+
+  <h2 class="section">8.1 Formulaire public (prospect / client)</h2>
+  <p>Accessible sans connexion via <span class="url">dashboard.html?client=1</span>.</p>
+  <p>Le prospect remplit :</p>
+  <ul>
+    <li>Prénom et nom</li>
+    <li>Téléphone / WhatsApp (obligatoire)</li>
+    <li>Email (facultatif)</li>
+    <li>Sujet : Inscription / Tarifs / Séance découverte / Test de niveau / Cours particuliers / Formation entreprise / Autre</li>
+    <li>Message détaillé</li>
+  </ul>
+  <p>Après validation, la demande est enregistrée dans Supabase et apparaît immédiatement dans la vue admin.</p>
+  <div class="tip">💡 Partagez ce lien sur vos réseaux sociaux ou dans vos statuts WhatsApp pour que les prospects puissent vous contacter directement.</div>
+
+  <h2 class="section">8.2 Vue Admin — Gestion des demandes</h2>
+  <p>Accès via la sidebar <strong>Admin → 📞 Espace Client</strong>.</p>
+  <ul>
+    <li>KPIs : total des demandes, en attente, traitées</li>
+    <li>Lien public affiché avec bouton de copie rapide</li>
+    <li>Tableau de toutes les demandes : date, nom, téléphone, sujet, statut, message</li>
+    <li>Bouton <strong>"✅ Traité"</strong> : marque la demande comme traitée (fond vert)</li>
+    <li>Bouton <strong>"↩ Rouvrir"</strong> : revient au statut Nouveau si besoin</li>
+  </ul>
+  <div class="warn">⚠️ Répondez aux prospects dans les 24h via WhatsApp ou appel téléphonique — le formulaire ne génère pas d'email automatique.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 9 — ESPACE FORMATEUR
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch9">
+  <div class="page-header">
+    <div class="page-icon">👨‍🏫</div>
+    <div>
+      <div class="page-title">9. Espace Formateur</div>
+      <div class="page-desc">Planning, classes, séances, présences, progression, rapports, tests</div>
+    </div>
+  </div>
+
+  <div class="info">ℹ️ Accessible uniquement aux comptes ayant le rôle <span class="role r-form">Formateur</span>.</div>
+
+  <h2 class="section">9.1 Planning</h2>
+  <p>Page d'accueil du formateur après connexion. En haut de la page s'affiche une <strong>carte d'identité professionnelle</strong> avec :</p>
+  <ul>
+    <li>Nom complet du formateur</li>
+    <li>Poste occupé (Formateur / Enseignant)</li>
+    <li>Numéro CIN / matricule <span style="font-family:monospace;background:#0D1B2A;color:#4A90D9;padding:1px 6px;border-radius:4px;font-size:.8rem">🪪 CI-XXXX</span> (affiché aussi dans la sidebar sous le nom)</li>
+  </ul>
+  <p>En dessous, la vue du planning :</p>
+  <ul>
+    <li>Séances passées, en cours et à venir</li>
+    <li>Cliquez sur une séance pour voir les détails (classe, étudiants, lien Meet…)</li>
+    <li>Indicateur de statut : Planifiée 🔵 / Réalisée 🟢 / Annulée 🔴</li>
+  </ul>
+
+  <h2 class="section">9.2 Mes Classes</h2>
+  <p>Liste des classes assignées au formateur avec pour chaque classe :</p>
+  <ul>
+    <li>Nom, niveau, horaire récurrent, liste des étudiants inscrits</li>
+    <li>Bouton pour voir la progression de chaque étudiant</li>
+    <li>Bouton pour créer une séance directement depuis la classe</li>
+  </ul>
+
+  <h2 class="section">9.3 Séances</h2>
+  <p>Création et gestion des séances (identique à l'admin — voir section 4.1 et 4.2).</p>
+  <div class="tip">💡 Après chaque séance, copiez le lien de pointage et envoyez-le aux étudiants via WhatsApp <strong>avant le début du cours</strong>.</div>
+
+  <h2 class="section">9.4 Présences</h2>
+  <p>Registre personnel des présences du formateur. Filtrage par séance. Modification possible des statuts (Présent / Absent).</p>
+
+  <h2 class="section">9.5 Progression Étudiants</h2>
+  <p>Vue de l'évolution pédagogique de chaque étudiant du formateur :</p>
+  <ul>
+    <li>Courbe de progression des notes dans le temps</li>
+    <li>Taux d'assiduité individuel</li>
+    <li>Tableau des dernières évaluations</li>
+    <li>Recommandations pédagogiques automatiques selon les performances</li>
+  </ul>
+
+  <h2 class="section">9.6 Rapport de Séance</h2>
+  <p>Formulaire de compte-rendu hebdomadaire à remplir après chaque cours :</p>
+  <ol class="steps">
+    <li>Sélectionnez la séance concernée</li>
+    <li>Rédigez : objectifs atteints, difficultés observées, exercices réalisés, devoirs assignés, observations par étudiant</li>
+    <li>Cliquez <strong>"Enregistrer le rapport"</strong></li>
+  </ol>
+  <p>Les rapports sont consultables par l'admin dans Suivi Pédagogique → Rapports de coaching.</p>
+
+  <h2 class="section">9.7 Historique Rapports</h2>
+  <p>Archive de tous les rapports de séance du formateur, filtrable par période et par classe.</p>
+
+  <h2 class="section">9.8 Tests & Évaluations</h2>
+  <p>Le formateur peut créer, modifier et partager des tests (voir section 6.2). Il peut aussi consulter les résultats de ses étudiants et corriger les exercices de rédaction.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 10 — ESPACE ÉTUDIANT
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch10">
+  <div class="page-header">
+    <div class="page-icon">🎓</div>
+    <div>
+      <div class="page-title">10. Espace Étudiant</div>
+      <div class="page-desc">Mon Espace • Séances • EDT • Documents • Messages • Notes • Quiz • Devoirs • Marketing • Service Client</div>
+    </div>
+  </div>
+
+  <div class="info">ℹ️ Accessible aux comptes ayant le rôle <span class="role r-etud">Étudiant</span>. L'espace est enrichi de nouveaux modules accessibles depuis le menu latéral.</div>
+
+  <h2 class="section">10.1 Mon Espace 🏠 (Tableau de bord personnel)</h2>
+  <p>Page d'accueil personnalisée de l'étudiant :</p>
+  <ul>
+    <li>Message de bienvenue avec <strong>prénom, niveau, numéro de dossier</strong> <span style="font-family:monospace;background:#0D1B2A;color:#C8960C;padding:1px 6px;border-radius:4px;font-size:.8rem">📁 DOS-XXX</span> et statut</li>
+    <li>KPIs personnels : nombre de présences, absences, moyenne générale</li>
+    <li>Dernières évaluations (5 les plus récentes) avec note, type et pourcentage</li>
+  </ul>
+  <div class="tip">💡 Le numéro de dossier est aussi visible en permanence dans la sidebar sous le nom de l'étudiant — utile pour le communiquer à l'administration.</div>
+
+  <h2 class="section">10.2 Mes Séances & Cours 📅 <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Vue personnalisée de toutes les séances de l'étudiant :</p>
+  <ul>
+    <li>Liste des séances passées et à venir avec date, heure, sujet et statut de présence</li>
+    <li><strong>🔗 Lien de pointage</strong> : bouton pour pointer directement depuis son espace (sans lien externe)</li>
+    <li><strong>📹 Rejoindre le Meet</strong> : après avoir pointé sa présence, l'étudiant est automatiquement redirigé vers le cours Google Meet en 3 secondes</li>
+    <li>Affichage du programme de la classe avec l'avancement séance par séance</li>
+  </ul>
+  <div class="tip">💡 Le lien Meet est intégré au pointage : l'étudiant pointe → confirmation → redirection automatique vers Google Meet. Il n'a pas besoin de chercher le lien séparément.</div>
+
+  <h2 class="section">10.3 Emploi du Temps 📆 <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Emploi du temps hebdomadaire personnel synchronisé avec les séances planifiées :</p>
+  <ul>
+    <li><strong>Vue semaine</strong> : affiche les séances de la semaine courante avec date, heure, sujet, statut (Planifiée / Réalisée / Annulée)</li>
+    <li><strong>Navigation</strong> : boutons ← Semaine précédente / Semaine suivante → pour consulter les semaines passées et à venir</li>
+    <li><strong>Statut de présence</strong> : pour les séances passées, indique si l'étudiant était Présent ✅ ou Absent ❌</li>
+    <li><strong>Bouton Pointer</strong> : pour les séances en cours ou à venir, permet de pointer directement depuis l'EDT</li>
+    <li><strong>Programme de classe</strong> : liste chronologique de toutes les séances du programme ci-dessous le calendrier</li>
+  </ul>
+  <div class="info">ℹ️ L'emploi du temps est <strong>automatiquement mis à jour</strong> dès qu'une séance est créée, modifiée ou annulée par l'admin ou le formateur.</div>
+
+  <h2 class="section">10.4 Ressources & Documents 📚 <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Espace centralisé pour accéder aux contenus pédagogiques transmis par l'administration et les formateurs :</p>
+  <ul>
+    <li>Cours et fiches de niveau filtrés selon le niveau de l'étudiant</li>
+    <li>Supports de cours, PDF et exercices mis à disposition</li>
+    <li>Accès au catalogue complet des activités pédagogiques</li>
+    <li>Tests et évaluations disponibles en ligne</li>
+  </ul>
+
+  <h2 class="section">10.5 Messages 💬 <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Système de messagerie <strong>bidirectionnelle</strong> entre l'étudiant, son formateur et l'administration :</p>
+
+  <h3 class="sub">Messages reçus (Reçus)</h3>
+  <p>Affiche tous les messages envoyés à l'étudiant par l'admin ou le formateur. Chaque message contient : expéditeur, date, objet et contenu complet.</p>
+
+  <h3 class="sub">Messages envoyés (Envoyés)</h3>
+  <p>Historique de tous les messages que l'étudiant a envoyés à l'administration ou au formateur.</p>
+
+  <h3 class="sub">Envoyer un message</h3>
+  <ol class="steps">
+    <li>Cliquez sur <strong>"✏️ Nouveau message"</strong> dans la section Messages</li>
+    <li>Un formulaire s'affiche — saisissez l'<strong>objet</strong> et le <strong>contenu</strong> du message</li>
+    <li>Cliquez <strong>"📨 Envoyer"</strong></li>
+    <li>Le message est immédiatement enregistré et visible par l'admin et le formateur dans leur interface</li>
+  </ol>
+  <div class="info">ℹ️ <strong>Côté admin/formateur :</strong> les messages envoyés par les étudiants sont visibles dans la section Messagerie de leur espace. Ils peuvent répondre via le bouton <strong>"✉️ Envoyer un message"</strong> dans le dossier étudiant.</div>
+
+  <h2 class="section">10.6 Mes Notes & Bulletin 📈</h2>
+  <p>Tableau de bord complet des évaluations <strong>synchronisé en temps réel</strong> avec la base de données :</p>
+
+  <h3 class="sub">Résumé du bulletin</h3>
+  <ul>
+    <li><strong>Moyenne générale /20</strong> avec mention (Excellent / Bien / Assez bien / Passable / Insuffisant)</li>
+    <li><strong>Taux de présence %</strong> calculé depuis les séances réalisées</li>
+    <li>Total des évaluations enregistrées</li>
+    <li>Devoirs rendus</li>
+  </ul>
+
+  <h3 class="sub">Détail des évaluations</h3>
+  <ul>
+    <li>Date, type (DS / Examen / Quiz / Devoir / Oral)</li>
+    <li>Note avec barre de progression colorée : vert ≥ 70% / orange ≥ 50% / rouge &lt; 50%</li>
+    <li>Commentaire du formateur, appréciation pédagogique</li>
+    <li>Résultats des quiz et tests en ligne</li>
+    <li>Devoirs soumis avec scores</li>
+  </ul>
+  <div class="tip">💡 Les notes apparaissent automatiquement dans cet espace dès qu'elles sont saisies par l'admin ou le formateur dans Suivi Pédagogique → Évaluations. Aucune action n'est nécessaire de la part de l'étudiant.</div>
+
+  <h2 class="section">10.7 Quiz Interactif 🧠</h2>
+  <p>Série de 8 questions aléatoires issues de la banque de quiz AGTM :</p>
+  <ul>
+    <li>Questions à choix multiple avec 4 options</li>
+    <li>Correction immédiate après chaque réponse avec explication</li>
+    <li>Score final avec pourcentage et encouragements</li>
+    <li>Bouton "Recommencer" pour une nouvelle série</li>
+  </ul>
+
+  <h2 class="section">10.8 Soumettre un Devoir 📤</h2>
+  <ol class="steps">
+    <li>Sélectionnez la matière / le thème</li>
+    <li>Collez votre texte ou rédigez directement dans le champ</li>
+    <li>Ajoutez une note (facultatif)</li>
+    <li>Cliquez <strong>"Soumettre le devoir"</strong></li>
+  </ol>
+  <p>Le formateur reçoit le devoir dans son espace et peut le corriger avec un commentaire et une note.</p>
+
+  <h2 class="section">10.9 Activités Pédagogiques 📖</h2>
+  <p>Accès au catalogue de cours, tests et évaluations en ligne (voir section 6 — contenu filtré selon le niveau de l'étudiant).</p>
+
+  <h2 class="section">10.10 Évaluer mes Séances ⭐</h2>
+  <ol class="steps">
+    <li>Sélectionnez la séance dans la liste déroulante (séances réalisées)</li>
+    <li>Cliquez sur les <strong>étoiles</strong> pour choisir votre note (1 à 5)</li>
+    <li>Rédigez un commentaire (facultatif)</li>
+    <li>Cliquez <strong>"✅ Soumettre mon évaluation"</strong></li>
+  </ol>
+  <div class="tip">💡 Vous pouvez aussi évaluer via le lien <span class="url">?satisfaction=ID</span> envoyé par votre formateur — sans connexion.</div>
+
+  <h2 class="section">10.11 Nos Formations 🎯 <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Accès à l'espace marketing depuis l'espace étudiant : catalogue complet des formations AGTM (Anglais Général, Business English, TOEIC, TOEFL…) avec descriptions, durées et tarifs. Permet à un étudiant de s'informer sur d'autres niveaux ou de recommander l'académie à son entourage.</p>
+
+  <h2 class="section">10.12 Service Client 📞 <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">NOUVEAU</span></h2>
+  <p>Accès direct au formulaire de contact de l'académie depuis l'espace étudiant. Permet à l'étudiant de soumettre rapidement une demande d'information, un signalement ou une question administrative à l'équipe AGTM.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 11 — DOCUMENTS ET PDF
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch11">
+  <div class="page-header">
+    <div class="page-icon">🖨️</div>
+    <div>
+      <div class="page-title">11. Documents & PDF générés</div>
+      <div class="page-desc">Tous les documents officiels générés par la plateforme</div>
+    </div>
+  </div>
+
+  <h2 class="section">11.1 Feuille de Présence (Séance)</h2>
+  <p>Générée depuis <strong>Suivi Pédagogique → Feuille de Séance → 🖨️ Imprimer</strong>.</p>
+  <p>Contient : logo AGTM, date, plage horaire, sujet, classe, formateur, format du cours, liste des étudiants avec colonnes signature/présence, lien Google Meet (si en ligne), lien de pointage numérique (si séance déjà enregistrée), zones de signatures formateur et direction.</p>
+
+  <h2 class="section">11.2 Emploi du Temps Personnalisé</h2>
+  <p>Généré depuis le <strong>Dossier Étudiant → 📅 Emploi du temps</strong>.</p>
+  <p>Contient : informations de l'étudiant, planning des séances de la période, horaires, formateur, rappel des règles (préavis <strong>5 heures</strong>, pointage obligatoire), zones de signatures.</p>
+
+  <h2 class="section">11.3 Fiche d'Engagement Apprenant</h2>
+  <p>Générée depuis le <strong>Dossier Étudiant → 📋 Fiche d'engagement</strong>.</p>
+  <p>Document contractuel signé par l'apprenant. Contient :</p>
+  <ul>
+    <li>Informations personnelles, forfait, durée</li>
+    <li>Art. 1 — Pointage obligatoire avant chaque séance</li>
+    <li>Art. 2 — Préavis de <strong>5 heures</strong> en cas d'absence</li>
+    <li>Art. 3 — Conditions de rattrapage des séances manquées</li>
+    <li>Art. 4 — Rattrapage obligatoire si le formateur est absent</li>
+    <li>Art. 5 — Volume horaire garanti (12 séances/période)</li>
+    <li>Art. 6 — Comportement et respect du cadre pédagogique</li>
+    <li>Zones de signatures</li>
+  </ul>
+
+  <h2 class="section">11.4 Contrat Formateur</h2>
+  <p>Généré depuis <strong>RH → Personnel → 📄 Contrat</strong> pour chaque formateur.</p>
+  <p>Contient :</p>
+  <ul>
+    <li>Informations personnelles et professionnelles du formateur</li>
+    <li>Art. 1 — Ponctualité : préavis de <strong>5 heures</strong> en cas d'empêchement</li>
+    <li>Art. 2 — Pointage obligatoire via formulaire numérique</li>
+    <li>Art. 3 — Rattrapage obligatoire dans les 7 jours calendaires</li>
+    <li>Art. 4 — Volume horaire et charge pédagogique (12 séances garanties)</li>
+    <li>Art. 5 — Qualité pédagogique et confidentialité</li>
+    <li>Zones de signatures</li>
+  </ul>
+
+  <h2 class="section">11.5 Dossier Complet Apprenant</h2>
+  <p>Généré depuis le <strong>Dossier Étudiant → 📁 Dossier complet</strong>. Compilation PDF en un seul document de :</p>
+  <ul>
+    <li>Fiche d'identité complète</li>
+    <li>Plan de paiement et historique des versements</li>
+    <li>Emploi du temps de la semaine en cours</li>
+    <li>Rapport de progression hebdomadaire</li>
+    <li>Résumé des présences et des notes</li>
+  </ul>
+
+  <h2 class="section">11.6 Bulletin de Paie</h2>
+  <p>Généré depuis <strong>RH → Fiches de Paie → 🖨️ Imprimer</strong>. Document officiel avec : membre, période, salaire de base, primes, retenues, net à payer, signatures.</p>
+
+  <h2 class="section">11.7 Rapport Financier PDF</h2>
+  <p>Généré depuis <strong>Finance → Rapport PDF</strong>. Bilan mensuel complet avec graphiques, détail des encaissements et dépenses, impayés.</p>
+
+  <h2 class="section">11.8 Certificat de Formation</h2>
+  <p>Généré depuis le Dossier Étudiant quand la formation est complétée. Certificat officiel AGTM Digital Academy au format A4, signé par la direction.</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 12 — ACCÈS PUBLICS
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch12">
+  <div class="page-header">
+    <div class="page-icon">🌐</div>
+    <div>
+      <div class="page-title">12. Accès publics (sans connexion)</div>
+      <div class="page-desc">Tous les liens partageables accessibles sans créer un compte</div>
+    </div>
+  </div>
+
+  <div class="tip">💡 Ces liens fonctionnent dans n'importe quel navigateur, sur téléphone ou ordinateur, sans connexion à la plateforme. Partagez-les via WhatsApp, SMS ou email.</div>
+
+  <h2 class="section">12.1 Pointage de Séance + Redirection Meet <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">MIS À JOUR</span></h2>
+  <p><span class="url">dashboard.html?pointage=ID_SÉANCE</span></p>
+  <p>Formulaire de présence numérique pour une séance spécifique. L'étudiant ou le formateur clique sur le lien, son nom est enregistré comme présent, la date et l'heure de pointage sont horodatées.</p>
+  <p><strong>Nouveau : </strong> si un lien Google Meet est associé à la séance, l'étudiant est <strong>automatiquement redirigé vers le cours en ligne 3 secondes après avoir pointé</strong>. Un bouton "Rejoindre maintenant" est également proposé pour accéder immédiatement sans attendre.</p>
+  <h4 class="step">Comment obtenir ce lien ?</h4>
+  <ol class="steps">
+    <li>Créez la séance dans Suivi Pédagogique → Feuille de Séance</li>
+    <li>Renseignez le <strong>lien Google Meet</strong> dans le champ prévu</li>
+    <li>Après enregistrement, un bloc vert apparaît avec le lien de pointage</li>
+    <li>Cliquez <strong>"📋 Copier"</strong> et envoyez le lien aux étudiants via WhatsApp</li>
+    <li>OU depuis Séances Planifiées → bouton <strong>"🔗 Lien"</strong> sur chaque ligne</li>
+    <li>OU depuis l'espace étudiant → Mes Séances ou Emploi du Temps → bouton <strong>"Pointer"</strong></li>
+  </ol>
+
+  <h2 class="section">12.2 Évaluation de Satisfaction</h2>
+  <p><span class="url">dashboard.html?satisfaction=ID_SÉANCE</span></p>
+  <p>Formulaire d'évaluation de satisfaction pour une séance. L'utilisateur entre son prénom, choisit sa note (1 à 5 étoiles) et laisse un commentaire.</p>
+  <h4 class="step">Comment obtenir ce lien ?</h4>
+  <ol class="steps">
+    <li>Allez dans Suivi Pédagogique → Satisfactions</li>
+    <li>Dans le bloc vert en haut, cliquez sur le bouton de la séance voulue (<strong>🔗 JJ/MM/AAAA — Sujet</strong>)</li>
+    <li>Le lien est copié — envoyez-le aux étudiants après chaque cours</li>
+  </ol>
+
+  <h2 class="section">12.3 Espace Marketing</h2>
+  <p><span class="url">dashboard.html?marketing=1</span></p>
+  <p>Page vitrine complète de l'académie (présentation, formations, tarifs, contacts). Idéale pour les prospects qui veulent s'informer avant de s'inscrire.</p>
+
+  <h2 class="section">12.4 Espace Client (Formulaire de contact)</h2>
+  <p><span class="url">dashboard.html?client=1</span></p>
+  <p>Formulaire simple pour qu'un prospect envoie une demande d'information. La demande atterrit directement dans l'Espace Client de l'admin.</p>
+
+  <h2 class="section">12.5 Test de Placement</h2>
+  <p><span class="url">dashboard.html?placement=1</span></p>
+  <p>Test de niveau gratuit couvrant toutes les compétences en anglais. Résultat instantané avec niveau CECRL recommandé. Parfait pour qualifier un prospect lors d'une séance découverte.</p>
+
+  <h2 class="section">12.6 Évaluation en ligne partagée</h2>
+  <p><span class="url">dashboard.html?eval_id=ID</span></p>
+  <p>Fiche d'évaluation spécifique à un étudiant ou un groupe, partagée par le formateur.</p>
+
+  <h2 class="section">12.7 Test d'Entraînement</h2>
+  <p><span class="url">dashboard.html?test_id=ID</span></p>
+  <p>Test de pratique spécifique créé dans Activités Pédagogiques. Résultat avec score et corrections détaillées.</p>
+
+  <hr/>
+  <table>
+    <thead><tr><th>Lien public</th><th>Créé depuis</th><th>Durée de validité</th></tr></thead>
+    <tbody>
+      <tr><td><span class="url">?pointage=</span></td><td>Feuille de séance (après save)</td><td>Durée de la séance</td></tr>
+      <tr><td><span class="url">?satisfaction=</span></td><td>Satisfactions → boutons de copie</td><td>Illimité</td></tr>
+      <tr><td><span class="url">?marketing=1</span></td><td>Liens & Contacts marketing</td><td>Illimité</td></tr>
+      <tr><td><span class="url">?client=1</span></td><td>Liens & Contacts marketing / Espace Client</td><td>Illimité</td></tr>
+      <tr><td><span class="url">?placement=1</span></td><td>Liens & Contacts marketing</td><td>Illimité</td></tr>
+      <tr><td><span class="url">?eval_id=</span></td><td>Activités Pédagogiques → Évaluations</td><td>Illimité</td></tr>
+      <tr><td><span class="url">?test_id=</span></td><td>Activités Pédagogiques → Tests</td><td>Illimité</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 13 — PARAMÈTRES SYSTÈME
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch13">
+  <div class="page-header">
+    <div class="page-icon">🔧</div>
+    <div>
+      <div class="page-title">13. Paramètres Système</div>
+      <div class="page-desc">Configuration de l'académie, utilisateurs, rôles, sécurité, données</div>
+    </div>
+  </div>
+
+  <div class="danger">🔒 Module réservé exclusivement à l'<span class="role r-admin">Admin</span>. Toute modification ici affecte l'ensemble de la plateforme.</div>
+
+  <h2 class="section">13.1 Onglet Académie</h2>
+  <p>Configuration générale de l'établissement :</p>
+  <ul>
+    <li>Nom de l'académie et slogan</li>
+    <li>Ville, pays, adresse</li>
+    <li>Email et téléphone de contact</li>
+    <li>Lien Google Meet officiel pour les séances découvertes</li>
+  </ul>
+  <div class="tip">💡 Ces informations apparaissent automatiquement dans tous les PDF générés (en-têtes, pieds de page).</div>
+
+  <h2 class="section">13.2 Onglet Utilisateurs <span style="background:#C8960C22;color:#A07008;border:1px solid #C8960C;border-radius:6px;padding:1px 8px;font-size:.72rem;font-weight:700">MIS À JOUR</span></h2>
+  <p>Gestion des comptes d'accès à la plateforme. <strong>L'admin est le seul à pouvoir créer des comptes utilisateurs.</strong></p>
+
+  <h4 class="step">Créer un utilisateur — 2 modes disponibles</h4>
+
+  <table>
+    <thead><tr><th>Mode</th><th>Fonctionnement</th><th>Quand l'utiliser</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>⚡ Accès immédiat</strong><br/><span style="font-size:.75rem;color:#A07008">(recommandé)</span></td>
+        <td>Le compte est actif immédiatement sans confirmation par email. L'admin partage directement email + mot de passe à l'utilisateur.</td>
+        <td>Pour les étudiants sans email professionnel, les formateurs qui commencent immédiatement, ou toute situation nécessitant un accès rapide.</td>
+      </tr>
+      <tr>
+        <td><strong>📧 Avec confirmation email</strong></td>
+        <td>Supabase envoie un lien de confirmation à l'email renseigné. L'utilisateur doit cliquer le lien avant de pouvoir se connecter.</td>
+        <td>Pour les utilisateurs avec email professionnel valide, ou quand la vérification d'identité par email est souhaitée.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 class="step">Étapes de création</h4>
+  <ol class="steps">
+    <li>Dans Paramètres → Utilisateurs, cliquez <strong>"➕ Créer"</strong></li>
+    <li>Choisissez le mode : <strong>Accès immédiat</strong> ou <strong>Avec confirmation email</strong> (sélecteur radio)</li>
+    <li>Renseignez : prénom, nom, email, rôle (Admin / Formateur / Secrétaire / Étudiant)</li>
+    <li>Définissez un mot de passe temporaire</li>
+    <li>Cliquez <strong>"➕ Créer"</strong> — le compte est créé et apparaît dans la liste</li>
+    <li>En mode <em>Accès immédiat</em> : communiquez l'email et le mot de passe à l'utilisateur via WhatsApp</li>
+    <li>En mode <em>Email</em> : l'utilisateur reçoit un lien de confirmation — il doit cliquer pour activer son compte</li>
+  </ol>
+
+  <div class="warn">⚠️ En mode <strong>Avec confirmation email</strong>, Supabase (plan gratuit) limite à 3-4 emails par heure. Privilégiez le mode <strong>Accès immédiat</strong> pour les inscriptions groupées.</div>
+  <div class="danger">🔒 Seul l'admin peut créer des comptes. Ni les formateurs, ni les étudiants n'ont accès à cette fonctionnalité.</div>
+
+  <h4 class="step">Gestion des comptes existants</h4>
+  <ul>
+    <li><strong>✅ Activer / 🚫 Désactiver</strong> : un compte désactivé ne peut plus se connecter</li>
+    <li><strong>Changer le rôle</strong> : menu déroulant sur la ligne — prend effet à la prochaine connexion</li>
+    <li><strong>✏️ Modifier</strong> : édite les informations du compte</li>
+    <li><strong>🗑️ Supprimer</strong> : supprime définitivement (irréversible)</li>
+  </ul>
+
+  <h2 class="section">13.3 Onglet Rôles & Accès</h2>
+  <p>Création de rôles personnalisés au-delà des 3 rôles standards :</p>
+  <ul>
+    <li>Créez un rôle "Secrétaire", "Directeur", "Assistant"…</li>
+    <li>Définissez les modules accessibles pour chaque rôle personnalisé</li>
+    <li>Assignez le rôle à un utilisateur depuis l'onglet Utilisateurs</li>
+  </ul>
+
+  <h2 class="section">13.4 Onglet Matrice d'Accès</h2>
+  <p>Tableau croisé rôles × modules permettant de visualiser et modifier précisément quels rôles ont accès à quels modules. Cochez/décochez les cases pour personnaliser l'accès.</p>
+
+  <h2 class="section">13.5 Onglet Sécurité</h2>
+  <ul>
+    <li>Historique des connexions (IP, date, email)</li>
+    <li>Forcer la déconnexion d'une session active</li>
+    <li>Politique de mot de passe</li>
+  </ul>
+
+  <h2 class="section">13.6 Onglet Données</h2>
+  <ul>
+    <li><strong>Export CSV</strong> : exportez les étudiants, paiements, présences en format tableur</li>
+    <li><strong>Sauvegarde</strong> : génère un export JSON complet de la base</li>
+    <li><strong>Nettoyage</strong> : supprime les données archivées anciennes (avec confirmation)</li>
+  </ul>
+
+  <h2 class="section">13.7 Onglet Système</h2>
+  <ul>
+    <li>Version de la plateforme</li>
+    <li>Statut de la connexion Supabase (vert = connecté)</li>
+    <li>Vider le cache local du navigateur</li>
+    <li>Informations sur la base de données (tables, nombre de lignes)</li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 14 — FAQ & DÉPANNAGE
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch14">
+  <div class="page-header">
+    <div class="page-icon">❓</div>
+    <div>
+      <div class="page-title">14. Questions fréquentes & Dépannage</div>
+      <div class="page-desc">Solutions aux problèmes les plus courants</div>
+    </div>
+  </div>
+
+  <h2 class="section">Connexion & Accès</h2>
+
+  <h3 class="sub">❓ Je ne peux pas me connecter</h3>
+  <ul>
+    <li>Vérifiez votre email et mot de passe (le bouton "Voir" permet d'afficher les caractères)</li>
+    <li>Vérifiez votre connexion internet</li>
+    <li>Si le message est "Email ou mot de passe incorrect", contactez l'admin pour réinitialiser</li>
+    <li>Si votre compte a été <strong>suspendu</strong>, un message spécifique s'affiche — contactez ISSA BAMBA</li>
+  </ul>
+
+  <h3 class="sub">❓ Je vois "Rôle non défini" après connexion</h3>
+  <p>Votre rôle n'a pas été configuré. L'admin doit aller dans Supabase → SQL Editor et exécuter :</p>
+  <div style="background:#0D1B2A;color:#4AE090;font-family:monospace;font-size:.78rem;padding:14px;border-radius:8px;margin:10px 0;line-height:1.6">
+    UPDATE auth.users<br/>
+    SET raw_app_meta_data = raw_app_meta_data || '{"role":"formateur","nom":"NOM","prenom":"Prenom"}'::jsonb<br/>
+    WHERE email = 'email@exemple.com';
+  </div>
+
+  <h3 class="sub">❓ Le bouton de création d'utilisateur ne fonctionne pas (limite d'email)</h3>
+  <p>Supabase (plan gratuit) limite à 3-4 emails d'invitation par heure. Solutions :</p>
+  <ul>
+    <li>Attendez 1 heure et réessayez</li>
+    <li>OU désactivez la confirmation d'email : Supabase → Authentication → Email Auth → désactivez "Confirm email"</li>
+  </ul>
+
+  <h2 class="section">Pédagogie & Séances</h2>
+
+  <h3 class="sub">❓ Le lien de pointage ne fonctionne pas</h3>
+  <ul>
+    <li>Le lien doit être copié <strong>après</strong> avoir sauvegardé la séance (bouton "💾 Créer la Séance")</li>
+    <li>Vérifiez que l'ID de séance dans le lien est bien un nombre entier</li>
+    <li>Le pointage fonctionne sans connexion — l'étudiant n'a pas besoin de compte</li>
+  </ul>
+
+  <h3 class="sub">❓ Une classe n'est pas modifiable</h3>
+  <p>Depuis la migration v19, les politiques RLS Supabase ont été mises à jour. Si les modifications ne s'enregistrent pas, vérifiez que vous êtes bien connecté en tant qu'admin.</p>
+
+  <h3 class="sub">❓ Les présences ne s'enregistrent pas dans la feuille de séance</h3>
+  <p>Assurez-vous que les étudiants sont bien dans la liste avant de cliquer "Créer". Si vous ajoutez des étudiants manuellement, vérifiez que leur numéro de dossier est correct.</p>
+
+  <h2 class="section">Finance</h2>
+
+  <h3 class="sub">❓ Les salaires n'apparaissent pas dans les dépenses Finance</h3>
+  <p>La synchronisation est automatique : quand vous générez une fiche de paie dans RH → Fiches de Paie, une dépense "Salaires [En attente]" est créée. Si elle n'apparaît pas, vérifiez dans Finance → Dépenses et cherchez le libellé du formateur.</p>
+
+  <h3 class="sub">❓ Je ne vois pas l'onglet "Finances Perso"</h3>
+  <p>Cet onglet est réservé à l'admin (<span class="role r-admin">Admin</span> uniquement). Les formateurs et étudiants ne le voient pas. C'est normal et intentionnel.</p>
+
+  <h2 class="section">Documents PDF</h2>
+
+  <h3 class="sub">❓ Le PDF ne s'imprime pas / la fenêtre ne s'ouvre pas</h3>
+  <ul>
+    <li>Vérifiez que votre navigateur ne bloque pas les popups — autorisez les popups pour ce site</li>
+    <li>Sur Chrome : barre d'adresse → icône popup bloqué → "Toujours autoriser les popups"</li>
+    <li>Sur Firefox : Outils → Options → Contenu → Exceptions popups</li>
+  </ul>
+
+  <h3 class="sub">❓ Le lien de pointage n'apparaît pas sur la feuille imprimée</h3>
+  <p>Le lien n'est disponible qu'<strong>après</strong> l'enregistrement de la séance. Imprimez en cliquant sur "🖨️ Imprimer" <strong>après</strong> avoir cliqué sur "💾 Créer la Séance".</p>
+
+  <h2 class="section">Données & Base de données</h2>
+
+  <h3 class="sub">❓ Les données ne se chargent pas (écran blanc ou "Chargement…")</h3>
+  <ul>
+    <li>Vérifiez votre connexion internet</li>
+    <li>Rechargez la page (F5)</li>
+    <li>Vérifiez que le service Supabase n'est pas en maintenance (status.supabase.com)</li>
+    <li>Déconnectez-vous et reconnectez-vous</li>
+  </ul>
+
+  <h2 class="section">Espace Étudiant</h2>
+
+  <h3 class="sub">❓ Mon numéro de dossier n'apparaît pas dans la sidebar / Mon Espace</h3>
+  <ul>
+    <li>Vérifiez que l'email de votre compte de connexion est <strong>identique</strong> à celui enregistré dans votre dossier étudiant</li>
+    <li>Signalez à l'admin l'email exact de votre compte — il pourra corriger le dossier</li>
+    <li>L'admin peut vérifier dans Étudiants → dossier → champ Email</li>
+  </ul>
+
+  <h3 class="sub">❓ L'emploi du temps est vide ou ne correspond pas à mes séances</h3>
+  <ul>
+    <li>Vérifiez que vous êtes bien <strong>inscrit à une classe</strong> dans votre dossier étudiant (admin → Dossier → Classes)</li>
+    <li>Si les séances n'ont pas encore été planifiées par le formateur, l'emploi du temps sera vide</li>
+    <li>Contactez l'admin pour vérifier l'inscription à la classe</li>
+  </ul>
+
+  <h3 class="sub">❓ Je ne vois aucun message dans "Messages"</h3>
+  <ul>
+    <li>La boîte est vide si l'admin ou le formateur n'a pas encore envoyé de message</li>
+    <li>Vous pouvez envoyer le premier message vous-même via <strong>"✏️ Nouveau message"</strong></li>
+    <li>Les messages reçus (onglet "Reçus") et envoyés (onglet "Envoyés") sont séparés</li>
+  </ul>
+
+  <h3 class="sub">❓ Après le pointage, je ne suis pas redirigé vers Google Meet</h3>
+  <ul>
+    <li>La redirection n'a lieu que si un lien Google Meet est renseigné dans la séance</li>
+    <li>Si le lien est absent, contactez votre formateur ou l'admin pour qu'il renseigne le lien Meet dans la feuille de séance</li>
+    <li>Vous pouvez aussi accéder au Meet depuis <strong>Mes Séances → bouton "📹 Rejoindre"</strong></li>
+  </ul>
+
+  <h3 class="sub">❓ Mes notes ne s'affichent pas dans "Mes Notes & Bulletin"</h3>
+  <ul>
+    <li>Les notes sont saisies par l'admin ou le formateur dans Suivi Pédagogique → Évaluations</li>
+    <li>Vérifiez que votre email de connexion correspond exactement au dossier étudiant</li>
+    <li>Si votre dossier n'est pas lié, un message d'explication s'affiche avec votre email — communiquez-le à l'admin</li>
+  </ul>
+
+  <h2 class="section">Navigation & Interface</h2>
+
+  <h3 class="sub">❓ La barre de recherche ne trouve pas un onglet</h3>
+  <ul>
+    <li>La recherche porte sur les onglets accessibles à votre rôle uniquement</li>
+    <li>Essayez des mots-clés différents : "Notes" → "Bulletin" / "EDT" → "Emploi" / "Cours" → "Ressources"</li>
+    <li>Les accents ne sont pas obligatoires dans la recherche</li>
+  </ul>
+
+  <h3 class="sub">❓ L'espace Paramètres affiche une erreur ou est vide</h3>
+  <ul>
+    <li>Paramètres est réservé aux <span class="role r-admin">Admin</span> uniquement</li>
+    <li>Si vous êtes admin et que la page reste blanche, un message d'erreur s'affiche avec le détail — cliquez "🔄 Réessayer"</li>
+    <li>Vérifiez que votre connexion Supabase est active (onglet Système dans Paramètres)</li>
+  </ul>
+
+  <hr/>
+  <div style="text-align:center;padding:28px;background:linear-gradient(135deg,#0D1B2A,#1C2840);border-radius:14px;margin-top:20px">
+    <div style="font-size:1.2rem;font-weight:900;color:#E8B84B;margin-bottom:8px">AGTM Digital Academy</div>
+    <div style="color:#8AAAC0;font-size:.85rem;margin-bottom:6px">Language &amp; Professional Development · Abidjan, Côte d'Ivoire 🇨🇮</div>
+    <div style="color:#5A7090;font-size:.78rem">Guide d'utilisation Premium v2026 Premium v2026 v2026 · Propriété de <strong style="color:#C8960C">ISSA BAMBA</strong> · © 2026</div>
+    <div style="margin-top:14px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <span style="background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.3);border-radius:8px;padding:6px 16px;font-size:.75rem;color:#C8960C;font-weight:700">📘 Guide Complet v2026.3</span>
+      <span style="background:rgba(74,224,144,.1);border:1px solid rgba(74,224,144,.2);border-radius:8px;padding:6px 16px;font-size:.75rem;color:#4AE090;font-weight:700">✅ 33+ modules documentés</span>
+      <span style="background:rgba(74,144,217,.1);border:1px solid rgba(74,144,217,.2);border-radius:8px;padding:6px 16px;font-size:.75rem;color:#4A90D9;font-weight:700">🔒 Sécurisé par Supabase RLS</span>
+      <span style="background:rgba(155,89,182,.1);border:1px solid rgba(155,89,182,.2);border-radius:8px;padding:6px 16px;font-size:.75rem;color:#9B59B6;font-weight:700">🤖 Assistant IA intégré</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 15 — ASSISTANT IA AGTM AI
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch15">
+  <div class="page-header" style="background:linear-gradient(135deg,#0D1B2A,#1A0E2A)">
+    <div class="page-icon">🤖</div>
+    <div>
+      <div class="page-title" style="color:#BDC3E7">15. Assistant IA — AGTM AI</div>
+      <div class="page-desc">Assistante pédagogique personnelle propulsée par Claude (Anthropic)</div>
+    </div>
+  </div>
+
+  <h2 class="section">15.1 Présentation</h2>
+  <p>AGTM AI est l'assistante pédagogique intelligente intégrée à la plateforme AGTM Digital Academy. Elle est accessible depuis l'onglet <strong>🤖 Assistant IA</strong> du tableau de bord, pour tous les rôles (étudiants, formateurs, secrétaire, direction, admin).</p>
+  <p>L'IA est propulsée par les modèles <strong>Claude d'Anthropic</strong> (les mêmes que Claude.ai) et adaptée au contexte pédagogique de l'AGTM grâce à une base de connaissances interne (programme, FAQ, règles de grammaire, etc.).</p>
+
+  <div class="tip">
+    <strong>Langue :</strong> L'IA répond <strong>toujours en français</strong> par défaut, sauf si vous lui écrivez en anglais. Pour les exercices d'anglais, elle fait la correction en anglais puis explique en français.
+  </div>
+
+  <h2 class="section">15.2 Les 3 tiers d'abonnement IA</h2>
+  <table>
+    <thead>
+      <tr><th>Tier</th><th>Modèle IA</th><th>Prix</th><th>Fonctionnalités incluses</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#4A90D9">🔵 Essentiel</strong></td>
+        <td>Standard (Haiku)</td>
+        <td>Inclus dans toute inscription</td>
+        <td>Questions pédagogiques, aide à la grammaire, FAQ école, explications de cours</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#C8960C">🟡 Recommandé</strong></td>
+        <td>Avancé (Sonnet)</td>
+        <td>+2 000 FCFA/mois</td>
+        <td>Tout Essentiel + exercices personnalisés par niveau, préparation TOEIC/TOEFL, historique des échanges, corrections détaillées</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#9B59B6">🟣 Premium</strong></td>
+        <td>Expert (Opus)</td>
+        <td>+4 000 FCFA/mois</td>
+        <td>Tout Recommandé + analyse avancée, simulations d'entretien en anglais, réponses plus longues et approfondies, support prioritaire 24h</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="info">Le tier par défaut est <strong>Essentiel</strong>. Il peut être modifié par l'administrateur depuis deux endroits : <strong>Administration → Gestion des Utilisateurs</strong> (via le bouton 🤖 IA dans la fiche de chaque utilisateur) ou depuis <strong>Config IA → Gestion des utilisateurs</strong>.</div>
+
+  <h2 class="section">15.3 Utilisation — Espace Étudiant</h2>
+
+  <h3 class="sub">Accéder à l'Assistant IA</h3>
+  <ol class="steps">
+    <li>Connectez-vous à votre tableau de bord étudiant</li>
+    <li>Cliquez sur <strong>🤖 Assistant IA</strong> dans le menu latéral</li>
+    <li>Votre tier actuel et le nombre de messages envoyés ce mois sont affichés en haut</li>
+    <li>Tapez votre question dans la zone de saisie et appuyez sur <strong>Entrée</strong> (ou cliquez <strong>➤ Envoyer</strong>)</li>
+  </ol>
+
+  <h3 class="sub">Exemples de questions utiles</h3>
+  <ul>
+    <li>« Explique-moi la différence entre <em>present perfect</em> et <em>past simple</em> »</li>
+    <li>« Fais-moi un exercice de vocabulaire niveau B1 »</li>
+    <li>« Corrige ce texte : <em>[ton texte en anglais]</em> »</li>
+    <li>« Comment se préparer au TOEIC en 3 mois ? »</li>
+    <li>« Quelles sont les dates des prochains examens à l'AGTM ? »</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Suggestions rapides :</strong> Si c'est votre première conversation, des boutons de suggestions apparaissent. Cliquez dessus pour démarrer rapidement.
+  </div>
+
+  <h3 class="sub">Nouvelle conversation</h3>
+  <p>Cliquez sur <strong>🔄 Nouvelle conv.</strong> pour effacer l'historique de la session en cours et repartir de zéro. L'historique archivé en base de données est conservé côté admin.</p>
+
+  <h2 class="section">15.4 Demander un upgrade de tier</h2>
+
+  <h3 class="sub">Depuis Mon Espace (tableau de bord)</h3>
+  <p>La carte <strong>Assistant IA AGTM</strong> en haut de votre tableau de bord affiche votre tier actuel. Si vous n'êtes pas sur le tier Premium, un bouton <strong>⬆ Upgrader</strong> est visible.</p>
+  <ol class="steps">
+    <li>Cliquez sur <strong>⬆ Upgrader</strong> dans la carte IA de votre tableau de bord</li>
+    <li>Une demande automatique est envoyée à l'administration par messagerie interne</li>
+    <li>L'administrateur traite la demande et modifie votre tier</li>
+    <li>Vous pouvez aussi cliquer sur <strong>⬆ Upgrader</strong> directement dans l'en-tête de l'espace Chat IA</li>
+  </ol>
+
+  <div class="warn">Le changement de tier est effectué par l'administrateur uniquement. Contactez l'administration si vous ne recevez pas de confirmation sous 24h.</div>
+
+  <h2 class="section">15.5 Utilisation — Espace Formateur</h2>
+  <p>Les formateurs ont accès à l'IA avec un prompt spécialisé pour :</p>
+  <ul>
+    <li>Préparer des cours, séquences pédagogiques, exercices</li>
+    <li>Générer du matériel adapté aux niveaux CECRL (A1→C1)</li>
+    <li>Rédiger des évaluations, barèmes, corrections type</li>
+    <li>Aider à rédiger les rapports de séances</li>
+  </ul>
+
+  <h2 class="section">15.6 Administration IA — Espace Admin</h2>
+  <p>L'administrateur dispose de deux points d'accès pour la gestion des tiers IA :</p>
+
+  <h3 class="sub">Depuis la Gestion des Utilisateurs</h3>
+  <p>Dans <strong>Administration → 👥 Utilisateurs</strong>, chaque fiche utilisateur affiche maintenant un sélecteur de tier IA :</p>
+  <ol class="steps">
+    <li>Localisez l'utilisateur dans la liste</li>
+    <li>Dans la colonne Actions, sélectionnez le tier souhaité dans le menu déroulant (🔵 Essentiel / 🟡 Recommandé / 🟣 Premium)</li>
+    <li>Cliquez sur <strong>🤖 IA</strong> pour appliquer</li>
+  </ol>
+
+  <h3 class="sub">Panneau Config IA — Onglet 1 : Configuration</h3>
+  <ul>
+    <li>Activer / désactiver globalement le service IA</li>
+    <li>Définir le modèle Claude pour chaque tier (Essentiel / Recommandé / Premium)</li>
+    <li>Définir le nombre max de tokens par réponse</li>
+    <li>Modifier le tier IA de n'importe quel utilisateur</li>
+  </ul>
+
+  <h3 class="sub">Onglet 2 : Instructions</h3>
+  <ul>
+    <li>Saisir des instructions spéciales qui s'ajoutent à toutes les conversations IA</li>
+    <li>Exemple : « Ne mentionnez pas les tarifs sans confirmation admin » ou ajouter des informations ponctuelles sur l'école</li>
+    <li>Ces instructions sont injectées en fin de prompt système pour tous les rôles</li>
+  </ul>
+
+  <h3 class="sub">Onglet 3 : Base de connaissances</h3>
+  <ul>
+    <li>Gérer les fiches de connaissance utilisées par l'IA (programme, FAQ, grammaire, etc.)</li>
+    <li>Ajouter de nouvelles fiches par catégorie et niveau</li>
+    <li>Activer / désactiver des fiches</li>
+    <li>Modifier la priorité d'affichage (les fiches prioritaires sont injectées en premier)</li>
+  </ul>
+
+  <div class="tip">
+    <strong>Sécurité :</strong> Toutes les conversations IA sont authentifiées par JWT. L'historique est stocké dans la table <code>ai_conversations</code> avec isolation par utilisateur (RLS). L'administrateur peut voir toutes les conversations, les utilisateurs ne voient que les leurs.
+  </div>
+
+  <h2 class="section">15.7 Dépannage IA</h2>
+
+  <h3 class="sub">❓ Le message "Erreur service IA" s'affiche</h3>
+  <ul>
+    <li>Vérifiez que votre connexion internet est active</li>
+    <li>Le service IA peut être temporairement désactivé par l'admin (message "service temporairement désactivé")</li>
+    <li>Si le problème persiste, contactez l'administration — la clé API Anthropic doit avoir un solde suffisant</li>
+  </ul>
+
+  <h3 class="sub">❓ L'IA ne répond pas en français</h3>
+  <ul>
+    <li>Si vous écrivez en anglais, l'IA répond en anglais (comportement normal)</li>
+    <li>Écrivez votre question en français pour obtenir une réponse en français</li>
+  </ul>
+
+  <h3 class="sub">❓ La réponse est coupée ou très courte</h3>
+  <ul>
+    <li>La longueur des réponses est limitée par le paramètre <strong>Max tokens</strong> dans Config IA</li>
+    <li>L'administrateur peut augmenter cette valeur (recommandé : 1024 à 2048)</li>
+    <li>Le tier Essentiel (Haiku) génère des réponses plus courtes que Sonnet ou Opus</li>
+  </ul>
+</div>
+
+<div class="page" id="ch16">
+  <div class="page-header" style="background:linear-gradient(135deg,#0D1B2A,#0A2040)">
+    <div class="page-icon">⚡</div>
+    <div>
+      <div class="page-title" style="color:#4A90D9">16. Technologie & Architecture</div>
+      <div class="page-desc">Stack technique, services utilisés, sécurité et infrastructure</div>
+    </div>
+  </div>
+
+  <h2 class="section">16.1 Vue d'ensemble de la stack</h2>
+  <p>AGTM Digital Academy est une <strong>application web progressive (PWA)</strong> 100% cloud, sans serveur à gérer. Elle repose sur 4 technologies principales :</p>
+  <table>
+    <thead><tr><th>Technologie</th><th>Rôle</th><th>Tier utilisé</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#3ECF8E">Supabase</strong></td>
+        <td>Base de données PostgreSQL, authentification JWT, stockage, RLS (Row-Level Security)</td>
+        <td>Free / Pro</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#00AD9F">Netlify</strong></td>
+        <td>Hébergement statique (HTML/CSS/JS), fonctions serverless (ai-chat.js, etc.), CDN mondial</td>
+        <td>Free / Starter</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#9B59B6">Claude (Anthropic)</strong></td>
+        <td>Moteur de l'Assistant IA — 3 modèles selon le tier : Haiku (Essentiel), Sonnet (Recommandé), Opus (Premium)</td>
+        <td>API à la consommation</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#C8960C">HTML / JS / TailwindCSS</strong></td>
+        <td>Interface utilisateur — Single Page Application sans framework lourd, Tailwind pour le style</td>
+        <td>Open source</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section">16.2 Supabase — Base de données & Auth</h2>
+  <p>Supabase fournit un backend PostgreSQL entièrement géré :</p>
+  <ul>
+    <li><strong>Authentification JWT</strong> : chaque utilisateur possède une session sécurisée côté serveur</li>
+    <li><strong>Row-Level Security (RLS)</strong> : chaque utilisateur ne peut accéder qu'à ses propres données. Un étudiant ne peut jamais lire les données d'un autre</li>
+    <li><strong>Tables principales</strong> : utilisateurs, étudiants, personnel, classes, seances, presences, finances, ai_config, ai_knowledge, ai_conversations, marketing_config</li>
+    <li><strong>Realtime</strong> : les mises à jour sont propagées en temps réel dans l'interface</li>
+  </ul>
+
+  <h2 class="section">16.3 Netlify — Hébergement & Fonctions serverless</h2>
+  <p>Netlify héberge les fichiers statiques (dashboard.html, vitrine.html, index.html, sw.js…) et expose des fonctions serverless dans <code>netlify/functions/</code> :</p>
+  <ul>
+    <li><strong>ai-chat.js</strong> : proxy sécurisé entre le navigateur et l'API Claude — la clé API Anthropic n'est jamais exposée au client</li>
+    <li><strong>CDN mondial</strong> : les pages se chargent rapidement depuis n'importe quel pays grâce au réseau de distribution Netlify</li>
+  </ul>
+
+  <h2 class="section">16.4 Claude (Anthropic) — Intelligence Artificielle</h2>
+  <p>L'Assistant IA AGTM est propulsé par les modèles de langage Claude d'Anthropic, les mêmes que ceux utilisés sur <em>claude.ai</em> :</p>
+  <table>
+    <thead><tr><th>Tier utilisateur</th><th>Modèle Claude</th><th>Caractéristiques</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#4A90D9">🔵 Essentiel</strong></td>
+        <td>Claude Haiku</td>
+        <td>Réponses rapides, questions courantes, FAQ, aide grammaticale</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#C8960C">🟡 Recommandé</strong></td>
+        <td>Claude Sonnet</td>
+        <td>Réponses plus détaillées, exercices personnalisés, préparation certifications</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#9B59B6">🟣 Premium</strong></td>
+        <td>Claude Opus</td>
+        <td>Analyse avancée, réponses approfondies, simulations d'entretien, support prioritaire</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>L'IA est enrichie d'une <strong>base de connaissances interne</strong> (programme AGTM, grammaire, FAQ) et peut effectuer des <strong>recherches web en temps réel</strong> (via Wikipedia et Brave Search) pour répondre à des questions d'actualité.</p>
+  <div class="tip">
+    <strong>Style de réponse :</strong> L'IA est configurée pour répondre de façon naturelle et conversationnelle, sans mise en forme markdown (pas d'astérisques, pas de tirets de liste). Les réponses sont fluides comme dans une vraie discussion.
+  </div>
+
+  <h2 class="section">16.5 PWA — Application installable</h2>
+  <p>La plateforme est une <strong>Progressive Web App (PWA)</strong>, ce qui signifie :</p>
+  <ul>
+    <li><strong>Installable</strong> sur Android, iOS et PC (Chrome, Edge, Safari) sans passer par un App Store</li>
+    <li><strong>Mode hors-ligne</strong> : les pages déjà visitées sont accessibles sans connexion grâce au Service Worker</li>
+    <li><strong>Mise à jour automatique</strong> : une bannière s'affiche quand une nouvelle version est disponible</li>
+    <li><strong>Notifications push</strong> : infrastructure en place pour des notifications futures (séances, rappels)</li>
+  </ul>
+
+  <h2 class="section">16.6 Sécurité</h2>
+  <ul>
+    <li>Authentification JWT avec sessions côté serveur (Supabase Auth)</li>
+    <li>RLS PostgreSQL : isolation des données par utilisateur au niveau base de données</li>
+    <li>Clés API jamais exposées côté client (via proxy Netlify Function)</li>
+    <li>HTTPS obligatoire (fourni par Netlify)</li>
+    <li>Système de rôles et de permissions configurable par l'administrateur</li>
+  </ul>
+  <div class="info">Pour consulter le statut des services : <strong>status.supabase.com</strong> · <strong>www.netlifystatus.com</strong></div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 17 — ENGLISH CORNER & CLASSE VIRTUELLE
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch17">
+  <div class="page-header" style="background:linear-gradient(135deg,#0D1B2A,#0A2A1A)">
+    <div class="page-icon">🌍</div>
+    <div>
+      <div class="page-title" style="color:#4AE090">17. English Corner & Classe Virtuelle</div>
+      <div class="page-desc">Espace d'apprentissage autonome, vidéos interactives, classe synchronisée, quiz automatiques, enregistrement</div>
+    </div>
+  </div>
+
+  <h2 class="section">17.1 Qu'est-ce que l'English Corner ?</h2>
+  <p>L'English Corner est un <strong>espace d'apprentissage autonome et interactif</strong> accessible depuis la plateforme AGTM. Il regroupe des ressources pédagogiques organisées par compétence et niveau CECRL (A1 → C2), ainsi qu'une salle de classe virtuelle synchronisée.</p>
+  <ul>
+    <li>Accessible <strong>sans connexion obligatoire</strong> pour les ressources publiques</li>
+    <li>Contenu organisé en <strong>8 sections</strong> : Accueil, Vidéos, Podcasts, Grammaire, Vocabulaire, Écriture, Écoute, Lecture</li>
+    <li>Plus de <strong>5 playlists YouTube curatées</strong> par niveau CEFR (BBC Learning English, TED, etc.)</li>
+    <li>Section <strong>Classe Virtuelle</strong> : synchronisation en temps réel entre professeur et apprenants</li>
+  </ul>
+  <div class="tip">💡 Accès rapide : depuis le tableau de bord étudiant → menu latéral → <strong>English Corner</strong>, ou depuis la vitrine publique.</div>
+
+  <h2 class="section">17.2 Navigation dans l'English Corner</h2>
+  <p>La barre de navigation latérale de l'English Corner contient :</p>
+  <table>
+    <thead><tr><th>Section</th><th>Contenu</th></tr></thead>
+    <tbody>
+      <tr><td><strong>🏠 Accueil</strong></td><td>Vue d'ensemble, ressources recommandées selon le niveau</td></tr>
+      <tr><td><strong>🎬 Vidéos</strong></td><td>Playlists YouTube par niveau CEFR (A1 → C2) — BBC Learning English, TED, etc.</td></tr>
+      <tr><td><strong>🎧 Podcasts</strong></td><td>Épisodes audio classés par niveau et thématique</td></tr>
+      <tr><td><strong>📚 Grammaire</strong></td><td>Règles, exercices et quiz de grammaire anglaise</td></tr>
+      <tr><td><strong>🔤 Vocabulaire</strong></td><td>Listes de mots, flashcards, exercices de mémorisation</td></tr>
+      <tr><td><strong>✍️ Écriture</strong></td><td>Exercices d'expression écrite guidée</td></tr>
+      <tr><td><strong>👂 Écoute</strong></td><td>Exercices de compréhension orale avec transcription</td></tr>
+      <tr><td><strong>📖 Lecture</strong></td><td>Textes authentiques avec questions de compréhension</td></tr>
+      <tr><td><strong>🎓 Live Class</strong></td><td>Classe Virtuelle — synchronisation YouTube en temps réel</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section">17.3 Classe Virtuelle — Synchronisation YouTube</h2>
+  <p>La <strong>Classe Virtuelle</strong> permet au professeur de contrôler un lecteur YouTube sur les appareils des apprenants en temps réel, sans partage d'écran. Chaque participant regarde et entend la vidéo localement — sans dépendre de Google Meet ou Zoom.</p>
+
+  <h3 class="sub">Comment ça fonctionne ?</h3>
+  <ul>
+    <li>Le <strong>Teacher</strong> contrôle la vidéo (play, pause, seek) — ses actions sont diffusées via Supabase Realtime</li>
+    <li>L'<strong>Élève</strong> reçoit les événements et synchronise automatiquement son propre lecteur</li>
+    <li>Chaque session est isolée par un <strong>code de session unique</strong></li>
+    <li>L'audio est lu <strong>localement sur chaque appareil</strong> — qualité optimale, zéro latence audio</li>
+  </ul>
+
+  <h4 class="step">Démarrer une session — Rôle Teacher (Professeur)</h4>
+  <ol class="steps">
+    <li>Aller dans English Corner → onglet <strong>🎓 Live Class</strong></li>
+    <li>Sélectionner le rôle <strong>"Teacher"</strong></li>
+    <li>Saisir un <strong>code de session</strong> (ex : <span class="url">AGTM-B1-LUNDI</span>) — ce code sera partagé aux élèves</li>
+    <li>Entrer l'<strong>ID YouTube</strong> de la vidéo à diffuser (11 caractères, ex : <span class="url">KOiMt65IQCA</span>)</li>
+    <li>Cliquer <strong>"Lancer la session"</strong> — le lecteur s'ouvre</li>
+    <li>Contrôler la vidéo normalement : chaque action (play/pause/avance) est synchronisée sur tous les appareils élèves connectés à ce code</li>
+  </ol>
+
+  <h4 class="step">Rejoindre une session — Rôle Student (Élève)</h4>
+  <ol class="steps">
+    <li>Aller dans English Corner → onglet <strong>🎓 Live Class</strong></li>
+    <li>Sélectionner le rôle <strong>"Student"</strong></li>
+    <li>Saisir le <strong>code de session</strong> donné par le professeur</li>
+    <li>Cliquer <strong>"Rejoindre"</strong> — le lecteur se synchronise automatiquement avec le Teacher</li>
+    <li>Si le professeur a déjà commencé, la vidéo démarre au bon timestamp</li>
+  </ol>
+
+  <div class="tip">💡 Le professeur peut aussi <strong>partager un lien direct</strong> (bouton "🔗 Partager") qui pré-remplit le code, le rôle "student" et l'ID vidéo — l'élève n'a qu'à cliquer.</div>
+  <div class="info">ℹ️ Le nombre d'élèves connectés est affiché en temps réel dans la barre de session. Chaque appareil garde son propre volume et ses propres sous-titres.</div>
+
+  <h2 class="section">17.3.1 Identification & Contrôle d'accès des apprenants</h2>
+  <p>Lorsqu'un apprenant rejoint une session Live Class, la plateforme <strong>vérifie automatiquement son identité dans la base de données</strong>. Seuls les étudiants enregistrés dans Supabase peuvent accéder à la vidéo.</p>
+  <ul>
+    <li>L'apprenant doit être <strong>connecté à son compte</strong> AGTM pour rejoindre une session</li>
+    <li>La plateforme récupère son <strong>numéro de dossier, prénom, nom et ID étudiant</strong> par vérification automatique</li>
+    <li>Si l'apprenant n'est pas enregistré dans la base, l'accès est refusé avec le message <em>"⛔ Accès refusé — non enregistré"</em></li>
+    <li>Le formateur voit la <strong>liste des participants en temps réel</strong> dans son panneau de droite</li>
+  </ul>
+  <div class="warn">⚠️ Les étudiants non encore inscrits dans Supabase doivent d'abord être créés par l'admin via Paramètres → Gestion Utilisateurs avant de pouvoir rejoindre une Live Class.</div>
+
+  <h2 class="section">17.3.2 Mode Suivi (Follow Mode)</h2>
+  <p>Par défaut, les apprenants sont en <strong>mode suivi</strong> : la vidéo se synchronise automatiquement sur les actions du formateur (play, pause, avance rapide). L'apprenant peut désactiver ce mode.</p>
+  <table>
+    <thead><tr><th>Mode</th><th>Comportement</th><th>Icône</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Suivi activé</strong> (défaut)</td><td>Toutes les actions du formateur sont appliquées automatiquement</td><td>👁 Suivi ON</td></tr>
+      <tr><td><strong>Suivi désactivé</strong></td><td>L'apprenant contrôle sa propre vidéo librement</td><td>✋ Libre</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 Un bouton semi-transparent <strong>"👁 Suivi ON / ✋ Libre"</strong> est affiché en bas à droite du lecteur. Cliquer pour basculer. En mode Libre, un rappel visuel s'affiche pour indiquer que le suivi est désactivé.</div>
+
+  <h2 class="section">17.3.3 Panneau d'évaluation — Formateur</h2>
+  <p>Le formateur dispose d'un panneau latéral <strong>d'évaluation en direct</strong> qui liste tous les participants connectés. Il peut évaluer chaque apprenant pendant ou après la séance, et les notes sont enregistrées automatiquement.</p>
+
+  <h4 class="step">Évaluer un apprenant depuis la Live Class</h4>
+  <ol class="steps">
+    <li>Dans le panneau droit de la Classe Virtuelle, cliquer sur <strong>"📝 Évaluer"</strong> à côté du nom d'un participant</li>
+    <li>Renseigner : <strong>Sujet</strong> (ex : Present Perfect), <strong>Thème</strong> optionnel, <strong>Score</strong> et <strong>Score maximum</strong>, <strong>Commentaire</strong></li>
+    <li>Cliquer <strong>"Enregistrer"</strong> — la note est sauvegardée dans Supabase (<code>live_evaluations</code> + <code>evaluations</code>)</li>
+    <li>L'apprenant reçoit immédiatement une <strong>notification de note</strong> sur son écran</li>
+    <li>L'appréciation automatique est calculée : ≥80% → <em>Très Bien</em> · ≥60% → <em>Bien</em> · ≥50% → <em>Passable</em> · &lt;50% → <em>Insuffisant</em></li>
+  </ol>
+  <div class="tip">💡 Les évaluations live sont aussi synchronisées dans l'espace étudiant → "Mes Notes" avec le type <em>"Classe Virtuelle"</em>.</div>
+
+  <h2 class="section">17.3.4 Quiz Manuel — Formateur</h2>
+  <p>En plus des quiz automatiques, le formateur peut <strong>diffuser un quiz instantané</strong> à tous les élèves connectés depuis le bouton "❓ Quiz" de la barre d'outils.</p>
+  <ol class="steps">
+    <li>Cliquer sur <strong>"❓ Quiz"</strong> dans la barre d'outils de la Classe Virtuelle</li>
+    <li>Saisir la question et les choix de réponses (jusqu'à 4 options)</li>
+    <li>Cliquer <strong>"Diffuser"</strong> — le quiz apparaît sur l'écran de tous les élèves connectés</li>
+    <li>Les résultats remontent en temps réel dans le panneau formateur</li>
+  </ol>
+
+  <h2 class="section">17.4 Quiz Triggers — Quiz automatiques pendant la vidéo</h2>
+  <p>Lorsque le lecteur atteint certains moments clés d'une vidéo, un <strong>quiz plein écran s'affiche automatiquement</strong> et suspend la lecture. L'apprenant répond, puis le cours reprend.</p>
+
+  <h3 class="sub">Pour les apprenants</h3>
+  <ol class="steps">
+    <li>La vidéo joue normalement</li>
+    <li>À un moment précis (<em>trigger_time</em> défini par l'administrateur), le lecteur se <strong>met en pause automatiquement</strong></li>
+    <li>Un quiz plein écran s'affiche : question à choix multiples (MCQ) ou question ouverte</li>
+    <li>Sélectionner la réponse → cliquer <strong>"Valider"</strong></li>
+    <li>Le résultat s'affiche avec l'explication — bouton <strong>"Continuer"</strong> pour reprendre la vidéo</li>
+  </ol>
+
+  <h3 class="sub">Types de questions disponibles</h3>
+  <ul>
+    <li><strong>MCQ</strong> (Multiple Choice Question) : 4 options, une seule bonne réponse — correction immédiate</li>
+    <li><strong>Question ouverte courte</strong> : l'apprenant rédige sa réponse, un modèle de réponse lui est montré</li>
+  </ul>
+  <div class="tip">💡 Chaque quiz est associé à une vidéo YouTube par son ID et à un niveau CEFR. Les quiz sont gérés dans la base de données Supabase (table <code>quizzes</code>) et peuvent être créés depuis le back-office admin.</div>
+
+  <h2 class="section">17.5 Outils de Capture — Screen Recording</h2>
+  <p>La barre d'outils de la Classe Virtuelle offre deux fonctions avancées :</p>
+
+  <h3 class="sub">🔴 Enregistrer un extrait (Screen Recording)</h3>
+  <ol class="steps">
+    <li>Cliquer sur <strong>"🔴 Enregistrer un extrait"</strong> dans la barre d'outils</li>
+    <li>Le navigateur demande l'autorisation de capturer l'écran — sélectionner <strong>l'onglet actuel</strong></li>
+    <li>Un point rouge clignotant (<span style="color:red">●</span>) indique que l'enregistrement est en cours</li>
+    <li>Cliquer <strong>"⏹ Arrêter"</strong> pour terminer</li>
+    <li>Le fichier <code>.webm</code> se télécharge automatiquement (nommé <code>agtm-extrait-[session]-[date].webm</code>)</li>
+  </ol>
+  <div class="info">ℹ️ L'enregistrement capture <strong>l'onglet complet avec l'audio système</strong> (son de la vidéo YouTube inclus). Compatible Chrome, Edge et Opera. Sur Firefox, l'audio système peut nécessiter une configuration supplémentaire.</div>
+  <div class="warn">⚠️ Autorisez les pop-ups et le partage d'écran dans les paramètres du navigateur si le dialogue ne s'ouvre pas.</div>
+
+  <h3 class="sub">📱 Enregistrement sur mobile (Android / Samsung / iOS)</h3>
+  <p>Sur mobile et tablette, <code>getDisplayMedia</code> n'est pas disponible dans le navigateur. La plateforme détecte automatiquement l'appareil et affiche un <strong>guide d'enregistrement natif</strong> adapté à chaque système.</p>
+  <table>
+    <thead><tr><th>Système</th><th>Comment activer le son interne</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Android (standard)</strong></td>
+        <td>Panneau de notifications → Capture d'écran → activer <em>"Sons de l'application"</em> ou <em>"Audio interne"</em> avant de démarrer</td>
+      </tr>
+      <tr>
+        <td><strong>Samsung (One UI)</strong></td>
+        <td>Raccourci capture d'écran → réglages → activer <em>"Son des médias"</em>. Sur One UI 5+ : Paramètres → Fonctions avancées → Capture vidéo d'écran → activer le son des médias</td>
+      </tr>
+      <tr>
+        <td><strong>iOS / iPadOS</strong></td>
+        <td>Réglages → Centre de contrôle → Ajouter <em>"Enregistrement d'écran"</em> → dans Centre de contrôle, appui long sur le bouton d'enregistrement → activer <em>"Micro"</em> pour capturer le son</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 Sur iOS, le son de la vidéo YouTube ne peut pas être capturé via l'enregistrement d'écran natif — utilisez AirPlay vers un Mac ou enregistrez depuis un ordinateur.</div>
+
+  <h3 class="sub">🔗 Partager ce cours (Web Share)</h3>
+  <ol class="steps">
+    <li>Cliquer sur <strong>"🔗 Partager"</strong> dans la barre d'outils</li>
+    <li>Sur mobile : le menu de partage natif du téléphone s'ouvre (WhatsApp, Email, SMS…)</li>
+    <li>Sur PC : le lien avec les paramètres de session est copié dans le presse-papiers</li>
+    <li>Le lien partagé contient le code de session, le rôle "student" et l'ID vidéo — l'élève rejoint en un clic</li>
+  </ol>
+
+  <h2 class="section">17.6 Playlists YouTube curatées (5 niveaux)</h2>
+  <p>L'English Corner propose 5 playlists prêtes à l'emploi, sélectionnées par l'équipe AGTM :</p>
+  <table>
+    <thead><tr><th>Niveau CEFR</th><th>Sources</th><th>Contenu</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A1 — Débutant</strong></td><td>BBC Learning English, EnglishClass101</td><td>Vocabulaire de base, salutations, premiers mots</td></tr>
+      <tr><td><strong>A2 — Élémentaire</strong></td><td>VOA Learning English, JenniferESL</td><td>Phrases du quotidien, présent simple, famille</td></tr>
+      <tr><td><strong>B1 — Intermédiaire</strong></td><td>BBC 6 Minute English, TED-Ed</td><td>Sujets d'actualité, Past Simple, Present Perfect</td></tr>
+      <tr><td><strong>B2 — Avancé</strong></td><td>TED Talks, BBC News, The Economist</td><td>Débats, opinions, économie, technologie</td></tr>
+      <tr><td><strong>C1/C2 — Expert</strong></td><td>TED Talks, BBC Hardtalk, academia</td><td>Conférences académiques, prise de position, nuances</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 Chaque vidéo affiche le niveau recommandé, la durée et la source. Les vidéos peuvent être filtrées par niveau depuis l'onglet <strong>Vidéos</strong> de l'English Corner.</div>
+
+  <h2 class="section">17.7 Rapports de Séance & Honoraires (Formateur)</h2>
+  <p>Les formateurs soumettent leurs rapports de séance directement depuis leur espace. L'admin et la direction pédagogique disposent d'un suivi temps réel avec génération PDF.</p>
+
+  <h3 class="sub">Soumettre un rapport de séance (Formateur)</h3>
+  <ol class="steps">
+    <li>Depuis le tableau de bord formateur → section <strong>"Rapport de Séance"</strong></li>
+    <li>Renseigner : thème abordé, objectifs atteints, exercices réalisés, progression globale</li>
+    <li>Saisir les présences : nombre de présents, absents non justifiés, absents justifiés</li>
+    <li>Cliquer <strong>"Soumettre le rapport"</strong> — les honoraires sont <strong>calculés automatiquement</strong></li>
+  </ol>
+  <div class="info">ℹ️ Le calcul des honoraires est automatique : Présent = 100% du tarif · Absent NJ = 50% du tarif · Absent Justifié = 0% (payé lors du rattrapage).</div>
+
+  <h3 class="sub">Générer le PDF d'un rapport (Admin / Formateur / Direction)</h3>
+  <ol class="steps">
+    <li>Aller dans <strong>Rapports</strong> → liste des rapports soumis</li>
+    <li>Cliquer sur <strong>"📄 PDF"</strong> à droite de la ligne souhaitée</li>
+    <li>Une fenêtre s'ouvre avec le rapport complet incluant les <strong>honoraires synchronisés</strong></li>
+    <li>Cliquer <strong>"🖨️ Imprimer / Enregistrer en PDF"</strong> — le navigateur ouvre la boîte d'impression</li>
+    <li>Choisir <strong>"Enregistrer en PDF"</strong> comme imprimante pour télécharger le fichier</li>
+  </ol>
+
+  <h3 class="sub">Suivi honoraires en temps réel</h3>
+  <p>Dans <strong>"Mes Honoraires"</strong> (espace formateur) :</p>
+  <ul>
+    <li>Tableau de toutes les séances avec montant calculé, tarif appliqué et statut de paiement</li>
+    <li>3 indicateurs en tête de page : <strong>Total validé · Payé · En attente</strong></li>
+    <li>Statuts : <em>En attente</em> → <em>Validé</em> → <em>Payé</em></li>
+  </ul>
+  <div class="tip">💡 L'admin peut valider ou marquer comme payé les honoraires depuis son espace Administration → Honoraires.</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CH 18 — ASSISTANT IA VOCAL
+     ════════════════════════════════════════════════════════════ -->
+<div class="page" id="ch18">
+  <div class="page-header">
+    <div class="page-icon">🎤</div>
+    <div>
+      <div class="page-title">18. Assistant IA Vocal</div>
+      <div class="page-desc">Reconnaissance vocale (STT), synthèse vocale (TTS) et score de prononciation</div>
+    </div>
+  </div>
+
+  <h2 class="section">18.1 Présentation</h2>
+  <p>L'assistant IA AGTM intègre un <strong>module vocal complet</strong> permettant aux apprenants de <strong>parler à la voix</strong> pour poser leurs questions, pratiquer leur speaking et recevoir les réponses lues à voix haute — en anglais ou en français.</p>
+  <ul>
+    <li><strong>STT (Speech-to-Text)</strong> : votre voix est retranscrite en texte dans la zone de saisie</li>
+    <li><strong>TTS (Text-to-Speech)</strong> : les réponses de l'IA sont lues automatiquement à voix haute</li>
+    <li><strong>Score de prononciation</strong> : pour les exercices de speaking, un score de clarté est affiché</li>
+    <li><strong>Bilingue</strong> : basculez entre l'anglais 🇬🇧 et le français 🇫🇷 en un clic</li>
+  </ul>
+  <div class="info">ℹ️ Le module vocal est disponible pour tous les rôles (étudiant, formateur, admin) depuis le menu <strong>"🤖 Assistant IA"</strong>.</div>
+
+  <h2 class="section">18.2 Boutons de la zone de saisie</h2>
+  <table>
+    <thead><tr><th>Bouton</th><th>Icône</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Microphone</strong></td><td>🎤 / ⏹</td><td>Activer/désactiver la saisie vocale. En cours : clignotement rouge</td></tr>
+      <tr><td><strong>Langue</strong></td><td>🇬🇧 / 🇫🇷</td><td>Basculer entre anglais (en-US) et français (fr-FR)</td></tr>
+      <tr><td><strong>Lecture TTS</strong></td><td>🔇 / 🔊</td><td>Activer/désactiver la lecture vocale des réponses IA</td></tr>
+      <tr><td><strong>Envoyer</strong></td><td>➤</td><td>Envoyer le message (clavier ou voix)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section">18.3 Activer la saisie vocale</h2>
+  <ol class="steps">
+    <li>Aller dans le menu <strong>"🤖 Assistant IA"</strong> du tableau de bord</li>
+    <li>Cliquer sur le bouton <strong>🎤</strong> dans la barre de saisie — autoriser l'accès au microphone si demandé</li>
+    <li>La barre bleue en haut de la zone de saisie apparaît avec le texte <em>"En écoute…"</em></li>
+    <li>Parler normalement — la transcription s'affiche en temps réel dans la zone de texte</li>
+    <li>Appuyer sur <strong>Entrée</strong> ou cliquer <strong>➤</strong> pour envoyer le message (le micro s'arrête automatiquement)</li>
+  </ol>
+  <div class="tip">💡 Le micro reste ouvert jusqu'à l'envoi — vous pouvez corriger ou compléter le texte transcrit avant d'envoyer.</div>
+  <div class="warn">⚠️ Si le navigateur ne supporte pas la Web Speech API (Firefox, anciens navigateurs), la transcription est automatiquement traitée par <strong>OpenAI Whisper</strong> — les 30 premières secondes d'audio sont envoyées à l'IA pour transcription.</div>
+
+  <h2 class="section">18.4 Activer la lecture des réponses (TTS)</h2>
+  <ol class="steps">
+    <li>Cliquer sur le bouton <strong>🔇</strong> dans la barre de saisie — il devient <strong>🔊</strong> (bleu)</li>
+    <li>Envoyer un message — la réponse de l'IA sera lue automatiquement à voix haute</li>
+    <li>Pour arrêter la lecture en cours : cliquer à nouveau sur <strong>🔊</strong> pour désactiver</li>
+  </ol>
+  <div class="info">ℹ️ La voix utilisée est sélectionnée automatiquement dans l'ordre de priorité : Google US English → Microsoft Aria → Samantha → voix système locale. La vitesse de lecture est légèrement ralentie (×0.92) pour une meilleure compréhension.</div>
+
+  <h2 class="section">18.5 Changer la langue vocale</h2>
+  <p>Cliquer sur le bouton de langue (🇬🇧 ou 🇫🇷) pour basculer entre :</p>
+  <table>
+    <thead><tr><th>Langue</th><th>Code</th><th>Usage recommandé</th></tr></thead>
+    <tbody>
+      <tr><td>🇬🇧 Anglais</td><td>en-US</td><td>Pratique du speaking, questions en anglais, préparation TOEIC/TOEFL</td></tr>
+      <tr><td>🇫🇷 Français</td><td>fr-FR</td><td>Questions administratives, aide à la grammaire, support en français</td></tr>
+    </tbody>
+  </table>
+  <div class="tip">💡 Si le micro est actif lors du changement de langue, la reconnaissance s'arrête et redémarre automatiquement dans la nouvelle langue.</div>
+
+  <h2 class="section">18.6 Score de prononciation</h2>
+  <p>Lors d'exercices de speaking guidés, un <strong>badge de clarté</strong> s'affiche pendant 4 secondes après la transcription :</p>
+  <table>
+    <thead><tr><th>Score</th><th>Badge</th><th>Interprétation</th></tr></thead>
+    <tbody>
+      <tr><td>≥ 85%</td><td><span style="color:green;font-weight:700">✅ 92%</span></td><td>Excellente prononciation — bien compris</td></tr>
+      <tr><td>60–84%</td><td><span style="color:orange;font-weight:700">⚠ 72%</span></td><td>Prononciation acceptable — quelques approximations</td></tr>
+      <tr><td>&lt; 60%</td><td><span style="color:red;font-weight:700">❌ 45%</span></td><td>Prononciation à améliorer — répéter l'exercice</td></tr>
+    </tbody>
+  </table>
+  <div class="info">ℹ️ Le score est calculé par distance de Levenshtein entre la phrase cible et la transcription vocale. Il est visible dans la barre de transcription en haut de la zone de saisie.</div>
+
+  <h2 class="section">18.7 Journal des interactions vocales</h2>
+  <p>Chaque interaction vocale est enregistrée dans la base de données (<code>voice_interactions</code>) pour le suivi pédagogique :</p>
+  <ul>
+    <li>Méthode STT utilisée (Web Speech ou Whisper)</li>
+    <li>Langue de l'interaction (en-US / fr-FR)</li>
+    <li>Transcription envoyée à l'IA</li>
+    <li>Score de prononciation (si exercice)</li>
+    <li>TTS activé ou non, durée de la session vocale</li>
+  </ul>
+  <div class="tip">💡 Les statistiques vocales par apprenant sont disponibles dans la vue <code>voice_stats_by_user</code> accessible depuis le back-office admin → Config IA → Statistiques.</div>
+</div>
+
+<div style="text-align:center;padding:10px;font-size:.7rem;color:#aaa;background:#F4F6F9">
+  Pour imprimer ce guide : Ctrl+P (Windows) ou Cmd+P (Mac) · Recommandé : format A4, orientation Portrait · v40 — 2026
+</div>
+
+</body>
+
+  <!-- NOUVELLES SECTIONS 2026 -->
+  <div id="pwa-guide" style="background:#fff;max-width:960px;margin:0 auto;padding:50px 60px;page-break-before:always;">
+    <div style="background:linear-gradient(135deg,#0D1B2A,#1C2840);color:#fff;border-radius:12px;padding:22px 28px;margin-bottom:32px;">
+      <div style="font-size:1.2rem;font-weight:900;color:#E8B84B;">&#128247; Application PWA — Installation Multi-Appareils</div>
+      <div style="font-size:0.72rem;color:#22C55E;margin-top:4px;">Section Nouvelle 2026</div>
+    </div>
+    <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:20px;">
+      AGTM Digital Academy est disponible en tant qu'<strong>Application Web Progressive (PWA)</strong>.
+      Installez-la sur votre smartphone, tablette ou ordinateur comme une application native, sans App Store.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:20px;">
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:8px;">&#128241; Android (Chrome)</div>
+        <ol style="font-size:0.82rem;color:#4A5568;line-height:1.8;padding-left:18px;">
+          <li>Ouvrez le site dans Chrome</li><li>Menu 3 points > "Ajouter a l'ecran d'accueil"</li><li>Confirmez</li>
+        </ol>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:8px;">&#127822; iPhone/iPad (Safari)</div>
+        <ol style="font-size:0.82rem;color:#4A5568;line-height:1.8;padding-left:18px;">
+          <li>Ouvrez dans Safari</li><li>Icone Partager > "Sur l'ecran d'accueil"</li><li>Appuyez "Ajouter"</li>
+        </ol>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:8px;">&#128187; PC/Mac (Chrome/Edge)</div>
+        <ol style="font-size:0.82rem;color:#4A5568;line-height:1.8;padding-left:18px;">
+          <li>Icone installation dans la barre d'adresse</li><li>Ou bouton "Installer l'App" sur la page</li><li>Confirmez</li>
+        </ol>
+      </div>
+    </div>
+    <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:10px;padding:14px 18px;">
+      <div style="font-weight:700;color:#C8960C;margin-bottom:8px;">Avantages PWA</div>
+      <div style="font-size:0.82rem;color:#4A5568;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:6px;">
+        <div>&#10003; Fonctionne hors-ligne</div><div>&#10003; Chargement rapide</div>
+        <div>&#10003; Notifications push</div><div>&#10003; Sync automatique</div>
+        <div>&#10003; Mise a jour auto</div><div>&#10003; Sans App Store</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="chatbot-guide" style="background:#fff;max-width:960px;margin:0 auto;padding:50px 60px;page-break-before:always;">
+    <div style="background:linear-gradient(135deg,#0D1B2A,#1C2840);color:#fff;border-radius:12px;padding:22px 28px;margin-bottom:32px;">
+      <div style="font-size:1.2rem;font-weight:900;color:#E8B84B;">&#129302; Amara — Assistante IA Marketing</div>
+      <div style="font-size:0.72rem;color:#C8960C;margin-top:4px;">Section Nouvelle 2026</div>
+    </div>
+    <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:20px;">
+      <strong>Amara</strong> est l'assistante IA marketing d'AGTM Digital Academy. Disponible 24h/24, 7j/7
+      sur la page d'accueil pour repondre aux visiteurs, prospects et clients sur les formations, tarifs et inscriptions.
+    </p>
+    <h3 style="font-size:1rem;font-weight:700;color:#0D1B2A;margin-bottom:12px;">Comment utiliser Amara ?</h3>
+    <ol style="font-size:0.88rem;color:#4A5568;line-height:2;padding-left:20px;margin-bottom:20px;">
+      <li>Cliquez sur le bouton dore en bas a droite de la page d'accueil</li>
+      <li>La fenetre de chat s'ouvre avec un message de bienvenue</li>
+      <li>Utilisez les boutons de reponse rapide ou tapez votre question</li>
+      <li>Amara repond en 1-2 secondes avec des informations precises</li>
+    </ol>
+    <div style="background:rgba(42,111,212,0.06);border:1px solid rgba(42,111,212,0.2);border-radius:10px;padding:14px 18px;">
+      <div style="font-weight:700;color:#2A6FD4;margin-bottom:8px;">Pour les administrateurs</div>
+      <p style="font-size:0.82rem;color:#4A5568;line-height:1.7;">
+        Les reponses d'Amara sont personnalisables via la section Marketing du dashboard.
+        Les statistiques sont synchronisees depuis Supabase via la table <code>marketing_config</code>.
+      </p>
+    </div>
+  </div>
+
+  <div id="moteur-ia-guide" style="background:#fff;max-width:960px;margin:0 auto;padding:50px 60px;page-break-before:always;">
+    <div style="background:linear-gradient(135deg,#0D1B2A,#1C2840);color:#fff;border-radius:12px;padding:22px 28px;margin-bottom:32px;">
+      <div style="font-size:1.2rem;font-weight:900;color:#E8B84B;">&#129504; Moteur IA Pedagogique — English Corner</div>
+      <div style="font-size:0.72rem;color:#5A9FFF;margin-top:4px;">Section Nouvelle 2026</div>
+    </div>
+    <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:20px;">
+      Le <strong>Moteur IA Pedagogique</strong> genere automatiquement des modules d'apprentissage complets
+      en moins de 10 secondes via Claude 3.5 Sonnet d'Anthropic.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+      <div style="display:flex;gap:14px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;">
+        <div style="font-weight:700;color:#EF4444;min-width:80px;">Etape 1</div>
+        <div style="font-size:0.82rem;color:#4A5568;">Saisie du sujet : titre brut + niveau CECRL (A1-C1) + categorie</div>
+      </div>
+      <div style="display:flex;gap:14px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;">
+        <div style="font-weight:700;color:#F59E0B;min-width:80px;">Etape 2</div>
+        <div style="font-size:0.82rem;color:#4A5568;">Generation Claude 3.5 : titre, 3 objectifs, contenu, 5 quiz, Elite Tip bilingue</div>
+      </div>
+      <div style="display:flex;gap:14px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;">
+        <div style="font-weight:700;color:#22C55E;min-width:80px;">Etape 3</div>
+        <div style="font-size:0.82rem;color:#4A5568;">Validation : parsing JSON, exemples bilingues, quiz, controle qualite</div>
+      </div>
+      <div style="display:flex;gap:14px;padding:12px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;">
+        <div style="font-weight:700;color:#C8960C;min-width:80px;">Etape 4</div>
+        <div style="font-size:0.82rem;color:#4A5568;">Publication Supabase : Draft > Review > Published. Disponible dans l'English Corner</div>
+      </div>
+    </div>
+    <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:10px;padding:14px 18px;">
+      <div style="font-weight:700;color:#C8960C;margin-bottom:10px;">Statistiques 2026</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;text-align:center;font-size:0.82rem;">
+        <div><div style="font-size:1.3rem;font-weight:700;color:#C8960C;">100+</div><div style="color:#6A8098;">Modules</div></div>
+        <div><div style="font-size:1.3rem;font-weight:700;color:#2A6FD4;"><10s</div><div style="color:#6A8098;">Generation</div></div>
+        <div><div style="font-size:1.3rem;font-weight:700;color:#22C55E;">5</div><div style="color:#6A8098;">Quiz/module</div></div>
+        <div><div style="font-size:1.3rem;font-weight:700;color:#C8960C;">A1-C1</div><div style="color:#6A8098;">Niveaux</div></div>
+        <div><div style="font-size:1.3rem;font-weight:700;color:#F59E0B;">100%</div><div style="color:#6A8098;">Valide</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="avantages-guide" style="background:#fff;max-width:960px;margin:0 auto;padding:50px 60px;page-break-before:always;">
+    <div style="background:linear-gradient(135deg,#0D1B2A,#1C2840);color:#fff;border-radius:12px;padding:22px 28px;margin-bottom:32px;">
+      <div style="font-size:1.2rem;font-weight:900;color:#E8B84B;">&#127942; Avantages Concurrentiels — Stack Technologique</div>
+      <div style="font-size:0.72rem;color:#C8960C;margin-top:4px;">Section Nouvelle 2026</div>
+    </div>
+    <p style="font-size:0.88rem;color:#4A5568;line-height:1.7;margin-bottom:20px;">
+      AGTM Digital Academy est la <strong>plateforme #1 d'apprentissage de l'anglais par IA en Afrique francophone</strong>,
+      grace a une combinaison unique d'outils technologiques de pointe.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:20px;">
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:6px;">&#129504; Claude 3.5 Sonnet</div>
+        <p style="font-size:0.8rem;color:#6A8098;">Generation de contenu pedagogique haute qualite. Modele IA derniere generation.</p>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:6px;">&#9889; Supabase PostgreSQL</div>
+        <p style="font-size:0.8rem;color:#6A8098;">Base de donnees temps reel, auth securisee (RLS), sync multi-appareils.</p>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:6px;">&#128247; PWA Installable</div>
+        <p style="font-size:0.8rem;color:#6A8098;">App sur tous appareils. Hors-ligne. Notifications push. Experience native.</p>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:6px;">&#127908; Assistante Vocale IA</div>
+        <p style="font-size:0.8rem;color:#6A8098;">Pratique prononciation. Score IA temps reel. Feedback instantane.</p>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:6px;">&#127891; Certificats Verifiables</div>
+        <p style="font-size:0.8rem;color:#6A8098;">Numeriques, verifiables en ligne. Reconnus employeurs. LinkedIn.</p>
+      </div>
+      <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:16px;">
+        <div style="font-weight:700;color:#0D1B2A;margin-bottom:6px;">&#128202; Dashboard 33 Modules</div>
+        <p style="font-size:0.8rem;color:#6A8098;">Etudiants, finances, KPIs, rapports, marketing, IA validation.</p>
+      </div>
+    </div>
+    <div style="background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:10px;padding:14px 18px;">
+      <div style="font-weight:700;color:#C8960C;margin-bottom:10px;">Comparaison concurrentielle</div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+        <tr style="background:rgba(212,160,23,0.1);">
+          <th style="padding:8px;text-align:left;color:#0D1B2A;">Critere</th>
+          <th style="padding:8px;text-align:center;color:#C8960C;">AGTM Academy</th>
+          <th style="padding:8px;text-align:center;color:#6A8098;">Concurrents</th>
+        </tr>
+        <tr><td style="padding:8px;color:#4A5568;">Modules IA</td><td style="padding:8px;text-align:center;color:#22C55E;font-weight:700;">100+</td><td style="padding:8px;text-align:center;color:#EF4444;">0</td></tr>
+        <tr><td style="padding:8px;color:#4A5568;">PWA</td><td style="padding:8px;text-align:center;color:#22C55E;font-weight:700;">Oui</td><td style="padding:8px;text-align:center;color:#EF4444;">Non</td></tr>
+        <tr><td style="padding:8px;color:#4A5568;">Assistante IA 24/7</td><td style="padding:8px;text-align:center;color:#22C55E;font-weight:700;">Oui</td><td style="padding:8px;text-align:center;color:#EF4444;">Non</td></tr>
+        <tr><td style="padding:8px;color:#4A5568;">Suivi temps reel</td><td style="padding:8px;text-align:center;color:#22C55E;font-weight:700;">Supabase</td><td style="padding:8px;text-align:center;color:#EF4444;">Non</td></tr>
+        <tr><td style="padding:8px;color:#4A5568;">Certificats</td><td style="padding:8px;text-align:center;color:#22C55E;font-weight:700;">Oui</td><td style="padding:8px;text-align:center;color:#EF4444;">Non</td></tr>
+      </table>
+    </div>
+  </div>
+
+</html>

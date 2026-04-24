@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fond navy (maskable safe zone) -->
+  <rect width="512" height="512" fill="#0D1B2A"/>
+  <!-- Carte dorée arrondie -->
+  <rect x="48" y="48" width="416" height="416" rx="72" fill="#C8960C"/>
+  <!-- Fond interne navy -->
+  <rect x="72" y="72" width="368" height="368" rx="52" fill="#0D1B2A"/>
+  <!-- Graduation cap path -->
+  <g transform="translate(256,175) scale(1.1)">
+    <!-- Carré de diplôme -->
+    <polygon points="0,-54 62,-27 0,0 -62,-27" fill="#C8960C"/>
+    <!-- Bord gauche -->
+    <polygon points="-62,-27 -62,27 0,54 0,0" fill="#E8B84B"/>
+    <!-- Bord droit -->
+    <polygon points="62,-27 62,27 0,54 0,0" fill="#A07008"/>
+  </g>
+  <!-- Texte AGTM -->
+  <text x="256" y="308" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="88" fill="#C8960C" letter-spacing="-2">AGTM</text>
+  <!-- Ligne séparatrice -->
+  <rect x="130" y="332" width="252" height="3" rx="1.5" fill="#C8960C" opacity="0.45"/>
+  <!-- Texte ACADEMY -->
+  <text x="256" y="378" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="36" fill="#8AAAC0" letter-spacing="7">ACADEMY</text>
+</svg>

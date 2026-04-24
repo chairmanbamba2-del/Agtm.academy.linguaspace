@@ -1,0 +1,53 @@
+       <!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+        <aside id="mainSidebar" class="agtm-sidebar">
+          <div class="agtm-sidebar-logo">
+            <div class="agtm-sidebar-avatar">AG</div>
+            <div>
+              <div class="agtm-sidebar-logo-text">AGTM Academy</div>
+              <div class="agtm-sidebar-logo-sub">Digital Academy</div>
+            </div>
+          </div>
+
+          <!-- User card (dynamique) -->
+          <div class="agtm-sidebar-user-card" id="sidebarUser">
+            <div class="agtm-sidebar-avatar" id="sidebarUserAvatar">?</div>
+            <div>
+              <div class="agtm-sidebar-user-name" id="sidebarUserName">Chargement…</div>
+              <div class="agtm-sidebar-user-role" id="sidebarUserRole">Utilisateur</div>
+            </div>
+          </div>
+
+          <!-- Contenu scrollable -->
+          <div class="sidebar-content">
+            <!-- Navigation (dynamique) -->
+            <div class="agtm-sidebar-section">Navigation</div>
+            <nav id="navList" style="display: flex; flex-direction: column; gap: 0.25rem; padding: 0 0.75rem;">
+              <!-- Le contenu sera injecté par JavaScript -->
+            </nav>
+
+            <!-- Liens rapides -->
+            <div class="agtm-sidebar-section">Ressources</div>
+            <button class="agtm-nav-btn">
+              <span class="agtm-nav-icon">🌐</span>
+              <span class="agtm-nav-label">Site vitrine</span>
+            </button>
+            <button class="agtm-nav-btn">
+              <span class="agtm-nav-icon">📘</span>
+              <span class="agtm-nav-label">Guide d'utilisation</span>
+            </button>
+
+            <!-- Déconnexion -->
+            <div class="agtm-sidebar-section">Compte</div>
+            <button onclick="logout()" class="agtm-nav-btn" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer; color: inherit; font-family: inherit; font-size: inherit; padding: 0;">
+              <span class="agtm-nav-icon">🚪</span>
+              <span class="agtm-nav-label">Déconnexion</span>
+            </button>
+          </div>
+
+          <!-- Copyright -->
+          <div style="padding: 1rem 1.25rem 1.5rem; font-size: .65rem; color: var(--premium-text-4);">
+            AGTM Digital Academy<br/>
+            Propriété de <span style="color: var(--premium-gold)">ISSA BAMBA</span><br/>
+            © 2026 — Tous droits réservés
+          </div>
+        </aside>

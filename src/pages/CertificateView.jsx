@@ -10,6 +10,21 @@ import { LANGUAGES } from '../lib/constants'
 import { formatDate } from '../lib/utils'
 
 const LEVEL_LABELS = { A1:'Découverte', A2:'Élémentaire', B1:'Intermédiaire', B2:'Avancé', C1:'Autonome', C2:'Maîtrise' }
+const CATEGORY_LABELS = {
+  culture_arabe: 'Culture arabe',
+  connaissance_monde_arabe: 'Connaissance du monde arabe',
+  ramadan: 'Ramadan & pratiques',
+  art_cuisine: 'Art, cuisine & patrimoine',
+  histoire_geo: 'Histoire & géographie',
+  famille_societe: 'Famille & société',
+}
+const RUBRIC_LABELS = {
+  monde_arabe: 'Connaissance du monde arabe',
+  ramadan: 'Ramadan & pratiques',
+  art_cuisine: 'Art, cuisine & patrimoine',
+  histoire_geo: 'Histoire & géographie',
+  famille: 'Famille & société',
+}
 
 export default function CertificateView() {
   const { id }     = useParams()
@@ -76,6 +91,18 @@ export default function CertificateView() {
                 <span className="text-muted">Numéro</span>
                 <span className="font-mono text-xs text-gold">{cert.certificate_number}</span>
               </div>
+              {cert.category && (
+                <div className="flex justify-between">
+                  <span className="text-muted">Catégorie</span>
+                  <span className="text-xs text-white">{CATEGORY_LABELS[cert.category] || cert.category}</span>
+                </div>
+              )}
+              {cert.native_language && (
+                <div className="flex justify-between">
+                  <span className="text-muted">Langue maternelle</span>
+                  <span className="text-xs text-white">{LANGUAGES[cert.native_language]?.flag} {LANGUAGES[cert.native_language]?.name}</span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-muted">Code vérif.</span>
                 <span className="font-mono text-sm text-gold font-bold">{cert.verification_code}</span>
@@ -130,22 +157,38 @@ export default function CertificateView() {
             </div>
 
             {/* Scores */}
-            <div className="grid grid-cols-4 gap-2 my-4">
-              {[
-                { label: 'Comp. orale',   val: cert.score_listening },
-                { label: 'Comp. écrite',  val: cert.score_reading },
-                { label: 'Grammaire',     val: cert.score_grammar },
-                { label: 'Score global',  val: cert.score_global, highlight: true },
-              ].map(s => (
-                <div key={s.label} style={{ background:'rgba(0,0,0,0.25)', padding:'.75rem', borderRadius:2, border: s.highlight ? '1.5px solid rgba(232,148,26,0.4)' : 'none' }}>
-                  <div className="font-serif text-lg" style={{ color: s.highlight ? '#E8941A' : '#F5B942' }}>{s.val}%</div>
-                  <div className="font-mono text-[8px] text-white/40 uppercase tracking-wider mt-0.5">{s.label}</div>
+            {cert.rubric_scores ? (
+              <div className="grid grid-cols-3 gap-2 my-4">
+                {Object.entries(cert.rubric_scores).map(([key, val]) => (
+                  <div key={key} style={{ background:'rgba(0,0,0,0.25)', padding:'.75rem', borderRadius:2 }}>
+                    <div className="font-serif text-lg text-[#F5B942]">{val}%</div>
+                    <div className="font-mono text-[8px] text-white/40 uppercase tracking-wider mt-0.5">{RUBRIC_LABELS[key] || key}</div>
+                  </div>
+                ))}
+                <div style={{ background:'rgba(0,0,0,0.25)', padding:'.75rem', borderRadius:2, border:'1.5px solid rgba(232,148,26,0.4)' }}>
+                  <div className="font-serif text-lg text-gold">{cert.score_global}%</div>
+                  <div className="font-mono text-[8px] text-white/40 uppercase tracking-wider mt-0.5">Score global</div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 gap-2 my-4">
+                {[
+                  { label: 'Comp. orale',   val: cert.score_listening },
+                  { label: 'Comp. écrite',  val: cert.score_reading },
+                  { label: 'Grammaire',     val: cert.score_grammar },
+                  { label: 'Score global',  val: cert.score_global, highlight: true },
+                ].map(s => (
+                  <div key={s.label} style={{ background:'rgba(0,0,0,0.25)', padding:'.75rem', borderRadius:2, border: s.highlight ? '1.5px solid rgba(232,148,26,0.4)' : 'none' }}>
+                    <div className="font-serif text-lg" style={{ color: s.highlight ? '#E8941A' : '#F5B942' }}>{s.val}%</div>
+                    <div className="font-mono text-[8px] text-white/40 uppercase tracking-wider mt-0.5">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <div className="font-serif text-sm italic text-white/50 mb-4">
               Score global de <strong className="text-gold-lt">{cert.score_global}%</strong> — Niveau <strong>{cert.level_certified}</strong> validé
+              {cert.category && <span className="block text-xs text-white/40 mt-1">Catégorie : {CATEGORY_LABELS[cert.category] || cert.category}</span>}
             </div>
 
             {/* Footer */}

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINGUA SPACE — Plateforme d'Apprentissage des Langues Intelligente</title>
+    <style>
+        :root {
+            --primary-dark: #0D2D52;
+            --primary-blue: #1A4B8C;
+            --accent-gold: #D4AF37;
+            --accent-light: #E8C872;
+            --bg-dark: #080F1A;
+            --bg-card: #0F1A2F;
+            --text-light: #F0F4F8;
+            --text-muted: #8A9BB2;
+            --border-color: #1E3A5F;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0A1526 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(15, 26, 47, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        header .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        
+        .logo-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--accent-gold);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        section {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        h2 {
+            color: var(--accent-gold);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-gold);
+            font-weight: 700;
+        }
+        
+        h3 {
+            color: var(--accent-light);
+            font-size: 1.6rem;
+            margin: 35px 0 20px;
+            font-weight: 600;
+        }
+        
+        h4 {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            margin: 25px 0 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 25px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        li strong {
+            color: var(--accent-light);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(26, 75, 140, 0.2) 0%, rgba(13, 45, 82, 0.1) 100%);
+            border-left: 4px solid var(--accent-gold);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-light) 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+        
+        .feature-card h4 {
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tech-badge {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .plan-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .plan-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .plan-card.featured {
+            border-color: var(--accent-gold);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.2);
+        }
+        
+        .plan-card.featured::before {
+            content: 'POPULAIRE';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin: 20px 0;
+        }
+        
+        .plan-period {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 40px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent-gold), var(--primary-blue));
+        }
+        
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            border: 3px solid var(--bg-card);
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+        }
+        
+        footer {
+            background: var(--primary-dark);
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+        
+        .quote {
+            font-style: italic;
+            font-size: 1.3rem;
+            color: var(--accent-light);
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            border-left: 4px solid var(--accent-gold);
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+        }
+        
+        @media (max-width: 768px) {
+            header { padding: 40px 20px; }
+            header h1 { font-size: 2.2rem; }
+            .content { padding: 30px 20px; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.4rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .plan-comparison { grid-template-columns: 1fr; }
+            .plan-card.featured { transform: none; }
+        }
+        
+        a {
+            color: var(--accent-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-gold);
+            text-decoration: underline;
+        }
+        
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-light);
+        }
+        
+        .table-of-contents {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .table-of-contents h3 {
+            margin-top: 0;
+            color: var(--accent-gold);
+        }
+        
+        .table-of-contents ul {
+            columns: 2;
+            column-gap: 40px;
+        }
+        
+        .table-of-contents li {
+            break-inside: avoid;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .table-of-contents ul {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LINGUA SPACE</h1>
+            <div class="subtitle">Plateforme d'Apprentissage des Langues Intelligente</div>
+            <div class="logo-badge">L'avenir de l'apprentissage des langues en Afrique</div>
+        </header>
+
+        <div class="content">
+            <section id="presentation">
+                <h2>Présentation Générale</h2>
+                <p><strong>LINGUA SPACE</strong> est une plateforme d'apprentissage des langues nouvelle génération, conçue spécifiquement pour les apprenants africains. Elle combine l'intelligence artificielle avancée, un design immersif et une pédagogie adaptative pour offrir une expérience d'apprentissage personnalisée et efficace.</p>
+                
+                <div class="highlight-box">
+                    <p><strong>Vision</strong> : Rendre l'apprentissage des langues accessible, engageant et efficace pour tous les Africains, en tirant parti des dernières technologies d'IA.</p>
+                    <p><strong>Mission</strong> : Fournir un environnement d'apprentissage complet qui s'adapte au niveau, aux objectifs et au contexte culturel de chaque apprenant.</p>
+                </div>
+            </section>
+
+            <section id="fonctionnalites">
+                <h2>Fonctionnalités Principales</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>1. Tutor IA Multilingue</h4>
+                        <ul>
+                            <li><strong>Conversations naturelles</strong> avec des modèles IA spécialisés (Claude, Llama, DeepSeek)</li>
+                            <li><strong>Correction en temps réel</strong> de la grammaire, prononciation et vocabulaire</li>
+                            <li><strong>Adaptation au niveau</strong> (A1 à C2) et aux objectifs de l'apprenant</li>
+                            <li><strong>Modes spécialisés</strong> : Free Talk, Business, Grammar, Exam Prep, Role Play, Research</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>2. Modules de Cours Structurés</h4>
+                        <ul>
+                            <li><strong>6 niveaux</strong> (A1, A2, B1, B2, C1, C2) pour 4 langues (Anglais, Français, Espagnol, Allemand)</li>
+                            <li><strong>Contenu multimédia</strong> : vidéos, audio, textes, exercices interactifs</li>
+                            <li><strong>Progression adaptative</strong> basée sur les performances</li>
+                            <li><strong>Quiz intelligents</strong> générés par IA à partir du contenu</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>3. Système de Certification</h4>
+                        <ul>
+                            <li><strong>Tests de niveau</strong> complets avec évaluation détaillée</li>
+                            <li><strong>Certificats officiels</strong> LINGUA SPACE (niveaux A1-C2)</li>
+                            <li><strong>Vérification en ligne</strong> des certificats via code unique</li>
+                            <li><strong>Préparation aux examens</strong> internationaux (IELTS, TOEFL, DELF, DELE)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>4. Gamification & Motivation</h4>
+                        <ul>
+                            <li><strong>Système de points XP</strong> et récompenses</li>
+                            <li><strong>Classements</strong> hebdomadaires et mensuels</li>
+                            <li><strong>Badges</strong> de compétence par langue</li>
+                            <li><strong>Streaks</strong> (jours consécutifs d'apprentissage)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>5. Administration Complète</h4>
+                        <ul>
+                            <li><strong>Tableau de bord admin</strong> avec statistiques détaillées</li>
+                            <li><strong>Gestion des abonnements</strong> et paiements</li>
+                            <li><strong>Contrôle des permissions IA</strong> par utilisateur/plan</li>
+                            <li><strong>Génération de rapports</strong> financiers et pédagogiques</li>
+                            <li><strong>Interface de support</strong> aux utilisateurs</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="architecture">
+                <h2>Architecture Technique</h2>
+                
+                <h3>Stack Technologique</h3>
+                <div class="tech-stack">
+                    <span class="tech-badge">React 18</span>
+                    <span class="tech-badge">Vite</span>
+                    <span class="tech-badge">Tailwind CSS</span>
+                    <span class="tech-badge">Supabase</span>
+                    <span class="tech-badge">PostgreSQL</span>
+                    <span class="tech-badge">Edge Functions</span>
+                    <span class="tech-badge">CinetPay</span>
+                    <span class="tech-badge">Vercel/Netlify</span>
+                </div>
+                
+                <h3>Base de Données</h3>
+                <ul>
+                    <li><strong>Utilisateurs</strong> : <code>lingua_users</code> avec rôles (user, admin, super_admin)</li>
+                    <li><strong>Abonnements</strong> : <code>lingua_subscriptions</code> avec plans UNI (1 langue) et All Access</li>
+                    <li><strong>Progression</strong> : <code>lingua_progress</code> par langue et utilisateur</li>
+                    <li><strong>Modules</strong> : <code>lingua_modules</code> avec contenu structuré</li>
+                    <li><strong>Sessions IA</strong> : <code>lingua_ai_sessions</code> pour le monitoring</li>
+                    <li><strong>Transactions</strong> : <code>lingua_transactions</code> pour la comptabilité</li>
+                    <li><strong>Permissions IA</strong> : <code>lingua_ai_permissions</code> pour le contrôle d'accès</li>
+                </ul>
+                
+                <h3>Sécurité</h3>
+                <ul>
+                    <li><strong>Authentification</strong> : Supabase Auth avec JWT</li>
+                    <li><strong>Autorisations</strong> : RLS (Row Level Security) sur toutes les tables</li>
+                    <li><strong>API Keys</strong> : Stockées dans les secrets Supabase (jamais dans le frontend)</li>
+                    <li><strong>Paiements</strong> : Tokens sécurisés via CinetPay</li>
+                </ul>
+            </section>
+
+            <section id="ia">
+                <h2>Modèles IA Intégrés</h2>
+                
+                <h3>Fournisseurs Supportés</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Anthropic (Claude)</h4>
+                        <ul>
+                            <li>Claude Sonnet 4.5 : Équilibre performance/coût</li>
+                            <li>Claude Haiku 3 : Rapide et économique</li>
+                            <li>Claude Opus 3 : Plus puissant, plus cher</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>Groq (Llama/Mixtral)</h4>
+                        <ul>
+                            <li>Llama 3.1 70B : Puissant et rapide</li>
+                            <li>Llama 3.2 90B : Vision + texte</li>
+                            <li>Mixtral 8x7B : Expert mixture</li>
+                            <li>Gemma2 9B : Léger et efficace</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>DeepSeek</h4>
+                        <ul>
+                            <li>DeepSeek Chat : Modèle principal</li>
+                            <li>DeepSeek Coder : Spécialisé code</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Recherche Web</h3>
+                <ul>
+                    <li><strong>Tavily</strong> : Recherche sémantique pour contenu éducatif</li>
+                    <li><strong>Brave Search</strong> : Alternative avec protection de la vie privée</li>
+                    <li><strong>YouTube API</strong> : Contenu vidéo éducatif</li>
+                </ul>
+                
+                <h3>Système de Permissions</h3>
+                <ul>
+                    <li><strong>Contrôle granulaire</strong> des modèles accessibles par utilisateur</li>
+                    <li><strong>Limites de tokens</strong> quotidiennes configurables</li>
+                    <li><strong>Priorités</strong> : Utilisateur > Plan > Global</li>
+                    <li><strong>Interface admin</strong> complète pour la gestion</li>
+                </ul>
+            </section>
+
+            <section id="abonnements">
+                <h2>Plans d'Abonnement</h2>
+                
+                <div class="plan-comparison">
+                    <div class="plan-card">
+                        <h3>UNI</h3>
+                        <div class="plan-price">15 000 FCFA<span class="plan-period">/mois</span></div>
+                        <ul>
+                            <li><strong>1 langue</strong> au choix (Anglais, Français, Espagnol, Allemand)</li>
+                            <li><strong>Accès complet</strong> aux modules (A1 à C2)</li>
+                            <li><strong>Tutor IA</strong> avec modèles de base</li>
+                            <li><strong>Certifications</strong> incluses</li>
+                            <li><strong>Support</strong> par email</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="plan-card featured">
+                        <h3>All Access</h3>
+                        <div class="plan-price">25 000 FCFA<span class="plan-period">/mois</span></div>
+                        <ul>
+                            <li><strong>Toutes les langues</strong> (4 langues)</li>
+                            <li><strong>Modèles IA premium</strong> (Claude Opus, Llama 90B)</li>
+                            <li><strong>Recherche web</strong> intégrée</li>
+                            <li><strong>Certifications premium</strong></li>
+                            <li><strong>Support prioritaire</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Paiements</h3>
+                <ul>
+                    <li><strong>Mobile Money</strong> : Orange Money, Wave, MTN</li>
+                    <li><strong>Cartes bancaires</strong> : Visa, Mastercard</li>
+                    <li><strong>Flutterwave</strong> : Paiements en ligne</li>
+                    <li><strong>Renouvellement</strong> automatique optionnel</li>
+                </ul>
+            </section>
+
+            <section id="interface">
+                <h2>Interface Utilisateur</h2>
+                
+                <h3>Design System</h3>
+                <ul>
+                    <li><strong>Thème sombre</strong> avec accents dorés</li>
+                    <li><strong>Animations fluides</strong> avec Framer Motion</li>
+                    <li><strong>Composants modulaires</strong> réutilisables</li>
+                    <li><strong>Responsive</strong> mobile-first</li>
+                    <li><strong>PWA</strong> installable (Progressive Web App)</li>
+                </ul>
+                
+                <h3>Navigation</h3>
+                <ul>
+                    <li><strong>Landing page</strong> avec présentation des fonctionnalités</li>
+                    <li><strong>Dashboard</strong> personnalisé avec progression</li>
+                    <li><strong>Corner</strong> par langue avec modules et exercices</li>
+                    <li><strong>Assistant IA</strong> avec interface conversationnelle</li>
+                    <li><strong>Admin</strong> avec tableau de bord complet</li>
+                </ul>
+                
+                <h3>Accessibilité</h3>
+                <ul>
+                    <li><strong>Contraste élevé</strong> pour une meilleure lisibilité</li>
+                    <li><strong>Navigation au clavier</strong> supportée</li>
+                    <li><strong>Textes alternatifs</strong> pour les images</li>
+                    <li><strong>Taille de texte</strong> ajustable</li>
+                </ul>
+            </section>
+
+            <section id="administration">
+                <h2>Administration</h2>
+                
+                <h3>Tableau de Bord Admin</h3>
+                <ul>
+                    <li><strong>Statistiques</strong> en temps réel (abonnés, revenus, activité)</li>
+                    <li><strong>Gestion utilisateurs</strong> : création, suspension, réactivation</li>
+                    <li><strong>Gestion abonnements</strong> : création manuelle, expiration automatique</li>
+                    <li><strong>Finance</strong> : transactions, reçus, export CSV</li>
+                    <li><strong>Permissions IA</strong> : contrôle d'accès aux modèles</li>
+                </ul>
+                
+                <h3>Automatisation</h3>
+                <ul>
+                    <li><strong>Expiration automatique</strong> des abonnements (cron job quotidien)</li>
+                    <li><strong>Rapports hebdomadaires</strong> par email aux abonnés</li>
+                    <li><strong>Notifications</strong> de renouvellement</li>
+                    <li><strong>Backups</strong> automatiques de la base de données</li>
+                </ul>
+                
+                <h3>Support</h3>
+                <ul>
+                    <li><strong>Interface de support</strong> intégrée</li>
+                    <li><strong>Génération de reçus</strong> automatique</li>
+                    <li><strong>Certificats</strong> personnalisables</li>
+                    <li><strong>Logs d'activité</strong> détaillés</li>
+                </ul>
+            </section>
+
+            <section id="deploiement">
+                <h2>Déploiement & Maintenance</h2>
+                
+                <h3>Environnements</h3>
+                <ul>
+                    <li><strong>Développement</strong> : localhost:5173 avec hot reload</li>
+                    <li><strong>Staging</strong> : prévisualisation des builds</li>
+                    <li><strong>Production</strong> : déploiement automatique via Git</li>
+                </ul>
+                
+                <h3>Monitoring</h3>
+                <ul>
+                    <li><strong>Logs d'erreurs</strong> : Sentry (à intégrer)</li>
+                    <li><strong>Performances</strong> : Core Web Vitals</li>
+                    <li><strong>Utilisation IA</strong> : tokens, coûts, modèles</li>
+                    <li><strong>Base de données</strong> : requêtes lentes, index</li>
+                </ul>
+                
+                <h3>Scaling</h3>
+                <ul>
+                    <li><strong>Frontend</strong> : CDN pour les assets statiques</li>
+                    <li><strong>Backend</strong> : Supabase auto-scaling</li>
+                    <li><strong>IA</strong> : load balancing entre fournisseurs</li>
+                    <li><strong>Base de données</strong> : réplication read-only pour les rapports</li>
+                </ul>
+            </section>
+
+            <section id="roadmap">
+                <h2>Roadmap & Évolutions Futures</h2>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Court Terme (Q2 2026)</h4>
+                        <ul>
+                            <li><strong>Application mobile</strong> React Native</li>
+                            <li><strong>Intégration WhatsApp</strong> pour notifications</li>
+                            <li><strong>Communauté</strong> avec forums et groupes</li>
+                            <li><strong>Contenu généré par les utilisateurs</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Moyen Terme (Q3-Q4 2026)</h4>
+                        <ul>
+                            <li><strong>Reconnaissance vocale</strong> avancée</li>
+                            <li><strong>Réalité augmentée</strong> pour l'immersion</li>
+                            <li><strong>Marché de tuteurs</strong> humains</li>
+                            <li><strong>Intégration écoles</strong> et entreprises</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>Long Terme (2027+)</h4>
+                        <ul>
+                            <li><strong>Apprentissage par la pratique</strong> (simulations)</li>
+                            <li><strong>IA personnelle</strong> qui évolue avec l'utilisateur</li>
+                            <li><strong>Certifications reconnues</strong> internationalement</li>
+                            <li><strong>Expansion</strong> à 10+ langues africaines</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="equipe">
+                <h2>Équipe & Contact</h2>
+                
+                <h3>Développement</h3>
+                <ul>
+                    <li><strong>Lead Developer</strong> : [Nom]</li>
+                    <li><strong>Design UI/UX</strong> : [Nom]</li>
+                    <li><strong>IA & Backend</strong> : [Nom]</li>
+                    <li><strong>Marketing</strong> : [Nom]</li>
+                </ul>
+                
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <h4>Email</h4>
+                        <p>support@lingua.space</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">📱</div>
+                        <h4>Téléphone</h4>
+                        <p>+225 XX XX XX XX</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">📍</div>
+                        <h4>Adresse</h4>
+                        <p>Abidjan, Côte d'Ivoire</p>
+                    </div>
+                </div>
+                
+                <h3>Réseaux Sociaux</h3>
+                <ul>
+                    <li><strong>LinkedIn</strong> : [lien]</li>
+                    <li><strong>Twitter/X</strong> : [lien]</li>
+                    <li><strong>Facebook</strong> : [lien]</li>
+                    <li><strong>Instagram</strong> : [lien]</li>
+                </ul>
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+                
+                <div class="quote">
+                    <p><strong>LINGUA SPACE</strong> représente l'avenir de l'apprentissage des langues en Afrique. En combinant l'intelligence artificielle de pointe avec une pédagogie adaptative et une interface utilisateur immersive, la plateforme offre une solution complète pour les apprenants de tous niveaux.</p>
+                    
+                    <p>Avec son architecture scalable, son système de permissions IA avancé et son administration complète, LINGUA SPACE est prête à évoluer avec les besoins de ses utilisateurs et à s'imposer comme la référence en matière d'apprentissage des langues en Afrique.</p>
+                    
+                    <p style="text-align: right; margin-top: 20px; font-weight: bold;">"Apprendre une langue n'a jamais été aussi personnel, engageant et efficace."</p>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p><strong>LINGUA SPACE</strong> — Plateforme d'Apprentissage des Langues Intelligente</p>
+            <p>© 2026 Tous droits réservés | Document de présentation officiel</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">
+                Dernière mise à jour : 23 avril 2026 | Version 2.0
+            </p>
+        </footer>
+    </div>
+
+    <a href="#" class="back-to-top" title="Retour en haut">↑</a>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Back to top button visibility
+        const backToTopButton = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.style.opacity = '1';
+                backToTopButton.style.visibility = 'visible';
+            } else {
+                backToTopButton.style.opacity = '0';
+                backToTopButton.style.visibility = 'hidden';
+            }
+        });
+
+        // Initialize back to top button
+        backToTopButton.style.opacity = '0';
+        backToTopButton.style.visibility = 'hidden';
+        backToTopButton.style.transition = 'opacity 0.3s, visibility 0.3s';
+    </script>
+</body>
+</html>

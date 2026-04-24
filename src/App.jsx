@@ -3,13 +3,17 @@
 // Ajoute les routes : Certification, LevelTest, Certificate,
 // Verify (public), Receipts, Admin
 // ============================================================
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useUserStore } from './store/userStore'
 import { supabase } from './lib/supabase'
+import { useProfile } from './hooks/useAuth'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from './lib/queryClient'
 import ToastProvider from './components/ui/Toast'
 import InstallPWA from './components/ui/InstallPWA'
 import Spinner from './components/ui/Spinner'
+
 
 // ── Pages existantes ────────────────────────────────────────
 import Landing      from './pages/Landing'
@@ -30,6 +34,9 @@ import Settings     from './pages/Settings'
 // ── NOUVELLES pages v2 ──────────────────────────────────────
 import Certification     from './pages/Certification'
 import LevelTest         from './pages/LevelTest'
+import CultureTest       from './pages/CultureTest'
+import LanguageLab       from './pages/LanguageLab'
+import QuranReader       from './components/ui/QuranReader'
 import CertificateView   from './pages/CertificateView'
 import CertificateVerify from './pages/CertificateVerify'
 import Receipts          from './pages/Receipts'
@@ -37,6 +44,13 @@ import AdminDashboard    from './pages/admin/AdminDashboard'
 import AdminUsers        from './pages/admin/Users'
 import Finance           from './pages/admin/Finance'
 import Marketing         from './pages/admin/Marketing'
+import AdminSubscribers  from './pages/admin/Subscribers'
+import AIPermissions     from './pages/admin/AIPermissions'
+import AdminDocs         from './pages/admin/AdminDocs'
+import AdminCertifications from './pages/admin/Certifications'
+import AdminRoles         from './pages/admin/AdminRoles'
+import AdminInbox         from './pages/admin/AdminInbox'
+import Messenger          from './pages/Messenger'
 
 // ─── Guards ─────────────────────────────────────────────────
 function PrivateRoute({ children }) {
@@ -61,7 +75,13 @@ function AdminRoute({ children }) {
   const user    = useUserStore(s => s.user)
   const loading = useUserStore(s => s.loading)
   const isAdmin = useUserStore(s => s.isAdmin)
-  if (loading) return null
+  const { loading: profileLoading } = useProfile()
+  
+  if (loading || profileLoading) return (
+    <div className="flex items-center justify-center h-screen bg-dark">
+      <Spinner size="lg" label="Chargement du profil admin..." />
+    </div>
+  )
   return user && isAdmin ? children : <Navigate to="/" replace />
 }
 
@@ -81,9 +101,10 @@ export default function App() {
   }, [])
 
   return (
+    <QueryClientProvider client={queryClient}>
     <ToastProvider>
       <BrowserRouter>
-        <InstallPWA />
+        <InstallPWAWrapper />
         <Routes>
           {/* ── Publiques ── */}
           <Route path="/"                  element={<Landing />} />
@@ -109,19 +130,37 @@ export default function App() {
           {/* ── NOUVELLES ROUTES v2 ── */}
           <Route path="/certification"        element={<PrivateRoute><Certification /></PrivateRoute>} />
           <Route path="/level-test/:lang"     element={<PrivateRoute><LevelTest /></PrivateRoute>} />
+          <Route path="/culture-test"         element={<PrivateRoute><CultureTest /></PrivateRoute>} />
           <Route path="/certificate/:id"      element={<PrivateRoute><CertificateView /></PrivateRoute>} />
           <Route path="/receipts"             element={<PrivateRoute><Receipts /></PrivateRoute>} />
+          <Route path="/messenger"           element={<PrivateRoute><Messenger /></PrivateRoute>} />
+          <Route path="/lab/:lang"           element={<PrivateRoute><LanguageLab /></PrivateRoute>} />
+          <Route path="/quran"              element={<PrivateRoute><div className="p-6 max-w-4xl mx-auto"><QuranReader /></div></PrivateRoute>} />
 
           {/* ── Admin ── */}
           <Route path="/admin"                element={<AdminRoute><AdminDashboard /></AdminRoute>} />
           <Route path="/admin/users"          element={<AdminRoute><AdminUsers /></AdminRoute>} />
           <Route path="/admin/finance"        element={<AdminRoute><Finance /></AdminRoute>} />
           <Route path="/admin/marketing"      element={<AdminRoute><Marketing /></AdminRoute>} />
+          <Route path="/admin/subscribers"    element={<AdminRoute><AdminSubscribers /></AdminRoute>} />
+          <Route path="/admin/ai-permissions" element={<AdminRoute><AIPermissions /></AdminRoute>} />
+          <Route path="/admin/docs"           element={<AdminRoute><AdminDocs /></AdminRoute>} />
+          <Route path="/admin/certifications" element={<AdminRoute><AdminCertifications /></AdminRoute>} />
+          <Route path="/admin/admin-roles"   element={<AdminRoute><AdminRoles /></AdminRoute>} />
+          <Route path="/admin/inbox"         element={<AdminRoute><AdminInbox /></AdminRoute>} />
 
           {/* ── Fallback ── */}
           <Route path="*"                  element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </ToastProvider>
+    </QueryClientProvider>
   )
+}
+
+function InstallPWAWrapper() {
+  const location = useLocation()
+  const showOn = ['/', '/dashboard']
+  if (!showOn.includes(location.pathname)) return null
+  return <InstallPWA />
 }

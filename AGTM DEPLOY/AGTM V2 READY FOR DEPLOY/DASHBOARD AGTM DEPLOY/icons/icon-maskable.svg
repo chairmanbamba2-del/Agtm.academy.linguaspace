@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fond navy plein (pour icône adaptative Android) -->
+  <rect width="512" height="512" fill="#0D1B2A"/>
+  <!-- Contenu dans la zone safe (≥ 40% de marge, donc 102px de chaque côté) -->
+  <!-- Logo AGTM centré dans la safe zone -->
+  <rect x="110" y="150" width="292" height="212" rx="22" fill="#C8960C"/>
+  <rect x="124" y="163" width="264" height="186" rx="14" fill="#0D1B2A"/>
+  <text x="256" y="264" text-anchor="middle" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="76" fill="#C8960C" letter-spacing="-1">AGTM</text>
+  <text x="256" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="28" fill="#8AAAC0" letter-spacing="5">ACADEMY</text>
+</svg>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGTM Digital Academy — Évaluation en ligne</title>
+
+  <script>
+    const SUPABASE_URL  = "https://fglzovvsyloprokmdadx.supabase.co";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww";
+  </script>
+
+  <style>
+    html { font-size: 17px; }
+    :root {
+      --gold: #C8960C; --gold-light: #E8B84B;
+      --success: #27AE60; --danger: #E04A4A;
+      --panel-bg: linear-gradient(135deg,#152540 0%,#241C08 100%);
+      --card-hd:  linear-gradient(90deg,#1C3258 0%,#2C2208 100%);
+      --input-bg: linear-gradient(135deg,#0B1828 0%,#1C1408 100%);
+      --border-mix: rgba(200,150,12,0.2);
+      --text-main: #E2D8C0; --text-sub: #8AAAC0; --text-muted: #6A8AAA;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(150deg,#09111E 0%,#160E04 40%,#0B1A2E 70%,#160E04 100%);
+      background-attachment: fixed;
+      color: var(--text-main); min-height: 100vh;
+    }
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#09111E}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(#2A3F58,#3A2A10);border-radius:3px}
+
+    /* HEADER */
+    .header { background: linear-gradient(90deg,#0E1E34 0%,#1A1408 100%); padding: 16px 28px; display: flex; align-items: center; gap: 14px; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 12px rgba(0,0,0,.5); }
+    .logo-badge { width: 44px; height: 44px; background: linear-gradient(135deg,#C8960C,#E8B84B); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: .9rem; color: #0A1520; flex-shrink: 0; box-shadow: 0 2px 8px rgba(200,150,12,.4); }
+    .logo-text { color: #E8B84B; font-weight: 800; font-size: 1.05rem; line-height: 1.2; }
+    .logo-sub  { color: #6AABF0; font-size: .68rem; letter-spacing: .05em; }
+    .eval-badge { margin-left: auto; background: rgba(200,150,12,.15); border: 1px solid rgba(200,150,12,.4); border-radius: 20px; padding: 5px 14px; color: #E8B84B; font-size: .75rem; font-weight: 700; }
+
+    /* WRAPPER */
+    .wrapper { max-width: 760px; margin: 0 auto; padding: 28px 18px 50px; }
+
+    /* CARD */
+    .card { background: var(--panel-bg); border: 1px solid var(--border-mix); border-radius: 14px; overflow: hidden; margin-bottom: 22px; }
+    .card-head { background: var(--card-hd); padding: 14px 20px; border-bottom: 1px solid var(--border-mix); display: flex; align-items: center; justify-content: space-between; }
+    .card-title { font-weight: 700; color: #E8B84B; font-size: .95rem; }
+    .card-body { padding: 22px; }
+
+    /* FORM */
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: .77rem; font-weight: 600; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em; }
+    .field input, .field select {
+      width: 100%; padding: 10px 14px; border-radius: 9px;
+      border: 1.5px solid #3A3A28; background: var(--input-bg);
+      font-size: .9rem; color: var(--text-main); outline: none; transition: border .2s, box-shadow .2s;
+    }
+    .field input:focus, .field select:focus { border-color: #C8960C; box-shadow: 0 0 0 2px rgba(200,150,12,.2); }
+    .req { color: var(--danger); }
+
+    /* PROGRESS BAR */
+    .progress-wrap { background: rgba(58,58,40,.7); border-radius: 10px; height: 8px; margin-bottom: 6px; }
+    .progress-bar { height: 8px; border-radius: 10px; background: linear-gradient(90deg,#C8960C,#E8B84B); transition: width .4s; }
+    .progress-label { font-size: .73rem; color: var(--text-muted); text-align: right; }
+
+    /* QUESTION CARD */
+    .q-card { background: linear-gradient(135deg,rgba(21,37,64,.7),rgba(36,28,8,.7)); border: 1.5px solid var(--border-mix); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+    .q-num  { font-size: .72rem; font-weight: 700; color: #6AABF0; text-transform: uppercase; margin-bottom: 8px; }
+    .q-text { font-size: .97rem; font-weight: 600; color: #E2D8C0; margin-bottom: 14px; line-height: 1.5; }
+    .q-options { display: flex; flex-direction: column; gap: 8px; }
+    .q-opt {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; border-radius: 9px; cursor: pointer;
+      border: 1.5px solid #3A3A28; background: rgba(11,24,40,.6); transition: all .15s;
+    }
+    .q-opt:hover { border-color: #C8960C; background: rgba(200,150,12,.08); }
+    .q-opt input[type=radio] { accent-color: #C8960C; width: 16px; height: 16px; flex-shrink: 0; }
+    .q-opt.correct  { border-color: var(--success); background: rgba(10,42,24,.7); }
+    .q-opt.wrong    { border-color: var(--danger);  background: rgba(42,10,10,.7); }
+    .q-opt.correct-missed { border-color: var(--success); background: rgba(10,42,24,.4); }
+
+    /* RESULT */
+    .result-card { background: linear-gradient(135deg,#152540 0%,#241C08 100%); border: 2px solid var(--gold); border-radius: 16px; padding: 32px; text-align: center; }
+    .result-score { font-size: 3.5rem; font-weight: 900; color: #E8B84B; line-height: 1; }
+    .result-label { font-size: 1rem; color: var(--text-sub); margin-top: 8px; }
+    .result-msg   { font-size: .9rem; color: var(--text-main); margin-top: 16px; padding: 12px 18px; border-radius: 10px; }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: block; width: 100%; padding: 13px; border-radius: 10px; border: none; cursor: pointer;
+      background: var(--gold); color: #0A1520; font-weight: 800; font-size: .95rem;
+      transition: opacity .15s; margin-top: 10px;
+    }
+    .btn-primary:hover { opacity: .9; }
+    .btn-primary:disabled { opacity: .5; cursor: default; }
+    .btn-secondary {
+      display: inline-block; padding: 10px 24px; border-radius: 9px; border: 1.5px solid var(--gold);
+      background: transparent; color: var(--gold); font-weight: 700; font-size: .85rem; cursor: pointer; margin-top: 16px;
+    }
+
+    /* BADGE */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: .7rem; font-weight: 700; }
+    .badge-blue { background: #EBF3FD; color: var(--sapphire); }
+    .badge-gold { background: rgba(200,150,12,.12); color: var(--gold); }
+
+    /* FOOTER */
+    footer { text-align: center; font-size: .7rem; color: #8AA0B0; padding: 20px; border-top: 1px solid var(--card-bd); }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-badge">AG</div>
+    <div>
+      <div class="logo-text">AGTM Digital Academy</div>
+      <div class="logo-sub">EIP — English In Practice · Business &amp; General English</div>
+    </div>
+    <div class="eval-badge">🧪 Évaluation en ligne</div>
+  </header>
+
+  <!-- LOADING -->
+  <div id="loading" style="text-align:center;padding:60px 20px;color:#7A9AB0">
+    <div style="font-size:2rem;margin-bottom:8px">⏳</div>
+    Chargement…
+  </div>
+
+  <!-- APP -->
+  <div id="app" style="display:none">
+    <div class="wrapper">
+
+      <!-- ÉTAPE 1 : Infos étudiant -->
+      <div id="step1">
+        <div style="text-align:center;margin-bottom:24px">
+          <div style="font-size:1.5rem;font-weight:900;color:#E2D8C0;margin-bottom:6px">Test de niveau AGTM</div>
+          <div style="font-size:.88rem;color:#7A9AB0">Renseignez vos informations pour démarrer l'évaluation.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">👤 Vos informations</span>
+            <span class="badge badge-blue">Étape 1 / 2</span>
+          </div>
+          <div class="card-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div class="field" style="grid-column:span 2">
+                <label>Nom complet <span class="req">*</span></label>
+                <input id="s1Nom" type="text" placeholder="Prénom et Nom" required/>
+              </div>
+              <div class="field">
+                <label>Adresse email</label>
+                <input id="s1Email" type="email" placeholder="votre@email.com"/>
+              </div>
+              <div class="field">
+                <label>Votre niveau estimé</label>
+                <select id="s1Niv">
+                  <option value="A1">A1 — Débutant</option>
+                  <option value="A2">A2 — Élémentaire</option>
+                  <option value="B1" selected>B1 — Intermédiaire</option>
+                  <option value="B2">B2 — Avancé</option>
+                  <option value="C1">C1 — Expert</option>
+                  <option value="C2">C2 — Maîtrise</option>
+                </select>
+              </div>
+              <div class="field" style="grid-column:span 2">
+                <label>Type d'évaluation</label>
+                <select id="s1Type">
+                  <option value="Test de niveau">Test de niveau général</option>
+                  <option value="Grammaire">Grammaire uniquement</option>
+                  <option value="Vocabulaire">Vocabulaire uniquement</option>
+                </select>
+              </div>
+            </div>
+            <p id="s1Err" style="color:#E04A4A;font-size:.8rem;min-height:18px;margin-top:6px"></p>
+            <button class="btn-primary" onclick="startEval()">▶️ Démarrer l'évaluation</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 2 : Questions -->
+      <div id="step2" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div style="font-size:1.1rem;font-weight:800;color:#E2D8C0">Évaluation en cours</div>
+            <div id="s2Info" style="font-size:.78rem;color:#7A9AB0;margin-top:2px"></div>
+          </div>
+          <div id="s2Timer" style="font-size:1.2rem;font-weight:900;color:#C8960C;font-variant-numeric:tabular-nums"></div>
+        </div>
+
+        <div style="margin-bottom:18px">
+          <div class="progress-wrap"><div id="progressBar" class="progress-bar" style="width:0%"></div></div>
+          <div id="progressLabel" class="progress-label"></div>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <p id="s2Err" style="color:#E04A4A;font-size:.8rem;min-height:18px;margin-top:4px"></p>
+        <button class="btn-primary" id="submitBtn" onclick="submitEval()">✅ Soumettre mes réponses</button>
+      </div>
+
+      <!-- ÉTAPE 3 : Résultat -->
+      <div id="step3" style="display:none">
+        <div class="result-card">
+          <div style="font-size:2rem;margin-bottom:12px">🏆</div>
+          <div id="resNom" style="font-size:1.1rem;font-weight:700;color:#E2D8C0;margin-bottom:16px"></div>
+          <div class="result-score" id="resScore"></div>
+          <div class="result-label" id="resLabel"></div>
+          <div class="result-msg" id="resMsg"></div>
+          <div id="resBadge" style="margin-top:16px"></div>
+          <button class="btn-secondary" onclick="location.reload()">🔄 Recommencer</button>
+        </div>
+
+        <div id="corrections" style="margin-top:24px"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    AGTM Digital Academy &nbsp;·&nbsp; EIP English In Practice &nbsp;·&nbsp; Propriété de <strong style="color:#C8960C">ISSA BAMBA</strong> &nbsp;·&nbsp; © 2026
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
+
+    let _questions = []
+    let _startTime = null
+    let _timerInterval = null
+
+    // Init
+    document.getElementById('loading').style.display = 'none'
+    document.getElementById('app').style.display = 'block'
+
+    // ── Démarrer l'évaluation ────────────────────────────────────────
+    window.startEval = async function() {
+      const nom   = document.getElementById('s1Nom').value.trim()
+      const niveau = document.getElementById('s1Niv').value
+      const type  = document.getElementById('s1Type').value
+      const err   = document.getElementById('s1Err')
+      if (!nom) { err.textContent = 'Veuillez saisir votre nom complet.'; return }
+      err.textContent = ''
+
+      // Charger les questions
+      let query = sb.from('quiz_questions').select('*').eq('niveau', niveau)
+      if (type !== 'Test de niveau général') query = query.eq('pilier', type)
+      const { data: qs, error } = await query.limit(60)
+      if (error || !qs?.length) {
+        err.textContent = 'Aucune question disponible pour ce niveau/type. Réessayez avec un autre niveau.'
+        return
+      }
+
+      // Mélanger et prendre max 10
+      _questions = qs.sort(() => Math.random() - .5).slice(0, Math.min(15, qs.length))
+
+      document.getElementById('step1').style.display = 'none'
+      document.getElementById('step2').style.display = 'block'
+      document.getElementById('s2Info').textContent =
+        `${nom} · Niveau ${niveau} · ${_questions.length} question(s)`
+
+      renderQuestions()
+      _startTime = Date.now()
+      startTimer()
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer')
+      const total = _questions.length
+      container.innerHTML = _questions.map((q, i) => {
+        let opts = []
+        try { opts = Array.isArray(q.options) ? q.options : JSON.parse(q.options || '[]') } catch {}
+        const optHtml = opts.length
+          ? opts.map(o => `
+            <label class="q-opt">
+              <input type="radio" name="q${i}" value="${escHtml(o)}"/>
+              <span>${escHtml(o)}</span>
+            </label>`).join('')
+          : `<input type="text" id="qa_${i}" placeholder="Votre réponse…"
+               style="width:100%;padding:9px 13px;border-radius:8px;border:1.5px solid #BEC9D8;font-size:.88rem;outline:none"/>`
+        return `<div class="q-card" id="qcard_${i}">
+          <div class="q-num">Question ${i+1} sur ${total} · ${bdg(q.niveau,'badge-gold')} ${bdg(q.pilier,'badge-blue')}</div>
+          <div class="q-text">${escHtml(q.question)}</div>
+          <div class="q-options">${optHtml}</div>
+        </div>`
+      }).join('')
+      updateProgress(0, total)
+      // Live progress on change
+      document.querySelectorAll('input[type=radio]').forEach(r => r.addEventListener('change', () => {
+        const answered = new Set([..._questions.map((_,i) => {
+          const checked = document.querySelector(`input[name=q${i}]:checked`)
+          const text = document.getElementById(`qa_${i}`)
+          return (checked || text?.value?.trim()) ? i : null
+        }).filter(x => x !== null)]).size
+        updateProgress(answered, total)
+      }))
+    }
+
+    function updateProgress(done, total) {
+      const pct = total ? Math.round(done / total * 100) : 0
+      document.getElementById('progressBar').style.width = pct + '%'
+      document.getElementById('progressLabel').textContent = `${done} / ${total} réponse(s)`
+    }
+
+    function startTimer() {
+      _timerInterval = setInterval(() => {
+        const s = Math.floor((Date.now() - _startTime) / 1000)
+        const m = Math.floor(s / 60)
+        document.getElementById('s2Timer').textContent = `⏱ ${m}:${String(s % 60).padStart(2,'0')}`
+        // Auto-submit après 30 minutes
+        if (s >= 1800) {
+          clearInterval(_timerInterval)
+          if (typeof submitEval === 'function' && !document.getElementById('submitBtn').disabled) {
+            document.getElementById('s2Timer').textContent = '⏱ Temps écoulé !'
+            submitEval()
+          }
+        }
+      }, 1000)
+    }
+
+    // ── Soumettre ────────────────────────────────────────────────────
+    window.submitEval = async function() {
+      clearInterval(_timerInterval)
+      const btn = document.getElementById('submitBtn')
+      btn.disabled = true
+      btn.textContent = 'Envoi en cours…'
+
+      const nom   = document.getElementById('s1Nom').value.trim()
+      const email = document.getElementById('s1Email').value.trim()
+      const niveau = document.getElementById('s1Niv').value
+      const type  = document.getElementById('s1Type').value
+
+      const reponses = []
+      let bonnes = 0
+      _questions.forEach((q, i) => {
+        const checked = document.querySelector(`input[name=q${i}]:checked`)
+        const textEl  = document.getElementById(`qa_${i}`)
+        const rep = checked ? checked.value : (textEl?.value?.trim() || '')
+        const correct = rep.trim().toLowerCase() === q.reponse_correcte.trim().toLowerCase()
+        if (correct) bonnes++
+        reponses.push({ question: q.question, reponse: rep, correcte: q.reponse_correcte, ok: correct, explication: q.explication || '' })
+      })
+
+      const score = Math.round((bonnes / _questions.length) * 20 * 10) / 10
+      const score_max = 20
+
+      // Sauvegarder
+      await sb.from('soumissions_evaluations').insert({
+        evaluation_titre: type,
+        etudiant_nom: nom,
+        etudiant_email: email || null,
+        niveau,
+        score,
+        score_max,
+        nb_questions: _questions.length,
+        nb_bonnes: bonnes,
+        reponses: reponses,
+      })
+
+      // Afficher résultat
+      document.getElementById('step2').style.display = 'none'
+      document.getElementById('step3').style.display = 'block'
+      document.getElementById('resNom').textContent = `Résultats de ${nom}`
+      document.getElementById('resScore').textContent = `${score} / ${score_max}`
+      document.getElementById('resLabel').textContent = `${bonnes} bonne(s) réponse(s) sur ${_questions.length}`
+
+      const pct = Math.round(bonnes / _questions.length * 100)
+      let mention, msgBg, msgCol, msgTxt
+      if (pct >= 85)      { mention='Excellent'; msgBg='#EBF9F1'; msgCol='#1A7A45'; msgTxt='Félicitations ! Votre niveau est très élevé.' }
+      else if (pct >= 70) { mention='Très Bien'; msgBg='#EBF9F1'; msgCol='#1A7A45'; msgTxt='Très bonne maîtrise de la langue anglaise.' }
+      else if (pct >= 55) { mention='Bien';      msgBg='#FFF8E6'; msgCol='#8A6000'; msgTxt='Bon niveau. Quelques points à consolider.' }
+      else if (pct >= 40) { mention='Assez Bien';msgBg='#FFF3E6'; msgCol='#8A4500'; msgTxt='Niveau correct. Des lacunes à combler.' }
+      else                { mention='À améliorer';msgBg='#FDEAEA'; msgCol='#8A1A1A'; msgTxt='Des bases à renforcer. Nos formateurs peuvent vous aider !' }
+
+      document.getElementById('resMsg').style.background = msgBg
+      document.getElementById('resMsg').style.color = msgCol
+      document.getElementById('resMsg').textContent = msgTxt
+      document.getElementById('resBadge').innerHTML = `<span class="badge" style="background:${msgBg};color:${msgCol};font-size:.85rem;padding:6px 16px">${mention} · ${pct}%</span>`
+
+      // Corrections
+      document.getElementById('corrections').innerHTML = `
+        <div style="font-size:.9rem;font-weight:700;color:#E2D8C0;margin-bottom:12px">📋 Correction détaillée</div>
+        ${reponses.map((r, i) => `
+          <div style="background:${r.ok?'rgba(10,42,24,.6)':'rgba(42,10,10,.6)'};border:1.5px solid ${r.ok?'#27AE60':'#E04A4A'};border-radius:10px;padding:14px 16px;margin-bottom:10px">
+            <div style="font-size:.75rem;font-weight:700;color:${r.ok?'#4AE090':'#E04A4A'};margin-bottom:5px">
+              ${r.ok?'✅':'❌'} Question ${i+1}
+            </div>
+            <div style="font-size:.9rem;font-weight:600;color:#E2D8C0;margin-bottom:8px">${escHtml(r.question)}</div>
+            <div style="font-size:.82rem;color:#8AAAC0">
+              Votre réponse : <strong style="color:${r.ok?'#4AE090':'#E04A4A'}">${escHtml(r.reponse||'—')}</strong>
+              ${!r.ok?` · Bonne réponse : <strong style="color:#4AE090">${escHtml(r.correcte)}</strong>`:''}
+            </div>
+            ${r.explication?`<div style="font-size:.75rem;color:#7A9AB0;margin-top:5px;font-style:italic">💡 ${escHtml(r.explication)}</div>`:''}
+          </div>`).join('')}
+      `
+    }
+
+    function escHtml(s) {
+      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+    }
+    function bdg(txt, cls) {
+      return `<span class="badge ${cls}">${escHtml(txt)}</span>`
+    }
+  </script>
+</body>
+</html>

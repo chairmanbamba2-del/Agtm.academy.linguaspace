@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGTM Digital Academy — Candidature Formateur</title>
+
+  <script>
+    const SUPABASE_URL  = "https://fglzovvsyloprokmdadx.supabase.co";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww";
+  </script>
+
+  <style>
+    html { font-size: 17px; }
+    :root {
+      --gold:#C8960C; --gold-light:#E8B84B;
+      --success:#27AE60; --danger:#E04A4A;
+      --panel-bg: linear-gradient(135deg,#152540 0%,#241C08 100%);
+      --card-hd:  linear-gradient(90deg,#1C3258 0%,#2C2208 100%);
+      --input-bg: linear-gradient(135deg,#0B1828 0%,#1C1408 100%);
+      --border-mix: rgba(200,150,12,0.2);
+      --text-main:#E2D8C0; --text-sub:#8AAAC0; --text-muted:#6A8AAA;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Segoe UI',system-ui,sans-serif;
+      background:linear-gradient(150deg,#09111E 0%,#160E04 40%,#0B1A2E 70%,#160E04 100%);
+      background-attachment:fixed;
+      color:var(--text-main);min-height:100vh;
+    }
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#09111E}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(#2A3F58,#3A2A10);border-radius:3px}
+    .header{background:linear-gradient(90deg,#0E1E34 0%,#1A1408 100%);padding:16px 28px;display:flex;align-items:center;gap:14px;border-bottom:3px solid var(--gold);box-shadow:0 2px 12px rgba(0,0,0,.5)}
+    .logo-badge{width:44px;height:44px;background:linear-gradient(135deg,#C8960C,#E8B84B);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;color:#0A1520;flex-shrink:0;box-shadow:0 2px 8px rgba(200,150,12,.4)}
+    .logo-text{color:#E8B84B;font-weight:800;font-size:1.05rem;line-height:1.2}
+    .logo-sub{color:#6AABF0;font-size:.68rem;letter-spacing:.05em}
+    .form-badge{margin-left:auto;background:rgba(200,150,12,.15);border:1px solid rgba(200,150,12,.4);border-radius:20px;padding:5px 14px;color:#E8B84B;font-size:.75rem;font-weight:700}
+    .wrapper{max-width:820px;margin:0 auto;padding:28px 18px 60px}
+    .card{background:var(--panel-bg);border:1px solid var(--border-mix);border-radius:14px;overflow:hidden;margin-bottom:22px}
+    .card-head{background:var(--card-hd);padding:14px 20px;border-bottom:1px solid var(--border-mix);display:flex;align-items:center;justify-content:space-between}
+    .card-title{font-weight:700;color:#E8B84B;font-size:.95rem}
+    .card-body{padding:22px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .span-2{grid-column:span 2}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:.77rem;font-weight:600;color:var(--text-sub);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+    .field input,.field select,.field textarea{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid #3A3A28;background:var(--input-bg);font-size:.9rem;color:var(--text-main);outline:none;transition:border .2s,box-shadow .2s}
+    .field input:focus,.field select:focus,.field textarea:focus{border-color:#C8960C;box-shadow:0 0 0 2px rgba(200,150,12,.2)}
+    .field textarea{resize:vertical;min-height:100px}
+    .req{color:var(--danger)}
+    .field-hint{font-size:.73rem;color:var(--text-muted);margin-top:5px}
+    .q-block{background:rgba(28,50,88,.5);border-left:4px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:16px}
+    .q-num{font-size:.73rem;font-weight:700;color:#E8B84B;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+    .q-text{font-size:.9rem;font-weight:600;color:#E2D8C0;margin-bottom:10px;line-height:1.4}
+    .btn-primary{display:block;width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,#C8960C,#E8B84B);color:#0A1520;font-weight:800;font-size:.97rem;transition:opacity .15s;margin-top:10px;box-shadow:0 3px 12px rgba(200,150,12,.3)}
+    .btn-primary:hover{opacity:.85}
+    .btn-primary:disabled{opacity:.5;cursor:default}
+    .success-card{background:linear-gradient(135deg,#0A2A18,#181808);border:2px solid var(--success);border-radius:14px;padding:32px;text-align:center}
+    .err-msg{color:var(--danger);font-size:.8rem;min-height:18px;margin-top:8px}
+    .badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.72rem;font-weight:700}
+    .badge-gold{background:rgba(200,150,12,.18);color:#E8B84B;border:1px solid rgba(200,150,12,.3)}
+    footer{text-align:center;font-size:.68rem;color:#3A5070;padding:20px;border-top:1px solid var(--border-mix);margin-top:20px}
+    @media(max-width:600px){.grid-2{grid-template-columns:1fr}.span-2{grid-column:span 1}}
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo-badge">AG</div>
+  <div>
+    <div class="logo-text">AGTM Digital Academy</div>
+    <div class="logo-sub">EIP — English In Practice · Abidjan, Côte d'Ivoire</div>
+  </div>
+  <div class="form-badge">🎯 Candidature Formateur</div>
+</header>
+
+<div class="wrapper">
+
+  <!-- FORMULAIRE -->
+  <div id="formView">
+
+    <div style="text-align:center;margin-bottom:28px">
+      <div style="font-size:1.4rem;font-weight:900;color:#E8B84B;margin-bottom:6px">Postuler comme Formateur</div>
+      <div style="font-size:.9rem;color:#8AAAC0;max-width:520px;margin:0 auto;line-height:1.6">
+        Rejoignez l'équipe AGTM Digital Academy. Renseignez vos informations et répondez aux questions pédagogiques ci-dessous.
+      </div>
+    </div>
+
+    <!-- INFOS PERSONNELLES -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">👤 Informations Personnelles</span>
+        <span class="badge badge-gold">Candidat</span>
+      </div>
+      <div class="card-body">
+        <div class="grid-2">
+          <div class="field">
+            <label>Nom <span class="req">*</span></label>
+            <input id="cNom" type="text" placeholder="NOM EN MAJUSCULES" required/>
+          </div>
+          <div class="field">
+            <label>Prénom <span class="req">*</span></label>
+            <input id="cPrenom" type="text" placeholder="Prénom"/>
+          </div>
+          <div class="field">
+            <label>Email <span class="req">*</span></label>
+            <input id="cEmail" type="email" placeholder="votre@email.com" required/>
+          </div>
+          <div class="field">
+            <label>Téléphone <span class="req">*</span></label>
+            <input id="cTel" type="text" placeholder="+225 XXXXXXXXXX" required/>
+          </div>
+          <div class="field">
+            <label>Poste visé</label>
+            <select id="cPoste">
+              <option>Formateur d'anglais</option>
+              <option>Formateur Business English</option>
+              <option>Formateur General English</option>
+              <option>Formateur Conversation</option>
+              <option>Formateur IELTS / TOEFL</option>
+              <option>Assistant pédagogique</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Niveau d'études</label>
+            <select id="cEtudes">
+              <option>Baccalauréat</option>
+              <option>Licence / Bachelor</option>
+              <option>Master</option>
+              <option>Doctorat</option>
+              <option>Diplôme professionnel</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Années d'expérience en enseignement <span class="req">*</span></label>
+            <input id="cExp" type="number" min="0" placeholder="Ex: 3"/>
+          </div>
+          <div class="field">
+            <label>Matières / Spécialités</label>
+            <input id="cMat" type="text" placeholder="Ex: Business English, IELTS, Conversation, Grammaire…"/>
+          </div>
+          <div class="field span-2">
+            <label>Disponibilités (jours et horaires)</label>
+            <input id="cDispo" type="text" placeholder="Ex: Lun–Ven 16h–20h, Week-end matin…"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTIONS PÉDAGOGIQUES -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">❓ Questions Pédagogiques</span>
+        <span class="badge badge-gold">Obligatoire</span>
+      </div>
+      <div class="card-body">
+
+        <div class="q-block">
+          <div class="q-num">Question 1 / 8</div>
+          <div class="q-text">Comment définissez-vous votre approche pédagogique pour enseigner l'anglais à des adultes débutants (niveau A1) ?</div>
+          <textarea id="q1" placeholder="Décrivez votre méthode, vos outils, vos techniques…" rows="3"></textarea>
+        </div>
+
+        <div class="q-block">
+          <div class="q-num">Question 2 / 8</div>
+          <div class="q-text">Comment adaptez-vous votre enseignement selon les différents niveaux (A1 à C2) et les objectifs des apprenants (professionnel, voyage, certification) ?</div>
+          <textarea id="q2" placeholder="Exemple concret avec un étudiant B1 vs C1…" rows="3"></textarea>
+        </div>
+
+        <div class="q-block">
+          <div class="q-num">Question 3 / 8</div>
+          <div class="q-text">Décrivez une séance de cours type que vous animeriez pour un groupe de niveau B1 sur le thème "Business Email Writing". Quelles activités proposeriez-vous ?</div>
+          <textarea id="q3" placeholder="Structure de la séance, timing, exercices…" rows="4"></textarea>
+        </div>
+
+        <div class="q-block">
+          <div class="q-num">Question 4 / 8</div>
+          <div class="q-text">Comment gérez-vous un étudiant qui éprouve des difficultés à progresser ? Quelles stratégies mettez-vous en place pour le remotiver ?</div>
+          <textarea id="q4" placeholder="Approche personnalisée, suivi, outils de remédiation…" rows="3"></textarea>
+        </div>
+
+        <div class="q-block">
+          <div class="q-num">Question 5 / 8</div>
+          <div class="q-text">Quels outils numériques (applications, plateformes, ressources en ligne) utilisez-vous dans vos cours et pourquoi ?</div>
+          <textarea id="q5" placeholder="Ex: Duolingo, Quizlet, Google Classroom, YouTube, podcasts…" rows="3"></textarea>
+        </div>
+
+        <div class="q-block">
+          <div class="q-num">Question 6 / 8</div>
+          <div class="q-text">Comment évaluez-vous la progression de vos étudiants ? Quels types d'évaluations utilisez-vous (formative, sommative, orale, écrite) ?</div>
+          <textarea id="q6" placeholder="Méthodes d'évaluation, fréquence, critères…" rows="3"></textarea>
+        </div>
+
+        <div class="q-block">
+          <div class="q-num">Question 7 / 8</div>
+          <div class="q-text">Avez-vous une expérience avec la préparation aux certifications internationales (IELTS, TOEFL, TOEIC, Cambridge) ? Si oui, décrivez votre méthodologie.</div>
+          <textarea id="q7" placeholder="Certifications maîtrisées, taux de réussite, méthodes…" rows="3"></textarea>
+        </div>
+
+        <div class="q-block">
+          <div class="q-num">Question 8 / 8</div>
+          <div class="q-text">Pourquoi souhaitez-vous rejoindre AGTM Digital Academy (EIP English In Practice) ? Quelles valeurs partagez-vous avec notre institution ?</div>
+          <textarea id="q8" placeholder="Motivation, vision, projet professionnel…" rows="4"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CV UPLOAD -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">📎 Curriculum Vitae (CV)</span>
+        <span class="badge badge-gold">Recommandé</span>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Téléverser votre CV <span style="color:#888;font-weight:400;text-transform:none">(PDF, Word, image — max 10 Mo)</span></label>
+          <div id="cvDropZone" style="border:2px dashed #BEC9D8;border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:#F8FAFC"
+            onclick="document.getElementById('cvFile').click()"
+            ondragover="event.preventDefault();this.style.borderColor='#7C3AED';this.style.background='rgba(124,58,237,.05)'"
+            ondragleave="this.style.borderColor='#BEC9D8';this.style.background='#F8FAFC'"
+            ondrop="event.preventDefault();this.style.borderColor='#BEC9D8';this.style.background='#F8FAFC';handleCvDrop(event.dataTransfer.files[0])">
+            <div style="font-size:2rem;margin-bottom:8px">📄</div>
+            <div style="font-size:.88rem;font-weight:600;color:#8AAAC0;margin-bottom:4px">Cliquez ou glissez votre CV ici</div>
+            <div style="font-size:.75rem;color:#8AA0B0">Formats acceptés : PDF, DOC, DOCX, JPG, PNG</div>
+          </div>
+          <input id="cvFile" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" style="display:none" onchange="handleCvFile(this.files[0])"/>
+          <div id="cvPreview" style="display:none;margin-top:10px;padding:10px 14px;background:#EBF9F1;border:1px solid #27AE60;border-radius:8px;display:flex;align-items:center;gap:10px">
+            <span style="font-size:1.2rem">✅</span>
+            <div style="flex:1">
+              <div id="cvFileName" style="font-size:.85rem;font-weight:700;color:#E8B84B"></div>
+              <div id="cvFileSize" style="font-size:.72rem;color:#8AAAC0"></div>
+            </div>
+            <button onclick="clearCv()" style="padding:3px 10px;border-radius:6px;border:1px solid #E04A4A;background:transparent;color:#E04A4A;font-size:.75rem;cursor:pointer">✕ Retirer</button>
+          </div>
+          <div id="cvUploadProgress" style="display:none;margin-top:8px">
+            <div style="font-size:.78rem;color:#7C3AED;margin-bottom:4px" id="cvProgressTxt">Téléversement en cours…</div>
+            <div style="height:6px;background:#DDE4EF;border-radius:3px;overflow:hidden">
+              <div id="cvProgressBar" style="height:6px;background:#7C3AED;border-radius:3px;width:0%;transition:width .3s"></div>
+            </div>
+          </div>
+        </div>
+        <div class="field-hint">Votre CV aidera l'équipe AGTM à mieux évaluer votre profil.</div>
+      </div>
+    </div>
+
+    <!-- LETTRE DE MOTIVATION -->
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">💬 Lettre de Motivation (optionnel)</span>
+      </div>
+      <div class="card-body">
+        <div class="field">
+          <label>Votre message à la direction</label>
+          <textarea id="cMotiv" rows="5" placeholder="Présentez-vous librement, expliquez votre parcours et votre vision de l'enseignement de l'anglais…"></textarea>
+          <div class="field-hint">Ce champ est optionnel mais fortement recommandé.</div>
+        </div>
+        <p id="formErr" class="err-msg"></p>
+        <button class="btn-primary" id="submitBtn" onclick="submitCandidature()">🎯 Soumettre ma Candidature</button>
+      </div>
+    </div>
+
+  </div><!-- /formView -->
+
+  <!-- SUCCÈS -->
+  <div id="successView" style="display:none">
+    <div class="success-card">
+      <div style="font-size:3rem;margin-bottom:16px">🎉</div>
+      <div style="font-size:1.2rem;font-weight:900;color:#4AE090;margin-bottom:8px">Candidature soumise avec succès !</div>
+      <div id="successMsg" style="font-size:.9rem;color:#8AAAC0;margin-bottom:24px;line-height:1.6"></div>
+      <div style="font-size:.82rem;color:#27AE60;background:#EBF9F1;border-radius:8px;padding:12px 18px;line-height:1.6">
+        ✅ Votre dossier a bien été transmis à la direction d'AGTM Digital Academy.<br/>
+        Notre équipe examinera votre candidature et vous contactera prochainement.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  AGTM Digital Academy &nbsp;·&nbsp; EIP English In Practice &nbsp;·&nbsp; Propriété de <strong style="color:#C8960C">ISSA BAMBA</strong> &nbsp;·&nbsp; © 2026
+</footer>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+  const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
+
+  // ── CV Upload helpers ──────────────────────────────────────────
+  window._cvFile = null
+  window._cvUrl  = null
+
+  window.handleCvFile = function(file) {
+    if (!file) return
+    if (file.size > 10 * 1024 * 1024) { alert('Fichier trop volumineux (max 10 Mo)'); return }
+    window._cvFile = file
+    document.getElementById('cvFileName').textContent = file.name
+    document.getElementById('cvFileSize').textContent = (file.size/1024).toFixed(1) + ' Ko'
+    document.getElementById('cvPreview').style.display = 'flex'
+    document.getElementById('cvDropZone').style.borderColor = '#27AE60'
+  }
+
+  window.handleCvDrop = function(file) {
+    if (file) handleCvFile(file)
+  }
+
+  window.clearCv = function() {
+    window._cvFile = null
+    window._cvUrl  = null
+    document.getElementById('cvFile').value = ''
+    document.getElementById('cvPreview').style.display = 'none'
+    document.getElementById('cvDropZone').style.borderColor = '#BEC9D8'
+  }
+
+  async function uploadCv(nom, prenom) {
+    if (!window._cvFile) return null
+    const file = window._cvFile
+    const ext  = file.name.split('.').pop()
+    const path = `${nom}_${prenom}_${Date.now()}.${ext}`.replace(/\s+/g,'_')
+    document.getElementById('cvUploadProgress').style.display = 'block'
+    document.getElementById('cvProgressBar').style.width = '30%'
+    document.getElementById('cvProgressTxt').textContent = 'Téléversement du CV…'
+    const { data, error } = await sb.storage.from('cvs').upload(path, file, { upsert: true })
+    if (error) { console.error(error); return null }
+    document.getElementById('cvProgressBar').style.width = '100%'
+    document.getElementById('cvProgressTxt').textContent = '✅ CV téléversé !'
+    const { data: urlData } = sb.storage.from('cvs').getPublicUrl(path)
+    return urlData?.publicUrl || null
+  }
+
+  window.submitCandidature = async function() {
+    const nom    = document.getElementById('cNom').value.trim().toUpperCase()
+    const prenom = document.getElementById('cPrenom').value.trim()
+    const email  = document.getElementById('cEmail').value.trim()
+    const tel    = document.getElementById('cTel').value.trim()
+    const exp    = Number(document.getElementById('cExp').value)||0
+    const err    = document.getElementById('formErr')
+
+    err.textContent = ''
+    if (!nom)    { err.textContent = 'Veuillez renseigner votre nom.'; return }
+    if (!prenom) { err.textContent = 'Veuillez renseigner votre prénom.'; return }
+    if (!email)  { err.textContent = 'Veuillez renseigner votre email.'; return }
+    if (!tel)    { err.textContent = 'Veuillez renseigner votre téléphone.'; return }
+
+    const btn = document.getElementById('submitBtn')
+    btn.disabled = true
+    btn.textContent = '⏳ Envoi en cours…'
+
+    // Upload CV si fourni
+    const cvUrl = await uploadCv(nom, prenom)
+
+    // Collecter les réponses aux questions
+    const reponses = {}
+    const questions = [
+      'Approche pédagogique pour débutants (A1)',
+      'Adaptation selon niveaux et objectifs',
+      'Séance type B1 — Business Email Writing',
+      'Gestion d\'un étudiant en difficulté',
+      'Outils numériques utilisés',
+      'Méthodes d\'évaluation',
+      'Expérience certifications internationales (IELTS/TOEFL)',
+      'Motivation pour rejoindre AGTM',
+    ]
+    for (let i = 1; i <= 8; i++) {
+      const val = document.getElementById('q'+i)?.value.trim()
+      if (val) reponses[questions[i-1]] = val
+    }
+
+    const { error } = await sb.from('candidatures').insert({
+      nom,
+      prenom,
+      email,
+      telephone: tel,
+      poste: document.getElementById('cPoste').value,
+      niveau_etudes: document.getElementById('cEtudes').value,
+      experience_annees: exp,
+      matieres: document.getElementById('cMat').value.trim()||null,
+      disponibilites: document.getElementById('cDispo').value.trim()||null,
+      motivations: document.getElementById('cMotiv').value.trim()||null,
+      reponses,
+      cv_url: cvUrl||null,
+      statut: 'Nouveau',
+    })
+
+    if (error) {
+      err.textContent = 'Erreur lors de la soumission : ' + error.message
+      btn.disabled = false
+      btn.textContent = '🎯 Soumettre ma Candidature'
+      return
+    }
+
+    document.getElementById('successMsg').innerHTML =
+      `Candidature de <strong>${prenom} ${nom}</strong> soumise le <strong>${new Date().toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}</strong>.`
+    document.getElementById('formView').style.display = 'none'
+    document.getElementById('successView').style.display = 'block'
+    window.scrollTo({ top:0, behavior:'smooth' })
+  }
+</script>
+</body>
+</html>

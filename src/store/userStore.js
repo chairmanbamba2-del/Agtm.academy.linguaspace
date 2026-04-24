@@ -23,11 +23,16 @@ export const useUserStore = create((set) => ({
   currentLanguage: 'en',
   setCurrentLanguage: (lang) => set({ currentLanguage: lang }),
 
+  // Native language (langue maternelle, pour le coach adaptatif)
+  nativeLanguage: null,
+  setNativeLanguage: (lang) => set({ nativeLanguage: lang }),
+
   // Reset complet (déconnexion)
   reset: () => set({
     user: null, linguaUser: null,
     subscription: null, progress: [],
-    isAdmin: false, loading: false
+    isAdmin: false, loading: false,
+    nativeLanguage: null
   })
 }))
 
@@ -37,28 +42,43 @@ export const useUserStore = create((set) => ({
 export function checkAccess(subscription, feature) {
   if (!subscription || subscription.status !== 'active') return false
 
-  const planKey = subscription.plan_type === 'uni'
-    ? `uni_${subscription.selected_language}`
-    : 'all_access'
+  const planType = subscription.plan_type || ''
+  const languages = getAccessibleLanguages(subscription)
 
-  const rules = {
-    'corner_en':   ['uni_en',  'all_access'],
-    'corner_es':   ['uni_es',  'all_access'],
-    'corner_de':   ['uni_de',  'all_access'],
-    'corner_fr':   ['uni_fr',  'all_access'],
-    'ai_chat':     ['uni_en', 'uni_es', 'uni_de', 'uni_fr', 'all_access'],
-    'ai_premium':  ['all_access'],
-    'role_play':   ['all_access'],
-    'exam_prep':   ['all_access'],
-    'all_languages':['all_access'],
+  if (feature.startsWith('corner_')) {
+    const lang = feature.replace('corner_', '')
+    return languages.includes(lang)
   }
 
-  return rules[feature]?.includes(planKey) ?? false
+  if (feature === 'ai_chat') return true
+
+  if (['ai_premium', 'role_play', 'exam_prep'].includes(feature)) {
+    return planType.startsWith('all_access')
+  }
+
+  if (feature === 'all_languages') {
+    return planType.startsWith('all_access')
+  }
+
+  return false
 }
 
 // Retourne les langues accessibles selon l'abonnement
 export function getAccessibleLanguages(subscription) {
   if (!subscription || subscription.status !== 'active') return []
-  if (subscription.plan_type === 'all_access') return ['en', 'es', 'de', 'fr']
-  return [subscription.selected_language]
+
+  const planType = subscription.plan_type || ''
+
+  if (planType.startsWith('all_access')) return ['en', 'es', 'de', 'fr', 'ar']
+
+  if (planType === 'a_la_carte') {
+    const langs = subscription.selected_language || ''
+    return langs.split(',').map(l => l.trim()).filter(Boolean)
+  }
+
+  if (planType.startsWith('uni')) {
+    if (subscription.selected_language) return [subscription.selected_language]
+  }
+
+  return []
 }

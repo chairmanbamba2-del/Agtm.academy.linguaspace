@@ -1,0 +1,84 @@
+        <!-- Top bar -->
+        <div class="agtm-topbar">
+          <button id="hamburgerBtn" class="agtm-btn agtm-btn-ghost agtm-btn-icon" onclick="window._toggleSidebar()" title="Réduire / Agrandir le menu" aria-label="Réduire / Agrandir le menu">☰</button>
+
+          <div class="agtm-topbar-title">
+            <h2 id="pageTitle"></h2>
+            <button id="navBackBtn" class="agtm-btn agtm-btn-primary" onclick="window._navBack()" style="display:none">← Retour</button>
+          </div>
+
+          <div class="agtm-search-bar" id="searchBarWrap">
+            <span class="agtm-nav-icon">🔍</span>
+            <input id="globalSearchInput" class="agtm-search-input" type="text" placeholder="Rechercher…  (Ctrl+K)"
+              oninput="window._globalSearch(this.value)"
+              onkeydown="if(event.key==='Escape'){this.value='';window._globalSearch('');this.blur()}"
+              onfocus="document.getElementById('searchResults').style.display='block'" />
+            <div id="searchResults" class="agtm-dropdown" style="display:none; top:calc(100% + 6px); left:0; right:0; max-width:360px; max-height:320px; overflow-y:auto"></div>
+          </div>
+
+          <div class="topbar-actions">
+            <!-- Ctrl+K hint pill -->
+            <button onclick="window._openCmd()" class="agtm-btn agtm-btn-secondary agtm-btn-pill agtm-btn-sm" data-tip="Ouvrir la palette de commandes">
+              <span style="font-size:.8rem">⌨️</span>
+              <span style="font-family:monospace;background:#0D1B2A;padding:1px 6px;border-radius:4px;font-size:.68rem;border:1px solid #1E3050">Ctrl+K</span>
+            </button>
+
+            <!-- Language toggle FR/EN -->
+            <button id="langToggleBtn" onclick="window._cycleLang()" title="Changer la langue" class="agtm-btn agtm-btn-secondary agtm-btn-pill agtm-btn-sm">
+              🌐 <span id="langLabel">FR</span>
+            </button>
+
+            <!-- Notification bell -->
+            <div style="position:relative" id="notifWrapper">
+              <button id="notifBtn" class="agtm-notif-btn" onclick="window._toggleNotifPanel()" aria-label="Notifications">
+                🔔
+                <span id="notifDot" class="agtm-notif-dot"></span>
+              </button>
+              <!-- Notification panel -->
+              <div id="notifPanel" class="agtm-dropdown" style="display:none; top:44px; width:320px">
+                <div class="agtm-dropdown-header">
+                  <div style="font-weight:800;color:var(--premium-gold-lt);font-size:.85rem">🔔 Notifications</div>
+                  <button onclick="window._notifMarkAllRead()" style="font-size:.68rem;color:var(--premium-sapphire-lt);background:none;border:none;cursor:pointer;padding:0">Tout marquer lu</button>
+                </div>
+                <div id="notifList" style="max-height:360px;overflow-y:auto;padding:4px 0">
+                  <div style="text-align:center;padding:24px;color:var(--premium-text-3);font-size:.8rem">Chargement…</div>
+                </div>
+                <div style="padding:10px 16px;border-top:1px solid var(--premium-border-2);text-align:center">
+                  <button onclick="navigateTo(profile?.role==='etudiant'?'mes_messages':'messagerie');window._closeNotifPanel()" style="font-size:.75rem;color:var(--premium-sapphire-lt);background:none;border:none;cursor:pointer">Voir tous les messages →</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- User profile button -->
+            <div style="position:relative" id="profileWrap">
+              <button onclick="window._toggleProfile()" aria-label="Menu profil" class="agtm-profile-btn">
+                <div id="profileAvatar" class="agtm-profile-avatar">?</div>
+                <div id="profileName">Chargement…</div>
+                <span style="color:var(--premium-text-4);font-size:.6rem">▼</span>
+              </button>
+              <!-- Dropdown -->
+              <div id="profileDrop" class="agtm-dropdown" style="display:none">
+                <div id="profileDropHeader" class="agtm-dropdown-header"></div>
+                <div style="padding:6px">
+                  <button onclick="window.navigateTo('mon_profil');window._closeProfile()" class="agtm-dropdown-item">
+                    <span>👤</span> Mon Profil
+                  </button>
+                  <button onclick="window.navigateTo('mes_preferences');window._closeProfile()" class="agtm-dropdown-item">
+                    <span>🔔</span> Mes Préférences
+                  </button>
+                  <button onclick="window.navigateTo('ma_securite');window._closeProfile()" class="agtm-dropdown-item">
+                    <span>🔒</span> Sécurité
+                  </button>
+                  <div class="agtm-dropdown-divider"></div>
+                  <button onclick="window._navGrpState={};window._closeProfile();window.buildSidebar&&window.buildSidebar()" class="agtm-dropdown-item" style="color:var(--premium-gold)">
+                    <span>🔄</span> Réinitialiser le menu
+                  </button>
+                  <div class="agtm-dropdown-divider"></div>
+                  <button onclick="logout()" class="agtm-dropdown-item" style="color:#E04A4A">
+                    <span>🚪</span> Déconnexion
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>

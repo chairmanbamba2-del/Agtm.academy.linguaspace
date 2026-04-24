@@ -6,7 +6,7 @@ import { signOut } from '../lib/auth'
 
 // Charge le profil complet de l'utilisateur connecté
 export function useProfile() {
-  const { user, setLinguaUser, setSubscription, setProgress } = useUserStore()
+  const { user, setLinguaUser, setSubscription, setProgress, setNativeLanguage } = useUserStore()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -23,6 +23,9 @@ export function useProfile() {
         setLinguaUser(linguaUser)
         setSubscription(subscription)
         setProgress(progress)
+        if (linguaUser?.native_language) {
+          setNativeLanguage(linguaUser.native_language)
+        }
       } catch (err) {
         setError(err.message)
       } finally {

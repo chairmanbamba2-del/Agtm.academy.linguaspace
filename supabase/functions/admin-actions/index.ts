@@ -128,7 +128,121 @@ Deno.serve(async (req: Request) => {
         })
       }
 
-      return ok({ success: true, userId: authUser.user.id })
+       return ok({ success: true, userId: authUser.user.id })
+    }
+
+    // ── Créer un abonnement pour un utilisateur existant ─────────────
+    if (action === 'create_subscription') {
+      const { userId, planType, selectedLanguage, paymentMode, notes, months } = payload
+
+      // Vérifier que l'utilisateur existe
+      const { data: existingUser } = await supabase
+        .from('lingua_users')
+        .select('id, email')
+        .eq('id', userId)
+        .single()
+      if (!existingUser) throw new Error('Utilisateur non trouvé')
+
+      const now      = new Date()
+      const expiresAt = new Date(now)
+      expiresAt.setMonth(expiresAt.getMonth() + (months || 1))
+
+      const amount = planType === 'all_access' ? 15000 : 10000
+
+      const { data: sub } = await supabase
+        .from('lingua_subscriptions')
+        .insert({
+          user_id:           userId,
+          plan_type:         planType,
+          selected_language: planType === 'uni' ? selectedLanguage : null,
+          status:            'active',
+          payment_mode:      paymentMode || 'manual',
+          amount_fcfa:       amount,
+          started_at:        now.toISOString(),
+          expires_at:        expiresAt.toISOString(),
+          created_by_admin:  user.id,
+          notes,
+        })
+        .select()
+        .single()
+
+      // Créer la progression
+      const languages = planType === 'all_access'
+        ? ['en','es','de','fr']
+        : [selectedLanguage]
+
+      for (const lang of languages.filter(Boolean)) {
+        await supabase.from('lingua_progress').upsert({
+          user_id:  userId,
+          language: lang,
+          current_level: 'A1',
+          xp_points: 0,
+          streak_days: 0,
+        }, { onConflict: 'user_id,language' })
+      }
+
+      // Créer la transaction
+      if (paymentMode !== 'free') {
+        await supabase.from('lingua_transactions').insert({
+          type:        'subscription',
+          direction:   'income',
+          user_id:     userId,
+          amount_fcfa: amount,
+          description: `Abonnement ${planType.toUpperCase()} — créé manuellement par admin`,
+          category:    planType === 'all_access' ? 'abonnement_all_access' : 'abonnement_uni',
+          payment_mode: paymentMode || 'manual',
+          status:      'confirmed',
+        })
+      }
+
+      // Logger l'événement
+      await supabase.from('lingua_subscription_events').insert({
+        subscription_id: sub.id,
+        user_id:         userId,
+        event_type:      'created',
+        notes:           `Créé manuellement par admin. Mode: ${paymentMode}`,
+        created_by:      user.id,
+      })
+
+      return ok({ success: true, subscriptionId: sub.id })
+    }
+
+    // ── Ajouter une transaction manuelle (recette/dépense) ─────────────
+    if (action === 'add_manual_transaction') {
+      const { userId, type, direction, amount_fcfa, description, category, payment_mode, payment_ref, notes } = payload
+
+      // Générer numéro de reçu
+      const { data: receiptNum } = await supabase.rpc('generate_receipt_number')
+      
+      const { data: transaction } = await supabase
+        .from('lingua_transactions')
+        .insert({
+          user_id:          userId || null,
+          type,
+          direction,
+          amount_fcfa,
+          description,
+          category,
+          payment_mode:     payment_mode || 'manual',
+          payment_ref:      payment_ref || null,
+          receipt_number:   receiptNum,
+          status:           'confirmed',
+          transaction_date: new Date().toISOString(),
+          notes,
+        })
+        .select()
+        .single()
+
+      // Si c'est une dépense, ajouter aussi dans lingua_expenses
+      if (direction === 'expense') {
+        await supabase.from('lingua_expenses').insert({
+          category, description, amount_fcfa,
+          vendor: notes || null,
+          invoice_ref: payment_ref || null,
+        })
+      }
+
+      return ok({ success: true, transactionId: transaction.id, receiptNumber: receiptNum })
     }
 
     // ── Suspendre un utilisateur ───────────────────────────

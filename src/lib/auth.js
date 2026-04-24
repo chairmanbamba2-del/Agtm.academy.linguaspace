@@ -1,8 +1,6 @@
 import { supabase } from './supabase'
 
 // ─── Inscription ─────────────────────────────────────────
-// Le trigger Supabase crée lingua_users automatiquement
-// NE PAS insérer manuellement dans lingua_users ici
 export async function signUp({ email, password, fullName, phone }) {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -16,6 +14,24 @@ export async function signUp({ email, password, fullName, phone }) {
     }
   })
   if (error) throw error
+  
+  // Créer l'entrée dans lingua_users si elle n'existe pas déjà
+  if (data.user) {
+    try {
+      await supabase.from('lingua_users').upsert({
+        id: data.user.id,
+        email: data.user.email,
+        full_name: fullName,
+        phone: phone || null,
+        country: 'CI',
+        role: 'user' // rôle par défaut
+      }, { onConflict: 'id' })
+    } catch (err) {
+      console.warn('Erreur création profil lingua_users:', err.message)
+      // Ne pas bloquer l'inscription si ça échoue
+    }
+  }
+  
   return data
 }
 

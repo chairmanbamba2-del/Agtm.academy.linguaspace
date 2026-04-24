@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGTM — Vérification en cours…</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: #0D1B2A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .card {
+      background: #152233;
+      border: 1px solid #2A3F58;
+      border-radius: 16px;
+      padding: 40px 48px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+    }
+    .logo {
+      width: 56px; height: 56px;
+      background: #C8960C;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 900;
+      color: #0D1B2A;
+      margin: 0 auto 20px;
+    }
+    h1 { color: #fff; font-size: 1.2rem; margin-bottom: 8px; }
+    p  { color: #5A7090; font-size: .88rem; margin-bottom: 24px; }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid #1E3050;
+      border-top-color: #C8960C;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .status { font-size: .82rem; color: #8AAAC0; min-height: 20px; }
+    .err    { color: #E04A4A; }
+    .ok     { color: #4AE090; }
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 28px;
+      background: #C8960C;
+      color: #0D1B2A;
+      font-weight: 700;
+      font-size: .85rem;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">EIP</div>
+    <h1>AGTM Digital Academy</h1>
+    <p>Vérification de votre compte en cours…</p>
+    <div class="spinner" id="spinner"></div>
+    <div class="status" id="status">Traitement du lien de confirmation…</div>
+    <div id="action"></div>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+    const SUPABASE_URL  = 'https://fglzovvsyloprokmdadx.supabase.co'
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww'
+
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
+
+    const statusEl  = document.getElementById('status')
+    const spinnerEl = document.getElementById('spinner')
+    const actionEl  = document.getElementById('action')
+
+    function showError(msg) {
+      spinnerEl.style.display = 'none'
+      statusEl.className = 'status err'
+      statusEl.textContent = msg
+      actionEl.innerHTML = `<a href="login.html" class="btn">Retour à la connexion</a>`
+    }
+
+    function showSuccess(msg, redirectUrl) {
+      spinnerEl.style.display = 'none'
+      statusEl.className = 'status ok'
+      statusEl.textContent = msg
+      setTimeout(() => { location.href = redirectUrl }, 1500)
+    }
+
+    async function handleCallback() {
+      const query = new URLSearchParams(window.location.search)
+      const hash  = new URLSearchParams(window.location.hash.slice(1))
+
+      // ── CAS 1 : PKCE — code d'autorisation dans l'URL (?code=...)
+      const code = query.get('code')
+      if (code) {
+        statusEl.textContent = 'Échange du code de confirmation…'
+        const { data, error } = await sb.auth.exchangeCodeForSession(code)
+        if (error) { showError('Lien invalide ou expiré. ' + error.message); return }
+        const type = query.get('type') || data?.session?.user?.aud || ''
+        if (type === 'recovery') {
+          showSuccess('✅ Identifié ! Redirection pour changer le mot de passe…', 'dashboard.html?action=reset_password')
+        } else {
+          showSuccess('✅ Compte confirmé ! Bienvenue sur AGTM Academy.', 'dashboard.html')
+        }
+        return
+      }
+
+      // ── CAS 2 : OTP hash — token_hash dans l'URL (?token_hash=...&type=...)
+      const token_hash = query.get('token_hash')
+      const type_otp   = query.get('type')
+      if (token_hash && type_otp) {
+        statusEl.textContent = 'Vérification du lien de confirmation…'
+        const { error } = await sb.auth.verifyOtp({ token_hash, type: type_otp })
+        if (error) { showError('Lien invalide ou expiré. ' + error.message); return }
+        if (type_otp === 'recovery') {
+          showSuccess('✅ Identifié ! Redirection pour changer le mot de passe…', 'dashboard.html?action=reset_password')
+        } else {
+          showSuccess('✅ Compte confirmé ! Bienvenue sur AGTM Academy.', 'dashboard.html')
+        }
+        return
+      }
+
+      // ── CAS 3 : Implicit flow — access_token dans le hash (#access_token=...)
+      const access_token  = hash.get('access_token')
+      const refresh_token = hash.get('refresh_token')
+      const type_hash     = hash.get('type')
+      if (access_token) {
+        statusEl.textContent = 'Connexion via le lien de confirmation…'
+        const { data, error } = await sb.auth.setSession({ access_token, refresh_token })
+        if (error) { showError('Session invalide. ' + error.message); return }
+        if (type_hash === 'recovery') {
+          showSuccess('✅ Identifié ! Redirection pour changer le mot de passe…', 'dashboard.html?action=reset_password')
+        } else {
+          showSuccess('✅ Compte confirmé ! Bienvenue sur AGTM Academy.', 'dashboard.html')
+        }
+        return
+      }
+
+      // ── CAS 4 : Session déjà active (rechargement de la page)
+      const { data: { session } } = await sb.auth.getSession()
+      if (session) {
+        showSuccess('✅ Déjà connecté, redirection…', 'dashboard.html')
+        return
+      }
+
+      // ── Aucun token trouvé
+      showError('Aucun token de confirmation trouvé. Le lien est peut-être invalide ou expiré.')
+    }
+
+    handleCallback()
+  </script>
+</body>
+</html>

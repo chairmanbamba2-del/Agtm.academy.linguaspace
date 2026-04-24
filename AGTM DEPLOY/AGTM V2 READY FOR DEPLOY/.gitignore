@@ -1,0 +1,173 @@
+# AGTM Digital Academy - .gitignore
+# Version: 1.0
+# Date: 2026-04-21
+
+# ============================================
+# ENVIRONNEMENT & CONFIGURATIONS SENSIBLES
+# ============================================
+
+# Fichiers de configuration locaux
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# Clés API et secrets
+*.key
+*.pem
+*.crt
+*.cert
+secrets.json
+credentials.json
+service-account.json
+
+# Fichiers de configuration spécifiques
+config.local.js
+config.local.json
+supabase/config.toml
+
+# ============================================
+# SYSTÈME & ÉDITEURS
+# ============================================
+
+# Système d'exploitation
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Éditeurs de code
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-*
+
+# ============================================
+# DEPENDANCES & BUILD
+# ============================================
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Cache
+.cache/
+.next/
+.nuxt/
+dist/
+build/
+out/
+.output/
+
+# ============================================
+# NETLIFY & FONCTIONS SERVERLESS
+# ============================================
+
+# Cache Netlify
+.netlify/
+.netlify/functions-dist/
+
+# Logs de déploiement
+.netlify/deploy.log
+
+# ============================================
+# BASE DE DONNÉES & CACHE
+# ============================================
+
+# Fichiers de base de données locaux
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache Supabase local
+.supabase/
+
+# Cache vidéos/API
+data/videos_cache.json
+data/*_cache.json
+
+# ============================================
+# ASSETS & MÉDIAS (optionnel)
+# ============================================
+
+# Images générées/compressées
+**/*.min.jpg
+**/*.min.png
+**/*.min.gif
+
+# PDFs générés
+**/*-generated.pdf
+**/*-temp.pdf
+
+# ============================================
+# LOGS & TEMPORAIRES
+# ============================================
+
+# Logs
+logs/
+*.log
+
+# Fichiers temporaires
+tmp/
+temp/
+*.tmp
+*.temp
+
+# ============================================
+# TEST & DÉVELOPPEMENT
+# ============================================
+
+# Coverage de tests
+coverage/
+.nyc_output/
+
+# Rapports de test
+test-results/
+junit.xml
+
+# ============================================
+# WINDOWS SPÉCIFIQUE
+# ============================================
+
+# Fichiers Windows
+*.cab
+*.msi
+*.msm
+*.msp
+
+# ============================================
+# EXCEPTIONS (fichiers à GARDER)
+# ============================================
+
+# !data/corner_content_seed.json  # Contenu pédagogique - À GARDER
+# !DEPLOYMENT.md                  # Documentation déploiement - À GARDER
+# !README.md                      # Documentation - À GARDER
+# !netlify.toml                   # Configuration Netlify - À GARDER
+# !package.json                   # Dépendances - À GARDER
+
+# ============================================
+# NOTES
+# ============================================
+
+# Fichiers à NE PAS ignorer :
+# - Tous les fichiers HTML, CSS, JS du projet
+# - Les images marketing dans Contenu Dashboard/
+# - Les fichiers de migration SQL
+# - Les fonctions Netlify
+# - Les icônes et manifest

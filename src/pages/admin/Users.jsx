@@ -66,9 +66,54 @@ export default function AdminUsers() {
     const password = prompt('Mot de passe temporaire :')
     if (!password) return
     const role = prompt('Rôle (user, admin, super_admin) :', 'user')
+    const fullName = prompt('Nom complet (optionnel) :', '')
+    const phone = prompt('Téléphone (optionnel) :', '')
+    const planType = prompt('Forfait (uni / all_access / vide pour aucun) :', '')
+    let selectedLanguage = null
+    let paymentMode = 'manual'
+    let notes = ''
+    if (planType) {
+      if (planType === 'uni') {
+        selectedLanguage = prompt('Langue (en, es, de, fr) :', 'en')
+      }
+      paymentMode = prompt('Mode paiement (orange_money, wave, mtn, card, manual, free) :', 'manual')
+      notes = prompt('Notes (optionnel) :', '')
+    }
     try {
-      await admin.createUser({ email, password, role })
-      alert('Utilisateur créé')
+      await admin.createUser({ 
+        email, 
+        password, 
+        role,
+        fullName: fullName || undefined,
+        phone: phone || undefined,
+        planType: planType || undefined,
+        selectedLanguage: selectedLanguage || undefined,
+        paymentMode: paymentMode || undefined,
+        notes: notes || undefined,
+      })
+      alert('Utilisateur créé' + (planType ? ' avec abonnement' : ''))
+      loadUsers()
+    } catch (err) {
+      alert('Erreur : ' + err.message)
+    }
+  }
+
+  const handleCreateSubscriptionForUser = async (userId) => {
+    const planType = prompt('Plan (uni / all_access) :', 'uni')
+    const selectedLanguage = planType === 'uni' ? prompt('Langue (en, es, de, fr) :', 'en') : null
+    const months = parseInt(prompt('Durée (mois) :', '1'))
+    const paymentMode = prompt('Mode paiement (orange_money, wave, mtn, card, manual, free) :', 'manual')
+    const notes = prompt('Notes (optionnel) :', '')
+    try {
+      await admin.createSubscription({
+        userId,
+        planType,
+        selectedLanguage,
+        paymentMode,
+        notes,
+        months,
+      })
+      alert('Abonnement créé')
       loadUsers()
     } catch (err) {
       alert('Erreur : ' + err.message)
@@ -172,31 +217,37 @@ export default function AdminUsers() {
                     <td className="py-4 px-2 text-sm text-muted">
                       {new Date(u.created_at).toLocaleDateString('fr-FR')}
                     </td>
-                    <td className="py-4 px-2">
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => alert(`Détails: ${JSON.stringify(u, null, 2)}`)}
-                          className="text-xs px-3 py-1 bg-white/5 hover:bg-white/10 rounded-sm transition-colors"
-                        >
-                          👁️ Voir
-                        </button>
-                        {u.status === 'active' ? (
-                          <button
-                            onClick={() => handleSuspend(u.id)}
-                            className="text-xs px-3 py-1 bg-red/20 hover:bg-red/30 text-red rounded-sm transition-colors"
-                          >
-                            ⏸️ Suspendre
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handleReactivate(u.id)}
-                            className="text-xs px-3 py-1 bg-green/20 hover:bg-green/30 text-green rounded-sm transition-colors"
-                          >
-                            ▶️ Réactiver
-                          </button>
-                        )}
-                      </div>
-                    </td>
+                     <td className="py-4 px-2">
+                       <div className="flex gap-2">
+                         <button
+                           onClick={() => handleCreateSubscriptionForUser(u.id)}
+                           className="text-xs px-3 py-1 bg-gold/20 hover:bg-gold/30 text-gold rounded-sm transition-colors"
+                         >
+                           ➕ Abo
+                         </button>
+                         <button
+                           onClick={() => alert(`Détails: ${JSON.stringify(u, null, 2)}`)}
+                           className="text-xs px-3 py-1 bg-white/5 hover:bg-white/10 rounded-sm transition-colors"
+                         >
+                           👁️ Voir
+                         </button>
+                         {u.status === 'active' ? (
+                           <button
+                             onClick={() => handleSuspend(u.id)}
+                             className="text-xs px-3 py-1 bg-red/20 hover:bg-red/30 text-red rounded-sm transition-colors"
+                           >
+                             ⏸️ Suspendre
+                           </button>
+                         ) : (
+                           <button
+                             onClick={() => handleReactivate(u.id)}
+                             className="text-xs px-3 py-1 bg-green/20 hover:bg-green/30 text-green rounded-sm transition-colors"
+                           >
+                             ▶️ Réactiver
+                           </button>
+                         )}
+                       </div>
+                     </td>
                   </tr>
                 ))}
               </tbody>

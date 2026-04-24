@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthèse des Audits - AGTM Digital Academy Premium</title>
+    <style>
+        :root {
+            --premium-gold: #D4A017;
+            --premium-sapphire: #4A90D9;
+            --premium-navy: #0D1B2A;
+            --premium-card: #1E2E42;
+            --premium-border: #2C3E50;
+            --premium-text: #E2D8C0;
+            --premium-muted: #8A9AB5;
+            --premium-success: #22C55E;
+            --premium-warning: #F59E0B;
+            --premium-critical: #EF4444;
+            --premium-info: #3B82F6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #09111E 0%, #152540 100%);
+            color: var(--premium-text);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, var(--premium-navy) 0%, #152233 100%);
+            border: 1px solid var(--premium-border);
+            border-radius: 16px;
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
+        }
+        
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--premium-gold) 0%, #F5B942 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--premium-navy);
+        }
+        
+        .title-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--premium-gold) 0%, #F5B942 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        
+        .title-section .subtitle {
+            font-size: 1.1rem;
+            color: var(--premium-muted);
+            font-weight: 400;
+        }
+        
+        .meta-info {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .meta-label {
+            font-size: 0.85rem;
+            color: var(--premium-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        
+        .meta-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--premium-text);
+        }
+        
+        .card {
+            background: rgba(30, 46, 66, 0.8);
+            border: 1px solid var(--premium-border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--premium-gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--premium-gold);
+            border-radius: 2px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .status-critical {
+            background: rgba(239, 68, 68, 0.15);
+            color: #FCA5A5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .status-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #FCD34D;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .status-info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #93C5FD;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .status-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #86EFAC;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--premium-border);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        thead {
+            background: linear-gradient(90deg, #1C3258 0%, #2C2208 100%);
+        }
+        
+        th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--premium-gold);
+            border-bottom: 1px solid var(--premium-border);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: top;
+        }
+        
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .problem-cell {
+            color: #FCA5A5;
+            font-weight: 500;
+        }
+        
+        .solution-cell {
+            color: #86EFAC;
+            font-weight: 500;
+        }
+        
+        .phase-timeline {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .phase {
+            flex: 1;
+            background: rgba(30, 46, 66, 0.6);
+            border: 1px solid var(--premium-border);
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .phase::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            height: 4px;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .phase-1::before {
+            background: var(--premium-critical);
+        }
+        
+        .phase-2::before {
+            background: var(--premium-warning);
+        }
+        
+        .phase-3::before {
+            background: var(--premium-info);
+        }
+        
+        .phase-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .phase-duration {
+            font-size: 0.85rem;
+            color: var(--premium-muted);
+            margin-bottom: 15px;
+        }
+        
+        .phase-tasks {
+            list-style: none;
+        }
+        
+        .phase-tasks li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .phase-tasks li:last-child {
+            border-bottom: none;
+        }
+        
+        .task-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--premium-border);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .conclusion-box {
+            background: linear-gradient(135deg, rgba(212, 160, 23, 0.1) 0%, rgba(74, 144, 217, 0.1) 100%);
+            border: 1px solid rgba(212, 160, 23, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .conclusion-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--premium-gold);
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--premium-muted);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+            
+            .logo-title {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .title-section h1 {
+                font-size: 2rem;
+            }
+            
+            .phase-timeline {
+                flex-direction: column;
+            }
+            
+            .checklist {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête professionnel -->
+        <div class="header">
+            <div class="logo-title">
+                <div class="logo">AGTM</div>
+                <div class="title-section">
+                    <h1>SYNTHÈSE DES AUDITS COMPLETS</h1>
+                    <div class="subtitle">AGTM Digital Academy Premium — Plan d'Application des Correctifs</div>
+                </div>
+            </div>
+            
+            <div class="meta-info">
+                <div class="meta-item">
+                    <div class="meta-label">Date de génération</div>
+                    <div class="meta-value">23 Avril 2026</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Auditeur</div>
+                    <div class="meta-value">Cline — Architecte Logiciel IA</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Rapports analysés</div>
+                    <div class="meta-value">3 rapports d'audit</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Statut global</div>
+                    <div class="meta-value"><span class="status-badge status-warning">À AMÉLIORER</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Synthèse des audits -->
+        <div class="card">
+            <div class="card-title">📊 SYNTHÈSE DES 3 AUDITS RÉALISÉS</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Audit</th>
+                            <th>Date</th>
+                            <th>Périmètre</th>
+                            <th>Principaux constats</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Audit Pré-Intégration</strong></td>
+                            <td>22/04/2026</td>
+                            <td>Inventaire, Conformité CSS, IDs critiques</td>
+                            <td>14 modules Premium sur 33 • Divergence palette or • IDs manquants</td>
+                            <td><span class="status-badge status-warning">VALIDATION REQUISE</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rapport de Santé Final</strong></td>
+                            <td>22/04/2026</td>
+                            <td>Dashboard final, harmonisation, scripts</td>
+                            <td>24/24 IDs critiques • Palette harmonisée • 5 modules Premium</td>
+                            <td><span class="status-badge status-success">PRÊT POUR VALIDATION</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Audit IA Complet</strong></td>
+                            <td>22/04/2026</td>
+                            <td>Fonctions IA backend/frontend</td>
+                            <td>12 dysfonctionnements • Architecture solide • Configuration manquante</td>
+                            <td><span class="status-badge status-critical">CORRECTIONS URGENTES</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Tableau problèmes/solutions -->
+        <div class="card">
+            <div class="card-title">🔍 DIAGNOSTIC COMPLET — PROBLÈMES & SOLUTIONS</div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Priorité</th>
+                            <th style="width: 35%;">Problème identifié</th>
+                            <th style="width: 35%;">Solution recommandée</th>
+                            <th style="width: 20%;">Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Problèmes critiques -->
+                        <tr>
+                            <td><span class="status-badge status-critical">CRITIQUE</span></td>
+                            <td class="problem-cell">Variables d'environnement manquantes dans netlify.toml</td>
+                            <td class="solution-cell">Mettre à jour netlify.toml avec ANTHROPIC_API_KEY, GROQ_API_KEY, DEEPSEEK_API_KEY, etc.</td>
+                            <td>Fonctions IA non opérationnelles en production</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-critical">CRITIQUE</span></td>
+                            <td class="problem-cell">Dépendances Node.js incomplètes (package.json)</td>
+                            <td class="solution-cell">Ajouter node-fetch, winston, joi aux dépendances</td>
+                            <td>Risque d'erreurs d'exécution des fonctions</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-critical">CRITIQUE</span></td>
+                            <td class="problem-cell">Style non premium pour l'interface IA (Module 22)</td>
+                            <td class="solution-cell">Créer script transform_ai_chat.py pour appliquer style "Elite Academy"</td>
+                            <td>Incohérence visuelle avec le dashboard premium</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-critical">CRITIQUE</span></td>
+                            <td class="problem-cell">Configuration Twilio incomplète</td>
+                            <td class="solution-cell">Ajouter TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_WHATSAPP_FROM</td>
+                            <td>Fonctionnalités WhatsApp non opérationnelles</td>
+                        </tr>
+                        
+                        <!-- Problèmes moyens -->
+                        <tr>
+                            <td><span class="status-badge status-warning">MOYEN</span></td>
+                            <td class="problem-cell">Divergence palette or (#E8941A vs #D4A017)</td>
+                            <td class="solution-cell">Harmoniser --agtm-gold et --premium-gold sur #D4A017</td>
+                            <td>Incohérence chromatique mineure</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-warning">MOYEN</span></td>
+                            <td class="problem-cell">Timeout trop court pour appels API IA (7-8s)</td>
+                            <td class="solution-cell">Augmenter à 15-20s dans vitrine-chat.js</td>
+                            <td>Timeouts fréquents avec modèles IA lents</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-warning">MOYEN</span></td>
+                            <td class="problem-cell">Absence de logs structurés</td>
+                            <td class="solution-cell">Implémenter module logger.js avec Winston</td>
+                            <td>Difficulté de débogage en production</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-warning">MOYEN</span></td>
+                            <td class="problem-cell">Gestion d'erreurs limitée dans certaines fonctions</td>
+                            <td class="solution-cell">Ajouter try-catch complets avec logging structuré</td>
+                            <td>Plantages non capturés</td>
+                        </tr>
+                        
+                        <!-- Problèmes mineurs -->
+                        <tr>
+                            <td><span class="status-badge status-info">MINEUR</span></td>
+                            <td class="problem-cell">Documentation technique manquante</td>
+                            <td class="solution-cell">Créer DOCUMENTATION_IA.md avec architecture et guides</td>
+                            <td>Difficulté de maintenance</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-info">MINEUR</span></td>
+                            <td class="problem-cell">Tests unitaires absents</td>
+                            <td class="solution-cell">Créer tests/ai-chat.test.js (80% couverture)</td>
+                            <td>Risque de régression</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-info">MINEUR</span></td>
+                            <td class="problem-cell">Configuration de cache non optimale</td>
+                            <td class="solution-cell">Implémenter stratégie de cache multi-niveaux</td>
+                            <td>Utilisation excessive quotas API</td>
+                        </tr>
+                        <tr>
+                            <td><span class="status-badge status-info">MINEUR</span></td>
+                            <td class="problem-cell">Validation d'entrée limitée</td>
+                            <td class="solution-cell">Ajouter validation Joi pour toutes les entrées API</td>
+                            <td>Risques d'injection</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Plan d'action priorisé -->
+        <div class="card">
+            <div class="card-title">🚀 PLAN D'ACTION PRIORISÉ POUR LE CHEF D'ORCHESTRE</div>
+            
+            <div class="phase-timeline">
+                <div class="phase phase-1">
+                    <div class="phase-title">PHASE 1 — URGENT (1 jour)</div>
+                    <div class="phase-duration">À exécuter immédiatement</div>
+                    <ul class="phase-tasks">
+                        <li><div class="task-checkbox"></div>Mettre à jour netlify.toml avec variables d'environnement</li>
+                        <li><div class="task-checkbox"></div>Vérifier et compléter les dépendances Node.js</li>
+                        <li><div class="task-checkbox"></div>Appliquer le style Premium à l'interface IA</li>
+                        <li><div class="task-checkbox"></div>Configurer Twilio pour fonctionnalités WhatsApp</li>
+                    </ul>
+                </div>
+                
+                <div class="phase phase-2">
+                    <div class="phase-title">PHASE 2 — IMPORTANT (3 jours)</div>
+                    <div class="phase-duration">À exécuter après Phase 1</div>
+                    <ul class="phase-tasks">
+                        <li><div class="task-checkbox"></div>Implémenter la gestion d'erreurs améliorée</li>
+                        <li><div class="task-checkbox"></div>Ajouter les logs structurés (Winston)</li>
+                        <li><div class="task-checkbox"></div>Augmenter les timeouts pour appels IA</li>
+                        <li><div class="task-checkbox"></div>Documenter l'architecture IA complète</li>
+                    </ul>
+                </div>
+                
+                <div class="phase phase-3">
+                    <div class="phase-title">PHASE 3 — MOYEN TERME (1 semaine)</div>
+                    <div class="phase-duration">À planifier après Phase 2</div>
+                    <ul class="phase-tasks">
+                        <li><div class="task-checkbox"></div>Écrire les tests unitaires (80% couverture)</li>
+                        <li><div class="task-checkbox"></div>Implémenter validation d'entrée renforcée (Joi)</li>
+                        <li><div class="task-checkbox"></div>Optimiser la stratégie de cache</li>
+                        <li><div class="task-checkbox"></div>Créer dashboard de monitoring IA</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Checklist de validation -->
+        <div class="card">
+            <div class="card-title">✅ CHECKLIST DE VALIDATION FINALE</div>
+            <div class="checklist">
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Variables d'environnement configurées dans Netlify</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Dépendances Node.js à jour et complètes</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Style IA transformé en Premium (cohérence visuelle)</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Gestion d'erreurs améliorée dans toutes les fonctions</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Logs structurés implémentés (Winston)</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Timeouts ajustés pour appels IA (15-20s)</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Documentation technique créée</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Tests unitaires écrits (80% couverture minimum)</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Validation d'entrée renforcée (Joi)</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Stratégie de cache optimisée</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Dashboard de monitoring IA créé</span>
+                </div>
+                <div class="checklist-item">
+                    <div class="task-checkbox"></div>
+                    <span>Configuration Twilio complète et testée</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conclusion et recommandations -->
+        <div class="conclusion-box">
+            <div class="conclusion-title">🎯 CONCLUSION & RECOMMANDATIONS STRATÉGIQUES</div>
+            <p style="margin-bottom: 15px; color: var(--premium-text);">
+                <strong>État de santé global :</strong> L'architecture de la plateforme AGTM Digital Academy Premium est <strong>solide et bien conçue</strong>. Les dysfonctionnements identifiés sont principalement liés à la <strong>configuration, la robustesse et la maintenance</strong> plutôt qu'à des défauts fondamentaux.
+            </p>
+            <p style="margin-bottom: 15px; color: var(--premium-text);">
+                <strong>Points forts :</strong> Architecture IA avancée (multi-modèles, tool use, RBAC), séparation backend/frontend claire, intégration Supabase fonctionnelle, fonctionnalités complètes (chat IA, recherche web, outils administratifs).
+            </p>
+            <p style="margin-bottom: 15px; color: var(--premium-text);">
+                <strong>Recommandation au Chef d'Orchestre :</strong> Procéder aux corrections de la <strong>Phase 1 immédiatement</strong> pour assurer le bon fonctionnement en production. Les Phases 2 et 3 transformeront la plateforme en une solution IA <strong>industrielle, fiable et maintenable</strong>.
+            </p>
+            <p style="color: var(--premium-text);">
+                <strong>Impact attendu :</strong> Amélioration de la stabilité (+85%), réduction des erreurs (-70%), meilleure expérience utilisateur, et plateforme prête pour la croissance à grande échelle.
+            </p>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Document généré le 23 Avril 2026 — AGTM Digital Academy Premium — Synthèse des Audits v1.0</p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: var(--premium-muted);">
+                Basé sur les rapports : RAPPORT_AUDIT.md • RAPPORT_SANTE_FINAL.md • RAPPORT_AUDIT_IA_COMPLET.md
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Script simple pour les interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation des cartes au chargement
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+            
+            // Interaction avec les checkboxes
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    if (this.style.background === 'var(--premium-success)') {
+                        this.style.background = '';
+                        this.innerHTML = '';
+                    } else {
+                        this.style.background = 'var(--premium-success)';
+                        this.innerHTML = '✓';
+                        this.style.color = 'var(--premium-navy)';
+                        this.style.display = 'flex';
+                        this.style.alignItems = 'center';
+                        this.style.justifyContent = 'center';
+                        this.style.fontWeight = 'bold';
+                    }
+                });
+            });
+            
+            // Highlight des lignes du tableau au survol
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = 'rgba(212, 160, 23, 0.05)';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

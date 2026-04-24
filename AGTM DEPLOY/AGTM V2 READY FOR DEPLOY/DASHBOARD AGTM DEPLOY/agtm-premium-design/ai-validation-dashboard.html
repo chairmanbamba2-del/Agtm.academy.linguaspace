@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGTM – Dashboard de Validation IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,600&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       DESIGN TOKENS — AGTM Elite Academy
+    ═══════════════════════════════════════════════════════════ */
+    :root {
+      /* Palette principale */
+      --premium-navy:      #0D1B2A;
+      --premium-navy-mid:  #152233;
+      --premium-navy-card: #1E2E42;
+      --premium-navy-dark: #080F18;
+      --premium-gold:      #C8960C;
+      --premium-gold-lt:   #E8B84B;
+      --premium-gold-dk:   #A07008;
+      --premium-sapphire:  #4A90D9;
+      --premium-sapphire-lt: #6AAEF5;
+
+      /* Fonctionnel */
+      --premium-success:   #22C55E;
+      --premium-danger:    #EF4444;
+      --premium-warning:   #F59E0B;
+      --premium-muted:     #8A9AB5;
+      --premium-text:      #E2D8C0;
+      --premium-text-dim:  #A0B0D0;
+
+      /* Glassmorphism */
+      --glass-bg:          rgba(255,255,255,0.04);
+      --glass-border:      rgba(255,255,255,0.08);
+      --glass-gold:        rgba(200,150,12,0.12);
+      --glass-sapphire:    rgba(74,144,217,0.12);
+
+      /* Gradients */
+      --grad-card:         linear-gradient(135deg, #152540 0%, #241C08 100%);
+      --grad-header:       linear-gradient(90deg, #1C3258 0%, #2C2208 100%);
+      --grad-gold:         linear-gradient(135deg, #C8960C 0%, #E8B84B 100%);
+      --grad-sapphire:     linear-gradient(135deg, #4A90D9 0%, #6AAEF5 100%);
+      --grad-bg:           linear-gradient(160deg, #0D1B2A 0%, #080F18 50%, #0D1B2A 100%);
+
+      /* Ombres */
+      --shadow-sm:         0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md:         0 4px 16px rgba(0,0,0,0.5);
+      --shadow-lg:         0 8px 40px rgba(0,0,0,0.6);
+      --shadow-gold:       0 8px 30px rgba(200,150,12,0.25);
+      --shadow-sapphire:   0 8px 30px rgba(74,144,217,0.2);
+
+      /* Bordures */
+      --border-gold:       rgba(200,150,12,0.25);
+      --border-sapphire:   rgba(74,144,217,0.25);
+      --border-glass:      rgba(255,255,255,0.07);
+
+      /* Typographie */
+      --font-serif:        'Cormorant Garamond', Georgia, serif;
+      --font-sans:         'DM Sans', -apple-system, sans-serif;
+      --font-mono:         'Space Mono', monospace;
+
+      /* Rayons */
+      --radius-sm:         6px;
+      --radius-md:         10px;
+      --radius-lg:         16px;
+      --radius-xl:         24px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: var(--font-sans);
+      background: var(--grad-bg);
+      color: var(--premium-text);
+      overflow-x: hidden;
+    }
+    body { min-height: 100vh; }
+
+    /* ═══════════════════════════════════════════════════════════
+       BARRE DE PROGRESSION "COURSE TO 100"
+    ═══════════════════════════════════════════════════════════ */
+    .course-to-100-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,15,24,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-gold);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .course-to-100-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--premium-gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .course-to-100-track {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+    }
+    .course-to-100-fill {
+      height: 100%;
+      background: var(--grad-gold);
+      border-radius: 99px;
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+    }
+    .course-to-100-fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background: var(--premium-gold-lt);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--premium-gold);
+    }
+    .course-to-100-count {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--premium-gold-lt);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .course-to-100-badge {
+      background: var(--glass-gold);
+      border: 1px solid var(--border-gold);
+      border-radius: 99px;
+      padding: 2px 10px;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--premium-gold);
+      letter-spacing: 0.08em;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER PAGE
+    ═══════════════════════════════════════════════════════════ */
+    .page-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border-glass);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .page-header-left { display: flex; align-items: center; gap: 12px; }
+    .page-header-icon {
+      width: 40px; height: 40px;
+      background: var(--glass-gold);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .page-header-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--premium-gold-lt);
+      letter-spacing: 0.02em;
+    }
+    .page-header-subtitle {
+      font-size: 0.75rem;
+      color: var(--premium-muted);
+      margin-top: 2px;
+    }
+    .page-header-stats {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .stat-chip {
+      background: var(--glass-bg);
+      border: 1px solid var(--border-glass);
+      border-radius: 99px;
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      color: var(--premium-text-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .stat-chip .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+    .dot-draft { background: var(--premium-warning); }
+    .dot-published { background: var(--premium-success); }
+    .dot-review { background: var(--premium-sapphire); }
+
+    /* ═══════════════════════════════════════════════════════════
+       SPLIT-SCREEN LAYOUT (70/30)
+    ═══════════════════════════════════════════════════════════ */
+    .split-screen {
+      display: grid;
+      grid-template-columns: 1fr 0.43fr;
+      gap: 0;
+      height: calc(100vh - 120px);
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PANNEAU GAUCHE — LISTE DES MODULES
+    ═══════════════════════════════════════════════════════════ */
+    .modules-panel {
+      border-right: 1px solid var(--border-glass);
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .modules-panel::-webkit-scrollbar { width: 4px; }
+    .modules-panel::-webkit-scrollbar-track { background: transparent; }
+    .modules-panel::-webkit-scrollbar-thumb { background: var(--border-gold); border-radius: 99px; }
+
+    .modules-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .modules-panel-title {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--premium-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 4px;
+    }
+    .filter-tab {
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      background: transparent;
+      color: var(--premium-muted);
+    }
+    .filter-tab.active {
+      background: var(--glass-gold);
+      border-color: var(--border-gold);
+      color: var(--premium-gold);
+    }
+    .filter-tab:hover:not(.active) {
+      background: var(--glass-bg);
+      border-color: var(--border-glass);
+      color: var(--premium-text);
+    }
+
+    /* Carte module dans la liste */
+    .agtm-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .agtm-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .agtm-card:hover {
+      border-color: var(--border-gold);
+      box-shadow: var(--shadow-gold);
+      transform: translateY(-1px);
+    }
+    .agtm-card.selected {
+      border-color: var(--premium-gold);
+      background: var(--glass-gold);
+      box-shadow: var(--shadow-gold);
+    }
+    .agtm-card.selected::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--grad-gold);
+      border-radius: 3px 0 0 3px;
+    }
+
+    .module-card-inner {
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .module-card-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      background: var(--glass-sapphire);
+      border: 1px solid var(--border-sapphire);
+    }
+    .module-card-body { flex: 1; min-width: 0; }
+    .module-card-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--premium-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+    .module-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .badge-draft {
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.3);
+      color: var(--premium-warning);
+    }
+    .badge-published {
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.3);
+      color: var(--premium-success);
+    }
+    .badge-review {
+      background: var(--glass-sapphire);
+      border: 1px solid var(--border-sapphire);
+      color: var(--premium-sapphire);
+    }
+    .badge-level {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-glass);
+      color: var(--premium-muted);
+    }
+    .module-card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+    }
+    .module-card-time {
+      font-size: 0.62rem;
+      color: var(--premium-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PANNEAU DROIT — PRÉVISUALISATION DYNAMIQUE
+    ═══════════════════════════════════════════════════════════ */
+    .preview-panel {
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background: rgba(8,15,24,0.5);
+    }
+    .preview-panel::-webkit-scrollbar { width: 4px; }
+    .preview-panel::-webkit-scrollbar-track { background: transparent; }
+    .preview-panel::-webkit-scrollbar-thumb { background: var(--border-sapphire); border-radius: 99px; }
+
+    /* État vide */
+    .preview-empty {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 40px;
+      text-align: center;
+    }
+    .preview-empty-icon {
+      width: 64px; height: 64px;
+      background: var(--glass-gold);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-xl);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+    .preview-empty-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: var(--premium-gold-lt);
+    }
+    .preview-empty-text {
+      font-size: 0.78rem;
+      color: var(--premium-muted);
+      max-width: 220px;
+      line-height: 1.6;
+    }
+
+    /* Header Premium du panneau de prévisualisation */
+    .preview-header {
+      background: var(--grad-header);
+      border-bottom: 1px solid var(--border-gold);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .preview-header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .preview-focus-title {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--premium-gold-lt);
+      line-height: 1.3;
+      flex: 1;
+    }
+    .preview-focus-title[contenteditable="true"] {
+      outline: none;
+      border-bottom: 1px dashed var(--border-gold);
+      padding-bottom: 2px;
+      cursor: text;
+    }
+    .preview-focus-title[contenteditable="true"]:focus {
+      border-bottom-color: var(--premium-gold);
+      background: rgba(200,150,12,0.05);
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+    .btn-approve {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--grad-gold);
+      border: none;
+      border-radius: var(--radius-md);
+      color: var(--premium-navy-dark);
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: var(--shadow-gold);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-approve:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 40px rgba(200,150,12,0.4);
+    }
+    .btn-approve:active { transform: translateY(0); }
+    .preview-header-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .preview-actions-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      color: var(--premium-text-dim);
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-sapphire);
+      color: var(--premium-sapphire);
+      background: var(--glass-sapphire);
+    }
+    .btn-danger-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: var(--radius-sm);
+      color: var(--premium-danger);
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-danger-sm:hover {
+      background: rgba(239,68,68,0.15);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ACCORDÉONS PÉDAGOGIQUES
+    ═══════════════════════════════════════════════════════════ */
+    .preview-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+
+    .accordion {
+      background: var(--glass-bg);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .accordion:hover { border-color: var(--border-gold); }
+    .accordion.open { border-color: var(--border-gold); }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+      background: var(--glass-bg);
+      transition: background 0.2s;
+    }
+    .accordion-header:hover { background: var(--glass-gold); }
+    .accordion.open .accordion-header { background: var(--glass-gold); border-bottom: 1px solid var(--border-gold); }
+
+    .accordion-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .accordion-icon {
+      width: 28px; height: 28px;
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      background: var(--glass-gold);
+      border: 1px solid var(--border-gold);
+      flex-shrink: 0;
+    }
+    .accordion-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--premium-text);
+    }
+    .accordion-subtitle {
+      font-size: 0.65rem;
+      color: var(--premium-muted);
+      margin-top: 1px;
+    }
+    .accordion-chevron {
+      color: var(--premium-gold);
+      font-size: 0.75rem;
+      transition: transform 0.3s;
+    }
+    .accordion.open .accordion-chevron { transform: rotate(180deg); }
+
+    .accordion-body {
+      display: none;
+      padding: 14px 16px;
+      animation: fadeIn 0.2s ease;
+    }
+    .accordion.open .accordion-body { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ÉDITION INLINE
+    ═══════════════════════════════════════════════════════════ */
+    .editable-field {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      color: var(--premium-text);
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      resize: vertical;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+    .editable-field:focus {
+      border-color: var(--premium-gold);
+      background: rgba(200,150,12,0.05);
+    }
+    .editable-field::placeholder { color: var(--premium-muted); }
+
+    .editable-inline {
+      display: inline-block;
+      min-width: 40px;
+      outline: none;
+      border-bottom: 1px dashed var(--border-gold);
+      color: var(--premium-gold-lt);
+      font-weight: 600;
+      cursor: text;
+      padding: 0 2px;
+    }
+    .editable-inline:focus {
+      background: rgba(200,150,12,0.08);
+      border-radius: 3px;
+      border-bottom-color: var(--premium-gold);
+    }
+
+    /* Objectifs d'apprentissage */
+    .objectives-list { display: flex; flex-direction: column; gap: 8px; }
+    .objective-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      background: rgba(74,144,217,0.06);
+      border: 1px solid var(--border-sapphire);
+      border-radius: var(--radius-sm);
+    }
+    .objective-num {
+      width: 20px; height: 20px;
+      background: var(--grad-sapphire);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .objective-text {
+      flex: 1;
+      font-size: 0.78rem;
+      color: var(--premium-text);
+      line-height: 1.4;
+      outline: none;
+      min-height: 20px;
+    }
+    .objective-text:focus {
+      background: rgba(74,144,217,0.08);
+      border-radius: 3px;
+      padding: 2px 4px;
+    }
+    .btn-add-objective {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px dashed var(--border-sapphire);
+      border-radius: var(--radius-sm);
+      color: var(--premium-sapphire);
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 4px;
+    }
+    .btn-add-objective:hover {
+      background: var(--glass-sapphire);
+      border-style: solid;
+    }
+
+    /* Exemples */
+    .examples-table { width: 100%; border-collapse: collapse; }
+    .examples-table th {
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      color: var(--premium-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 8px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-glass);
+    }
+    .examples-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      vertical-align: top;
+    }
+    .examples-table tr:last-child td { border-bottom: none; }
+    .example-en {
+      font-size: 0.78rem;
+      color: var(--premium-gold-lt);
+      font-style: italic;
+      outline: none;
+    }
+    .example-en:focus { background: rgba(200,150,12,0.08); border-radius: 3px; padding: 1px 3px; }
+    .example-fr {
+      font-size: 0.75rem;
+      color: var(--premium-text-dim);
+      outline: none;
+    }
+    .example-fr:focus { background: rgba(255,255,255,0.05); border-radius: 3px; padding: 1px 3px; }
+    .example-ctx {
+      font-size: 0.68rem;
+      color: var(--premium-muted);
+      outline: none;
+    }
+    .example-ctx:focus { background: rgba(255,255,255,0.03); border-radius: 3px; padding: 1px 3px; }
+
+    /* Quiz */
+    .quiz-list { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-item {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+    .quiz-item-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .quiz-num {
+      width: 22px; height: 22px;
+      background: var(--glass-gold);
+      border: 1px solid var(--border-gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      color: var(--premium-gold);
+      flex-shrink: 0;
+    }
+    .quiz-question {
+      flex: 1;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--premium-text);
+      outline: none;
+    }
+    .quiz-question:focus { background: rgba(255,255,255,0.04); border-radius: 3px; padding: 2px 4px; }
+    .quiz-options { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      transition: all 0.15s;
+    }
+    .quiz-option.correct {
+      background: rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.25);
+    }
+    .quiz-option-letter {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      background: var(--glass-bg);
+      border: 1px solid var(--border-glass);
+      color: var(--premium-muted);
+      flex-shrink: 0;
+    }
+    .quiz-option.correct .quiz-option-letter {
+      background: rgba(34,197,94,0.2);
+      border-color: rgba(34,197,94,0.4);
+      color: var(--premium-success);
+    }
+    .quiz-option-text {
+      font-size: 0.75rem;
+      color: var(--premium-text-dim);
+      outline: none;
+      flex: 1;
+    }
+    .quiz-option-text:focus { background: rgba(255,255,255,0.04); border-radius: 3px; padding: 1px 3px; }
+    .quiz-explanation {
+      font-size: 0.72rem;
+      color: var(--premium-muted);
+      font-style: italic;
+      padding: 6px 8px;
+      background: rgba(255,255,255,0.02);
+      border-left: 2px solid var(--border-gold);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      outline: none;
+    }
+    .quiz-explanation:focus { background: rgba(200,150,12,0.05); }
+
+    /* ═══════════════════════════════════════════════════════════
+       ELITE TIP BOX
+    ═══════════════════════════════════════════════════════════ */
+    .elite-tip-box {
+      background: linear-gradient(135deg, rgba(200,150,12,0.08) 0%, rgba(74,144,217,0.05) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .elite-tip-box::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(200,150,12,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .elite-tip-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .elite-tip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: var(--grad-gold);
+      border-radius: 99px;
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--premium-navy-dark);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .elite-tip-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--premium-gold-lt);
+      outline: none;
+    }
+    .elite-tip-title:focus { background: rgba(200,150,12,0.08); border-radius: 3px; padding: 1px 4px; }
+    .elite-tip-content {
+      font-size: 0.78rem;
+      color: var(--premium-text);
+      line-height: 1.6;
+      margin-bottom: 10px;
+      outline: none;
+    }
+    .elite-tip-content:focus { background: rgba(200,150,12,0.05); border-radius: 4px; padding: 4px 6px; }
+    .elite-tip-mnemonic {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(74,144,217,0.08);
+      border: 1px solid var(--border-sapphire);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+    }
+    .elite-tip-mnemonic-icon { font-size: 0.9rem; flex-shrink: 0; }
+    .elite-tip-mnemonic-text {
+      font-size: 0.75rem;
+      color: var(--premium-sapphire-lt);
+      font-style: italic;
+      outline: none;
+      flex: 1;
+    }
+    .elite-tip-mnemonic-text:focus { background: rgba(74,144,217,0.08); border-radius: 3px; padding: 1px 3px; }
+    .elite-tip-pro {
+      font-size: 0.72rem;
+      color: var(--premium-muted);
+      line-height: 1.5;
+      outline: none;
+    }
+    .elite-tip-pro:focus { background: rgba(255,255,255,0.03); border-radius: 3px; padding: 2px 4px; }
+
+    /* ═══════════════════════════════════════════════════════════
+       SECTION LABELS
+    ═══════════════════════════════════════════════════════════ */
+    .section-label {
+      font-size: 0.62rem;
+      font-family: var(--font-mono);
+      color: var(--premium-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-glass);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TOAST NOTIFICATION
+    ═══════════════════════════════════════════════════════════ */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toast {
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.78rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: slideIn 0.3s ease;
+      box-shadow: var(--shadow-lg);
+    }
+    .toast-success {
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.35);
+      color: var(--premium-success);
+    }
+    .toast-gold {
+      background: var(--glass-gold);
+      border: 1px solid var(--border-gold);
+      color: var(--premium-gold-lt);
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .split-screen {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow: visible;
+      }
+      .modules-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--border-glass);
+        max-height: 40vh;
+      }
+      .preview-panel { min-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BARRE DE PROGRESSION "COURSE TO 100"
+═══════════════════════════════════════════════════════════ -->
+<div class="course-to-100-bar">
+  <span class="course-to-100-label">Course to 100</span>
+  <div class="course-to-100-track">
+    <div class="course-to-100-fill" id="progressFill" style="width: 8%"></div>
+  </div>
+  <span class="course-to-100-count" id="progressCount">8 / 100 modules</span>
+  <span class="course-to-100-badge" id="progressBadge">8%</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HEADER PAGE
+═══════════════════════════════════════════════════════════ -->
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-header-icon">🤖</div>
+    <div>
+      <div class="page-header-title">Dashboard de Validation IA</div>
+      <div class="page-header-subtitle">Révision et publication des modules générés par l'IA</div>
+    </div>
+  </div>
+  <div class="page-header-stats">
+    <div class="stat-chip"><span class="dot dot-draft"></span> 12 Draft</div>
+    <div class="stat-chip"><span class="dot dot-review"></span> 3 En révision</div>
+    <div class="stat-chip"><span class="dot dot-published"></span> 8 Publiés</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SPLIT-SCREEN LAYOUT
+═══════════════════════════════════════════════════════════ -->
+<div class="split-screen">
+
+  <!-- ─── PANNEAU GAUCHE : LISTE DES MODULES ─── -->
+  <div class="modules-panel">
+    <div class="modules-panel-header">
+      <span class="modules-panel-title">Modules en attente</span>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterModules('all', this)">Tous</button>
+        <button class="filter-tab" onclick="filterModules('draft', this)">Draft</button>
+        <button class="filter-tab" onclick="filterModules('review', this)">Révision</button>
+        <button class="filter-tab" onclick="filterModules('published', this)">Publiés</button>
+      </div>
+    </div>
+
+    <!-- Modules générés par l'IA -->
+    <div id="modulesList">
+
+      <div class="agtm-card selected" onclick="selectModule(this, 0)" data-status="draft">
+        <div class="module-card-inner">
+          <div class="module-card-icon">📚</div>
+          <div class="module-card-body">
+            <div class="module-card-title">Present Perfect vs Simple Past</div>
+            <div class="module-card-meta">
+              <span class="badge badge-draft">Draft</span>
+              <span class="badge badge-level">B1</span>
+              <span class="badge badge-level">Grammaire</span>
+            </div>
+          </div>
+          <div class="module-card-actions">
+            <span class="module-card-time">Il y a 2h</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agtm-card" onclick="selectModule(this, 1)" data-status="draft">
+        <div class="module-card-inner">
+          <div class="module-card-icon">💼</div>
+          <div class="module-card-body">
+            <div class="module-card-title">Business Email Writing Essentials</div>
+            <div class="module-card-meta">
+              <span class="badge badge-draft">Draft</span>
+              <span class="badge badge-level">B2</span>
+              <span class="badge badge-level">Business</span>
+            </div>
+          </div>
+          <div class="module-card-actions">
+            <span class="module-card-time">Il y a 4h</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agtm-card" onclick="selectModule(this, 2)" data-status="review">
+        <div class="module-card-inner">
+          <div class="module-card-icon">🌍</div>
+          <div class="module-card-body">
+            <div class="module-card-title">Environmental Vocabulary for BAC</div>
+            <div class="module-card-meta">
+              <span class="badge badge-review">Révision</span>
+              <span class="badge badge-level">B1</span>
+              <span class="badge badge-level">Vocabulaire</span>
+            </div>
+          </div>
+          <div class="module-card-actions">
+            <span class="module-card-time">Hier</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agtm-card" onclick="selectModule(this, 3)" data-status="draft">
+        <div class="module-card-inner">
+          <div class="module-card-icon">🎯</div>
+          <div class="module-card-body">
+            <div class="module-card-title">Conditional Sentences (Types 1, 2, 3)</div>
+            <div class="module-card-meta">
+              <span class="badge badge-draft">Draft</span>
+              <span class="badge badge-level">B2</span>
+              <span class="badge badge-level">Grammaire</span>
+            </div>
+          </div>
+          <div class="module-card-actions">
+            <span class="module-card-time">Hier</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agtm-card" onclick="selectModule(this, 4)" data-status="published">
+        <div class="module-card-inner">
+          <div class="module-card-icon">👨‍👩‍👧</div>
+          <div class="module-card-body">
+            <div class="module-card-title">Family & Relationships Vocabulary</div>
+            <div class="module-card-meta">
+              <span class="badge badge-published">Publié</span>
+              <span class="badge badge-level">A1</span>
+              <span class="badge badge-level">Vocabulaire</span>
+            </div>
+          </div>
+          <div class="module-card-actions">
+            <span class="module-card-time">2 jours</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agtm-card" onclick="selectModule(this, 5)" data-status="draft">
+        <div class="module-card-inner">
+          <div class="module-card-icon">🏢</div>
+          <div class="module-card-body">
+            <div class="module-card-title">Job Interview Phrases & Strategies</div>
+            <div class="module-card-meta">
+              <span class="badge badge-draft">Draft</span>
+              <span class="badge badge-level">B2</span>
+              <span class="badge badge-level">Communication</span>
+            </div>
+          </div>
+          <div class="module-card-actions">
+            <span class="module-card-time">3 jours</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agtm-card" onclick="selectModule(this, 6)" data-status="draft">
+        <div class="module-card-inner">
+          <div class="module-card-icon">📊</div>
+          <div class="module-card-body">
+            <div class="module-card-title">TOEIC Reading Comprehension Strategies</div>
+            <div class="module-card-meta">
+              <span class="badge badge-draft">Draft</span>
+              <span class="badge badge-level">B2</span>
+              <span class="badge badge-level">Examen</span>
+            </div>
+          </div>
+          <div class="module-card-actions">
+            <span class="module-card-time">3 jours</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── PANNEAU DROIT : PRÉVISUALISATION DYNAMIQUE ─── -->
+  <div class="preview-panel" id="previewPanel">
+
+    <!-- Header Premium -->
+    <div class="preview-header" id="previewHeader">
+      <div class="preview-header-top">
+        <div>
+          <div style="font-size:0.62rem;font-family:var(--font-mono);color:var(--premium-muted);margin-bottom:4px;letter-spacing:0.08em;text-transform:uppercase;">Focus Title</div>
+          <div class="preview-focus-title" id="previewTitle" contenteditable="true">
+            Present Perfect vs Simple Past: Mastering Time in English
+          </div>
+        </div>
+        <button class="btn-approve" onclick="approveModule()">
+          🔥 Approuver &amp; Publier
+        </button>
+      </div>
+      <div class="preview-header-meta">
+        <span class="badge badge-draft" id="previewStatus">Draft</span>
+        <span class="badge badge-level">B1</span>
+        <span class="badge badge-level">Grammaire</span>
+        <span class="badge badge-level" style="color:var(--premium-muted)">45 min</span>
+      </div>
+      <div class="preview-actions-row">
+        <button class="btn-secondary" onclick="regenerateModule()">↻ Régénérer</button>
+        <button class="btn-secondary" onclick="copyJSON()">⎘ Copier JSON</button>
+        <button class="btn-secondary" onclick="saveEdits()">💾 Sauvegarder</button>
+        <button class="btn-danger-sm" onclick="deleteModule()">🗑 Supprimer</button>
+      </div>
+    </div>
+
+    <!-- Corps du panneau -->
+    <div class="preview-body">
+
+      <!-- ACCORDÉON 1 : Learning Objectives -->
+      <div class="accordion open" id="acc-objectives">
+        <div class="accordion-header" onclick="toggleAccordion('acc-objectives')">
+          <div class="accordion-header-left">
+            <div class="accordion-icon">🎯</div>
+            <div>
+              <div class="accordion-title">Learning Objectives</div>
+              <div class="accordion-subtitle">3 objectifs mesurables</div>
+            </div>
+          </div>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="objectives-list" id="objectivesList">
+            <div class="objective-item">
+              <div class="objective-num">1</div>
+              <div class="objective-text" contenteditable="true">Maîtriser le Present Perfect dans un contexte de réunion professionnelle</div>
+            </div>
+            <div class="objective-item">
+              <div class="objective-num">2</div>
+              <div class="objective-text" contenteditable="true">Distinguer le Present Perfect du Simple Past dans des situations concrètes</div>
+            </div>
+            <div class="objective-item">
+              <div class="objective-num">3</div>
+              <div class="objective-text" contenteditable="true">Utiliser les marqueurs temporels appropriés (already, yet, just, ever, never)</div>
+            </div>
+          </div>
+          <button class="btn-add-objective" onclick="addObjective()">+ Ajouter un objectif</button>
+        </div>
+      </div>
+
+      <!-- ACCORDÉON 2 : Core Content -->
+      <div class="accordion" id="acc-content">
+        <div class="accordion-header" onclick="toggleAccordion('acc-content')">
+          <div class="accordion-header-left">
+            <div class="accordion-icon">📖</div>
+            <div>
+              <div class="accordion-title">Core Content</div>
+              <div class="accordion-subtitle">Introduction · Grammaire · Pratique</div>
+            </div>
+          </div>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-body">
+
+          <!-- Introduction -->
+          <div class="section-label">Introduction</div>
+          <textarea class="editable-field" rows="4" placeholder="Texte d'introduction (150-200 mots)...">Le Present Perfect est l'un des temps les plus utilisés en anglais professionnel, notamment lors des réunions d'affaires. Contrairement au Simple Past qui ancre une action dans un moment précis du passé, le Present Perfect établit un lien entre le passé et le présent. Pour un apprenant francophone, cette distinction est cruciale car le français utilise souvent le passé composé pour les deux situations. Dans ce module, vous allez découvrir comment utiliser ces deux temps avec précision et confiance dans vos communications professionnelles.</textarea>
+
+          <div style="margin-top:12px">
+            <div class="section-label">Key Concept</div>
+            <div class="editable-field" contenteditable="true" style="min-height:36px">Le Present Perfect relie le passé au présent ; le Simple Past ancre dans un moment révolu.</div>
+          </div>
+
+          <!-- Exemples -->
+          <div style="margin-top:14px">
+            <div class="section-label">Exemples bilingues</div>
+            <table class="examples-table">
+              <thead>
+                <tr>
+                  <th>English</th>
+                  <th>Français</th>
+                  <th>Contexte</th>
+                </tr>
+              </thead>
+              <tbody id="examplesBody">
+                <tr>
+                  <td><span class="example-en" contenteditable="true">I have finished the report.</span></td>
+                  <td><span class="example-fr" contenteditable="true">J'ai terminé le rapport.</span></td>
+                  <td><span class="example-ctx" contenteditable="true">Réunion d'équipe</span></td>
+                </tr>
+                <tr>
+                  <td><span class="example-en" contenteditable="true">She finished the report yesterday.</span></td>
+                  <td><span class="example-fr" contenteditable="true">Elle a terminé le rapport hier.</span></td>
+                  <td><span class="example-ctx" contenteditable="true">Rapport passé précis</span></td>
+                </tr>
+                <tr>
+                  <td><span class="example-en" contenteditable="true">Have you ever worked abroad?</span></td>
+                  <td><span class="example-fr" contenteditable="true">Avez-vous déjà travaillé à l'étranger ?</span></td>
+                  <td><span class="example-ctx" contenteditable="true">Entretien d'embauche</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Erreurs courantes -->
+          <div style="margin-top:14px">
+            <div class="section-label">Erreurs courantes</div>
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius-sm);padding:10px 12px;">
+              <div style="font-size:0.72rem;color:var(--premium-danger);font-weight:600;margin-bottom:4px">❌ Erreur fréquente</div>
+              <div class="editable-field" contenteditable="true" style="border:none;background:transparent;padding:0;font-size:0.75rem;color:var(--premium-text-dim)">I have seen him yesterday. → Incorrect car "yesterday" est un marqueur de temps précis qui exige le Simple Past : "I saw him yesterday."</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ACCORDÉON 3 : Quiz Data -->
+      <div class="accordion" id="acc-quiz">
+        <div class="accordion-header" onclick="toggleAccordion('acc-quiz')">
+          <div class="accordion-header-left">
+            <div class="accordion-icon">❓</div>
+            <div>
+              <div class="accordion-title">Quiz Data</div>
+              <div class="accordion-subtitle">5 questions · Édition inline</div>
+            </div>
+          </div>
+          <span class="accordion-chevron">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="quiz-list" id="quizList">
+
+            <!-- Question 1 -->
+            <div class="quiz-item">
+              <div class="quiz-item-header">
+                <div class="quiz-num">1</div>
+                <div class="quiz-question" contenteditable="true">Which sentence uses the Present Perfect correctly?</div>
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option correct">
+                  <div class="quiz-option-letter">A</div>
+                  <div class="quiz-option-text" contenteditable="true">I have already submitted the report.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">B</div>
+                  <div class="quiz-option-text" contenteditable="true">I have submitted the report yesterday.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">C</div>
+                  <div class="quiz-option-text" contenteditable="true">I submitted the report since Monday.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">D</div>
+                  <div class="quiz-option-text" contenteditable="true">I have submitted the report last week.</div>
+                </div>
+              </div>
+              <div class="quiz-explanation" contenteditable="true">✅ "Already" est un marqueur du Present Perfect. Les options B, C et D mélangent des marqueurs temporels incompatibles avec ce temps.</div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="quiz-item">
+              <div class="quiz-item-header">
+                <div class="quiz-num">2</div>
+                <div class="quiz-question" contenteditable="true">Complete: "She ___ in Abidjan for 10 years." (She still lives there)</div>
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">A</div>
+                  <div class="quiz-option-text" contenteditable="true">lived</div>
+                </div>
+                <div class="quiz-option correct">
+                  <div class="quiz-option-letter">B</div>
+                  <div class="quiz-option-text" contenteditable="true">has lived</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">C</div>
+                  <div class="quiz-option-text" contenteditable="true">is living</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">D</div>
+                  <div class="quiz-option-text" contenteditable="true">was living</div>
+                </div>
+              </div>
+              <div class="quiz-explanation" contenteditable="true">✅ "For 10 years" avec une situation qui continue jusqu'au présent → Present Perfect "has lived".</div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="quiz-item">
+              <div class="quiz-item-header">
+                <div class="quiz-num">3</div>
+                <div class="quiz-question" contenteditable="true">Which time expression is NOT used with the Present Perfect?</div>
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">A</div>
+                  <div class="quiz-option-text" contenteditable="true">already</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">B</div>
+                  <div class="quiz-option-text" contenteditable="true">yet</div>
+                </div>
+                <div class="quiz-option correct">
+                  <div class="quiz-option-letter">C</div>
+                  <div class="quiz-option-text" contenteditable="true">yesterday</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">D</div>
+                  <div class="quiz-option-text" contenteditable="true">ever</div>
+                </div>
+              </div>
+              <div class="quiz-explanation" contenteditable="true">✅ "Yesterday" est un marqueur de temps précis → Simple Past uniquement. Already, yet, ever → Present Perfect.</div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="quiz-item">
+              <div class="quiz-item-header">
+                <div class="quiz-num">4</div>
+                <div class="quiz-question" contenteditable="true">Translate: "J'ai déjà envoyé l'email."</div>
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option correct">
+                  <div class="quiz-option-letter">A</div>
+                  <div class="quiz-option-text" contenteditable="true">I have already sent the email.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">B</div>
+                  <div class="quiz-option-text" contenteditable="true">I already sent the email.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">C</div>
+                  <div class="quiz-option-text" contenteditable="true">I have sent already the email.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">D</div>
+                  <div class="quiz-option-text" contenteditable="true">I was sending the email already.</div>
+                </div>
+              </div>
+              <div class="quiz-explanation" contenteditable="true">✅ "Already" avec Present Perfect : "have already sent". Position de "already" : entre have et le participe passé.</div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="quiz-item">
+              <div class="quiz-item-header">
+                <div class="quiz-num">5</div>
+                <div class="quiz-question" contenteditable="true">In a job interview: "Have you ever ___ a team?" — Best answer:</div>
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">A</div>
+                  <div class="quiz-option-text" contenteditable="true">Yes, I managed a team of 5 people last year.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">B</div>
+                  <div class="quiz-option-text" contenteditable="true">Yes, I have managed a team of 5 people.</div>
+                </div>
+                <div class="quiz-option">
+                  <div class="quiz-option-letter">C</div>
+                  <div class="quiz-option-text" contenteditable="true">Yes, I was managing a team.</div>
+                </div>
+                <div class="quiz-option correct">
+                  <div class="quiz-option-letter">D</div>
+                  <div class="quiz-option-text" contenteditable="true">Yes, I have managed a team of 5 people for 2 years at my previous company.</div>
+                </div>
+              </div>
+              <div class="quiz-explanation" contenteditable="true">✅ La réponse D est la plus complète et professionnelle : Present Perfect + durée + contexte. Idéale pour un entretien TOEIC ou professionnel.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ELITE TIP BOX -->
+      <div class="elite-tip-box">
+        <div class="elite-tip-header">
+          <span class="elite-tip-badge">⭐ Elite Tip</span>
+        </div>
+        <div class="elite-tip-title" contenteditable="true">La règle d'or du Present Perfect</div>
+        <div class="elite-tip-content" contenteditable="true">
+          Posez-vous toujours cette question : "Est-ce que le moment précis est important ?" Si oui → Simple Past. Si non (ou si l'action a encore un impact maintenant) → Present Perfect. Cette règle simple vous évitera 90% des erreurs.
+        </div>
+        <div class="elite-tip-mnemonic">
+          <span class="elite-tip-mnemonic-icon">💡</span>
+          <span class="elite-tip-mnemonic-text" contenteditable="true">Mnémotechnique : "PP = Passé Présent" — le Present Perfect relie toujours le Passé au Présent.</span>
+        </div>
+        <div class="section-label" style="margin-top:10px">Conseil Pro</div>
+        <div class="elite-tip-pro" contenteditable="true">Dans un email professionnel ou un entretien TOEIC, utilisez le Present Perfect pour montrer votre expérience sans date précise : "I have worked with international clients" sonne plus professionnel que "I worked with international clients".</div>
+      </div>
+
+    </div><!-- /preview-body -->
+  </div><!-- /preview-panel -->
+
+</div><!-- /split-screen -->
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+  // ═══════════════════════════════════════════════════════════
+  // DONNÉES DES MODULES (simulées)
+  // ═══════════════════════════════════════════════════════════
+  const MODULES_DATA = [
+    {
+      title: "Present Perfect vs Simple Past: Mastering Time in English",
+      status: "draft",
+      level: "B1",
+      theme: "Grammaire",
+      duration: "45 min"
+    },
+    {
+      title: "Business Email Writing: From Good to Outstanding",
+      status: "draft",
+      level: "B2",
+      theme: "Business",
+      duration: "60 min"
+    },
+    {
+      title: "Environmental Vocabulary for BAC Excellence",
+      status: "review",
+      level: "B1",
+      theme: "Vocabulaire",
+      duration: "30 min"
+    },
+    {
+      title: "Conditional Sentences: Mastering Types 1, 2 & 3",
+      status: "draft",
+      level: "B2",
+      theme: "Grammaire",
+      duration: "50 min"
+    },
+    {
+      title: "Family & Relationships: Essential A1 Vocabulary",
+      status: "published",
+      level: "A1",
+      theme: "Vocabulaire",
+      duration: "25 min"
+    },
+    {
+      title: "Job Interview Phrases: Land Your Dream Job",
+      status: "draft",
+      level: "B2",
+      theme: "Communication",
+      duration: "45 min"
+    },
+    {
+      title: "TOEIC Reading: Proven Strategies for High Scores",
+      status: "draft",
+      level: "B2",
+      theme: "Examen",
+      duration: "60 min"
+    }
+  ];
+
+  let currentModuleIndex = 0;
+  let publishedCount = 8;
+  const totalModules = 100;
+
+  // ═══════════════════════════════════════════════════════════
+  // SÉLECTION D'UN MODULE
+  // ═══════════════════════════════════════════════════════════
+  function selectModule(el, index) {
+    // Désélectionner tous
+    document.querySelectorAll('.agtm-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    currentModuleIndex = index;
+
+    const mod = MODULES_DATA[index];
+    if (!mod) return;
+
+    // Mettre à jour le header de prévisualisation
+    document.getElementById('previewTitle').textContent = mod.title;
+
+    const statusEl = document.getElementById('previewStatus');
+    statusEl.textContent = mod.status === 'draft' ? 'Draft' : mod.status === 'review' ? 'En révision' : 'Publié';
+    statusEl.className = 'badge ' + (mod.status === 'draft' ? 'badge-draft' : mod.status === 'review' ? 'badge-review' : 'badge-published');
+
+    showToast('Module chargé : ' + mod.title.substring(0, 40) + '...', 'gold');
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // ACCORDÉONS
+  // ═══════════════════════════════════════════════════════════
+  function toggleAccordion(id) {
+    const acc = document.getElementById(id);
+    acc.classList.toggle('open');
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // FILTRES
+  // ═══════════════════════════════════════════════════════════
+  function filterModules(status, btn) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.agtm-card').forEach(card => {
+      if (status === 'all' || card.dataset.status === status) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // AJOUTER UN OBJECTIF
+  // ═══════════════════════════════════════════════════════════
+  function addObjective() {
+    const list = document.getElementById('objectivesList');
+    const count = list.children.length + 1;
+    const item = document.createElement('div');
+    item.className = 'objective-item';
+    item.innerHTML = `
+      <div class="objective-num">${count}</div>
+      <div class="objective-text" contenteditable="true">Nouvel objectif d'apprentissage...</div>
+    `;
+    list.appendChild(item);
+    item.querySelector('.objective-text').focus();
+    showToast('Objectif ajouté', 'gold');
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // APPROUVER & PUBLIER
+  // ═══════════════════════════════════════════════════════════
+  function approveModule() {
+    const statusEl = document.getElementById('previewStatus');
+    statusEl.textContent = 'Publié';
+    statusEl.className = 'badge badge-published';
+
+    // Mettre à jour la carte dans la liste
+    const selectedCard = document.querySelector('.agtm-card.selected');
+    if (selectedCard) {
+      selectedCard.dataset.status = 'published';
+      const badge = selectedCard.querySelector('.badge');
+      if (badge) {
+        badge.textContent = 'Publié';
+        badge.className = 'badge badge-published';
+      }
+    }
+
+    // Mettre à jour la progression
+    publishedCount++;
+    updateProgress(publishedCount);
+
+    showToast('🎉 Module approuvé et publié avec succès !', 'success');
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // RÉGÉNÉRER
+  // ═══════════════════════════════════════════════════════════
+  function regenerateModule() {
+    showToast('↻ Régénération en cours via l\'IA...', 'gold');
+    // Ici : appel à l'Edge Function generate-module-content
+    setTimeout(() => {
+      showToast('✅ Module régénéré avec succès !', 'success');
+    }, 2000);
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // COPIER JSON
+  // ═══════════════════════════════════════════════════════════
+  function copyJSON() {
+    const title = document.getElementById('previewTitle').textContent;
+    const objectives = Array.from(document.querySelectorAll('.objective-text')).map(el => el.textContent.trim());
+
+    const json = JSON.stringify({
+      Focus_Title: title,
+      Learning_Objectives: objectives,
+      status: "draft",
+      generated_at: new Date().toISOString()
+    }, null, 2);
+
+    navigator.clipboard.writeText(json).then(() => {
+      showToast('⎘ JSON copié dans le presse-papiers', 'gold');
+    }).catch(() => {
+      showToast('Erreur lors de la copie', 'error');
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // SAUVEGARDER
+  // ═══════════════════════════════════════════════════════════
+  function saveEdits() {
+    showToast('💾 Modifications sauvegardées', 'success');
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // SUPPRIMER
+  // ═══════════════════════════════════════════════════════════
+  function deleteModule() {
+    if (confirm('Supprimer ce module ? Cette action est irréversible.')) {
+      const selectedCard = document.querySelector('.agtm-card.selected');
+      if (selectedCard) {
+        selectedCard.style.opacity = '0';
+        selectedCard.style.transform = 'translateX(-20px)';
+        selectedCard.style.transition = 'all 0.3s';
+        setTimeout(() => selectedCard.remove(), 300);
+      }
+      showToast('🗑 Module supprimé', 'gold');
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // MISE À JOUR DE LA PROGRESSION
+  // ═══════════════════════════════════════════════════════════
+  function updateProgress(count) {
+    const pct = Math.min(100, Math.round((count / totalModules) * 100));
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressCount').textContent = count + ' / ' + totalModules + ' modules';
+    document.getElementById('progressBadge').textContent = pct + '%';
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // TOAST NOTIFICATIONS
+  // ═══════════════════════════════════════════════════════════
+  function showToast(message, type = 'gold') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-' + (type === 'success' ? 'success' : 'gold');
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(20px)';
+      toast.style.transition = 'all 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // INITIALISATION
+  // ═══════════════════════════════════════════════════════════
+  document.addEventListener('DOMContentLoaded', () => {
+    updateProgress(publishedCount);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AGTM Digital Academy — Fiche d'Inscription</title>
+
+  <!-- ╔══════════════════════════════════════════════╗
+       ║  🔑  CLÉS SUPABASE                           ║
+       ╚══════════════════════════════════════════════╝ -->
+  <script>
+    const SUPABASE_URL  = "https://fglzovvsyloprokmdadx.supabase.co";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww";
+  </script>
+
+  <style>
+    /* ══════════════════════════════════════════════
+       VARIABLES — Charte Graphique AGTM
+    ══════════════════════════════════════════════ */
+    :root {
+      /* Couleurs marque */
+      --gold:         #E8941A;
+      --gold-light:   #F5B942;
+      --gold-dark:    #C77D1A;
+      --gold-bg:      rgba(232,148,26,.12);
+      --sapphire:     #0D2D52;
+      --sapphire-lt:  #1B4F8A;
+      --danger:       #E04A4A;
+      --success:      #27AE60;
+
+      /* Header (fond sombre — impact marque) */
+      --h-bg:         #0A1520;
+      --h-mid:        #0E1E34;
+      --h-gray:       #8A9EAE;
+      --h-border:     #1E3A5F;
+
+      /* Corps du formulaire — thème sombre */
+      --body-bg:      #09111E;
+      --card-bg:      linear-gradient(135deg,#152540 0%,#241C08 100%);
+      --card-border:  rgba(232,148,26,.2);
+      --card-shadow:  0 4px 20px rgba(0,0,0,.4);
+      --head-bg:      linear-gradient(90deg,#132540 0%,#2C2208 100%);
+      --text-main:    #E2D8C0;
+      --text-sub:     #8AAAC0;
+      --text-muted:   #6A8AAA;
+      --input-bg:     linear-gradient(135deg,#080F1A 0%,#1C1408 100%);
+      --input-bd:     #3A3A28;
+      --input-focus:  #E8941A;
+      --pill-bg:      rgba(21,37,64,.5);
+      --pill-bd:      #3A3A28;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(150deg,#09111E 0%,#160E04 40%,#0B1A2E 70%,#160E04 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#09111E}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(#1E3A5F,#3A2A10);border-radius:3px}
+
+    /* ══ HEADER ══════════════════════════════════ */
+    header {
+      background: linear-gradient(135deg, #060D14 0%, var(--h-mid) 100%);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 44px 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand { display: flex; align-items: center; gap: 18px; }
+
+    .brand-badge {
+      width: 72px; height: 72px;
+      background: var(--gold);
+      border-radius: 16px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-weight: 900; color: #0A1520;
+      flex-shrink: 0; line-height: 1;
+      box-shadow: 0 4px 16px rgba(232,148,26,.4);
+    }
+    .brand-badge .badge-main { font-size: 22px; letter-spacing: -1px; }
+    .brand-badge .badge-sub  { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; opacity: .8; }
+
+    .brand-text h1 {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: .3px;
+      line-height: 1.1;
+    }
+    .brand-text .tagline {
+      font-size: .8rem;
+      color: var(--sapphire-lt);
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+    .brand-text .eip-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      background: rgba(232,148,26,.12);
+      border: 1px solid rgba(232,148,26,.35);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: .73rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: .4px;
+    }
+    .brand-text .eip-pill::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold-light);
+    }
+
+    .contact-block {
+      text-align: right;
+      font-size: .78rem;
+      color: var(--h-gray);
+      line-height: 2;
+    }
+    .contact-block a { color: var(--gold-light); text-decoration: none; }
+    .contact-block a:hover { text-decoration: underline; }
+
+    .header-bar {
+      background: var(--gold);
+      color: #0A1520;
+      text-align: center;
+      font-size: .77rem;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 7px 40px;
+    }
+
+    /* ══ LAYOUT ═══════════════════════════════════ */
+    main {
+      max-width: 880px;
+      margin: 32px auto 64px;
+      padding: 0 16px;
+    }
+
+    .page-title { text-align: center; margin-bottom: 28px; }
+    .page-title h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+    .page-title p {
+      font-size: .84rem;
+      color: var(--text-sub);
+      margin-top: 5px;
+    }
+
+    /* ══ SECTION CARDS ════════════════════════════ */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--head-bg);
+      border-bottom: 2px solid var(--gold);
+      padding: 14px 20px;
+    }
+    .section-num {
+      width: 28px; height: 28px;
+      background: var(--gold);
+      color: #0A1520;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .section-head h3 {
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .section-head .section-desc {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+    .section-body { padding: 22px; }
+
+    /* ══ GRIDS ════════════════════════════════════ */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .col-span-2 { grid-column: span 2; }
+    .col-span-3 { grid-column: span 3; }
+
+    @media (max-width: 620px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .col-span-2, .col-span-3 { grid-column: span 1; }
+      .header-top { flex-direction: column; text-align: center; }
+      .contact-block { text-align: center; }
+      .brand-text h1 { font-size: 1.4rem; }
+    }
+
+    /* ══ FORM CONTROLS ════════════════════════════ */
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+
+    label.field-label {
+      font-size: .73rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+    label.field-label .req { color: var(--gold); margin-left: 3px; font-size: .8rem; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-bd);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: .88rem;
+      font-family: inherit;
+      padding: 9px 12px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+    }
+    input::placeholder { color: #4A6A8A; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px rgba(232,148,26,.2);
+    }
+    input.invalid {
+      border-color: var(--danger) !important;
+      box-shadow: 0 0 0 3px rgba(217,64,64,.1) !important;
+    }
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238AAAC0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 34px;
+    }
+    select option { background: #080F1A; color: var(--text-main); }
+    textarea { min-height: 70px; resize: vertical; }
+
+    /* ══ RADIO & CHECKBOX ═════════════════════════ */
+    .radio-group, .check-group {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 3px;
+    }
+    .radio-pill input[type="radio"],
+    .check-pill input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .radio-pill, .check-pill { position: relative; }
+    .radio-pill label,
+    .check-pill label {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 15px;
+      background: var(--pill-bg);
+      border: 1.5px solid var(--pill-bd);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: .82rem; font-weight: 600;
+      color: var(--text-sub);
+      transition: all .18s; user-select: none;
+    }
+    .radio-pill input:checked + label,
+    .check-pill input:checked + label {
+      border-color: var(--gold);
+      background: var(--gold-bg);
+      color: var(--gold-light);
+    }
+    .radio-pill label:hover,
+    .check-pill label:hover {
+      border-color: var(--gold);
+      background: rgba(232,148,26,.08);
+      color: var(--text-main);
+    }
+
+    /* ══ NIVEAU ═══════════════════════════════════ */
+    .niveau-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 8px; margin-top: 5px;
+    }
+    .niveau-opt { position: relative; }
+    .niveau-opt input[type="radio"] { position: absolute; opacity: 0; }
+    .niveau-opt label {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 11px 6px 9px;
+      background: var(--pill-bg);
+      border: 1.5px solid var(--pill-bd);
+      border-radius: 10px;
+      cursor: pointer; text-align: center;
+      transition: all .18s;
+      font-size: .78rem; font-weight: 600;
+      color: var(--text-sub);
+    }
+    .niveau-opt .badge {
+      font-size: .73rem; font-weight: 800;
+      background: rgba(19,37,64,.8); color: #1B4F8A;
+      border-radius: 4px; padding: 2px 8px; margin-bottom: 4px;
+    }
+    .niveau-opt input:checked + label {
+      border-color: var(--gold); background: var(--gold-bg); color: var(--gold-light);
+    }
+    .niveau-opt input:checked + label .badge { background: var(--gold); color: #0A1520; }
+    .niveau-opt label:hover { border-color: var(--gold); background: rgba(232,148,26,.08); }
+
+    /* ══ MISC ═════════════════════════════════════ */
+    .sep { border: none; border-top: 1px solid rgba(232,148,26,.15); margin: 18px 0; }
+
+    .info-tip {
+      display: flex; gap: 8px; align-items: flex-start;
+      background: rgba(26,42,66,.7);
+      border: 1px solid rgba(74,144,217,.25);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: .78rem; color: #1B4F8A;
+      margin-bottom: 14px;
+    }
+    .info-tip .tip-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    .engagement-box {
+      background: rgba(28,20,8,.6);
+      border: 1.5px solid rgba(232,148,26,.4);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .engagement-box input[type="checkbox"] {
+      width: 20px; height: 20px; flex-shrink: 0;
+      margin-top: 2px; cursor: pointer; accent-color: var(--gold);
+    }
+    .engagement-box .engage-text {
+      font-size: .84rem; color: var(--text-main); line-height: 1.7;
+    }
+    .engage-text strong { color: var(--gold-light); }
+
+    /* ══ SUBMIT ═══════════════════════════════════ */
+    .submit-zone { text-align: center; margin-top: 24px; }
+    .btn-submit {
+      background: var(--gold); color: #0A1520;
+      border: none; border-radius: 10px;
+      font-size: .96rem; font-weight: 800; font-family: inherit;
+      padding: 14px 52px; cursor: pointer; letter-spacing: .5px;
+      transition: background .2s, transform .1s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(232,148,26,.35);
+    }
+    .btn-submit:hover { background: var(--gold-light); box-shadow: 0 6px 28px rgba(232,148,26,.5); }
+    .btn-submit:active { transform: scale(.97); }
+    .btn-submit:disabled { background: #2A3A50; color: #5A7090; cursor: not-allowed; box-shadow: none; }
+    .required-note { font-size: .74rem; color: var(--text-muted); margin-top: 10px; }
+    .required-note span { color: var(--gold); }
+
+    /* ══ NOTIFICATION ═════════════════════════════ */
+    #notif {
+      display: none; margin-top: 18px; padding: 16px 20px;
+      border-radius: 10px; font-size: .88rem; font-weight: 600;
+      text-align: center; line-height: 1.6;
+    }
+    #notif.success { background: rgba(39,174,96,.12); border: 1.5px solid var(--success); color: #4AE090; }
+    #notif.error   { background: rgba(224,74,74,.1);  border: 1.5px solid var(--danger);  color: #E08080; }
+
+    /* ══ FOOTER ═══════════════════════════════════ */
+    footer {
+      background: var(--h-mid);
+      border-top: 2px solid var(--gold);
+      text-align: center;
+      padding: 20px 24px;
+    }
+    .footer-line { font-size: .78rem; color: var(--h-gray); line-height: 2; }
+    .footer-line .gold  { color: var(--gold); font-weight: 700; }
+    .footer-line .blue  { color: var(--sapphire-lt); }
+    .footer-line .pipe  { color: #1E3A5F; margin: 0 6px; }
+
+    /* ══ SPINNER ══════════════════════════════════ */
+    .spin {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid rgba(10,21,32,.3); border-top-color: #0A1520;
+      border-radius: 50%;
+      animation: rotate .65s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes rotate { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     HEADER — Identité AGTM
+══════════════════════════════════════════════════════ -->
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <div class="brand-badge">
+        <span class="badge-main">AGTM</span>
+        <span class="badge-sub">Academy</span>
+      </div>
+      <div class="brand-text">
+        <h1>AGTM Digital Academy</h1>
+        <div class="tagline">Language &amp; Professional Development</div>
+        <div class="eip-pill">Language &amp; Professional Development &nbsp;·&nbsp; Business &amp; General English</div>
+      </div>
+    </div>
+
+    <div class="contact-block">
+      <div>📞 <a href="tel:+2250709269880">+225 07 09 26 98 80</a>
+           &nbsp;/&nbsp; <a href="tel:+2250707967250">07 07 96 72 50</a></div>
+      <div>✉️ <a href="mailto:contact.eipservices@gmail.com">contact.eipservices@gmail.com</a></div>
+      <div>📍 Abidjan, Côte d'Ivoire</div>
+      <div style="margin-top:4px;font-size:.71rem;color:#8AAAC0">
+        Responsable : <strong style="color:var(--gold-light)">Issa Bamba</strong>
+      </div>
+    </div>
+  </div>
+  <div class="header-bar">✦ Fiche d'Inscription Officielle — AGTM Digital Academy ✦</div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════
+     CONTENU PRINCIPAL
+══════════════════════════════════════════════════════ -->
+<main>
+  <div class="page-title">
+    <h2>📝 Formulaire d'Inscription</h2>
+    <p>Complétez toutes les sections. Les champs marqués <strong style="color:var(--gold)">*</strong> sont obligatoires.</p>
+  </div>
+
+  <form id="eipForm" novalidate autocomplete="off">
+
+    <!-- ════════════════════════════════════════════
+         SECTION 1 — INFORMATIONS PERSONNELLES
+    ════════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-num">1</div>
+        <h3>Informations Personnelles</h3>
+        <span class="section-desc">Identité &amp; Coordonnées</span>
+      </div>
+      <div class="section-body">
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="field-label">Nom <span class="req">*</span></label>
+            <input type="text" id="nom" placeholder="KONÉ" required autocomplete="family-name"/>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Prénom(s) <span class="req">*</span></label>
+            <input type="text" id="prenom" placeholder="Aminata Chloé" required autocomplete="given-name"/>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:14px">
+          <div class="form-group">
+            <label class="field-label">Email <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="vous@email.com" required autocomplete="email"/>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Téléphone <span class="req">*</span></label>
+            <input type="text" id="telephone" placeholder="0709269880" inputmode="numeric"
+              oninput="this.value=this.value.replace(/[^0-9+\s\-]/g,'')" required autocomplete="tel"/>
+          </div>
+          <div class="form-group">
+            <label class="field-label">WhatsApp <span class="req">*</span></label>
+            <input type="text" id="whatsapp" placeholder="0709269880" inputmode="numeric"
+              oninput="this.value=this.value.replace(/[^0-9+\s\-]/g,'')"/>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:14px">
+          <div class="form-group">
+            <label class="field-label">Adresse <span class="req">*</span></label>
+            <input type="text" id="adresse" placeholder="Quartier, Commune — ex: Cocody, Abidjan" required/>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Profession / Classe</label>
+            <input type="text" id="profession" placeholder="Ingénieur · Étudiant · Terminale A…"/>
+          </div>
+        </div>
+
+        <hr class="sep"/>
+
+        <div class="form-group">
+          <label class="field-label">Niveau d'anglais actuel <span class="req">*</span></label>
+          <div class="niveau-grid">
+            <div class="niveau-opt">
+              <input type="radio" name="niveau_actuel" id="nv_a1" value="A1"/>
+              <label for="nv_a1"><span class="badge">A1</span>Débutant</label>
+            </div>
+            <div class="niveau-opt">
+              <input type="radio" name="niveau_actuel" id="nv_a2" value="A2"/>
+              <label for="nv_a2"><span class="badge">A2</span>Élémentaire</label>
+            </div>
+            <div class="niveau-opt">
+              <input type="radio" name="niveau_actuel" id="nv_b1" value="B1" checked/>
+              <label for="nv_b1"><span class="badge">B1</span>Intermédiaire</label>
+            </div>
+            <div class="niveau-opt">
+              <input type="radio" name="niveau_actuel" id="nv_b2" value="B2"/>
+              <label for="nv_b2"><span class="badge">B2</span>Inter. Avancé</label>
+            </div>
+            <div class="niveau-opt">
+              <input type="radio" name="niveau_actuel" id="nv_c1" value="C1"/>
+              <label for="nv_c1"><span class="badge">C1</span>Avancé</label>
+            </div>
+            <div class="niveau-opt">
+              <input type="radio" name="niveau_actuel" id="nv_np" value="Non évalué"/>
+              <label for="nv_np"><span class="badge">?</span>Non évalué</label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION 2 — FORMATION SOUHAITÉE
+    ════════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-num">2</div>
+        <h3>Formation Souhaitée</h3>
+        <span class="section-desc">Programme &amp; Organisation</span>
+      </div>
+      <div class="section-body">
+
+        <div class="form-group">
+          <label class="field-label">Type de formation <span class="req">*</span></label>
+          <div class="check-group">
+            <div class="check-pill">
+              <input type="checkbox" id="f_gen" name="formation" value="Anglais Général"/>
+              <label for="f_gen">🗣 Anglais Général</label>
+            </div>
+            <div class="check-pill">
+              <input type="checkbox" id="f_pro" name="formation" value="Anglais Professionnel"/>
+              <label for="f_pro">💼 Anglais Professionnel</label>
+            </div>
+            <div class="check-pill">
+              <input type="checkbox" id="f_toeic" name="formation" value="Préparation TOEIC"/>
+              <label for="f_toeic">📋 Préparation TOEIC</label>
+            </div>
+            <div class="check-pill">
+              <input type="checkbox" id="f_toefl" name="formation" value="Préparation TOEFL"/>
+              <label for="f_toefl">🎓 Préparation TOEFL</label>
+            </div>
+            <div class="check-pill">
+              <input type="checkbox" id="f_conv" name="formation" value="Conversation"/>
+              <label for="f_conv">💬 Conversation</label>
+            </div>
+            <div class="check-pill">
+              <input type="checkbox" id="f_kid" name="formation" value="Anglais Enfants"/>
+              <label for="f_kid">👦 Anglais Enfants</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:16px">
+          <div class="form-group">
+            <label class="field-label">Durée souhaitée <span class="req">*</span></label>
+            <select id="duree">
+              <option value="">— Choisir —</option>
+              <option value="1 mois">1 mois</option>
+              <option value="3 mois">3 mois</option>
+              <option value="6 mois">6 mois</option>
+              <option value="12 mois">12 mois</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Mode de cours <span class="req">*</span></label>
+            <select id="mode_cours">
+              <option value="">— Choisir —</option>
+              <option value="Présentiel">🏫 Présentiel</option>
+              <option value="En ligne">💻 En ligne</option>
+              <option value="Hybride">🔄 Hybride</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Disponibilités <span class="req">*</span></label>
+            <select id="disponibilites">
+              <option value="">— Choisir —</option>
+              <option value="Matin (7h-12h)">🌅 Matin (7h–12h)</option>
+              <option value="Après-midi (12h-17h)">☀️ Après-midi (12h–17h)</option>
+              <option value="Soir (17h-21h)">🌆 Soir (17h–21h)</option>
+              <option value="Nuit (21h-23h)">🌙 Nuit (21h–23h)</option>
+              <option value="Week-end">📅 Week-end</option>
+              <option value="Flexible">🔓 Flexible</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION 3 — PAIEMENT
+    ════════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-num">3</div>
+        <h3>Modalités de Paiement</h3>
+        <span class="section-desc">Mode de règlement &amp; Échéancier</span>
+      </div>
+      <div class="section-body">
+
+        <div class="info-tip">
+          <span class="tip-icon">ℹ️</span>
+          <span>Le <strong>mode de paiement</strong> indique comment vous souhaitez payer (moyen utilisé).
+          La <strong>modalité</strong> indique en combien de fois vous réglez les frais de formation.</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="field-label">Mode de paiement <span class="req">*</span></label>
+            <select id="mode_paiement">
+              <option value="">— Choisir le moyen —</option>
+              <option value="Espèces">💵 Espèces</option>
+              <option value="Mobile Money — Wave">📱 Mobile Money — Wave</option>
+              <option value="Mobile Money — Orange Money">📱 Mobile Money — Orange Money</option>
+              <option value="Virement bancaire">🏦 Virement bancaire</option>
+              <option value="Chèque">📝 Chèque</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Modalité de paiement <span class="req">*</span></label>
+            <select id="modalite_paiement">
+              <option value="">— Choisir la modalité —</option>
+              <option value="Intégral (paiement unique)">✅ Intégral — paiement unique</option>
+              <option value="En 2 versements">📅 En 2 versements</option>
+              <option value="En 3 versements">📅 En 3 versements</option>
+              <option value="En 4 versements">📅 En 4 versements</option>
+              <option value="Mensuel">🔁 Mensuel</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:14px">
+          <div class="form-group">
+            <label class="field-label">Comment nous avez-vous connus ?</label>
+            <select id="source">
+              <option value="">— Choisir —</option>
+              <option value="Bouche à oreille">👥 Bouche à oreille</option>
+              <option value="Réseaux sociaux">📱 Réseaux sociaux</option>
+              <option value="Affiche / Flyer">🗞 Affiche / Flyer</option>
+              <option value="Site internet">🌐 Site internet</option>
+              <option value="Ancien(ne) élève">🎓 Ancien(ne) élève</option>
+              <option value="Recommandation d'un proche">💬 Recommandation d'un proche</option>
+              <option value="Autre">❓ Autre</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+         SECTION 4 — ENGAGEMENT & VALIDATION
+    ════════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-num">4</div>
+        <h3>Engagement &amp; Validation</h3>
+        <span class="section-desc">Lecture et signature électronique</span>
+      </div>
+      <div class="section-body">
+
+        <div class="engagement-box">
+          <input type="checkbox" id="engagement" required/>
+          <div class="engage-text">
+            Je soussigné(e) <strong id="preview-name">___________</strong>,
+            m'engage à respecter scrupuleusement les horaires de cours fixés,
+            à régler les frais de formation selon la modalité choisie,
+            et à me conformer au règlement intérieur de
+            <strong>AGTM Digital Academy</strong>.
+            Je reconnais avoir pris connaissance des conditions générales
+            et les accepte sans réserve.
+          </div>
+        </div>
+
+        <div class="submit-zone">
+          <button type="submit" class="btn-submit" id="submitBtn">
+            ✉️ &nbsp; Soumettre ma fiche d'inscription
+          </button>
+          <p class="required-note">
+            <span>*</span> Champs obligatoires — Données transmises de façon sécurisée.
+          </p>
+        </div>
+
+        <div id="notif"></div>
+
+      </div>
+    </div>
+
+  </form>
+</main>
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-line">
+    <span class="gold">© 2026 AGTM Digital Academy</span>
+    <span class="pipe">|</span>
+    Propriété de <span class="gold">ISSA BAMBA</span>
+    <span class="pipe">|</span>
+    <span class="blue">Language &amp; Professional Development</span>
+    <span class="pipe">|</span>
+    Business &amp; General English Specialist
+    <span class="pipe">|</span>
+    Abidjan, Côte d'Ivoire
+  </div>
+  <div class="footer-line" style="margin-top:4px;font-size:.71rem;color:#8A9AB5">
+    <em>Practice makes perfect.</em>
+    <span class="pipe">|</span>
+    Formulaire sécurisé — Données protégées via Supabase
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+  // ── Preview nom dans l'engagement ─────────────────────
+  const nomInput    = document.getElementById("nom");
+  const prenomInput = document.getElementById("prenom");
+  const previewName = document.getElementById("preview-name");
+
+  function updatePreview() {
+    const n = nomInput.value.trim().toUpperCase();
+    const p = prenomInput.value.trim();
+    previewName.textContent = (n || p) ? `${p} ${n}`.trim() : "___________";
+  }
+  nomInput.addEventListener("input", updatePreview);
+  prenomInput.addEventListener("input", updatePreview);
+
+  // ── Helpers ────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+  const notif = $("notif");
+  const btnEl = $("submitBtn");
+
+  function showNotif(type, html) {
+    notif.className = type;
+    notif.innerHTML = html;
+    notif.style.display = "block";
+    notif.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function setLoading(on) {
+    btnEl.disabled = on;
+    btnEl.innerHTML = on
+      ? '<span class="spin"></span>Envoi en cours…'
+      : '✉️ &nbsp; Soumettre ma fiche d\'inscription';
+  }
+
+  function getChecked(name) {
+    return [...document.querySelectorAll(`input[name="${name}"]:checked`)]
+      .map(el => el.value).join(", ");
+  }
+
+  // ── Soumission ─────────────────────────────────────────
+  $("eipForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    notif.style.display = "none";
+
+    // Lecture des valeurs
+    const nom        = $("nom").value.trim();
+    const prenom     = $("prenom").value.trim();
+    const email      = $("email").value.trim();
+    const tel        = $("telephone").value.trim();
+    const adresse    = $("adresse").value.trim();
+    const niveau     = document.querySelector('input[name="niveau_actuel"]:checked')?.value || "";
+    const formations = getChecked("formation");
+    const duree      = $("duree").value;
+    const mode       = $("mode_cours").value;
+    const dispo      = $("disponibilites").value;
+    const modePai    = $("mode_paiement").value;
+    const modalite   = $("modalite_paiement").value;
+    const engage     = $("engagement").checked;
+
+    // Validation email
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    const errors = [];
+    if (!nom)        errors.push("Nom obligatoire");
+    if (!prenom)     errors.push("Prénom(s) obligatoire(s)");
+    if (!email)      errors.push("Email obligatoire");
+    else if (!emailOk) errors.push("Adresse email invalide");
+    if (!tel)        errors.push("Téléphone obligatoire");
+    if (!adresse)    errors.push("Adresse obligatoire");
+    if (!niveau)     errors.push("Niveau d'anglais obligatoire");
+    if (!formations) errors.push("Choisissez au moins une formation");
+    if (!duree)      errors.push("Durée obligatoire");
+    if (!mode)       errors.push("Mode de cours obligatoire");
+    if (!dispo)      errors.push("Disponibilités obligatoires");
+    if (!modePai)    errors.push("Mode de paiement obligatoire");
+    if (!modalite)   errors.push("Modalité de paiement obligatoire");
+    if (!engage)     errors.push("Vous devez accepter l'engagement");
+
+    if (errors.length) {
+      showNotif("error", "⚠️ <strong>Champs manquants ou invalides :</strong><br>• " + errors.join("<br>• "));
+      return;
+    }
+
+    // Vérif config
+    if (!SUPABASE_URL || SUPABASE_URL.includes("xxxx") || !SUPABASE_ANON || SUPABASE_ANON.length < 20) {
+      showNotif("error", "⚙️ <strong>Configuration requise :</strong> Clés Supabase non définies.");
+      return;
+    }
+
+    setLoading(true);
+
+    const payload = {
+      nom:           nom.toUpperCase(),
+      prenom:        prenom.charAt(0).toUpperCase() + prenom.slice(1),
+      email:         email.toLowerCase(),
+      telephone:     tel,
+      whatsapp:      $("whatsapp").value.trim() || null,
+      adresse:       adresse || null,
+      niveau:        niveau,
+      formations:    formations,
+      duree:         duree,
+      mode_cours:    mode,
+      disponibilites: dispo,
+      mode_paiement: modePai + " — " + modalite,
+      source:        $("source").value || null,
+      statut:        "nouveau",
+    };
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/inscriptions_web`, {
+        method: "POST",
+        headers: {
+          "Content-Type":  "application/json",
+          "apikey":        SUPABASE_ANON,
+          "Authorization": `Bearer ${SUPABASE_ANON}`,
+          "Prefer":        "return=minimal",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok || res.status === 201) {
+        showNotif("success",
+          `🎉 <strong>Inscription enregistrée avec succès !</strong><br>
+           Bienvenue, <strong>${payload.prenom} ${payload.nom}</strong> !<br>
+           Votre fiche a bien été reçue par l'équipe <strong>AGTM Digital Academy</strong>.<br>
+           Nous vous contacterons dans les <strong>24 à 48 heures</strong> pour confirmer
+           votre inscription et vous communiquer les détails pratiques.<br><br>
+           <em style="color:#0D2D52">📞 Pour toute urgence : +225 07 09 26 98 80</em>`);
+        e.target.reset();
+        updatePreview();
+        document.getElementById("nv_b1").checked = true;
+      } else {
+        const errText = await res.text();
+        showNotif("error", `❌ Erreur serveur (${res.status}).<br><small>${errText.slice(0,180)}</small>`);
+      }
+    } catch (err) {
+      showNotif("error", `❌ Impossible de joindre le serveur.<br>Vérifiez votre connexion.<br><small>${err.message}</small>`);
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>
+</body>
+</html>

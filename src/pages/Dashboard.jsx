@@ -11,14 +11,16 @@ import MasterCard, { XPBar, LevelBadge, StreakBadge } from '../components/ui/Mas
 export default function Dashboard() {
   const navigate = useNavigate()
   const { loading } = useProfile()
+  const user         = useUserStore(s => s.user)
   const linguaUser   = useUserStore(s => s.linguaUser)
   const progress     = useUserStore(s => s.progress)
+  const isAdmin      = useUserStore(s => s.isAdmin)
   const { subscription, isActive, isPremium, languages, daysLeft } = useSubscription()
 
-  // Rediriger si pas d'abonnement actif
+  // Rediriger si pas d'abonnement actif (sauf admin)
   useEffect(() => {
-    if (!loading && !isActive) navigate('/subscribe')
-  }, [loading, isActive])
+    if (!loading && !isActive && !isAdmin) navigate('/subscribe')
+  }, [loading, isActive, isAdmin])
 
   if (loading) {
     return (
@@ -36,9 +38,9 @@ export default function Dashboard() {
       {/* Header */}
       <div className="flex items-start justify-between mb-10">
         <div>
-          <p className="section-label">Tableau de bord</p>
+          <p className="section-label">Mon espace</p>
           <h1 className="font-serif text-3xl text-white">
-            Bonjour, <em className="text-gold">{linguaUser?.full_name?.split(' ')[0] || 'là'}</em> 👋
+            Bon retour <em className="text-gold italic">{user?.email?.split('@')[0] || 'sur Lingua Space'}</em>
           </h1>
         </div>
         {isPremium && (
@@ -138,7 +140,11 @@ export default function Dashboard() {
                 <div className="flex gap-2">
                   <Link to={`/corner/${lang}`}
                     className="flex-1 btn-gold text-center text-xs py-2">
-                    Entrer dans le Corner
+                    Corner
+                  </Link>
+                  <Link to={`/lab/${lang}`}
+                    className="flex-1 text-center text-xs py-2 border border-white/10 text-muted hover:text-white hover:border-gold/30 rounded-sm transition-all">
+                    🧪 Lab
                   </Link>
                   <Link to={`/modules/${lang}`}
                     className="flex-1 btn-outline text-center text-xs py-2">
@@ -156,7 +162,7 @@ export default function Dashboard() {
         <h2 className="font-serif text-xl text-white mb-4">Accès rapide</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
-            { to: '/assistant', icon: '🤖', label: 'IA Coach',    sub: 'Speaking & Listening' },
+            { to: '/assistant', icon: '🤖', label: 'IA Coach',    sub: 'Speaking, Listening & Lab' },
             { to: '/progress',  icon: '📊', label: 'Progression', sub: 'Mes statistiques' },
             { to: '/settings',  icon: '⚙️', label: 'Paramètres', sub: 'Compte & abonnement' },
             { to: '/subscribe', icon: '⬆️', label: isPremium ? 'Mon forfait' : 'Passer Premium', sub: isPremium ? 'ALL ACCESS actif' : 'Débloquer tout' },

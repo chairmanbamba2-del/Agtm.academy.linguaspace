@@ -1,0 +1,197 @@
+# Netlify Configuration - AGTM Digital Academy Premium (Optimized)
+# Version: 2.0 - Résilience & Multi-LLM Fallback
+# Date: 2026-04-23
+
+[build]
+  # Répertoire à déployer
+  publish = "."
+  
+  # Commandes de build (optionnel - site statique)
+  command = ""
+  functions = "netlify/functions"
+  
+  # Variables d'environnement (à configurer dans Netlify UI)
+  # SUPABASE_URL = "your-project-url"
+  # SUPABASE_ANON_KEY = "your-anon-key"
+
+[build.environment]
+  # Version Node.js
+  NODE_VERSION = "18"
+  
+  # Variables pour le frontend
+  NODE_ENV = "production"
+  
+  # ============================================
+  # CONFIGURATION IA AVEC REDONDANCE MULTI-LLM
+  # ============================================
+  
+  # --- Anthropic (Claude) - Primary ---
+  # À CONFIGURER DANS LES VARIABLES D'ENVIRONNEMENT NETLIFY
+  ANTHROPIC_API_KEY = "sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  ANTHROPIC_API_KEY_BACKUP = "sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # --- Groq - Secondary ---
+  GROQ_API_KEY = "gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  GROQ_API_KEY_BACKUP = "gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # --- DeepSeek - Tertiary ---
+  DEEPSEEK_API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  DEEPSEEK_API_KEY_BACKUP = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # --- Services de Recherche ---
+  BRAVE_SEARCH_API_KEY = "BSAxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  TAVILY_API_KEY = "tvly-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # --- YouTube API (pour English Corner) ---
+  YOUTUBE_API_KEY = "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  YOUTUBE_API_KEY_BACKUP = "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # --- Listen Notes (Podcasts) ---
+  LISTEN_NOTES_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # --- Twilio (WhatsApp) ---
+  TWILIO_ACCOUNT_SID = "ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  TWILIO_AUTH_TOKEN = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  TWILIO_WHATSAPP_FROM = "+1xxxxxxxxxx"
+  TWILIO_TEMPLATE_ETUDIANT = "HXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  TWILIO_TEMPLATE_NOUVEAU = "HXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # --- Supabase ---
+  SUPABASE_URL = "https://xxxxxxxxxxxxxxxxxxxx.supabase.co"
+  SUPABASE_SERVICE_KEY = "sb_secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  SUPABASE_ANON_KEY = "sb_publishable_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  
+  # ============================================
+  # CONFIGURATION TIMEOUTS OPTIMISÉS
+  # ============================================
+  
+  # Timeouts pour les appels API (en millisecondes)
+  API_TIMEOUT_DEFAULT = "20000"           # 20 secondes par défaut
+  API_TIMEOUT_GROQ = "15000"              # 15 secondes pour Groq
+  API_TIMEOUT_CLAUDE = "20000"            # 20 secondes pour Claude
+  API_TIMEOUT_DEEPSEEK = "15000"          # 15 secondes pour DeepSeek
+  API_TIMEOUT_YOUTUBE = "10000"           # 10 secondes pour YouTube
+  API_TIMEOUT_LISTENNOTES = "10000"       # 10 secondes pour Listen Notes
+  
+  # Configuration de retry
+  API_MAX_RETRIES = "3"
+  API_RETRY_DELAY = "1000"                # 1 seconde entre les retries
+  
+  # ============================================
+  # CONFIGURATION CACHE
+  # ============================================
+  
+  # Durée de cache (en secondes)
+  CACHE_TTL_YOUTUBE = "86400"             # 24 heures
+  CACHE_TTL_PODCASTS = "43200"            # 12 heures
+  CACHE_TTL_AI_CONTENT = "3600"           # 1 heure
+  
+  # Sécurité CORS (domaines autorisés, séparés par des virgules)
+  ALLOWED_ORIGINS = "https://agtm-digital-academy.netlify.app,https://agtm-academy.com,http://localhost:3000,http://localhost:8888"
+
+# ============================================
+# REDIRECTIONS
+# ============================================
+
+# Redirections principales
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/vitrine"
+  to = "/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/accueil"
+  to = "/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/home"
+  to = "/index.html"
+  status = 301
+
+# Redirections pour l'ancienne vitrine (backward compatibility)
+[[redirects]]
+  from = "/vitrine-old"
+  to = "/vitrine-old.html"
+  status = 200
+
+# Redirections API (si nécessaire)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# ============================================
+# HEADERS DE SÉCURITÉ
+# ============================================
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    
+    # Cache statique
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ============================================
+# CONFIGURATION PWA
+# ============================================
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Content-Type = "application/javascript"
+    Service-Worker-Allowed = "/"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# ============================================
+# CONFIGURATION SINGLE PAGE APP
+# ============================================
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+  conditions = {Language = ["en"], Country = ["US"]}
+
+# ============================================
+# GESTION DES ERREURS
+# ============================================
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# ============================================
+# NOTES DE DÉPLOIEMENT
+# ============================================
+
+# Note: Pour déployer, uploader ce fichier avec le dossier "WEB_PORTAL AGTM DIGITAL ACADEMY"
+# dans Netlify Drag & Drop, ou connecter le repository GitHub.
+
+# Configuration recommandée pour la résilience:
+# 1. Toutes les clés API ont une version de secours (_BACKUP)
+# 2. Timeouts augmentés pour absorber les latences
+# 3. Cache TTL configuré pour économiser les quotas API
+# 4. Multi-LLM fallback automatique en cas d'erreur 400/429

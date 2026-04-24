@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import MasterCard, { LevelBadge } from '../components/ui/MasterCard';
 import { PulseAvatar, AIVoiceWave, ElasticBubble } from '../components/ui/AIWidgets';
+import PricingConfigurator from '../components/ui/PricingConfigurator';
+import TopBanner from '../components/ui/TopBanner';
 
 const Landing = () => {
   useEffect(() => {
@@ -31,6 +33,7 @@ const Landing = () => {
   return (
     <>
       <Navbar />
+      <TopBanner />
 
       {/* HERO SECTION avec grille or & halos radiaux */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-20 overflow-hidden bg-lingua">
@@ -57,7 +60,7 @@ const Landing = () => {
           
           {/* Langues badges */}
           <div className="flex flex-wrap justify-center gap-3 mb-10">
-            {['🇬🇧 English Corner', '🇪🇸 Rincón Español', '🇩🇪 Deutsche Ecke', '🇫🇷 Espace Francophone'].map((lang, i) => (
+            {['🇬🇧 English Corner', '🇪🇸 Rincón Español', '🇩🇪 Deutsche Ecke', '🇫🇷 Espace Francophone', '🇸🇦 الركن العربي'].map((lang, i) => (
                <span key={i} className="px-3 py-1.5 bg-card border border-bdr rounded-sm text-white text-xs sm:text-sm font-medium">
                 {lang}
               </span>
@@ -66,7 +69,7 @@ const Landing = () => {
           
            {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-             <Link to="/subscribe" className="btn-gold px-6 py-3 text-base font-semibold sm:px-8 sm:py-4 sm:text-lg text-center no-underline">Choisir mon forfait →</Link>
+             <a href="#pricing" className="btn-gold px-6 py-3 text-base font-semibold sm:px-8 sm:py-4 sm:text-lg text-center no-underline">Choisir mon forfait →</a>
              <a href="#corners" className="btn-outline px-6 py-3 text-base sm:px-8 sm:py-4 sm:text-lg text-center no-underline">Découvrir les Corners</a>
            </div>
         </div>
@@ -81,8 +84,8 @@ const Landing = () => {
       {/* STATS BAR */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 px-4 bg-card border-y border-bdr">
         {[
-          { number: '4', label: 'Langues disponibles' },
-          { number: '400', label: 'Modules A1 → C2' },
+          { number: '5', label: 'Langues disponibles' },
+          { number: '500', label: 'Modules A1 → C2' },
           { number: '2000+', label: 'Contenus audio/vidéo' },
           { number: '24/7', label: 'IA Coach disponible' }
         ].map((stat, i) => (
@@ -98,13 +101,13 @@ const Landing = () => {
         <div className="max-w-6xl mx-auto">
           <div className="mb-12">
             <div className="section-label">Vos espaces d'immersion</div>
-            <h2 className="section-title">Quatre <em>Corners</em>,<br />une seule ambition.</h2>
+            <h2 className="section-title">Cinq <em>Corners</em>,<br />une seule ambition.</h2>
             <p className="text-muted max-w-xl">
               Chaque Corner est un univers d'immersion linguistique : flux de contenus authentiques, quiz automatiques, coach IA et 100 modules progressifs.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
               { flag: '🇬🇧', name: 'English Corner', tag: 'British & American English', color: 'en', bgText: 'EN',
                 desc: 'Podcasts BBC, extraits de séries, news et culture anglophone. Votre coach IA pratique avec vous le Business English, l\'IELTS et la vie quotidienne.',
@@ -121,6 +124,10 @@ const Landing = () => {
               { flag: '🇫🇷', name: 'Espace Francophone', tag: 'Francophonie mondiale', color: 'fr', bgText: 'FR',
                 desc: 'RFI, littérature africaine, culture francophone mondiale. Perfectionnez votre français écrit et oral pour les concours, les examens et le monde professionnel.',
                 features: ['RFI Savoirs & culture africaine', 'Préparation DELF / DALF', 'Français des affaires', '100 modules A1 → C2']
+              },
+              { flag: '🇸🇦', name: 'الركن العربي', tag: 'العربية الفصحى', color: 'ar', bgText: 'AR',
+                desc: 'القرآن الكريم، الأدب العربي، الثقافة الإسلامية. انغمس في اللغة العربية الفصحى من خلال محتوى أصلي وتفاعلي.',
+                features: ['النصوص القرآنية', 'اختبارات تفاعلية', 'مكتبة رقمية', '100 modules A1 → C2']
               }
             ].map((corner, i) => (
               <MasterCard key={i} variant="corner" padding="lg" className={`corner-${corner.color}`}>
@@ -267,98 +274,58 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* PRICING SECTION Premium */}
-      <section id="pricing" className="fade-in py-20 px-4 bg-card">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+      {/* PRICING SECTION - Configurateur interactif */}
+      <section id="pricing" className="fade-in py-20 px-4 bg-card relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-gold bg-grid-60 opacity-5"></div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="text-center mb-12">
             <div className="section-label" style={{justifyContent: 'center'}}>Tarifs & Abonnements</div>
-            <h2 className="section-title">Simple. <em>Transparent.</em> Accessible.</h2>
+            <h2 className="section-title">Choisissez <em>votre</em> formule.</h2>
             <p className="text-muted max-w-lg mx-auto">
-              Aucun engagement à long terme. Résiliez quand vous voulez. Paiement par Mobile Money, Wave ou carte bancaire.
+              Construisez l'abonnement qui vous correspond. Sans engagement, résiliez en 1 clic.
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Forfait LINGUA UNI */}
-            <MasterCard variant="content" padding="xl" className="text-center">
-              <div className="mb-6">
-                <span className="text-3xl">🟢</span>
-                <div className="font-mono text-xs tracking-ultra text-muted uppercase mt-2">Forfait</div>
-                <div className="font-serif text-3xl text-white mt-1">LINGUA UNI</div>
-              </div>
-              
-              <div className="mb-6">
-                <div className="font-serif text-4xl text-gold">10 000 <span className="text-lg">FCFA</span></div>
-                <div className="text-sm text-muted mt-1">par mois · 1 langue au choix</div>
-              </div>
-              
-              <div className="flex justify-center gap-2 mb-6">
-                {['🇬🇧 EN', '🇪🇸 ES', '🇩🇪 DE', '🇫🇷 FR'].map((chip, i) => (
-                  <span key={i} className="px-3 py-1 bg-dark border border-bdr rounded-sm text-sm">
-                    {chip}
-                  </span>
-                ))}
-              </div>
-              
-              <div className="space-y-3 mb-8">
-                {[
-                  '1 Corner au choix parmi les 4 langues',
-                  '100 modules A1 → C2 (langue choisie)',
-                  'Flux audio/vidéo + quiz IA automatiques',
-                  'Coach IA Free Talk & Business Mode'
-                ].map((feat, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm">
-                    <span className="text-green-400">✓</span>
-                    <span className="text-white/80">{feat}</span>
-                  </div>
-                ))}
-              </div>
-              
-               <Link to="/signup?plan=uni" className="btn-gold w-full py-3 font-semibold block text-center no-underline">Choisir LINGUA UNI</Link>
-            </MasterCard>
-            
-            {/* Forfait LINGUA PRO - ALL ACCESS avec glow */}
+
+          <div className="max-w-2xl mx-auto mb-16">
+            <PricingConfigurator showTitle={true} />
+          </div>
+
+          <div className="text-center mb-8">
+            <span className="text-xs text-muted font-mono tracking-[0.2em] uppercase">— OU —</span>
+            <p className="text-muted text-sm mt-3 mb-8">Vous préférez l'expérience complète ?</p>
+          </div>
+
+          <div className="max-w-lg mx-auto">
             <MasterCard variant="corner" glow={true} padding="xl" className="text-center relative overflow-hidden">
               <div className="absolute -top-10 -right-10 w-40 h-40 bg-gold-glow rounded-full blur-3xl opacity-30"></div>
               <div className="relative z-10">
-                <div className="mb-6">
-                  <span className="text-3xl">⭐</span>
-                  <div className="font-mono text-xs tracking-ultra text-gold uppercase mt-2">Forfait</div>
-                  <div className="font-serif text-3xl text-white mt-1">LINGUA PRO</div>
-                  <div className="mt-2">
-                    <LevelBadge level="ALL ACCESS" lang="premium" size="sm" />
-                  </div>
+                <span className="text-3xl">⭐</span>
+                <div className="font-serif text-2xl text-white mt-2">ALL ACCESS</div>
+                <div className="mt-1 mb-4">
+                  <LevelBadge level="PREMIUM" lang="premium" size="sm" />
                 </div>
-                
-                <div className="mb-6">
-                  <div className="font-serif text-4xl text-gold">15 000 <span className="text-lg">FCFA</span></div>
-                  <div className="text-sm text-muted mt-1">par mois · 4 langues incluses</div>
-                </div>
-                
-                <div className="flex justify-center gap-2 mb-6">
-                  {['🇬🇧 EN', '🇪🇸 ES', '🇩🇪 DE', '🇫🇷 FR'].map((chip, i) => (
-                    <span key={i} className="px-3 py-1 bg-dark border border-gold/30 rounded-sm text-sm">
-                      {chip}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="space-y-3 mb-8">
+
+                <div className="font-serif text-4xl text-gold mb-1">15 000 <span className="text-lg text-muted">FCFA</span></div>
+                <div className="text-sm text-muted mb-6">/mois · 5 langues incluses</div>
+
+                <div className="space-y-2 mb-8 text-left max-w-sm mx-auto">
                   {[
-                    'Accès aux 4 Corners (EN, ES, DE, FR)',
-                    '400 modules A1 → C2 (toutes langues)',
-                    'Flux audio/vidéo + quiz IA automatiques',
-                    'Coach IA complet (Role Play + Exam Prep)',
-                    'Statistiques avancées & progression'
-                  ].map((feat, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm">
+                    'Accès aux 5 Corners — Coach Claude Opus',
+                    'Sessions IA illimitées',
+                    'Role Play & Exam Prep inclus',
+                    'Leaderboard & statistiques avancées',
+                    'Paiement mensuel ou trimestriel'
+                  ].map((f, i) => (
+                    <div key={i} className="flex items-center gap-2 text-sm">
                       <span className="text-gold">✓</span>
-                      <span className="text-white">{feat}</span>
+                      <span className="text-white/90">{f}</span>
                     </div>
                   ))}
                 </div>
-                
-                 <Link to="/signup?plan=pro" className="btn-gold w-full py-3 font-semibold shadow-gold-lg block text-center no-underline">Choisir LINGUA PRO</Link>
+
+                <Link to="/subscribe" className="btn-gold px-8 py-3 font-semibold inline-block no-underline">
+                  Découvrir All Access →
+                </Link>
               </div>
             </MasterCard>
           </div>
@@ -376,7 +343,7 @@ const Landing = () => {
             <li><a href="https://africaglobaltraining.com" className="text-muted hover:text-white transition-colors no-underline">AGTM Academy</a></li>
           </ul>
           <div className="text-xs text-muted">
-            © 2025 AGTM Digital Academy · lingua.africaglobaltraining.com
+            © 2026 AGTM Digital Academy · lingua.africaglobaltraining.com
           </div>
         </div>
       </footer>

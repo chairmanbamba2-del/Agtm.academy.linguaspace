@@ -28,6 +28,7 @@ CREATE POLICY "Users can delete own profile" ON lingua_users
 
 -- lingua_subscriptions: allow users to insert their own subscriptions
 DROP POLICY IF EXISTS "Users see own subscriptions" ON lingua_subscriptions;
+DROP POLICY IF EXISTS "Users manage own subscriptions" ON lingua_subscriptions;
 CREATE POLICY "Users manage own subscriptions" ON lingua_subscriptions
   FOR ALL USING (user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid()));
 
@@ -38,6 +39,7 @@ CREATE POLICY "Users manage own progress" ON lingua_progress
 
 -- lingua_ai_sessions: allow users to insert their own sessions
 DROP POLICY IF EXISTS "Users see own ai sessions" ON lingua_ai_sessions;
+DROP POLICY IF EXISTS "Users manage own ai sessions" ON lingua_ai_sessions;
 CREATE POLICY "Users manage own ai sessions" ON lingua_ai_sessions
   FOR ALL USING (user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid()));
 

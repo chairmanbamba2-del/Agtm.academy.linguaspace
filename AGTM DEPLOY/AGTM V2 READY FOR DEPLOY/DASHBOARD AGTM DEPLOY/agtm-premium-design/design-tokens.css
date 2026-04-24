@@ -1,0 +1,171 @@
+/* 
+ * AGTM Digital Academy - Design Tokens v1.0
+ * Extraits de dashboard.html (2000+ lignes de styles inline)
+ * À utiliser comme base pour la refonte Premium
+ * NE PAS MODIFIER LES NOMS DE TOKENS EXISTANTS
+ */
+
+:root {
+  /* ===== COULEURS PRINCIPALES ===== */
+  
+  /* Palette Navy / Bleu nuit */
+  --agtm-navy:      #0D2D52;
+  --agtm-blue:      #1B4F8A;
+  --agtm-dark:      #080F1A;
+  --agtm-card:      #132540;
+  --agtm-border:    #1E3A5F;
+  
+  /* Palette Or (Gold) — harmonisé avec --premium-gold */
+  --agtm-gold:      #D4A017;   /* Aligné sur --premium-gold de components.css */
+  --agtm-gold-lt:   #F0C040;   /* Aligné sur --premium-gold-lt de components.css */
+  
+  /* Palette fonctionnelle */
+  --agtm-white:     #FAFAF8;
+  --agtm-muted:     #8A9AB5;
+  --agtm-success:   #22C55E;
+  --agtm-danger:    #EF4444;
+  --agtm-warning:   #F59E0B;
+  --agtm-info:      #3B82F6;
+  
+  /* Tokens hérités (ancien système) */
+  --accent: #C8960C;
+  --accent2: #4A90D9;
+  --bg-deep: #09111E;
+  --bg-warm: #160E04;
+  --text-main: #E2D8C0;
+  --text-muted: #A0B0D0;
+  --gold: #C8960C;
+  --gold-lt: #E8B84B;
+  --blue: #4A90D9;
+  --green: #4AE090;
+  --red: #E04A4A;
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.07);
+  
+  /* Gradients */
+  --panel-bg: linear-gradient(135deg, #152540 0%, #241C08 100%);
+  --card-hd: linear-gradient(90deg, #1C3258 0%, #2C2208 100%);
+  --input-bg: linear-gradient(135deg, #0B1828 0%, #1C1408 100%);
+  
+  /* Bordures */
+  --border-mix: rgba(200,150,12,0.22);
+  --border-blu: rgba(74,144,217,0.28);
+  
+  /* ===== TYPOGRAPHIE ===== */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* ===== ESPACEMENTS ===== */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  
+  /* ===== BORDS ARRONDI ===== */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* ===== OMBRES ===== */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.6);
+  --shadow-gold: 0 8px 30px rgba(212,160,23,0.3);   /* Mis à jour : #D4A017 */
+  --shadow-deep: 0 20px 60px rgba(0,0,0,0.6);
+  
+  /* ===== TRANSITIONS ===== */
+  --transition-fast: all 0.15s ease;
+  --transition: all 0.25s ease;
+  --transition-slow: all 0.4s ease;
+  
+  /* ===== Z-INDEX ===== */
+  --z-dropdown: 1000;
+  --z-modal: 99999;
+  --z-tooltip: 1000;
+  --z-navbar: 90;
+  --z-sidebar: 2000;
+  
+  /* ===== BREAKPOINTS (mobile-first) ===== */
+  --breakpoint-sm: 420px;
+  --breakpoint-md: 600px;
+  --breakpoint-lg: 768px;
+  --breakpoint-xl: 1024px;
+  --breakpoint-2xl: 1280px;
+}
+
+/* ===== CLASSES UTILITAIRES POUR LA MIGRATION ===== */
+
+/* Backgrounds */
+.bg-navy { background-color: var(--agtm-navy); }
+.bg-card { background-color: var(--agtm-card); }
+.bg-dark { background-color: var(--agtm-dark); }
+
+/* Text colors */
+.text-gold { color: var(--agtm-gold); }
+.text-gold-lt { color: var(--agtm-gold-lt); }
+.text-muted { color: var(--agtm-muted); }
+.text-white { color: var(--agtm-white); }
+.text-success { color: var(--agtm-success); }
+.text-danger { color: var(--agtm-danger); }
+.text-warning { color: var(--agtm-warning); }
+.text-info { color: var(--agtm-info); }
+
+/* Borders */
+.border-gold { border-color: var(--agtm-gold); }
+.border-muted { border-color: var(--agtm-border); }
+
+/* Gradients */
+.gradient-panel { background: var(--panel-bg); }
+.gradient-card-header { background: var(--card-hg); }
+
+/* Spacing utilities */
+.p-16 { padding: var(--space-16); }
+.p-24 { padding: var(--space-24); }
+.mb-8 { margin-bottom: var(--space-8); }
+.mb-16 { margin-bottom: var(--space-16); }
+.mb-24 { margin-bottom: var(--space-24); }
+
+/* Radius utilities */
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+
+/* ===== ÉTATS D'INTERACTION ===== */
+:focus-visible {
+  outline: 2px solid var(--agtm-gold);
+  outline-offset: 2px;
+}
+
+/* ===== MODE CONTRASTE ÉLEVÉ ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --agtm-gold: #FFB347;
+    --agtm-gold-lt: #FFD166;
+    --agtm-white: #FFFFFF;
+    --agtm-muted: #8B99AE;
+  }
+}
+
+/* ===== MODE SOMBRE (par défaut) ===== */
+/* Les tokens sont déjà optimisés pour le mode sombre */
+
+/* ===== MODE CLAIR (future extension) ===== */
+@media (prefers-color-scheme: light) {
+  :root {
+    --agtm-navy: #E8F1FF;
+    --agtm-blue: #3B82F6;
+    --agtm-dark: #F8FAFC;
+    --agtm-card: #FFFFFF;
+    --agtm-border: #E2E8F0;
+    --agtm-white: #1E293B;
+    --agtm-muted: #64748B;
+    --agtm-gold: #D97706;
+    --agtm-gold-lt: #F59E0B;
+  }
+}

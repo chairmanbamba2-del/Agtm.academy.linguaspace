@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGTM Digital Academy — 11. Recommandations Finales</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0A0F1A;
+    color: #E0E6F0;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ─── EN-TÊTE ─── */
+  .header {
+    background: linear-gradient(135deg, #0C1425 0%, #1A0E08 50%, #0D1B2A 100%);
+    border-bottom: 1px solid rgba(200,150,12,0.15);
+    padding: 30px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,150,12,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    background: rgba(200,150,12,0.12);
+    border: 1px solid rgba(200,150,12,0.25);
+    color: #C8960C;
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #F0E8D0;
+    position: relative;
+    z-index: 1;
+  }
+  .header h1 span { color: #C8960C; }
+  .header p {
+    color: #8AAAC0;
+    font-size: .88rem;
+    margin-top: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 18px 24px;
+    background: rgba(12,20,37,0.8);
+    border-bottom: 1px solid rgba(30,48,80,0.3);
+    flex-wrap: wrap;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #4AE090;
+    font-family: 'Space Mono', monospace;
+  }
+  .stat-label {
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #5A7090;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* ─── CONTENU ─── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  .intro-card {
+    background: linear-gradient(135deg, rgba(12,20,37,0.6), rgba(26,14,8,0.4));
+    border: 1px solid #1E3050;
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 32px;
+  }
+  .intro-card p { color: #A0B8D0; font-size: .88rem; line-height: 1.7; }
+
+  /* ─── SECTION DE RECO ─── */
+  .section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #C8960C;
+    margin: 36px 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .bar {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200,150,12,0.3), transparent);
+  }
+
+  .reco-card {
+    background: linear-gradient(135deg, rgba(13,27,42,0.7), rgba(20,12,8,0.5));
+    border: 1px solid #1E3050;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: all .2s;
+    position: relative;
+  }
+  .reco-card:hover {
+    border-color: rgba(200,150,12,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .reco-card .badge-status {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: .65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .badge-ok { background: rgba(74,224,144,0.12); color: #4AE090; border: 1px solid rgba(74,224,144,0.2); }
+
+  .reco-card .reco-num {
+    font-size: .7rem;
+    font-weight: 700;
+    color: #8E44AD;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .reco-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #F0E8D0;
+    margin-bottom: 8px;
+    padding-right: 80px;
+  }
+  .reco-card p { color: #8AAAC0; font-size: .82rem; line-height: 1.65; }
+  .reco-card .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .tech-tag {
+    padding: 2px 10px;
+    border-radius: 6px;
+    background: rgba(30,48,80,0.4);
+    border: 1px solid rgba(30,48,80,0.6);
+    font-size: .7rem;
+    color: #90A4AE;
+    font-weight: 500;
+  }
+  .tech-tag.sql { border-color: rgba(142,68,173,0.3); color: #BB8FCE; }
+  .tech-tag.js  { border-color: rgba(200,150,12,0.3); color: #E8B84B; }
+  .tech-tag.api { border-color: rgba(74,224,144,0.2); color: #4AE090; }
+  .tech-tag.ui  { border-color: rgba(74,144,226,0.3); color: #4A90E2; }
+  .tech-tag.svr { border-color: rgba(226,74,74,0.3); color: #E24A4A; }
+
+  /* ─── TABLEAU RÉCAPITULATIF ─── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 28px 0;
+    border-radius: 12px;
+    border: 1px solid #1E3050;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .82rem;
+  }
+  thead th {
+    background: #0C1425;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 700;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #5A7090;
+    border-bottom: 1px solid #1E3050;
+  }
+  tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(30,48,80,0.3);
+    color: #C0D0E0;
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(30,48,80,0.15); }
+  td.icon-cell { font-size: 1.2rem; text-align: center; width: 40px; }
+  td .files-list {
+    font-size: .72rem;
+    color: #5A7090;
+    margin-top: 3px;
+  }
+  td .files-list span {
+    display: inline-block;
+    padding: 1px 6px;
+    background: rgba(30,48,80,0.3);
+    border-radius: 4px;
+    margin: 1px 2px;
+    font-family: 'Space Mono', monospace;
+    font-size: .68rem;
+    color: #90A4AE;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    padding: 28px 20px;
+    border-top: 1px solid rgba(30,48,80,0.3);
+    color: #3A5068;
+    font-size: .75rem;
+  }
+  .footer strong { color: #5A7090; }
+
+  @media (max-width: 640px) {
+    .header h1 { font-size: 1.2rem; }
+    .stats-bar { gap: 20px; }
+    .stat-num { font-size: 1.2rem; }
+    .reco-card h3 { font-size: .88rem; padding-right: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ EN-TÊTE ═══ -->
+<div class="header">
+  <div class="header-badge">AGTM Digital Academy</div>
+  <h1>📋 11. Recommandations <span>Finales</span></h1>
+  <p>Implémentation complète des 7 recommandations prioritaires • Audit v46</p>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">7/7</div>
+    <div class="stat-label">Recommandations</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">17/17</div>
+    <div class="stat-label">Sous-tests OK</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Fichiers modifiés</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">248</div>
+    <div class="stat-label">Lignes SQL v46</div>
+  </div>
+</div>
+
+<!-- ═══ CONTENU ═══ -->
+<div class="container">
+
+  <div class="intro-card">
+    <p>
+      Ce rapport détaille l'implémentation des <strong style="color:#C8960C">7 recommandations finales</strong>
+      issues de la section 11 de l'audit complet. Chaque recommandation a été traitée avec les artefacts correspondants :
+      migration SQL (v46), injections frontend dans le <code style="color:#4AE090">dashboard.html</code>,
+      mise à jour des formulaires et création de fonctions JavaScript.
+    </p>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION : RECO ①                  -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">① Sélecteur formateur dédié <span class="bar"></span></div>
+
+  <div class="reco-card">
+    <span class="badge-status badge-ok">✅ OK</span>
+    <div class="reco-num">RECO ①</div>
+    <h3>Remplacer le champ texte libre du formateur par un sélecteur depuis la table <code>personnel</code></h3>
+    <p>
+      Création d'une vue SQL <code>v_formateurs_select</code> filtrant les membres du personnel actifs
+      avec un rôle formateur/enseignant/directeur. Le champ texte libre a été remplacé par un
+      <code><select></code> dans <strong>devoir_form.html</strong> (id <code>eFmtSelect</code>)
+      avec populating via Supabase. Le formulaire d'évaluation a aussi été enrichi.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag sql">SQL VIEW</span>
+      <span class="tech-tag ui">HTML Select</span>
+      <span class="tech-tag api">Supabase JS</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION : RECO ②                  -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">② Liaison modules ↔ questions <span class="bar"></span></div>
+
+  <div class="reco-card">
+    <span class="badge-status badge-ok">✅ OK</span>
+    <div class="reco-num">RECO ②</div>
+    <h3>Ajouter <code>module_id</code> et <code>lecon_id</code> dans <code>quiz_questions</code></h3>
+    <p>
+      Colonnes ajoutées à la table <code>quiz_questions</code> : <code>module_id</code> (BIGINT REFERENCES modules),
+      <code>lecon_id</code> (BIGINT REFERENCES lecons), <code>difficulty</code> (VARCHAR(10)),
+      <code>tags</code> (JSONB). Index créés pour requêtes optimisées.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag sql">ALTER TABLE</span>
+      <span class="tech-tag sql">FOREIGN KEY</span>
+      <span class="tech-tag sql">INDEX</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION : RECO ③                  -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">③ Notifications soumission devoir <span class="bar"></span></div>
+
+  <div class="reco-card">
+    <span class="badge-status badge-ok">✅ OK</span>
+    <div class="reco-num">RECO ③</div>
+    <h3>Notifier le formateur (email/WhatsApp) à chaque soumission de devoir</h3>
+    <p>
+      Création de la table <code>notifications</code> avec colonnes canal (email, whatsapp, both),
+      destinataire, référence. Fonction trigger <code>fn_notifier_soumission_devoir()</code>
+      qui détecte le formateur (via <code>formateur_id</code> ou correspondance de nom),
+      crée une notification avec le message approprié et marque <code>notification_envoyee = TRUE</code>.
+      Index et policies RLS configurés.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag sql">TABLE</span>
+      <span class="tech-tag sql">TRIGGER</span>
+      <span class="tech-tag sql">FUNCTION</span>
+      <span class="tech-tag api">Email/WhatsApp</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION : RECO ④                  -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">④ Durée configurable des tests <span class="bar"></span></div>
+
+  <div class="reco-card">
+    <span class="badge-status badge-ok">✅ OK</span>
+    <div class="reco-num">RECO ④</div>
+    <h3>Permettre à l'admin de paramétrer la durée (actuellement 30 min fixes)</h3>
+    <p>
+      Table <code>config_tests</code> créée (clé/valeur). Valeurs par défaut insérées :
+      <code>duree_test_placement</code> = 30 min, <code>duree_test_module</code> = 20 min,
+      <code>duree_quiz_libre</code> = 5 min, <code>timer_actif_dashboard</code> = true,
+      <code>timer_dashboard_secondes</code> = 600 (10 min). Un admin peut modifier ces valeurs
+      directement dans Supabase sans toucher au code.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag sql">TABLE</span>
+      <span class="tech-tag sql">CONFIG</span>
+      <span class="tech-tag ui">Supabase UI</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION : RECO ⑤                  -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">⑤ Génération IA de questions <span class="bar"></span></div>
+
+  <div class="reco-card">
+    <span class="badge-status badge-ok">✅ OK</span>
+    <div class="reco-num">RECO ⑤</div>
+    <h3>Intégrer l'Edge Function <code>generate-module-content</code> pour des questions personnalisées</h3>
+    <p>
+      Fonction <code>window.genererQuizIA()</code> injectée dans <strong>dashboard.html</strong>.
+      Affiche un modal interactif permettant de choisir le thème, le niveau CECRL (A1–C1) et la catégorie
+      (grammaire, vocabulaire, business, communication, examen). Appelle l'Edge Function
+      Supabase <code>generate-module-content</code> via l'URL configurable <code>EDGE_FN_GENERATE_MODULE</code>.
+      Barre de progression, gestion d'erreur, et les questions générées remplacent le quiz en cours.
+      Un bouton <strong>🤖 IA</strong> a été ajouté dans la modeBar du dashboard.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag js">JavaScript</span>
+      <span class="tech-tag api">Supabase Edge Function</span>
+      <span class="tech-tag api">Claude IA</span>
+      <span class="tech-tag ui">Modal</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION : RECO ⑥                  -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">⑥ Mapping certifications explicite <span class="bar"></span></div>
+
+  <div class="reco-card">
+    <span class="badge-status badge-ok">✅ OK</span>
+    <div class="reco-num">RECO ⑥</div>
+    <h3>Ajouter champ <code>certification</code> (TOEIC/TOEFL/IELTS) dans <code>quiz_questions</code></h3>
+    <p>
+      Colonne <code>certification</code> (VARCHAR(20)) ajoutée avec contrainte CHECK limitant
+      les valeurs à : TOEIC, TOEFL, IELTS, BEPC, BAC, ou NULL. Permet le filtrage des questions
+      par certification cible, essentiel pour la préparation aux examens.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag sql">ALTER TABLE</span>
+      <span class="tech-tag sql">CHECK</span>
+      <span class="tech-tag api">Filtrage</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- SECTION : RECO ⑦                  -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">⑦ Timer quiz dashboard <span class="bar"></span></div>
+
+  <div class="reco-card">
+    <span class="badge-status badge-ok">✅ OK</span>
+    <div class="reco-num">RECO ⑦</div>
+    <h3>Ajouter un timer aux quiz intégrés aux modules du dashboard</h3>
+    <p>
+      Deux systèmes de timer implémentés :
+    </p>
+    <ul style="color:#8AAAC0;font-size:.82rem;line-height:1.7;padding-left:18px;margin-top:6px">
+      <li><strong>Timer module (évaluation)</strong> : fonction <code>_apTimerStart()</code> avec span <code>#apTimer</code> affiché en haut à droite du quiz. Initialisé à 600s (10 min) avec décompte en direct. Passe au rouge à 30s.</li>
+      <li><strong>Timer quiz libre</strong> : fonction <code>window._qTimerInit()</code> avec span <code>#libreTimer</code>. Temps configurable via <code>timer_dashboard_secondes</code> dans Supabase.</li>
+    </ul>
+    <p style="color:#8AAAC0;font-size:.82rem;margin-top:6px">
+      Les deux timers sont initialisés automatiquement au chargement du quiz et stoppent à la fin des questions.
+    </p>
+    <div class="tech-tags">
+      <span class="tech-tag js">JavaScript</span>
+      <span class="tech-tag ui">DOM Timer</span>
+      <span class="tech-tag sql">Config DB</span>
+      <span class="tech-tag ui">Space Mono</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- TABLEAU RÉCAPITULATIF              -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">📊 Récapitulatif des artefacts <span class="bar"></span></div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Recommandation</th>
+          <th>Fichiers / Artefacts</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="icon-cell">①</td>
+          <td><strong>Sélecteur formateur dédié</strong></td>
+          <td>
+            <span class="files-list">
+              <span>supabase_MIGRATION_v46.sql</span>
+              <span>devoir_form.html</span>
+              <span>evaluation_form.html</span>
+            </span>
+          </td>
+          <td style="color:#4AE090;font-weight:700">✅ OK</td>
+        </tr>
+        <tr>
+          <td class="icon-cell">②</td>
+          <td><strong>Liaison modules ↔ questions</strong></td>
+          <td>
+            <span class="files-list">
+              <span>supabase_MIGRATION_v46.sql</span>
+            </span>
+          </td>
+          <td style="color:#4AE090;font-weight:700">✅ OK</td>
+        </tr>
+        <tr>
+          <td class="icon-cell">③</td>
+          <td><strong>Notifications soumission devoir</strong></td>
+          <td>
+            <span class="files-list">
+              <span>supabase_MIGRATION_v46.sql</span>
+              <span>dashboard.html</span>
+            </span>
+          </td>
+          <td style="color:#4AE090;font-weight:700">✅ OK</td>
+        </tr>
+        <tr>
+          <td class="icon-cell">④</td>
+          <td><strong>Durée configurable des tests</strong></td>
+          <td>
+            <span class="files-list">
+              <span>supabase_MIGRATION_v46.sql</span>
+            </span>
+          </td>
+          <td style="color:#4AE090;font-weight:700">✅ OK</td>
+        </tr>
+        <tr>
+          <td class="icon-cell">⑤</td>
+          <td><strong>Génération IA de questions</strong></td>
+          <td>
+            <span class="files-list">
+              <span>dashboard.html</span>
+              <span>fix_recommandations_finales.js</span>
+              <span>Edge Function generate-module-content</span>
+            </span>
+          </td>
+          <td style="color:#4AE090;font-weight:700">✅ OK</td>
+        </tr>
+        <tr>
+          <td class="icon-cell">⑥</td>
+          <td><strong>Mapping certifications explicite</strong></td>
+          <td>
+            <span class="files-list">
+              <span>supabase_MIGRATION_v46.sql</span>
+            </span>
+          </td>
+          <td style="color:#4AE090;font-weight:700">✅ OK</td>
+        </tr>
+        <tr>
+          <td class="icon-cell">⑦</td>
+          <td><strong>Timer quiz dashboard</strong></td>
+          <td>
+            <span class="files-list">
+              <span>dashboard.html</span>
+              <span>fix_recommandations_finales.js</span>
+              <span>supabase_MIGRATION_v46.sql</span>
+            </span>
+          </td>
+          <td style="color:#4AE090;font-weight:700">✅ OK</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- DÉTAILS TECHNIQUES                 -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section-title">🔧 Notes techniques <span class="bar"></span></div>
+
+  <div class="intro-card">
+    <ul style="color:#8AAAC0;font-size:.82rem;line-height:2;padding-left:18px">
+      <li><strong>Migration SQL v46</strong> : 248 lignes exécutables dans l'ordre, toutes les instructions sont en <code>IF NOT EXISTS</code> / <code>DROP IF EXISTS</code> pour être idempotentes.</li>
+      <li><strong>Script d'injection</strong> : <code>fix_recommandations_finales.js</code> (446 lignes) — injection automatisée dans <code>dashboard.html</code>.</li>
+      <li><strong>Timer</strong> : Appel unique via <code>setTimeout(() => window._qTimerInit(), 100)</code> — doublon nettoyé.</li>
+      <li><strong>Edge Function</strong> : L'URL est configurable via la constante <code>EDGE_FN_GENERATE_MODULE</code> dans le dashboard.</li>
+      <li><strong>Certifications</strong> : CHECK contrainte : <code>'TOEIC', 'TOEFL', 'IELTS', 'BEPC', 'BAC'</code>.</li>
+      <li><strong>Sélecteur formateur</strong> : Vue filtrée par <code>statut = 'Actif'</code> et poste ILIKE formateur/enseignant/directeur.</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <strong>AGTM Digital Academy</strong> © 2026 — Propriété intellectuelle : ISSA BAMBA<br>
+  Rapport d'audit — Section 11 · Recommandations Finales · v46
+</div>
+
+</body>
+</html>

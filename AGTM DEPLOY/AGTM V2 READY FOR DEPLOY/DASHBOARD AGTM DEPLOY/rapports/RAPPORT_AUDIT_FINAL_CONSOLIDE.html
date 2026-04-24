@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGTM Digital Academy — Audit Final Consolidé</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI',system-ui,sans-serif; background:#f0f2f5; color:#1a1a2e; padding:20px; }
+.container { max-width:1200px; margin:auto; }
+.header { background:linear-gradient(135deg,#1a1a2e,#16213e); color:#fff; padding:30px; border-radius:12px; margin-bottom:24px; }
+.header h1 { font-size:28px; margin-bottom:8px; }
+.header p { opacity:.85; font-size:14px; }
+.badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; }
+.badge-success { background:#d4edda; color:#155724; }
+.badge-warning { background:#fff3cd; color:#856404; }
+.badge-danger { background:#f8d7da; color:#721c24; }
+.badge-info { background:#d1ecf1; color:#0c5460; }
+.card { background:#fff; border-radius:10px; padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.card h2 { font-size:20px; margin-bottom:16px; padding-bottom:10px; border-bottom:2px solid #e9ecef; }
+.card h3 { font-size:16px; margin:16px 0 8px; color:#2d3436; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+.stat-box { background:#f8f9fa; border-radius:8px; padding:16px; text-align:center; }
+.stat-box .num { font-size:32px; font-weight:700; color:#1a1a2e; }
+.stat-box .label { font-size:13px; color:#636e72; margin-top:4px; }
+.status-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; }
+.status-dot.ok { background:#00b894; }
+.status-dot.fail { background:#e17055; }
+.status-dot.warn { background:#fdcb6e; }
+table { width:100%; border-collapse:collapse; margin-top:12px; }
+th,td { padding:10px 12px; text-align:left; border-bottom:1px solid #e9ecef; font-size:14px; }
+th { background:#f8f9fa; font-weight:600; color:#2d3436; }
+.code { font-family:'Cascadia Code','Fira Code',monospace; font-size:13px; background:#f8f9fa; padding:2px 6px; border-radius:4px; }
+pre.code-block { background:#1a1a2e; color:#e4e4e4; padding:16px; border-radius:8px; overflow-x:auto; font-size:13px; line-height:1.6; margin:12px 0; }
+.reco-card { border-left:4px solid #0984e3; }
+.reco-card.completed { border-left-color:#00b894; }
+.reco-card.partial { border-left-color:#fdcb6e; }
+.reco-card.critical { border-left-color:#e17055; }
+.file-tag { display:inline-block; background:#dfe6e9; padding:2px 10px; border-radius:12px; font-size:11px; font-weight:600; color:#2d3436; margin:2px; }
+.footer { text-align:center; padding:20px; color:#636e72; font-size:13px; }
+mark { background:#ffeaa7; padding:0 4px; }
+.details summary { cursor:pointer; padding:8px 0; font-weight:600; color:#2d3436; }
+.details summary:hover { color:#0984e3; }
+.details[open] summary { color:#0984e3; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <h1>🔒 AGTM Digital Academy — Audit de Sécurité & Recommandations Finales</h1>
+  <p>Généré le 23/04/2026 à 21:30 UTC • Période d'audit : Avril 2026</p>
+  <div style="margin-top:12px">
+    <span class="badge badge-success">✅ 17/17 Tests Recommandations OK</span>
+    <span class="badge badge-success">✅ netlify.toml nettoyé (19 clés)</span>
+    <span class="badge badge-danger">⚠️ JWT SERVICE_ROLE retiré du frontend</span>
+    <span class="badge badge-info">📦 7 Recommandations Implémentées</span>
+  </div>
+</div>
+
+<!-- ═══ RÉSUMÉ ═══ -->
+<div class="card">
+  <h2>📊 Résumé Global</h2>
+  <div class="grid">
+    <div class="stat-box"><div class="num">7</div><div class="label">Recommandations Implémentées</div></div>
+    <div class="stat-box"><div class="num">19</div><div class="label">Clés API nettoyées (netlify.toml)</div></div>
+    <div class="stat-box"><div class="num">1</div><div class="label">JWT SERVICE_ROLE supprimé du frontend</div></div>
+    <div class="stat-box"><div class="num">1</div><div class="label">Fichier .env.example créé</div></div>
+    <div class="stat-box"><div class="num">1</div><div class="label">Migration SQL v46 créée</div></div>
+    <div class="stat-box"><div class="num">2</div><div class="label">Scripts fixes créés</div></div>
+  </div>
+</div>
+
+<!-- ═══ RECO ① ═══ -->
+<div class="card reco-card completed">
+  <h2>✅ ① Sélecteur formateur dédié</h2>
+  <p><strong>Problème :</strong> Champ texte libre pour le formateur dans les formulaires de devoir/évaluation.</p>
+  <p><strong>Solution :</strong> Création d'une vue SQL <code class="code">v_formateurs_select</code> + remplacement des champs texte par des <code class="code"><select></code> dynamiques.</p>
+  <h3>Fichiers modifiés</h3>
+  <div>
+    <span class="file-tag">devoir_form.html</span>
+    <span class="file-tag">evaluation_form.html</span>
+    <span class="file-tag">pointage_form.html</span>
+    <span class="file-tag">recrutement_form.html</span>
+    <span class="file-tag">supabase_MIGRATION_v46_recommandations_finales.sql</span>
+  </div>
+  <details class="details">
+    <summary>Détails SQL</summary>
+    <pre class="code-block">-- Vue des formateurs
+CREATE OR REPLACE VIEW public.v_formateurs_select AS
+SELECT id, nom || ' ' || prenom AS nom_complet, email, telephone
+FROM public.personnel
+WHERE statut = 'actif' AND (role = 'formateur' OR role LIKE '%formateur%')
+ORDER BY nom, prenom;
+
+-- Usage dans les formulaires
+<select id="formateur_id" class="form-control" required>
+  <option value="">Sélectionner un formateur...</option>
+</select></pre>
+  </details>
+</div>
+
+<!-- ═══ RECO ② ═══ -->
+<div class="card reco-card completed">
+  <h2>✅ ② Liaison modules ↔ questions</h2>
+  <p><strong>Problème :</strong> Les questions de quiz n'étaient pas liées aux modules/leçons.</p>
+  <p><strong>Solution :</strong> Ajout des colonnes <code class="code">module_id</code>, <code class="code">lecon_id</code>, <code class="code">difficulty</code>, <code class="code">tags</code> dans <code class="code">quiz_questions</code>.</p>
+  <details class="details">
+    <summary>Détails SQL</summary>
+    <pre class="code-block">ALTER TABLE public.quiz_questions
+ADD COLUMN IF NOT EXISTS module_id INT REFERENCES public.modules(id) ON DELETE SET NULL,
+ADD COLUMN IF NOT EXISTS lecon_id INT REFERENCES public.lecons(id) ON DELETE SET NULL,
+ADD COLUMN IF NOT EXISTS difficulty TEXT DEFAULT 'moyen',
+ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}',
+ADD COLUMN IF NOT EXISTS quiz_id INT REFERENCES public.quiz(id) ON DELETE SET NULL;
+
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_module ON public.quiz_questions(module_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_lecon ON public.quiz_questions(lecon_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_difficulty ON public.quiz_questions(difficulty);</pre>
+  </details>
+</div>
+
+<!-- ═══ RECO ③ ═══ -->
+<div class="card reco-card completed">
+  <h2>✅ ③ Notifications soumission devoir</h2>
+  <p><strong>Problème :</strong> Aucune notification au formateur lors d'une soumission de devoir.</p>
+  <p><strong>Solution :</strong> Table <code class="code">notifications</code> + trigger PostgreSQL + colonnes email/WhatsApp dans <code class="code">personnel</code>.</p>
+  <details class="details">
+    <summary>Détails</summary>
+    <pre class="code-block">-- Table de notifications
+CREATE TABLE IF NOT EXISTS public.notifications (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  destinataire_id INT REFERENCES public.personnel(id) ON DELETE CASCADE,
+  type TEXT NOT NULL CHECK (type IN ('whatsapp','email')),
+  sujet TEXT NOT NULL,
+  message TEXT NOT NULL,
+  statut TEXT DEFAULT 'pending',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Trigger automatique à la soumission
+CREATE OR REPLACE FUNCTION public.notifier_soumission_devoir()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.notifications (destinataire_id, type, sujet, message)
+  SELECT p.id, 'email',
+    'Nouveau devoir soumis',
+    'Un étudiant a soumis un devoir. Connectez-vous pour le consulter.'
+  FROM public.personnel p
+  WHERE p.id = NEW.formateur_id AND p.notification_email = true;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;</pre>
+  </details>
+</div>
+
+<!-- ═══ RECO ④ ═══ -->
+<div class="card reco-card completed">
+  <h2>✅ ④ Durée configurable des tests</h2>
+  <p><strong>Problème :</strong> Durée fixe de 30 min pour tous les quiz.</p>
+  <p><strong>Solution :</strong> Table <code class="code">config_tests</code> avec <code class="code">duree_minutes</code> paramétrable par quiz + valeurs par défaut.</p>
+  <details class="details">
+    <summary>Détails</summary>
+    <pre class="code-block">CREATE TABLE IF NOT EXISTS public.config_tests (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  module_id INT REFERENCES public.modules(id) ON DELETE CASCADE,
+  duree_minutes INT NOT NULL DEFAULT 30,
+  tentative_max INT NOT NULL DEFAULT 3,
+  note_minimum DECIMAL(5,2) DEFAULT 10.00,
+  actif BOOLEAN DEFAULT true,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Durées par module
+INSERT INTO public.config_tests (module_id, duree_minutes, tentative_max) VALUES
+  (1, 30, 3), (2, 45, 2), (3, 20, 5), (4, 60, 2), (5, 30, 3)
+ON CONFLICT DO NOTHING;
+
+-- Frontend: timer depuis la config
+const dureeMinutes = configTests[moduleId]?.duree_minutes || 30;
+const timerSeconds = dureeMinutes * 60;</pre>
+  </details>
+</div>
+
+<!-- ═══ RECO ⑤ ═══ -->
+<div class="card reco-card completed">
+  <h2>✅ ⑤ Génération IA de questions</h2>
+  <p><strong>Problème :</strong> Pas de génération automatique de questions par IA.</p>
+  <p><strong>Solution :</strong> Fonction <code class="code">genererQuizIA</code> + Edge Function <code class="code">generate-module-content</code> + interface modale dédiée.</p>
+  <details class="details">
+    <summary>Détails</summary>
+    <pre class="code-block">// Fonction de génération IA
+async function genererQuizIA(moduleId, leconId, certification) {
+  const prompt = `Génère ${nbQuestions} questions de quiz
+    - Module: ${moduleName}, Leçon: ${leconName}
+    - Certification: ${certification || 'Aucune'}
+    - Difficulté: ${difficulty}
+    - Format: JSON avec question, options[], reponse, explication`;
+  
+  const reponse = await appelerIA(prompt, 'claude-sonnet-4-20250514');
+  return JSON.parse(reponse);
+}
+
+// Edge Function déployée
+// netlify/functions/generate-module-content.js</pre>
+  </details>
+</div>
+
+<!-- ═══ RECO ⑥ ═══ -->
+<div class="card reco-card completed">
+  <h2>✅ ⑥ Mapping certifications explicite</h2>
+  <p><strong>Problème :</strong> Pas de champ certification (TOEIC/TOEFL/IELTS) dans les questions.</p>
+  <p><strong>Solution :</strong> Colonne <code class="code">certification</code> dans <code class="code">quiz_questions</code> avec contrainte CHECK + 3 certifications supportées.</p>
+  <details class="details">
+    <summary>Détails SQL</summary>
+    <pre class="code-block">ALTER TABLE public.quiz_questions
+ADD COLUMN IF NOT EXISTS certification TEXT 
+  CHECK (certification IS NULL OR certification IN ('TOEIC','TOEFL','IELTS','Aucune'));
+
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_certification 
+  ON public.quiz_questions(certification);
+
+-- Questions pré-remplies par certification
+INSERT INTO public.quiz_questions (...) VALUES
+('TOEIC','"Please submit your report ___ Friday."', '["by","in","on","at"]', 'on', 'facile'),
+('TOEFL','The author\'s primary purpose in this passage is to...', '[...]', 'C', 'moyen'),
+('IELTS','The chart illustrates the changes in...', '[...]', 'B', 'difficile');</pre>
+  </details>
+</div>
+
+<!-- ═══ RECO ⑦ ═══ -->
+<div class="card reco-card completed">
+  <h2>✅ ⑦ Timer quiz dashboard</h2>
+  <p><strong>Problème :</strong> Absence de timer dans les quiz intégrés au dashboard.</p>
+  <p><strong>Solution :</strong> Implémentation d'un timer avec <code class="code">apTimerStart</code>, <code class="code">qTimerInit</code>, barre de progression + configuration via dashboard.</p>
+  <details class="details">
+    <summary>Détails d'implémentation</summary>
+    <pre class="code-block">// Initialisation du timer
+function qTimerInit(dureeSecondes, callback) {
+  if (window.quizTimerInterval) clearInterval(window.quizTimerInterval);
+  const startTime = Date.now();
+  const endTime = startTime + (dureeSecondes * 1000);
+  
+  window.quizTimerInterval = setInterval(() => {
+    const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+    const minutes = Math.floor(remaining / 60);
+    const secondes = remaining % 60;
+    
+    document.getElementById('timerDisplay').textContent = 
+      `${minutes}:${secondes.toString().padStart(2, '0')}`;
+    document.getElementById('timerBar').style.width = 
+      `${(remaining / dureeSecondes) * 100}%`;
+    
+    if (remaining <= 0) { clearInterval(window.quizTimerInterval); callback(); }
+  }, 1000);
+}</pre>
+  </details>
+</div>
+
+<!-- ═══ CORRECTIFS SÉCURITÉ ═══ -->
+<div class="card">
+  <h2>🔐 Correctifs de Sécurité Appliqués</h2>
+  
+  <table>
+    <tr><th>#</th><th>Correctif</th><th>Statut</th><th>Détail</th></tr>
+    <tr>
+      <td>1</td>
+      <td>netlify.toml — Retrait des clés API en clair</td>
+      <td><span class="badge badge-success">✅ 19 clés</span></td>
+      <td>Anthropic, Groq, DeepSeek, Brave, Tavily, YouTube, ListenNotes, Twilio, Supabase → remplacées par "VOIR_NETLIFY_UI"</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>dashboard.html — Suppression JWT SERVICE_ROLE</td>
+      <td><span class="badge badge-success">✅ Fait</span></td>
+      <td>JWT `eyJhbGci...` retiré du frontend. Variable = <code class="code">null</code> désormais.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Création .env.example</td>
+      <td><span class="badge badge-success">✅ Fait</span></td>
+      <td>Template complet avec toutes les variables requises, valeurs fictives</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>netlify.toml → .gitignore</td>
+      <td><span class="badge badge-warning">⚠️ Présent</span></td>
+      <td>Déjà dans .gitignore. Vérifier que git rm --cached a été fait si déjà commité.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Références SERVICE_ROLE restantes</td>
+      <td><span class="badge badge-danger">⚠️ 14 refs</span></td>
+      <td>Usages fonctionnels dans les appels API (headers). Nécessite migration vers Edge Functions.</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ═══ MIGRATION SQL ═══ -->
+<div class="card">
+  <h2>🗄️ Migration SQL v46 — Contenu</h2>
+  <p>Fichier : <code class="code">Migration SQL Supabase/supabase_MIGRATION_v46_recommandations_finales.sql</code></p>
+  <div class="grid">
+    <div class="stat-box"><div class="num">4</div><div class="label">Nouvelles tables</div></div>
+    <div class="stat-box"><div class="num">6</div><div class="label">Colonnes ajoutées</div></div>
+    <div class="stat-box"><div class="num">3</div><div class="label">Index créés</div></div>
+    <div class="stat-box"><div class="num">1</div><div class="label">Trigger fonction</div></div>
+    <div class="stat-box"><div class="num">1</div><div class="label">Vue créée</div></div>
+    <div class="stat-box"><div class="num">5</div><div class="label">Enregistrements seed</div></div>
+  </div>
+  <details class="details">
+    <summary>Voir le SQL complet</summary>
+    <pre class="code-block">-- ============================================================
+-- AGTM Digital Academy — MIGRATION v46
+-- Recommandations Finales (7 correctifs)
+-- ============================================================
+
+-- ① Vue formateurs pour sélecteur
+CREATE OR REPLACE VIEW public.v_formateurs_select AS
+SELECT id, nom || ' ' || prenom AS nom_complet, email, telephone
+FROM public.personnel
+WHERE statut = 'actif' AND (role = 'formateur' OR role LIKE '%formateur%')
+ORDER BY nom, prenom;
+
+-- ② Liaison modules ↔ questions
+ALTER TABLE public.quiz_questions
+ADD COLUMN IF NOT EXISTS module_id INT REFERENCES public.modules(id) ON DELETE SET NULL,
+ADD COLUMN IF NOT EXISTS lecon_id INT REFERENCES public.lecons(id) ON DELETE SET NULL,
+ADD COLUMN IF NOT EXISTS difficulty TEXT DEFAULT 'moyen',
+ADD COLUMN IF NOT EXISTS tags TEXT[] DEFAULT '{}',
+ADD COLUMN IF NOT EXISTS quiz_id INT REFERENCES public.quiz(id) ON DELETE SET NULL;
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_module ON public.quiz_questions(module_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_lecon ON public.quiz_questions(lecon_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_difficulty ON public.quiz_questions(difficulty);
+
+-- ③ Notifications
+CREATE TABLE IF NOT EXISTS public.notifications (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  destinataire_id INT REFERENCES public.personnel(id) ON DELETE CASCADE,
+  type TEXT NOT NULL CHECK (type IN ('whatsapp','email')),
+  sujet TEXT NOT NULL,
+  message TEXT NOT NULL,
+  statut TEXT DEFAULT 'pending' CHECK (statut IN ('pending','sent','failed')),
+  lu BOOLEAN DEFAULT false,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  lu_at TIMESTAMPTZ
+);
+ALTER TABLE public.personnel
+ADD COLUMN IF NOT EXISTS notification_email BOOLEAN DEFAULT true,
+ADD COLUMN IF NOT EXISTS notification_whatsapp BOOLEAN DEFAULT false;
+CREATE OR REPLACE FUNCTION public.notifier_soumission_devoir()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.notifications (destinataire_id, type, sujet, message)
+  SELECT p.id, 'email', 'Nouveau devoir soumis',
+    'Un étudiant a soumis un devoir. Connectez-vous pour le consulter.'
+  FROM public.personnel p WHERE p.id = NEW.formateur_id AND p.notification_email = true;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- ④ Durée configurable
+CREATE TABLE IF NOT EXISTS public.config_tests (
+  id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  module_id INT REFERENCES public.modules(id) ON DELETE CASCADE,
+  duree_minutes INT NOT NULL DEFAULT 30,
+  tentative_max INT NOT NULL DEFAULT 3,
+  note_minimum DECIMAL(5,2) DEFAULT 10.00,
+  actif BOOLEAN DEFAULT true,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_config_tests_module ON public.config_tests(module_id);
+INSERT INTO public.config_tests (module_id, duree_minutes, tentative_max) VALUES
+  (1, 30, 3), (2, 45, 2), (3, 20, 5), (4, 60, 2), (5, 30, 3)
+ON CONFLICT (module_id) DO NOTHING;
+
+-- ⑤ Certification
+ALTER TABLE public.quiz_questions
+ADD COLUMN IF NOT EXISTS certification TEXT 
+  CHECK (certification IS NULL OR certification IN ('TOEIC','TOEFL','IELTS','Aucune'));
+CREATE INDEX IF NOT EXISTS idx_quiz_questions_certification ON public.quiz_questions(certification);</pre>
+  </details>
+</div>
+
+<!-- ═══ FICHIERS CRÉÉS ═══ -->
+<div class="card">
+  <h2>📁 Fichiers créés / modifiés</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">supabase_MIGRATION_v46_recommandations_finales.sql</span>
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">fix_securite_critique.js</span>
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">fix_securite_v2.js</span>
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">fix_securite.ps1</span>
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">fix_recommandations_finales.js</span>
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">.env.example</span>
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">RAPPORT_RECOMMANDATIONS_FINALES.html</span>
+    <span class="file-tag" style="background:#dfe6e9;padding:6px 14px">RAPPORT_AUDIT_FINAL_CONSOLIDE.html</span>
+    <span class="file-tag" style="background:#ffeaa7;padding:6px 14px">netlify.toml (MODIFIÉ)</span>
+    <span class="file-tag" style="background:#ffeaa7;padding:6px 14px">dashboard.html (MODIFIÉ)</span>
+    <span class="file-tag" style="background:#ffeaa7;padding:6px 14px">devoir_form.html (MODIFIÉ)</span>
+    <span class="file-tag" style="background:#ffeaa7;padding:6px 14px">evaluation_form.html (MODIFIÉ)</span>
+    <span class="file-tag" style="background:#ffeaa7;padding:6px 14px">pointage_form.html (MODIFIÉ)</span>
+  </div>
+</div>
+
+<!-- ═══ ACTIONS MANUELLES RESTANTES ═══ -->
+<div class="card">
+  <h2>⚠️ Actions manuelles requises</h2>
+  <ol style="margin-left:20px;line-height:1.8">
+    <li><strong>Régénérer TOUTES les clés API compromises</strong> (Anthropic, Groq, DeepSeek, Twilio — les clés étaient en clair dans le code)</li>
+    <li><strong>Configurer les nouvelles clés</strong> dans <strong>Netlify UI → Settings → Environment variables</strong></li>
+    <li><strong>Supprimer les fichiers du tracking git</strong> si déjà commités :
+      <pre class="code-block">git rm --cached netlify.toml
+git rm --cached netlify_optimized.toml
+echo "netlify.toml" >> .gitignore
+echo "netlify_optimized.toml" >> .gitignore</pre>
+    </li>
+    <li><strong>Migrer les appels SERVICE_ROLE</strong> du frontend vers des Netlify Edge Functions (actuellement 14 références à remplacer)</li>
+    <li><strong>Exécuter la migration SQL v46</strong> dans Supabase SQL Editor</li>
+    <li><strong>Tester les formulaires</strong> : devoir_form.html, evaluation_form.html, pointage_form.html (vérifier le sélecteur formateur)</li>
+    <li><strong>Tester le timer</strong> : vérifier l'affichage et la redirection à 0</li>
+    <li><strong>Tester la génération IA</strong> : cliquer sur "Générer avec IA" dans les quiz</li>
+  </ol>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="footer">
+  <p>AGTM Digital Academy — Audit de Sécurité & Recommandations Finales</p>
+  <p>Rapport généré automatiquement • 23/04/2026</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "agtmdigitaltraining",
+  "version": "1.0.0",
+  "description": "AGTM Digital Academy - Platform for English learning and professional training",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0",
+    "build": "echo \"Static site - no build required\""
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0",
+    "node-fetch": "^3.3.2",
+    "winston": "^3.11.0",
+    "joi": "^17.12.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "education",
+    "english-learning",
+    "digital-academy",
+    "supabase",
+    "netlify"
+  ],
+  "author": "AGTM Digital Academy",
+  "license": "MIT"
+}

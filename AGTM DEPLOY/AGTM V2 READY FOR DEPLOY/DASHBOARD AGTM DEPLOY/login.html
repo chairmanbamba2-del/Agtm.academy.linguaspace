@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EIP — Connexion</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        navy:  { DEFAULT:'#0D1B2A', mid:'#152233', light:'#1A2D42', dark:'#080F18', card:'#1E2E42' },
+        gold:  { DEFAULT:'#C8960C', light:'#E8B84B', dark:'#A07008' },
+        sapp:  { DEFAULT:'#4A90D9' },
+      }}}
+    }
+  </script>
+
+  <!-- ╔══════════════════════════════════════════╗
+       ║  COLLER VOS CLÉS SUPABASE ICI           ║
+       ╚══════════════════════════════════════════╝ -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+    const SUPABASE_URL  = 'https://fglzovvsyloprokmdadx.supabase.co'      // https://xxxx.supabase.co
+    const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbHpvdnZzeWxvcHJva21kYWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NzkxODEsImV4cCI6MjA5MDU1NTE4MX0.QffMgmgl0Ti-ZCuQ0y_eWbZYLd5ktq-1Y6nh1RfKZww' // clé anon publique
+
+    const sb = createClient(SUPABASE_URL, SUPABASE_ANON)
+
+    // Redirect si déjà connecté
+    const { data: { session } } = await sb.auth.getSession()
+    if (session) location.href = 'dashboard.html'
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const email = document.getElementById('email').value.trim()
+      const pwd   = document.getElementById('password').value
+      const btn   = document.getElementById('loginBtn')
+      const err   = document.getElementById('errMsg')
+
+      btn.disabled = true
+      btn.textContent = 'Connexion...'
+      err.textContent = ''
+
+      const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd })
+
+      if (error) {
+        err.textContent = 'Email ou mot de passe incorrect.'
+        btn.disabled = false
+        btn.textContent = 'Se connecter'
+        return
+      }
+
+      location.href = 'dashboard.html'
+    })
+  </script>
+</head>
+<body class="min-h-screen bg-navy flex flex-col" style="background:#0D1B2A">
+
+  <!-- Header -->
+  <header class="border-b-2 py-5 px-8 flex items-center gap-4"
+          style="background:#080F18; border-color:#C8960C">
+    <div class="w-12 h-12 rounded-xl flex items-center justify-center font-black text-lg"
+         style="background:#C8960C; color:#0D1B2A">EIP</div>
+    <div>
+      <div class="font-bold text-xl" style="color:#C8960C">EIP English In Practice</div>
+      <div class="text-xs tracking-widest uppercase" style="color:#4A90D9">
+        Business &amp; General English Specialist
+      </div>
+    </div>
+    <div class="ml-auto text-xs italic" style="color:#90A4AE">Practice makes perfect.</div>
+  </header>
+
+  <!-- Login card -->
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md rounded-2xl overflow-hidden shadow-2xl"
+         style="background:#152233; border:1px solid #2A3F58">
+
+      <div class="p-8 border-b-2" style="border-color:#C8960C; background:#1A2D42">
+        <h1 class="text-2xl font-bold" style="color:#ffffff">Connexion</h1>
+        <p class="text-sm mt-1" style="color:#90A4AE">
+          Accédez à votre espace personnalisé
+        </p>
+      </div>
+
+      <form id="loginForm" class="p-8 space-y-5">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider mb-2"
+                 style="color:#90A4AE">Adresse Email</label>
+          <input id="email" type="email" required
+                 placeholder="vous@email.com"
+                 class="w-full rounded-lg px-4 py-3 text-sm outline-none
+                        transition focus:ring-2"
+                 style="background:#1E3050; border:1.5px solid #2A3F58;
+                        color:#fff; focus:border-color:#4A90D9"/>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider mb-2"
+                 style="color:#90A4AE">Mot de passe</label>
+          <input id="password" type="password" required
+                 placeholder="••••••••"
+                 class="w-full rounded-lg px-4 py-3 text-sm outline-none transition"
+                 style="background:#1E3050; border:1.5px solid #2A3F58; color:#fff"/>
+        </div>
+
+        <p id="errMsg" class="text-sm font-medium" style="color:#E74C3C; min-height:20px"></p>
+
+        <button id="loginBtn" type="submit"
+                class="w-full rounded-xl py-3 font-bold text-base transition
+                       hover:opacity-90 active:scale-95"
+                style="background:#C8960C; color:#0D1B2A">
+          Se connecter
+        </button>
+      </form>
+
+      <div class="px-8 pb-6 text-center text-xs" style="color:#4A6080">
+        AGTM Digital Academy &nbsp;|&nbsp; Conception : <strong style="color:#C8960C">ISSA BAMBA</strong>
+        &nbsp;|&nbsp; © 2026
+      </div>
+    </div>
+  </main>
+
+  <footer class="text-center text-xs py-4" style="color:#2A4060; border-top:1px solid #152233">
+    © 2026 AGTM Academy &nbsp;·&nbsp; EIP English In Practice &nbsp;·&nbsp; Abidjan, Côte d'Ivoire
+  </footer>
+</body>
+</html>

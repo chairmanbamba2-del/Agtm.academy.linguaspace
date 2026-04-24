@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide d'Administration LINGUA SPACE</title>
+    <style>
+        :root {
+            --primary-dark: #0D2D52;
+            --primary-blue: #1A4B8C;
+            --accent-gold: #D4AF37;
+            --accent-light: #E8C872;
+            --bg-dark: #080F1A;
+            --bg-card: #0F1A2F;
+            --text-light: #F0F4F8;
+            --text-muted: #8A9BB2;
+            --border-color: #1E3A5F;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+            --code-bg: #0A1526;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0A1526 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(15, 26, 47, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 300px 1fr;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            background: var(--primary-dark);
+            padding: 30px 20px;
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-header h1 {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .toc {
+            list-style: none;
+        }
+        
+        .toc > li {
+            margin-bottom: 15px;
+        }
+        
+        .toc > li > a {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .toc > li > a:hover,
+        .toc > li > a.active {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+            border-left-color: var(--accent-gold);
+        }
+        
+        .toc-sub {
+            list-style: none;
+            margin-top: 10px;
+            margin-left: 20px;
+            border-left: 1px solid var(--border-color);
+            padding-left: 15px;
+        }
+        
+        .toc-sub li {
+            margin-bottom: 8px;
+        }
+        
+        .toc-sub a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .toc-sub a:hover,
+        .toc-sub a.active {
+            color: var(--accent-light);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 50px 40px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+        
+        section {
+            margin-bottom: 80px;
+            scroll-margin-top: 20px;
+        }
+        
+        section:last-child {
+            margin-bottom: 0;
+        }
+        
+        h2 {
+            color: var(--accent-gold);
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-gold);
+            font-weight: 700;
+        }
+        
+        h3 {
+            color: var(--accent-light);
+            font-size: 1.6rem;
+            margin: 40px 0 20px;
+            font-weight: 600;
+            padding-left: 15px;
+            border-left: 4px solid var(--info);
+        }
+        
+        h4 {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 25px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        li strong {
+            color: var(--accent-light);
+        }
+        
+        /* Cards and Boxes */
+        .info-box {
+            background: linear-gradient(135deg, rgba(26, 75, 140, 0.2) 0%, rgba(13, 45, 82, 0.1) 100%);
+            border-left: 4px solid var(--info);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-left: 4px solid var(--warning);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .success-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(13, 45, 82, 0.05) 100%);
+            border-left: 4px solid var(--success);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .danger-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(13, 45, 82, 0.05) 100%);
+            border-left: 4px solid var(--danger);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-gold) 0%, var(--accent-light) 100%);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+        
+        /* Code Blocks */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-light);
+            font-size: 0.9rem;
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            color: var(--text-light);
+        }
+        
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 30px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        
+        th {
+            background: var(--primary-dark);
+            color: var(--accent-gold);
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        
+        tr:nth-child(even) {
+            background: rgba(26, 75, 140, 0.05);
+        }
+        
+        tr:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .badge-info {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--info);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .badge-gold {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--accent-gold);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            grid-column: 1 / -1;
+            background: var(--primary-dark);
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+        
+        .footer-note {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .main-content {
+                max-height: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 30px 20px;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            h3 {
+                font-size: 1.4rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                padding: 20px 15px;
+            }
+        }
+        
+        /* Links */
+        a {
+            color: var(--accent-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-gold);
+            text-decoration: underline;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-gold);
+        }
+        
+        /* Print Styles */
+        @media print {
+            .sidebar {
+                display: none;
+            }
+            
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .feature-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>Guide d'Administration</h1>
+                <div class="subtitle">LINGUA SPACE</div>
+            </div>
+            
+            <ul class="toc">
+                <li><a href="#introduction" class="active">Introduction</a></li>
+                <li><a href="#tableau-de-dash-admin">Tableau de Dash Admin</a>
+                    <ul class="toc-sub">
+                        <li><a href="#acces-admin">Accès</a></li>
+                        <li><a href="#kpis">KPIs</a></li>
+                        <li><a href="#modules-admin">Modules Admin</a></li>
+                    </ul>
+                </li>
+                <li><a href="#gestion-des-utilisateurs">Gestion des Utilisateurs</a>
+                    <ul class="toc-sub">
+                        <li><a href="#liste-utilisateurs">Liste des Utilisateurs</a></li>
+                        <li><a href="#creation-utilisateur">Création d'Utilisateur</a></li>
+                        <li><a href="#actions-utilisateur">Actions sur Utilisateur</a></li>
+                    </ul>
+                </li>
+                <li><a href="#gestion-des-abonnements">Gestion des Abonnements</a>
+                    <ul class="toc-sub">
+                        <li><a href="#liste-abonnements">Liste des Abonnements</a></li>
+                        <li><a href="#creation-abonnement">Création d'Abonnement</a></li>
+                        <li><a href="#expiration-automatique">Expiration Automatique</a></li>
+                    </ul>
+                </li>
+                <li><a href="#permissions-ia">Permissions IA</a>
+                    <ul class="toc-sub">
+                        <li><a href="#fournisseurs-ia">Fournisseurs IA</a></li>
+                        <li><a href="#types-permissions">Types de Permissions</a></li>
+                        <li><a href="#parametres-globaux">Paramètres Globaux</a></li>
+                    </ul>
+                </li>
+                <li><a href="#finance-comptabilite">Finance & Comptabilité</a>
+                    <ul class="toc-sub">
+                        <li><a href="#transactions">Transactions</a></li>
+                        <li><a href="#receipts">Reçus</a></li>
+                        <li><a href="#rapports">Rapports</a></li>
+                    </ul>
+                </li>
+                <li><a href="#marketing-communications">Marketing & Communications</a></li>
+                <li><a href="#certifications-tests">Certifications & Tests</a></li>
+                <li><a href="#configuration-systeme">Configuration Système</a>
+                    <ul class="toc-sub">
+                        <li><a href="#variables-environnement">Variables d'Environnement</a></li>
+                        <li><a href="#base-donnees">Base de Données</a></li>
+                        <li><a href="#cron-jobs">Cron Jobs</a></li>
+                    </ul>
+                </li>
+                <li><a href="#depannage">Dépannage</a>
+                    <ul class="toc-sub">
+                        <li><a href="#problemes-courants">Problèmes Courants</a></li>
+                        <li><a href="#logs">Logs</a></li>
+                        <li><a href="#support-technique">Support Technique</a></li>
+                    </ul>
+                </li>
+                <li><a href="#securite">Sécurité</a>
+                    <ul class="toc-sub">
+                        <li><a href="#bonnes-pratiques">Bonnes Pratiques</a></li>
+                        <li><a href="#audit">Audit</a></li>
+                        <li><a href="#conformite">Conformité</a></li>
+                    </ul>
+                </li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section id="introduction">
+                <h2>Introduction</h2>
+                <p>Ce guide décrit l'ensemble des fonctionnalités d'administration de la plateforme LINGUA SPACE. Il est destiné aux administrateurs et super-administrateurs chargés de gérer la plateforme, les utilisateurs, les abonnements, les permissions IA et la comptabilité.</p>
+                
+                <div class="info-box">
+                    <p><strong>Accès admin</strong> : <code>/admin</code> (nécessite un compte avec rôle <code>admin</code> ou <code>super_admin</code>)</p>
+                </div>
+            </section>
+
+            <section id="tableau-de-dash-admin">
+                <h2>Tableau de Dash Admin</h2>
+                
+                <h3 id="acces-admin">Accès</h3>
+                <ul>
+                    <li><strong>URL</strong> : <code>https://votre-domaine.space/admin</code></li>
+                    <li><strong>Authentification</strong> : Connexion avec un compte ayant le rôle <code>admin</code> ou <code>super_admin</code></li>
+                    <li><strong>Sécurité</strong> : Vérification automatique des permissions via RLS</li>
+                </ul>
+                
+                <h3 id="kpis">KPIs (Indicateurs Clés)</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Abonnés actifs</h4>
+                        <p>Nombre d'abonnements avec statut <code>active</code></p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Tests passés</h4>
+                        <p>Nombre total de tests de niveau complétés</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Certificats émis</h4>
+                        <p>Nombre de certificats générés</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Recettes du mois</h4>
+                        <p>Somme des transactions <code>income</code> du mois en cours</p>
+                    </div>
+                </div>
+                
+                <h3 id="modules-admin">Modules Admin</h3>
+                <ol>
+                    <li><strong>Finance & Comptabilité</strong> : Gestion des transactions, reçus, exports CSV</li>
+                    <li><strong>Gestion abonnés</strong> : Abonnements actifs, résiliations, historique</li>
+                    <li><strong>Permissions IA</strong> : Contrôle d'accès aux modèles IA</li>
+                    <li><strong>Gestion utilisateurs</strong> : Création, suspension, réactivation</li>
+                    <li><strong>Marketing</strong> : Campagnes, promotions, communications</li>
+                    <li><strong>Rapport hebdomadaire</strong> : Déclenchement des emails de rapport</li>
+                </ol>
+            </section>
+
+            <section id="gestion-des-utilisateurs">
+                <h2>Gestion des Utilisateurs</h2>
+                
+                <h3 id="liste-utilisateurs">Liste des Utilisateurs</h3>
+                <ul>
+                    <li><strong>Accès</strong> : <code>/admin/users</code></li>
+                    <li><strong>Fonctionnalités</strong> :
+                        <ul>
+                            <li>Voir tous les utilisateurs inscrits</li>
+                            <li>Filtrer par rôle, statut, date</li>
+                            <li>Rechercher par email ou nom</li>
+                            <li>Pagination (20 utilisateurs/page)</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <h3 id="creation-utilisateur">Création d'Utilisateur</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Formulaire manuel</h4>
+                        <ul>
+                            <li>Email (obligatoire)</li>
+                            <li>Mot de passe (obligatoire)</li>
+                            <li>Nom complet</li>
+                            <li>Téléphone</li>
+                            <li>Pays (défaut : CI)</li>
+                            <li>Rôle (user, admin, super_admin)</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Création avec abonnement</h4>
+                        <ul>
+                            <li>Sélectionner un plan (UNI ou All Access)</li>
+                            <li>Choisir la langue (pour UNI)</li>
+                            <li>Définir la durée (1 mois, 3 mois, 12 mois)</li>
+                            <li>Paiement manuel (sans transaction réelle)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 id="actions-utilisateur">Actions sur Utilisateur</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4><span class="badge badge-warning">Suspension</span></h4>
+                        <p>Désactive le compte (ne supprime pas les données)</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4><span class="badge badge-success">Réactivation</span></h4>
+                        <p>Rétablit l'accès</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4><span class="badge badge-info">Changement de rôle</span></h4>
+                        <p>user ↔ admin ↔ super_admin</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4><span class="badge badge-danger">Réinitialisation mot de passe</span></h4>
+                        <p>Via email automatique</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gestion-des-abonnements">
+                <h2>Gestion des Abonnements</h2>
+                
+                <h3 id="liste-abonnements">Liste des Abonnements</h3>
+                <ul>
+                    <li><strong>Accès</strong> : <code>/admin/subscribers</code></li>
+                    <li><strong>Fonctionnalités</strong> :
+                        <ul>
+                            <li>Voir tous les abonnements (actifs, expirés, en attente)</li>
+                            <li>Filtrer par plan, statut, date d'expiration</li>
+                            <li>Rechercher par email utilisateur</li>
+                            <li>Tri par date de création/expiration</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <h3 id="creation-abonnement">Création d'Abonnement</h3>
+                <div class="info-box">
+                    <h4>Étapes de création</h4>
+                    <ol>
+                        <li><strong>Sélection utilisateur</strong> : Choisir parmi les utilisateurs existants</li>
+                        <li><strong>Configuration</strong> :
+                            <ul>
+                                <li>Plan : UNI (1 langue) ou All Access (toutes langues)</li>
+                                <li>Langue : Pour UNI seulement (en, fr, es, de)</li>
+                                <li>Durée : 1 à 12 mois</li>
+                                <li>Montant : 15 000 FCFA (UNI) ou 25 000 FCFA (All Access)</li>
+                                <li>Méthode de paiement : Manuel (admin), Orange Money, Wave, MTN, carte</li>
+                            </ul>
+                        </li>
+                        <li><strong>Validation</strong> :
+                            <ul>
+                                <li>Vérifier la cohérence plan/langue</li>
+                                <li>Générer un numéro de référence</li>
+                                <li>Créer la transaction associée</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+                
+                <h3 id="expiration-automatique">Expiration Automatique</h3>
+                <div class="warning-box">
+                    <h4>Fonction PostgreSQL</h4>
+                    <pre><code>-- Dans Supabase Dashboard > Database > Cron Jobs
+Schedule: 0 2 * * *
+Command: SELECT expire_subscriptions();</code></pre>
+                    <p><strong>Cron Job</strong> : Exécution quotidienne à 2h du matin</p>
+                </div>
+            </section>
+
+            <section id="permissions-ia">
+                <h2>Permissions IA</h2>
+                
+                <div class="info-box">
+                    <p>Le système de permissions IA permet de contrôler finement quels modèles d'IA sont accessibles à quels utilisateurs, avec quelles limites.</p>
+                    <p><strong>Accès</strong> : <code>/admin/ai-permissions</code></p>
+                </div>
+                
+                <h3 id="fournisseurs-ia">Fournisseurs IA Supportés</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Anthropic (Claude)</h4>
+                        <ul>
+                            <li><code>claude-sonnet-4-5</code> : Équilibre performance/coût</li>
+                            <li><code>claude-haiku-3</code> : Rapide et économique</li>
+                            <li><code>claude-opus-3</code> : Plus puissant, plus cher</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Groq (Llama/Mixtral)</h4>
+                        <ul>
+                            <li><code>llama-3.1-70b-versatile</code> : Puissant et rapide</li>
+                            <li><code>llama-3.2-90b-vision-preview</code> : Vision + texte</li>
+                            <li><code>mixtral-8x7b-32768</code> : Expert mixture</li>
+                            <li><code>gemma2-9b-it</code> : Léger et efficace</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>DeepSeek</h4>
+                        <ul>
+                            <li><code>deepseek-chat</code> : Modèle principal</li>
+                            <li><code>deepseek-coder</code> : Spécialisé code</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 id="types-permissions">Types de Permissions</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4><span class="badge badge-gold">Utilisateur spécifique</span></h4>
+                        <p>Appliqué à un utilisateur particulier</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4><span class="badge badge-info">Plan spécifique</span></h4>
+                        <p>Appliqué à tous les utilisateurs d'un plan (UNI/All Access)</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4><span class="badge badge-success">Utilisateur + Plan</span></h4>
+                        <p>Combinaison des deux (prioritaire)</p>
+                    </div>
+                </div>
+                
+                <h3 id="parametres-globaux">Paramètres Globaux</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Paramètre</th>
+                                <th>Valeur par défaut</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Fournisseur par défaut</strong></td>
+                                <td><code>anthropic</code></td>
+                                <td>Fournisseur IA utilisé par défaut</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Modèle par défaut</strong></td>
+                                <td><code>claude-sonnet-4-5</code></td>
+                                <td>Modèle IA utilisé par défaut</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tokens/jour (Free)</strong></td>
+                                <td>10 000</td>
+                                <td>Limite quotidienne pour les utilisateurs free</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tokens/jour (Premium)</strong></td>
+                                <td>50 000</td>
+                                <td>Limite quotidienne pour les utilisateurs premium</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recherche web</strong></td>
+                                <td><code>true</code></td>
+                                <td>Activation de la recherche web</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fournisseur recherche</strong></td>
+                                <td><code>tavily</code></td>
+                                <td>Fournisseur de recherche web</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="info-box">
+                    <h4>Logique de Priorité</h4>
+                    <ol>
+                        <li><strong>Permissions utilisateur</strong> (priorité haute)</li>
+                        <li><strong>Permissions plan</strong> (priorité moyenne)</li>
+                        <li><strong>Paramètres globaux</strong> (priorité basse)</li>
+                        <li><strong>Configuration statique</strong> (<code>ai-config.js</code>) (fallback)</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="finance-comptabilite">
+                <h2>Finance & Comptabilité</h2>
+                
+                <h3 id="transactions">Transactions</h3>
+                <ul>
+                    <li><strong>Accès</strong> : <code>/admin/finance</code></li>
+                    <li><strong>Types</strong> :
+                        <ul>
+                            <li><span class="badge badge-success">income</span> : Recettes (abonnements)</li>
+                            <li><span class="badge badge-danger">expense</span> : Dépenses (frais, salaires)</li>
+                            <li><span class="badge badge-warning">refund</span> : Remboursements</li>
+                            <li><span class="badge badge-info">adjustment</span> : Ajustements comptables</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <h3 id="receipts">Reçus</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Génération automatique</h4>
+                        <p>Pour chaque transaction <code>income</code></p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Format</h4>
+                        <p>PDF avec logo et détails</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Envoi</h4>
+                        <p>Email automatique à l'utilisateur</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Téléchargement</h4>
+                        <p>Depuis l'interface admin ou utilisateur</p>
+                    </div>
+                </div>
+                
+                <h3 id="rapports">Rapports</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Mensuel</h4>
+                        <p>Recettes, dépenses, bénéfice</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Par plan</h4>
+                        <p>Répartition UNI vs All Access</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Par langue</h4>
+                        <p>Popularité des langues</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Par méthode de paiement</h4>
+                        <p>Mobile Money vs cartes</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="marketing-communications">
+                <h2>Marketing & Communications</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Campagnes Email</h4>
+                        <ul>
+                            <li>Newsletter mensuelle</li>
+                            <li>Promotions spéciales</li>
+                            <li>Rappels de renouvellement</li>
+                            <li>Nouvelles fonctionnalités</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Notifications in-app</h4>
+                        <ul>
+                            <li>Nouvelles fonctionnalités</li>
+                            <li>Événements spéciaux</li>
+                            <li>Progression personnelle</li>
+                            <li>Classements hebdomadaires</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>SMS</h4>
+                        <ul>
+                            <li>Pour les utilisateurs avec téléphone</li>
+                            <li>Notifications importantes</li>
+                            <li>Promotions urgentes</li>
+                            <li>Rappels de paiement</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>Analytics</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrique</th>
+                                <th>Description</th>
+                                <th>Cible</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Acquisition</strong></td>
+                                <td>Source des nouveaux utilisateurs</td>
+                                <td>≥ 100/mois</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Rétention</strong></td>
+                                <td>Taux de renouvellement</td>
+                                <td>≥ 70%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Engagement</strong></td>
+                                <td>Temps moyen sur la plateforme</td>
+                                <td>≥ 30 min/jour</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conversion</strong></td>
+                                <td>Taux d'inscription → abonnement</td>
+                                <td>≥ 15%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="certifications-tests">
+                <h2>Certifications & Tests</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Tests de Niveau</h4>
+                        <ul>
+                            <li><strong>Génération</strong> : IA crée des tests adaptés au niveau</li>
+                            <li><strong>Correction</strong> : Automatique avec feedback détaillé</li>
+                            <li><strong>Historique</strong> : Tous les tests passés par utilisateur</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Certificats</h4>
+                        <ul>
+                            <li><strong>Génération</strong> : PDF personnalisé avec nom, niveau, date</li>
+                            <li><strong>Vérification</strong> : Code unique accessible via <code>/verify/:code</code></li>
+                            <li><strong>Statistiques</strong> : Nombre de certificats par niveau/langue</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Préparation aux Examens</h4>
+                        <ul>
+                            <li><strong>Contenu spécifique</strong> : IELTS, TOEFL, DELF, DALF, DELE, Goethe</li>
+                            <li><strong>Simulations</strong> : Tests blancs avec conditions réelles</li>
+                            <li><strong>Feedback</strong> : Points forts/faibles avec recommandations</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="configuration-systeme">
+                <h2>Configuration Système</h2>
+                
+                <h3 id="variables-environnement">Variables d'Environnement</h3>
+                <div class="warning-box">
+                    <h4>Frontend (<code>.env</code>)</h4>
+                    <pre><code>VITE_SUPABASE_URL=https://xxx.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_xxx
+VITE_APP_ENV=development|production
+VITE_APP_URL=http://localhost:5173|https://votre-domaine.space
+VITE_YOUTUBE_API_KEY=xxx</code></pre>
+                </div>
+                
+                <div class="danger-box">
+                    <h4>Backend (Supabase Secrets)</h4>
+                    <pre><code>ANTHROPIC_API_KEY=sk-ant-xxx
+GROQ_API_KEY=gsk_xxx
+DEEPSEEK_API_KEY=sk-xxx
+TAVILY_API_KEY=tvly-xxx
+BRAVE_SEARCH_API_KEY=xxx
+CINETPAY_API_KEY=xxx
+CINETPAY_SITE_ID=xxx
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx</code></pre>
+                    <p><strong>⚠️ IMPORTANT</strong> : Ces clés ne doivent JAMAIS être dans le frontend React</p>
+                </div>
+                
+                <h3 id="base-donnees">Base de Données</h3>
+                <div class="info-box">
+                    <ul>
+                        <li><strong>Migrations</strong> : <code>supabase/migrations/*.sql</code></li>
+                        <li><strong>Application</strong> : <code>supabase db push</code></li>
+                        <li><strong>Vérification</strong> : <code>supabase db status</code></li>
+                    </ul>
+                </div>
+                
+                <h3 id="cron-jobs">Cron Jobs</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Schedule</th>
+                                <th>Commande</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Expiration abonnements</strong></td>
+                                <td><code>0 2 * * *</code></td>
+                                <td><code>SELECT expire_subscriptions();</code></td>
+                                <td>Quotidien à 2h du matin</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Rapports hebdomadaires</strong></td>
+                                <td><code>0 9 * * 1</code></td>
+                                <td><code>SELECT generate_weekly_reports();</code></td>
+                                <td>Lundi à 9h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Backups</strong></td>
+                                <td><code>0 3 * * *</code></td>
+                                <td><code>SELECT backup_database();</code></td>
+                                <td>Quotidien à 3h</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="depannage">
+                <h2>Dépannage</h2>
+                
+                <h3 id="problemes-courants">Problèmes Courants</h3>
+                
+                <div class="danger-box">
+                    <h4>1. Utilisateur ne peut pas accéder à l'IA</h4>
+                    <p><strong>Vérifier</strong> :</p>
+                    <ul>
+                        <li>Abonnement actif (<code>lingua_subscriptions.status = 'active'</code>)</li>
+                        <li>Permissions IA (<code>lingua_ai_permissions.is_allowed = true</code>)</li>
+                        <li>Limites de tokens non dépassées</li>
+                    </ul>
+                    <p><strong>Solution</strong> :</p>
+                    <ul>
+                        <li>Créer/modifier l'abonnement</li>
+                        <li>Ajouter une permission IA</li>
+                        <li>Réinitialiser les compteurs quotidiens</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>2. Paiement échoué</h4>
+                    <p><strong>Vérifier</strong> :</p>
+                    <ul>
+                        <li>Clés CinetPay configurées</li>
+                        <li>Solde suffisant sur le compte marchand</li>
+                        <li>Statut de la transaction dans <code>lingua_transactions</code></li>
+                    </ul>
+                    <p><strong>Solution</strong> :</p>
+                    <ul>
+                        <li>Vérifier les logs CinetPay</li>
+                        <li>Créer une transaction manuelle</li>
+                        <li>Contacter le support CinetPay</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h4>3. Certificat non généré</h4>
+                    <p><strong>Vérifier</strong> :</p>
+                    <ul>
+                        <li>Test de niveau complété (<code>lingua_level_tests</code>)</li>
+                        <li>Score minimum atteint</li>
+                        <li>Edge Function <code>generate-certificate</code> déployée</li>
+                    </ul>
+                    <p><strong>Solution</strong> :</p>
+                    <ul>
+                        <li>Relancer la génération manuellement</li>
+                        <li>Vérifier les logs Edge Function</li>
+                        <li>Regénérer le test</li>
+                    </ul>
+                </div>
+                
+                <h3 id="logs">Logs</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Frontend</h4>
+                        <p>Console du navigateur</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Backend</h4>
+                        <p>Supabase Dashboard > Logs</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Edge Functions</h4>
+                        <p>Supabase Dashboard > Edge Functions > Logs</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Base de données</h4>
+                        <pre style="margin: 0; font-size: 0.8rem;"><code>SELECT * FROM lingua_ai_sessions 
+ORDER BY created_at DESC 
+LIMIT 10</code></pre>
+                    </div>
+                </div>
+                
+                <h3 id="support-technique">Support Technique</h3>
+                <div class="info-box">
+                    <ul>
+                        <li><strong>Email</strong> : tech@lingua.space</li>
+                        <li><strong>Urgences</strong> : +225 XX XX XX XX</li>
+                        <li><strong>Documentation</strong> : <code>/docs</code> (ce guide)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="securite">
+                <h2>Sécurité</h2>
+                
+                <h3 id="bonnes-pratiques">Bonnes Pratiques</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Rôles</h4>
+                        <ul>
+                            <li><code>user</code> : Accès standard</li>
+                            <li><code>admin</code> : Accès admin limité</li>
+                            <li><code>super_admin</code> : Accès complet</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Mots de passe</h4>
+                        <ul>
+                            <li>Longueur minimum : 8 caractères</li>
+                            <li>Complexité : majuscules, minuscules, chiffres</li>
+                            <li>Expiration : 90 jours (recommandé)</li>
+                            <li>Historique : 5 derniers mots de passe</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Sessions</h4>
+                        <ul>
+                            <li>Expiration : 24 heures d'inactivité</li>
+                            <li>Unique : Une session par appareil</li>
+                            <li>Revocation : Possible depuis l'admin</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>API Keys</h4>
+                        <ul>
+                            <li>Jamais dans le code frontend</li>
+                            <li>Rotation régulière (90 jours)</li>
+                            <li>Accès limité par IP (si possible)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3 id="audit">Audit</h3>
+                <ul>
+                    <li><strong>Logs de connexion</strong> : <code>auth.sessions</code></li>
+                    <li><strong>Actions admin</strong> : Table <code>admin_audit_log</code> (à implémenter)</li>
+                    <li><strong>Modifications données</strong> : Triggers de logging</li>
+                </ul>
+                
+                <h3 id="conformite">Conformité</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>RGPD</h4>
+                        <ul>
+                            <li>Consentement explicite</li>
+                            <li>Droit à l'oubli</li>
+                            <li>Portabilité des données</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Paiements</h4>
+                        <ul>
+                            <li>Conformité PCI DSS (via CinetPay)</li>
+                            <li>Chiffrement des données bancaires</li>
+                            <li>Audit régulier</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Données personnelles</h4>
+                        <ul>
+                            <li>Chiffrement au repos</li>
+                            <li>Chiffrement en transit (TLS)</li>
+                            <li>Accès limité</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conclusion">
+                <h2>Conclusion</h2>
+                
+                <div class="success-box">
+                    <p>Ce guide couvre l'ensemble des fonctionnalités d'administration de LINGUA SPACE. Pour toute question supplémentaire ou problème non couvert, contactez l'équipe technique.</p>
+                    
+                    <p><strong>Rappel</strong> : Avec de grands pouvoirs viennent de grandes responsabilités. Utilisez les fonctionnalités admin avec discernement et respect pour la vie privée des utilisateurs.</p>
+                </div>
+                
+                <p style="text-align: center; margin-top: 40px; font-style: italic; color: var(--text-muted);">
+                    *Dernière mise à jour : 22 avril 2026*
+                </p>
+            </section>
+        </main>
+
+        <footer>
+            <p><strong>LINGUA SPACE — Guide d'Administration Officiel</strong></p>
+            <p>© 2026 Tous droits réservés | Document technique interne</p>
+            <p class="footer-note">
+                Ce document est destiné à l'usage exclusif des administrateurs de la plateforme LINGUA SPACE.<br>
+                La diffusion ou la reproduction de ce document sans autorisation est strictement interdite.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Update active state in sidebar
+                    document.querySelectorAll('.toc a, .toc-sub a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Scroll to target
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Update active state on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.toc a, .toc-sub a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Print functionality
+        const printButton = document.createElement('button');
+        printButton.textContent = '📄 Imprimer ce guide';
+        printButton.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        `;
+        
+        printButton.addEventListener('mouseenter', () => {
+            printButton.style.transform = 'translateY(-3px)';
+            printButton.style.boxShadow = '0 8px 25px rgba(212, 175, 55, 0.6)';
+        });
+        
+        printButton.addEventListener('mouseleave', () => {
+            printButton.style.transform = 'translateY(0)';
+            printButton.style.boxShadow = '0 5px 20px rgba(212, 175, 55, 0.4)';
+        });
+        
+        printButton.addEventListener('click', () => {
+            window.print();
+        });
+        
+        document.body.appendChild(printButton);
+
+        // Initialize first section as active
+        if (navLinks.length > 0) {
+            navLinks[0].classList.add('active');
+        }
+
+        // Add copy functionality for code blocks
+        document.querySelectorAll('pre').forEach(pre => {
+            const copyButton = document.createElement('button');
+            copyButton.textContent = '📋 Copier';
+            copyButton.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: var(--primary-blue);
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                opacity: 0.7;
+                transition: opacity 0.3s;
+            `;
+            
+            pre.style.position = 'relative';
+            pre.appendChild(copyButton);
+            
+            copyButton.addEventListener('mouseenter', () => {
+                copyButton.style.opacity = '1';
+            });
+            
+            copyButton.addEventListener('mouseleave', () => {
+                copyButton.style.opacity = '0.7';
+            });
+            
+            copyButton.addEventListener('click', () => {
+                const code = pre.querySelector('code').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    const originalText = copyButton.textContent;
+                    copyButton.textContent = '✅ Copié!';
+                    setTimeout(() => {
+                        copyButton.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

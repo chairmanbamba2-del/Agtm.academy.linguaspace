@@ -1,11 +1,10 @@
-// ── MODULES LIST PAGE ───────────────────────────────────────
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import { useUserStore } from '../store/userStore'
 import { useProfile } from '../hooks/useAuth'
 import { useSubscription } from '../hooks/useSubscription'
-import { getModules, supabase } from '../lib/supabase'
+import { useModules, useModuleProgress } from '../hooks/useModules'
 import { LANGUAGES, CEFR_LEVELS, CEFR_LABELS } from '../lib/constants'
 import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
 
@@ -16,28 +15,16 @@ export default function Modules() {
   const progress    = useUserStore(s => s.progress)
   const { can }     = useSubscription()
 
-  const [modules, setModules]       = useState([])
-  const [modProgress, setModProg]   = useState([])
-  const [selectedLevel, setLevel]   = useState(null)
-  const [fetching, setFetching]     = useState(true)
+  const [selectedLevel, setLevel] = useState(null)
 
   const language = LANGUAGES[lang]
   const prog     = progress.find(p => p.language === lang)
   const level    = prog?.current_level || 'A1'
 
-  if (!loading && !can(`corner_${lang}`)) return <Navigate to="/subscribe" replace />
+  const { data: modules = [], isLoading: fetching } = useModules(lang)
+  const { data: modProgress = [] } = useModuleProgress(user?.id)
 
-  useEffect(() => {
-    if (!lang || !user) return
-    Promise.all([
-      getModules(lang),
-      supabase.from('lingua_module_progress')
-        .select('*').eq('user_id', user.id)
-    ]).then(([mods, { data: mp }]) => {
-      setModules(mods.length ? mods : DEMO_MODULES[lang] || [])
-      setModProg(mp || [])
-    }).finally(() => setFetching(false))
-  }, [lang, user])
+  if (!loading && !can(`corner_${lang}`)) return <Navigate to="/subscribe" replace />
 
   if (!language) return <Navigate to="/dashboard" replace />
 
@@ -56,7 +43,6 @@ export default function Modules() {
         </div>
       </div>
 
-      {/* Filtre CEFR */}
       <div className="flex gap-2 flex-wrap mb-8">
         <button onClick={() => setLevel(null)}
           className={`px-4 py-2 text-xs font-mono rounded transition-all
@@ -122,18 +108,4 @@ export default function Modules() {
       )}
     </AppLayout>
   )
-}
-
-// Modules de démo
-const DEMO_MODULES = {
-  en: [
-    { id: 'm1', language: 'en', level: 'A1', order_num: 1,  title: 'Greetings and Introductions', description: 'Learn to say hello, introduce yourself and ask simple questions.', content_type: 'lesson', duration_min: 15 },
-    { id: 'm2', language: 'en', level: 'A1', order_num: 2,  title: 'Numbers and Alphabet', description: 'Count from 1 to 100 and spell your name.', content_type: 'exercise', duration_min: 20 },
-    { id: 'm3', language: 'en', level: 'A1', order_num: 3,  title: 'Days, Months and Time', description: 'Tell the time and talk about your week.', content_type: 'lesson', duration_min: 25 },
-    { id: 'm4', language: 'en', level: 'A2', order_num: 16, title: 'Present Simple vs Continuous', description: 'Understand when to use each tense.', content_type: 'lesson', duration_min: 30 },
-    { id: 'm5', language: 'en', level: 'B1', order_num: 34, title: 'Expressing Opinions', description: 'Give your opinion confidently in English.', content_type: 'lesson', duration_min: 35 },
-    { id: 'm6', language: 'en', level: 'B2', order_num: 54, title: 'Advanced Conditionals', description: 'Master all types of conditional sentences.', content_type: 'lesson', duration_min: 40 },
-    { id: 'm7', language: 'en', level: 'C1', order_num: 74, title: 'Academic Writing Structures', description: 'Write formal essays and reports with precision.', content_type: 'exercise', duration_min: 50 },
-    { id: 'm8', language: 'en', level: 'C2', order_num: 90, title: 'Idiomatic and Nuanced English', description: 'Master idioms, register and sophisticated vocabulary.', content_type: 'lesson', duration_min: 45 },
-  ],
 }

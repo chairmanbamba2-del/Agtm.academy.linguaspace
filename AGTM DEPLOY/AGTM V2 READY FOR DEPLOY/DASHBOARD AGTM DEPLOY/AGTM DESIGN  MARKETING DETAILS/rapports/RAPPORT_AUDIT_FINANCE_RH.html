@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGTM Digital Academy — Audit Finance & RH</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --gold:#C8960C; --gold-lt:#E8B84B; --gold-dk:#A07008;
+    --navy:#0D1B2A; --dark:#080f1a; --card:#0e1a2d; --border:#1a2a44;
+    --text:#E2D8C0; --muted:#8899b4; --success:#16a34a; --warning:#f59e0b; --danger:#dc2626; --info:#06b6d4;
+    --radius:12px; --radius-sm:8px;
+  }
+  html{font-size:15px}
+  body{
+    background:linear-gradient(150deg,#09111E 0%,#160E04 40%,#0B1A2E 70%,#160E04 100%);
+    background-attachment:fixed;font-family:'DM Sans','Segoe UI',system-ui,sans-serif;
+    min-height:100vh;color:var(--text);padding:20px;
+  }
+  .container{max-width:1200px;margin:0 auto}
+  h1{font-family:'Space Mono',monospace;font-size:1.8rem;margin-bottom:5px;background:linear-gradient(135deg,#E8B84B,#C8960C,#4A90D9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .subtitle{color:var(--muted);margin-bottom:24px;font-size:.85rem}
+  h2{color:var(--gold-lt);font-size:1.1rem;margin:24px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--gold);display:flex;align-items:center;gap:8px}
+  h2.success{color:var(--success);border-color:var(--success)}
+  h2.danger{color:var(--danger);border-color:var(--danger)}
+  h2.warning{color:var(--warning);border-color:var(--warning)}
+  h2.info{color:var(--info);border-color:var(--info)}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+  .kpi{
+    background:linear-gradient(135deg,#0e1a2d,#1C1408);border:1px solid var(--border);border-radius:var(--radius);
+    padding:14px 16px;text-align:center;transition:all .22s
+  }
+  .kpi:hover{transform:translateY(-2px);border-color:var(--gold)}
+  .kpi .num{font-size:1.3rem;font-weight:700;color:var(--gold-lt);font-family:'Space Mono',monospace}
+  .kpi .lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+  .section-card{
+    background:linear-gradient(135deg,#152540 0%,#241C08 100%);
+    border:1px solid rgba(200,150,12,.22);border-radius:var(--radius);
+    margin-bottom:20px;overflow:hidden;
+  }
+  .section-card h3{
+    background:linear-gradient(90deg,#1C3258 0%,#2C2208 100%);
+    padding:12px 18px;font-size:.85rem;color:var(--gold-lt);
+    border-bottom:1px solid rgba(200,150,12,.22);
+    display:flex;align-items:center;gap:8px;
+  }
+  .section-card .body{padding:16px 18px}
+  table{width:100%;border-collapse:collapse;font-size:.8rem}
+  th{background:linear-gradient(90deg,#1C3258,#2C2208);color:var(--gold-lt);padding:8px 12px;font-weight:600;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+  td{padding:7px 12px;border-bottom:1px solid rgba(200,150,12,.08);color:var(--text)}
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:700}
+  .badge.ok{background:rgba(22,163,74,.15);color:var(--success);border:1px solid rgba(22,163,74,.3)}
+  .badge.warn{background:rgba(245,158,11,.15);color:var(--warning);border:1px solid rgba(245,158,11,.3)}
+  .badge.err{background:rgba(220,38,38,.15);color:var(--danger);border:1px solid rgba(220,38,38,.3)}
+  .badge.info{background:rgba(6,182,212,.15);color:var(--info);border:1px solid rgba(6,182,212,.3)}
+  .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+  .status-dot.ok{background:var(--success)}
+  .status-dot.warn{background:var(--warning)}
+  .status-dot.err{background:var(--danger)}
+  ul{list-style:none;padding:0}
+  li{padding:6px 0 6px 20px;position:relative;font-size:.82rem;line-height:1.5}
+  li::before{content:'▸';position:absolute;left:0;color:var(--gold)}
+  .action-btn{
+    display:inline-block;padding:5px 12px;border-radius:6px;
+    font-size:.7rem;font-weight:700;text-decoration:none;
+    background:linear-gradient(135deg,var(--gold),var(--gold-lt));color:#0D1B2A;
+    margin:2px;transition:all .15s;cursor:pointer;border:none
+  }
+  .action-btn:hover{transform:scale(1.05)}
+  .action-btn.danger{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
+  .action-btn.success{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff}
+  .code{font-family:'Space Mono',monospace;font-size:.72rem;background:rgba(0,0,0,.3);padding:1px 6px;border-radius:4px;color:var(--info)}
+  .report-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  @media(max-width:768px){.report-summary{grid-template-columns:repeat(2,1fr)}}
+  .summary-card{
+    background:linear-gradient(135deg,#0e1a2d,#1C1408);
+    border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;text-align:center
+  }
+  .summary-card .num{font-size:1.6rem;font-weight:700;font-family:'Space Mono',monospace}
+  .summary-card .lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+  .footer{margin-top:30px;padding:14px 18px;border-top:1px solid var(--border);font-size:.72rem;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🔍 Audit Finance & Ressources Humaines</h1>
+<div class="subtitle">AGTM Digital Academy — Diagnostic complet des sections Finance et RH · <span id="date"></span></div>
+
+<!-- KPIs globaux -->
+<div class="report-summary">
+  <div class="summary-card"><div class="num" style="color:var(--gold-lt)">6</div><div class="lbl">Sous-sections Finance</div></div>
+  <div class="summary-card"><div class="num" style="color:var(--info)">7</div><div class="lbl">Sous-sections RH</div></div>
+  <div class="summary-card"><div class="num" style="color:var(--success)">4</div><div class="lbl">Tables Supabase RH</div></div>
+  <div class="summary-card"><div class="num" style="color:var(--warning)">30+</div><div class="lbl">Fonctions JS auditées</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION FINANCE                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2>💰 Section Finance <span style="font-size:.6rem;color:var(--muted);font-weight:400">— 6 onglets spécialisés</span></h2>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Formulaire encaissement OK</div></div>
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Gestion dépenses OK</div></div>
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Échéancier OK</div></div>
+  <div class="kpi"><div class="num">⚠️</div><div class="lbl">Proforma sans email auto</div></div>
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Rapport PDF OK</div></div>
+  <div class="kpi"><div class="num">⚠️</div><div class="lbl">RLS à vérifier</div></div>
+</div>
+
+<div class="section-card">
+<h3>📊 Vue d'ensemble — Finance</h3>
+<div class="body">
+<table>
+<tr><th>Métrique</th><th>Statut</th><th>Détail</th></tr>
+<tr><td>KPIs globaux (total encaissé, dépenses, solde, à percevoir)</td><td><span class="badge ok">✅ OK</span></td><td>4 KPIs principaux + 4 KPIs mensuels + 4 KPIs paie = 12 indicateurs</td></tr>
+<tr><td>Calcul solde net</td><td><span class="badge ok">✅ OK</span></td><td>Entrées - Sorties, avec couleur conditionnelle</td></tr>
+<tr><td>Échéances en retard</td><td><span class="badge ok">✅ OK</span></td><td>Filtre statut='En retard'</td></tr>
+<tr><td>Intégration fiches de paie</td><td><span class="badge ok">✅ OK</span></td><td>Salaires du mois et total cumulé</td></tr>
+<tr><td>Top 5 dépenses par catégorie</td><td><span class="badge ok">✅ OK</span></td><td>Classement catégories montant décroissant</td></tr>
+<tr><td>Stock de sécurité (caisse)</td><td><span class="badge warn">⚠️ Améliorable</span></td><td>Affiche le solde mais pas d'alerte de seuil bas</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>💳 Encaissements — Gestion des paiements</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Liste des paiements avec date, étudiant, montant, motif</td><td><span class="badge ok">✅ OK</span></td><td>Tri décroissant par date</td></tr>
+<tr><td>Ajout d'un paiement</td><td><span class="badge ok">✅ OK</span></td><td>Fonction <span class="code">savePaiement()</span> ligne ~6531</td></tr>
+<tr><td>Suppression d'un paiement</td><td><span class="badge ok">✅ OK</span></td><td>Fonction <span class="code">_delPaiement()</span></td></tr>
+<tr><td>Reçu d'inscription imprimable</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">printRecuInscription()</span></td></tr>
+<tr><td>Filtre par période</td><td><span class="badge ok">✅ OK</span></td><td>Filtres mensuels disponibles</td></tr>
+<tr><td>Recu individuel PDF</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">printRecu()</span> ligne 5188</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>💸 Dépenses — Gestion des sorties de fonds</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Liste des dépenses (date, catégorie, montant, description)</td><td><span class="badge ok">✅ OK</span></td><td>Ligne ~4581</td></tr>
+<tr><td>Ajout d'une dépense</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">saveDepense()</span></td></tr>
+<tr><td>Suppression d'une dépense</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">delDepense()</span></td></tr>
+<tr><td>Catégorisation des dépenses</td><td><span class="badge ok">✅ OK</span></td><td>Catégories définies</td></tr>
+<tr><td>Totaux par catégorie</td><td><span class="badge ok">✅ OK</span></td><td>Calcul auto dans overview</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>🏦 Journal de Caisse</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Solde de caisse actuel</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_finCaisse()</span> ligne 4666</td></tr>
+<tr><td>Historique des mouvements</td><td><span class="badge ok">✅ OK</span></td><td>Entrées/sorties chronologiques</td></tr>
+<tr><td>Alerte de seuil bas</td><td><span class="badge warn">⚠️ Manquant</span></td><td>Pas d'alerte automatique si caisse < seuil</td></tr>
+<tr><td>Export PDF caisse</td><td><span class="badge ok">✅ OK</span></td><td>Via rapport PDF</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>📋 Échéancier — Plans de paiement</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Création de plan de paiement</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">createPlan()</span></td></tr>
+<tr><td>Génération automatique d'échéances</td><td><span class="badge ok">✅ OK</span></td><td>Multi-échéances par plan</td></tr>
+<tr><td>Marquage "Payé"</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">markEcheancePaid()</span></td></tr>
+<tr><td>Edition d'échéance</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">editEcheance()</span></td></tr>
+<tr><td>Suppression d'échéance/plan</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">deleteEcheance()/deletePlan()</span></td></tr>
+<tr><td>Suspension/réactivation étudiant selon impayés</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_syncStatutEtudiantPaiement()</span></td></tr>
+<tr><td>Impression échéancier</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">printEcheancier()</span> ligne 5117</td></tr>
+<tr><td>Vue des étudiants suspendus</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_voirEtudiantsSuspendus()</span></td></tr>
+<tr><td>Sync manuelle de tous les statuts</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_syncTousEtudiants()</span></td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>🧾 Factures Proforma</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Générateur de proforma</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_finProforma()</span> ligne 5327</td></tr>
+<tr><td>Ajout de lignes (description, PU, Qté, TVA)</td><td><span class="badge ok">✅ OK</span></td><td>Lignes dynamiques</td></tr>
+<tr><td>Calcul automatique des totaux</td><td><span class="badge ok">✅ OK</span></td><td>TTC, TVA, Net à payer</td></tr>
+<tr><td>Envoi par email</td><td><span class="badge err">❌ Manquant</span></td><td>Pas de fonction d'envoi email automatique</td></tr>
+<tr><td>Impression proforma</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_printProforma()</span></td></tr>
+<tr><td>Décaissement imprimable</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_printDecaissement()</span></td></tr>
+</table>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- FINANCE PERSO                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2>🔐 Finance Personne <span style="font-size:.6rem;color:var(--muted);font-weight:400">— Protégée par code PIN</span></h2>
+
+<div class="section-card">
+<h3>🔑 Système de verrouillage PIN</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Code PIN à 4 chiffres</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_fpSetCode()/_fpVerifyCode()</span></td></tr>
+<tr><td>Hachage SHA-256 du PIN</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_fpHash()</span></td></tr>
+<tr><td>Réinitialisation du code</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_fpResetCode()</span></td></tr>
+<tr><td>Gestion des finances personnelles</td><td><span class="badge ok">✅ OK</span></td><td>Table <span class="code">finances_perso</span></td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>📄 Paie Personnel (section Finance)</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Fiches de paie (employé, période, brut, net)</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_finPaiePersonnel()</span> ligne 5890</td></tr>
+<tr><td>Calcul automatique du salaire</td><td><span class="badge ok">✅ OK</span></td><td>Net = Brut - Cotisations</td></tr>
+<tr><td>Marquage "Payé"</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_marquerFichePayee()</span></td></tr>
+<tr><td>Suppression fiche</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_delFichePaie()</span></td></tr>
+<tr><td>Impression fiche de paie</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_printFichePaie()</span></td></tr>
+<tr><td>Rapport PDF global</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_finRapportPDF()</span></td></tr>
+</table>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION RH                                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2>👥 Section Ressources Humaines <span style="font-size:.6rem;color:var(--muted);font-weight:400">— 7 onglets</span></h2>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Gest. Personnel OK</div></div>
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Paie & Bulletins OK</div></div>
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Honoraires OK</div></div>
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Congés OK</div></div>
+  <div class="kpi"><div class="num">✅</div><div class="lbl">Recrutement OK</div></div>
+  <div class="kpi"><div class="num">⚠️</div><div class="lbl">Pointage à renforcer</div></div>
+</div>
+
+<div class="section-card">
+<h3>📊 Vue d'ensemble RH</h3>
+<div class="body">
+<table>
+<tr><th>Métrique</th><th>Statut</th><th>Détail</th></tr>
+<tr><td>KPIs : Personnel actif, Formateurs, Apprenants</td><td><span class="badge ok">✅ OK</span></td><td>Décomptes depuis tables <span class="code">personnel</span>, <span class="code">etudiants</span></td></tr>
+<tr><td>Vue synthétique avec graphiques</td><td><span class="badge ok">✅ OK</span></td><td>Chart.js</td></tr>
+<tr><td>Statistiques RH (masculin/féminin, postes)</td><td><span class="badge ok">✅ OK</span></td><td>Répartition par catégorie</td></tr>
+<tr><td>Derniers mouvements (arrivées, départs)</td><td><span class="badge ok">✅ OK</span></td><td>Filtré par date création</td></tr>
+<tr><td>Alertes (congés en attente, contrats expirés)</td><td><span class="badge warn">⚠️ Améliorable</span></td><td>Pas d'alerte proactive sur expirations</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>👤 Gestion du Personnel</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Ajout d'un employé</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_savePersonnel()</span> ligne 11620</td></tr>
+<tr><td>Édition d'un employé</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_savePersonnelEdit()</span> ligne 11716</td></tr>
+<tr><td>Suppression personnel</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_delPersonnel()</span></td></tr>
+<tr><td>Changement de statut (actif/inactif/congé)</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhChangeStatut()</span></td></tr>
+<tr><td>Impression fiche d'engagement</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_printFicheEngagement()</span></td></tr>
+<tr><td>Impression contrat formateur</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_printContratFormateur()</span> ligne 11460</td></tr>
+<tr><td>Carte employé imprimable</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_printCarteEmploye()</span></td></tr>
+<tr><td>Recherche/filtre personnel</td><td><span class="badge ok">✅ OK</span></td><td>Filtre par nom, poste, statut</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>💳 Paie & Bulletins</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Génération fiche de paie par employé</td><td><span class="badge ok">✅ OK</span></td><td>Avec période, brut, net, cotisations</td></tr>
+<tr><td>Salaire automatique (basé sur poste)</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhAutoSal()</span></td></tr>
+<tr><td>Recalcul automatique depuis séances</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_fpAutoSeances()</span></td></tr>
+<tr><td>Impression fiche de paie</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhPrintFichePaie()</span></td></tr>
+<tr><td>Statut payé/en attente</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhPayStatut()</span></td></tr>
+<tr><td>Suppression fiche</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_delFichePaie()</span></td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>💰 Honoraires des Formateurs</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Calcul des honoraires par séance</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_calcHonoraires()</span> ligne 18864</td></tr>
+<tr><td>Table de référence <span class="code">honoraires_formateurs</span></td><td><span class="badge ok">✅ OK</span></td><td>Migration v37</td></tr>
+<tr><td>Vue synthétique des honoraires</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhHonoraires()</span></td></tr>
+<tr><td>Marquage payé</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_payerHonoraire()</span></td></tr>
+<tr><td>RLS (formateur voit ses propres honoraires)</td><td><span class="badge ok">✅ OK</span></td><td>Politique <span class="code">hf_fmt_own</span></td></tr>
+<tr><td>Portail dédié formateur</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">renderMesHonoraires()</span></td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>🏖️ Gestion des Congés</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Demande de congé</td><td><span class="badge ok">✅ OK</span></td><td>Avec dates, motif, type</td></tr>
+<tr><td>Validation/refus</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhCongeStatut()</span></td></tr>
+<tr><td>Suppression</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_delConge()</span></td></tr>
+<tr><td>Solde de congés restants</td><td><span class="badge warn">⚠️ Améliorable</span></td><td>Pas de calcul automatique du solde</td></tr>
+<tr><td>Calendrier des absences</td><td><span class="badge warn">⚠️ Améliorable</span></td><td>Vue liste uniquement, pas de calendrier visuel</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>📋 Recrutement — Gestion des Candidatures</h3>
+<div class="body">
+<table>
+<tr><th>Fonctionnalité</th><th>Statut</th><th>Note</th></tr>
+<tr><td>Liste des candidatures reçues</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhRecrutement()</span> ligne 12443</td></tr>
+<tr><td>Changement de statut (nouveau/contacté/entretien/retenu/refusé)</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhCandStatut()</span></td></tr>
+<tr><td>Suppression candidature</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">_rhCandSupprimer()</span></td></tr>
+<tr><td>Lien CV téléchargeable</td><td><span class="badge ok">✅ OK</span></td><td>Upload Supabase Storage</td></tr>
+<tr><td>Formulaire de candidature public</td><td><span class="badge ok">✅ OK</span></td><td><span class="code">recrutement_form.html</span> et <span class="code">renderCandidatureForm()</span></td></tr>
+<tr><td>Statistiques recrutement</td><td><span class="badge warn">⚠️ Améliorable</span></td><td>Pas de tableau de bord recrutement</td></tr>
+</table>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ANALYSE CRITIQUE                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="warning">⚠️ Points d'attention & Corrections à appliquer</h2>
+
+<div class="section-card">
+<h3>🔴 Corrections critiques</h3>
+<div class="body">
+<ul>
+<li><strong>Proforma - Envoi email automatique</strong> : La facture proforma est imprimable mais n'a pas de fonction d'envoi automatique par email. À ajouter.</li>
+<li><strong>Alerte de seuil de caisse</strong> : Le journal de caisse n'alerte pas quand le solde passe sous un seuil minimum configurable.</li>
+<li><strong>Expiration des contrats</strong> : Pas d'alerte proactive pour les contrats du personnel arrivant à expiration.</li>
+<li><strong>Solde de congés automatique</strong> : Le système ne calcule pas automatiquement le solde de congés restant par employé.</li>
+</ul>
+</div></div>
+
+<div class="section-card">
+<h3>🟡 Améliorations recommandées</h3>
+<div class="body">
+<ul>
+<li><strong>Dashboard RH</strong> : Ajouter des graphiques d'évolution des effectifs (Chart.js déjà présent).</li>
+<li><strong>Export CSV/Excel</strong> : Les listes (personnel, paie) n'ont pas d'export CSV — ajouter <span class="code">_prmExportCSV()</span> existe déjà dans Paramètres.</li>
+<li><strong>Intégration pointage → paie</strong> : Le lien entre les séances pointées et le calcul automatique de la paie est partiel.</li>
+<li><strong>Notifications RH</strong> : Les demandes de congés ne génèrent pas de notification dans le panneau dédié.</li>
+<li><strong>Filtre avancé recrutement</strong> : Ajouter un filtre par poste, date, statut.</li>
+</ul>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- IDS CRITIQUES                                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="info">🔑 IDs Critiques — Conformité & Sécurité</h2>
+
+<div class="section-card">
+<h3>📌 Vérification des IDs Finance</h3>
+<div class="body">
+<table>
+<tr><th>ID</th><th>Présent</th><th>Fonction</th></tr>
+<tr><td><span class="code">finance</span></td><td><span class="badge ok">✅</span></td><td>Section Finance Pro</td></tr>
+<tr><td><span class="code">finance_perso</span></td><td><span class="badge ok">✅</span></td><td>Section Finance Perso (PIN)</td></tr>
+<tr><td><span class="code">finSwitch</span></td><td><span class="badge ok">✅</span></td><td>Navigation onglets Finance</td></tr>
+<tr><td><span class="code">_finTab</span></td><td><span class="badge ok">✅</span></td><td>État onglet Finance</td></tr>
+<tr><td><span class="code">sec_nav_search_*</span></td><td><span class="badge ok">✅</span></td><td>Recherche dynamique onglets</td></tr>
+<tr><td><span class="code">sec-nav-col</span></td><td><span class="badge ok">✅</span></td><td>Navigation colonne secondaire</td></tr>
+<tr><td><span class="code">sec-body</span></td><td><span class="badge ok">✅</span></td><td>Contenu principal onglet</td></tr>
+<tr><td><span class="code">_navBack</span></td><td><span class="badge ok">✅</span></td><td>Historique finance préservé</td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>📌 Vérification des IDs RH</h3>
+<div class="body">
+<table>
+<tr><th>ID</th><th>Présent</th><th>Fonction</th></tr>
+<tr><td><span class="code">rh</span></td><td><span class="badge ok">✅</span></td><td>Section RH</td></tr>
+<tr><td><span class="code">rhSwitch</span></td><td><span class="badge ok">✅</span></td><td>Navigation onglets RH</td></tr>
+<tr><td><span class="code">_rhTab</span></td><td><span class="badge ok">✅</span></td><td>État onglet RH</td></tr>
+<tr><td><span class="code">personnel</span></td><td><span class="badge ok">✅</span></td><td>Table Supabase</td></tr>
+<tr><td><span class="code">fiches_paie</span></td><td><span class="badge ok">✅</span></td><td>Table Supabase</td></tr>
+<tr><td><span class="code">conges</span></td><td><span class="badge ok">✅</span></td><td>Table Supabase</td></tr>
+<tr><td><span class="code">honoraires_formateurs</span></td><td><span class="badge ok">✅</span></td><td>Table Supabase (Migration v37)</td></tr>
+<tr><td><span class="code">candidatures</span></td><td><span class="badge ok">✅</span></td><td>Table Supabase</td></tr>
+<tr><td><span class="code">nav_rh</span></td><td><span class="badge ok">✅</span></td><td>Bouton navigation RH</td></tr>
+<tr><td><span class="code">nav_finance</span></td><td><span class="badge ok">✅</span></td><td>Bouton navigation Finance</td></tr>
+</table>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- BASE DE DONNÉES                                -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2 class="success">🗄️ Tables Supabase — Structure & RLS</h2>
+
+<div class="section-card">
+<h3>🏛️ Tables Finance</h3>
+<div class="body">
+<table>
+<tr><th>Table</th><th>RLS Enabled</th><th>Politiques</th><th>Statut</th></tr>
+<tr><td><span class="code">paiements</span></td><td>✅</td><td><span class="code">paiements_auth</span> (authenticated full access)</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">depenses</span></td><td>✅</td><td><span class="code">depenses_auth</span> (authenticated full access)</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">echeances</span></td><td>✅</td><td><span class="code">ech_auth</span> (authenticated full access)</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">plans_paiement</span></td><td>✅</td><td><span class="code">plans_auth</span> (authenticated full access)</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">finances_perso</span></td><td>✅</td><td>Authenticated</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">factures</span></td><td>✅</td><td>Authenticated</td><td><span class="badge ok">✅ OK</span></td></tr>
+</table>
+</div></div>
+
+<div class="section-card">
+<h3>🏛️ Tables RH</h3>
+<div class="body">
+<table>
+<tr><th>Table</th><th>RLS Enabled</th><th>Politiques</th><th>Statut</th></tr>
+<tr><td><span class="code">personnel</span></td><td>✅</td><td><span class="code">personnel_auth</span></td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">fiches_paie</span></td><td>✅</td><td><span class="code">paie_auth</span></td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">conges</span></td><td>✅</td><td><span class="code">conges_auth</span></td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">honoraires_formateurs</span></td><td>✅</td><td><span class="code">hf_admin_full</span>, <span class="code">hf_fmt_own</span>, <span class="code">hf_dir_read</span></td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">candidatures</span></td><td>✅</td><td>Authenticated + anon insert</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td><span class="code">rapports_seances</span></td><td>✅</td><td><span class="code">rs_admin_full</span>, <span class="code">rs_fmt_own</span>, <span class="code">rs_dir_read</span></td><td><span class="badge ok">✅ OK</span></td></tr>
+</table>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SYNTHÈSE DES CORRECTIONS                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2>🛠️ Corrections Appliquées</h2>
+
+<div class="section-card">
+<h3>✅ Corrections déjà appliquées dans le code</h3>
+<div class="body">
+<table>
+<tr><th>#</th><th>Correction</th><th>Fichier</th><th>Statut</th></tr>
+<tr><td>1</td><td>Ajout du système de PIN pour Finance Perso (SHA-256)</td><td>dashboard-premium-lot2-final.html</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td>2</td><td>Sync automatique statut étudiant ↔ paiement (suspendu si impayé)</td><td>dashboard-premium-lot2-final.html</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td>3</td><td>Génération automatique des honoraires formateurs par séance</td><td>dashboard-premium-lot2-final.html</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td>4</td><td>RLS fine-grained pour honoraires (admin, formateur, direction)</td><td>supabase_MIGRATION_v37</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td>5</td><td>Vue <span class="code">v_rapport_honoraires_sync</span> pour consolidation</td><td>supabase_MIGRATION_v37</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td>6</td><td>Fonction <span class="code">soumettre_rapport_et_honoraires()</span> PL/pgSQL</td><td>supabase_MIGRATION_v37</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td>7</td><td>Barre de recherche dans les onglets (si > 8 onglets)</td><td>dashboard-premium-lot2-final.html</td><td><span class="badge ok">✅ OK</span></td></tr>
+<tr><td>8</td><td>Navigation avec historique + sauvegarde des onglets par section</td><td>dashboard-premium-lot2-final.html</td><td><span class="badge ok">✅ OK</span></td></tr>
+</table>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- STATISTIQUES                                   -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2>📊 Statistiques du code Finance & RH</h2>
+
+<div class="kpi-grid">
+  <div class="kpi"><div class="num">30+</div><div class="lbl">Fonctions JS</div></div>
+  <div class="kpi"><div class="num">11</div><div class="lbl">Tables Supabase</div></div>
+  <div class="kpi"><div class="num">6</div><div class="lbl">Migrations SQL</div></div>
+  <div class="kpi"><div class="num">4</div><div class="lbl">Formulaires HTML</div></div>
+  <div class="kpi"><div class="num">22</div><div class="lbl">Fonctions impression PDF</div></div>
+  <div class="kpi"><div class="num">8</div><div class="lbl">Corrections appliquées</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- RECOMMANDATIONS                               -->
+<!-- ═══════════════════════════════════════════════ -->
+<h2>📋 Recommandations Prioritaires</h2>
+
+<div class="section-card">
+<h3>🔴 Priorité Haute</h3>
+<div class="body">
+<ul>
+<li><strong>1. Ajouter l'envoi email automatique des proformas</strong> — via Edge Function ou service SMTP</li>
+<li><strong>2. Alerte seuil de caisse</strong> — Notification si solde < seuil configurable</li>
+<li><strong>3. Notifications RH</strong> — Alertes congés, expirations contrats, candidatures</li>
+</ul>
+</div></div>
+
+<div class="section-card">
+<h3>🟡 Priorité Moyenne</h3>
+<div class="body">
+<ul>
+<li><strong>4. Export CSV/Excel</strong> pour toutes les listes Finance et RH</li>
+<li><strong>5. Calendrier des congés</strong> — Vue FullCalendar pour les absences</li>
+<li><strong>6. Solde congés automatique</strong> — Calcul basé sur date d'embauche</li>
+</ul>
+</div></div>
+
+<div class="section-card">
+<h3>🟢 Priorité Faible</h3>
+<div class="body">
+<ul>
+<li><strong>7. Dashboard recruiter</strong> — Statistiques recrutement (taux conversion, délais)</li>
+<li><strong>8. Audit trail</strong> — Historique des modifications sensibles (paie, honoraires)</li>
+<li><strong>9. Mode hors-ligne</strong> — Cache des données Finance/RH pour consultation offline</li>
+</ul>
+</div></div>
+
+<div class="footer">
+  <strong>Rapport d'Audit Finance & RH</strong> — AGTM Digital Academy v2 · Généré le <span id="date2"></span><br>
+  <span style="font-size:.65rem">Dashboard principal : 27 896 lignes · 30+ fonctions auditées · 11 tables Supabase · 6 migrations SQL</span>
+</div>
+
+</div>
+<script>document.getElementById('date').textContent=document.getElementById('date2').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})</script>
+</body>
+</html>

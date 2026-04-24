@@ -1,0 +1,125 @@
+/* 
+ * AGTM Digital Academy - Modules CSS
+ * Fichier vide pour la refonte Premium
+ * Styles spécifiques aux 33 modules fonctionnels
+ * 
+ * Organisation par module :
+ * 1. admin/          - Tableau de bord, statistiques
+ * 2. etudiants/      - Gestion apprenants, inscriptions
+ * 3. pedagogie/      - Planning, séances, classes
+ * 4. finance/        - Facturation, paiements, graphiques
+ * 5. rapports/       - Suivi pédagogique, évaluations
+ * 6. pointage/       - Présences, feuilles d'émargement
+ * 7. english-corner/ - Quiz, tests, certificats
+ * 8. ia/             - Assistant conversationnel, chat
+ * 9. parametres/     - Configuration système, RBAC
+ * 10. communication/ - Messagerie, notifications
+ * 11. rh/            - Ressources humaines, formateurs
+ * 12. marketing/     - Espace client, vitrine
+ */
+
+/* ===== MODULE ADMIN ===== */
+.admin-overview {}
+.admin-chart {}
+.admin-risk-card {}
+.admin-cohort-grid {}
+
+/* ===== MODULE ÉTUDIANTS ===== */
+.etudiant-table {}
+.etudiant-form {}
+.etudiant-card {}
+.etudiant-stats {}
+
+/* ===== MODULE PÉDAGOGIE ===== */
+.pedagogie-calendar {}
+.pedagogie-seance-form {}
+.pedagogie-classe-card {}
+.pedagogie-module-view {}
+
+/* ===== MODULE FINANCE ===== */
+.finance-chart {}
+.finance-proforma {}
+.finance-paiement-plan {}
+.finance-echeance-table {}
+
+/* ===== MODULE RAPPORTS ===== */
+.rapport-form {}
+.rapport-table {}
+.rapport-search {}
+.rapport-detail {}
+
+/* ===== MODULE POINTAGE ===== */
+.pointage-feuille {}
+.pointage-etudiant-row {}
+.pointage-justification {}
+.pointage-summary {}
+
+/* ===== MODULE ENGLISH CORNER ===== */
+.english-corner-quiz {}
+.english-corner-evaluation {}
+.english-corner-certificat {}
+.english-corner-placement-test {}
+
+/* ===== MODULE IA ===== */
+.ia-chat-container {}
+.ia-message-bubble {}
+.ia-voice-controls {}
+.ia-history-sidebar {}
+
+/* ===== MODULE PARAMÈTRES ===== */
+.parametres-config-form {}
+.parametres-user-table {}
+.parametres-rbac-matrix {}
+.parametres-ai-settings {}
+
+/* ===== MODULE COMMUNICATION ===== */
+.communication-messagerie {}
+.communication-notification {}
+.communication-broadcast {}
+.communication-template {}
+
+/* ===== MODULE RH ===== */
+.rh-formateur-card {}
+.rh-paiement-form {}
+.rh-contract-view {}
+.rh-recruitment-form {}
+
+/* ===== MODULE MARKETING ===== */
+.marketing-vitrine {}
+.marketing-landing-page {}
+.marketing-inscription-form {}
+.marketing-client-portal {}
+
+/* ===== RESPONSIVE PAR MODULE ===== */
+
+/* Mobile optimizations per module */
+@media (max-width: 768px) {
+  .admin-chart { height: 200px !important; }
+  .etudiant-table { font-size: 0.8rem; }
+  .pedagogie-calendar { height: 400px; }
+  .finance-proforma { padding: 12px; }
+  .rapport-form { grid-template-columns: 1fr; }
+  .pointage-feuille { overflow-x: auto; }
+  .english-corner-quiz { padding: 16px; }
+  .ia-chat-container { flex-direction: column; }
+  .parametres-config-form { grid-template-columns: 1fr; }
+  .communication-messagerie { flex-direction: column; }
+  .rh-formateur-card { flex-direction: column; }
+  .marketing-vitrine { padding: 16px; }
+}
+
+/* Tablette optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .admin-chart { height: 250px; }
+  .etudiant-table { font-size: 0.85rem; }
+  .pedagogie-calendar { height: 500px; }
+  .finance-proforma { padding: 16px; }
+  .rapport-form { grid-template-columns: 1fr 1fr; }
+  .pointage-feuille { overflow-x: auto; }
+  .english-corner-quiz { padding: 20px; }
+  .ia-chat-container { flex-direction: row; }
+  .parametres-config-form { grid-template-columns: 1fr 1fr; }
+  .communication-messagerie { flex-direction: row; }
+  .rh-formateur-card { flex-direction: row; }
+  .marketing-vitrine { padding: 24px; }
+}

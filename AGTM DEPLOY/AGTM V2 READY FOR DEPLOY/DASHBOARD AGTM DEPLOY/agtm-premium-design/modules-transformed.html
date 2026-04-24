@@ -1,0 +1,369 @@
+<!-- ================================================== -->
+<!-- MODULE ADMINISTRATION - ÉTUDIANTS (TRANSFORMÉ) -->
+<!-- ================================================== -->
+
+<!-- Conteneur principal -->
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">👨‍🎓 Gestion des Étudiants</div>
+      <div class="premium-card-subtitle">Administration des apprenants de l'académie</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._exportCSV('etudiants')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">📊 Exporter CSV</button>
+      <button onclick="window.showAddEtud()" class="agtm-btn agtm-btn-primary agtm-btn-sm">➕ Ajouter un étudiant</button>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="premium-card-body">
+    <div class="agtm-field-group" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+      <div class="agtm-field">
+        <input id="seE" type="text" class="agtm-input" placeholder="🔍 Nom, email, téléphone…" oninput="window._fe()" style="width: 250px;">
+      </div>
+      <div class="agtm-field">
+        <select id="seS" class="agtm-select" onchange="window._fe()" style="width: 160px;">
+          <option value="">Tous statuts</option>
+          <option value="Actif">Actif</option>
+          <option value="Inactif">Inactif</option>
+        </select>
+      </div>
+      <div style="font-size: .75rem; color: var(--premium-text-3);">X étudiant(s)</div>
+      <div style="flex: 1"></div>
+    </div>
+  </div>
+
+  <!-- Tableau des étudiants -->
+  <div class="premium-card-body" style="padding-top: 0;">
+    <table class="agtm-table">
+      <thead>
+        <tr>
+          <th>N° Dossier</th>
+          <th>Nom Complet</th>
+          <th>Email</th>
+          <th>Niveau</th>
+          <th>Quota Séances</th>
+          <th>Statut</th>
+          <th>Inscrit le</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="etudBody">
+        <!-- Rempli dynamiquement -->
+        <tr>
+          <td style="font-family: var(--premium-font-mono); color: var(--premium-gold);">EIP-2026-1234</td>
+          <td style="font-weight: 600;">John DOE</td>
+          <td>john.doe@example.com</td>
+          <td><span class="agtm-badge agtm-badge-blue">B1</span></td>
+          <td style="color: var(--premium-gold);">📋 24 séances<br><span style="font-size: .65rem; color: var(--premium-text-3);">2×/sem.</span></td>
+          <td><span class="agtm-badge agtm-badge-green">Actif</span></td>
+          <td style="font-size: .7rem; color: var(--premium-text-3);">15/04/2026</td>
+          <td>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+              <button onclick="window.toggleEtud(123, 'Actif')" class="agtm-btn agtm-btn-danger agtm-btn-sm">Désactiver</button>
+              <button onclick="window.showEditEtud(123)" class="agtm-btn agtm-btn-secondary agtm-btn-sm">✏️ Modifier</button>
+              <button onclick="window.printRecuInscription(123)" class="agtm-btn agtm-btn-success agtm-btn-sm">🖨️ Reçu</button>
+              <button onclick="window._envoyerMessageEtud(123, 'John DOE', 'john.doe@example.com')" class="agtm-btn agtm-btn-primary agtm-btn-sm">💬 Message</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="font-size: .75rem; color: var(--premium-text-3);">Page 1 sur 5</div>
+      <div style="display: flex; gap: 8px;">
+        <button class="agtm-btn agtm-btn-ghost agtm-btn-sm">← Précédent</button>
+        <button class="agtm-btn agtm-btn-ghost agtm-btn-sm">Suivant →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================== -->
+<!-- MODULE PÉDAGOGIE - CATALOGUE (TRANSFORMÉ) -->
+<!-- ================================================== -->
+
+<div class="agtm-card premium-card" style="margin-bottom: 1.5rem;">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">📚 Catalogue Pédagogique</div>
+      <div class="premium-card-subtitle">Modules de formation et ressources d'apprentissage</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._pedaCatFilter('all')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">Tous</button>
+      <button onclick="window._pedaCatFilter('A')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">A1/A2</button>
+      <button onclick="window._pedaCatFilter('B')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">B1/B2</button>
+      <button onclick="window._pedaCatFilter('C')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">C1/C2</button>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="premium-card-body">
+    <div class="agtm-field-group" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+      <div class="agtm-field">
+        <label class="agtm-label">Recherche</label>
+        <input type="text" class="agtm-input" placeholder="Nom du module, tags…">
+      </div>
+      <div class="agtm-field">
+        <label class="agtm-label">Type de ressource</label>
+        <select class="agtm-select">
+          <option>Toutes</option>
+          <option>Vidéo</option>
+          <option>PDF</option>
+          <option>Quiz</option>
+          <option>Exercice</option>
+        </select>
+      </div>
+      <div class="agtm-field">
+        <label class="agtm-label">Statut</label>
+        <select class="agtm-select">
+          <option>Actif</option>
+          <option>Brouillon</option>
+          <option>Archivé</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau des modules -->
+  <div class="premium-card-body" style="padding-top: 0;">
+    <table class="agtm-table">
+      <thead>
+        <tr>
+          <th>Module</th>
+          <th>Niveau</th>
+          <th>Type</th>
+          <th>Durée</th>
+          <th>Statut</th>
+          <th>Dernière mise à jour</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 600;">Present Simple & Continuous</td>
+          <td><span class="agtm-badge agtm-badge-gold">A2</span></td>
+          <td><span class="agtm-badge agtm-badge-muted">📽️ Vidéo</span></td>
+          <td style="color: var(--premium-text-2);">45 min</td>
+          <td><span class="agtm-badge agtm-badge-green">Actif</span></td>
+          <td style="font-size: .7rem; color: var(--premium-text-3);">12/04/2026</td>
+          <td>
+            <div style="display: flex; gap: 5px;">
+              <button class="agtm-btn agtm-btn-secondary agtm-btn-sm">👁️ Voir</button>
+              <button class="agtm-btn agtm-btn-primary agtm-btn-sm">✏️ Éditer</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight: 600;">Business Vocabulary</td>
+          <td><span class="agtm-badge agtm-badge-blue">B1</span></td>
+          <td><span class="agtm-badge agtm-badge-muted">📄 PDF</span></td>
+          <td style="color: var(--premium-text-2);">60 min</td>
+          <td><span class="agtm-badge agtm-badge-green">Actif</span></td>
+          <td style="font-size: .7rem; color: var(--premium-text-3);">10/04/2026</td>
+          <td>
+            <div style="display: flex; gap: 5px;">
+              <button class="agtm-btn agtm-btn-secondary agtm-btn-sm">👁️ Voir</button>
+              <button class="agtm-btn agtm-btn-primary agtm-btn-sm">✏️ Éditer</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Stats -->
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="display: flex; gap: 20px;">
+        <div style="text-align: center;">
+          <div class="stat-value" style="color: var(--premium-gold); font-size: 1.5rem; font-weight: 700;">24</div>
+          <div class="stat-label" style="font-size: .7rem;">Modules actifs</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="stat-value" style="color: var(--premium-sapphire); font-size: 1.5rem; font-weight: 700;">156</div>
+          <div class="stat-label" style="font-size: .7rem;">Ressources totales</div>
+        </div>
+      </div>
+      <button class="agtm-btn agtm-btn-primary">➕ Nouveau module</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================== -->
+<!-- MODULE FINANCE - ENCAISSEMENTS (TRANSFORMÉ) -->
+<!-- ================================================== -->
+
+<div class="agtm-card premium-card">
+  <div class="premium-card-header">
+    <div>
+      <div class="premium-card-title">💰 Encaissements & Paiements</div>
+      <div class="premium-card-subtitle">Suivi des transactions financières</div>
+    </div>
+    <div class="agtm-btn-group">
+      <button onclick="window._finSwitch('encaissements')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">Encaissements</button>
+      <button onclick="window._finSwitch('depenses')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">Dépenses</button>
+      <button onclick="window._finSwitch('echeancier')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">Échéancier</button>
+      <button onclick="window._finSwitch('caisse')" class="agtm-btn agtm-btn-secondary agtm-btn-sm">Caisse</button>
+    </div>
+  </div>
+
+  <!-- Filtres financiers -->
+  <div class="premium-card-body">
+    <div class="agtm-field-group" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+      <div class="agtm-field">
+        <label class="agtm-label">Période</label>
+        <select class="agtm-select">
+          <option>Ce mois</option>
+          <option>Mois dernier</option>
+          <option>Trimestre en cours</option>
+          <option>Année en cours</option>
+          <option>Personnalisé</option>
+        </select>
+      </div>
+      <div class="agtm-field">
+        <label class="agtm-label">Type de paiement</label>
+        <select class="agtm-select">
+          <option>Tous</option>
+          <option>Espèces</option>
+          <option>Mobile Money</option>
+          <option>Virement</option>
+          <option>Chèque</option>
+        </select>
+      </div>
+      <div class="agtm-field">
+        <label class="agtm-label">Statut</label>
+        <select class="agtm-select">
+          <option>Payé</option>
+          <option>En attente</option>
+          <option>Partiel</option>
+          <option>Annulé</option>
+        </select>
+      </div>
+      <div class="agtm-field">
+        <label class="agtm-label">Montant min.</label>
+        <input type="number" class="agtm-input" placeholder="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- Tableau des transactions -->
+  <div class="premium-card-body" style="padding-top: 0;">
+    <table class="agtm-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Étudiant</th>
+          <th>Référence</th>
+          <th>Montant</th>
+          <th>Mode</th>
+          <th>Statut</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="paiementRows">
+        <!-- Rempli dynamiquement -->
+        <tr>
+          <td style="font-size: .75rem; color: var(--premium-text-2);">21/04/2026</td>
+          <td style="font-weight: 600;">John DOE</td>
+          <td style="font-family: var(--premium-font-mono); color: var(--premium-gold);">PAY-2026-0456</td>
+          <td style="font-weight: 700; color: #22C55E;">75 000 FCFA</td>
+          <td><span class="agtm-badge agtm-badge-gold">Mobile Money</span></td>
+          <td><span class="agtm-badge agtm-badge-green">Payé</span></td>
+          <td>
+            <div style="display: flex; gap: 5px;">
+              <button onclick="window.printRecu(456)" class="agtm-btn agtm-btn-secondary agtm-btn-sm">🖨️ Reçu</button>
+              <button onclick="window._delPaiement(456)" class="agtm-btn agtm-btn-danger agtm-btn-sm">🗑️ Suppr.</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-size: .75rem; color: var(--premium-text-2);">20/04/2026</td>
+          <td style="font-weight: 600;">Alice MARTIN</td>
+          <td style="font-family: var(--premium-font-mono); color: var(--premium-gold);">PAY-2026-0455</td>
+          <td style="font-weight: 700; color: #F59E0B;">50 000 FCFA</td>
+          <td><span class="agtm-badge agtm-badge-muted">Espèces</span></td>
+          <td><span class="agtm-badge agtm-badge-orange">En attente</span></td>
+          <td>
+            <div style="display: flex; gap: 5px;">
+              <button onclick="window.markEcheancePaid(455)" class="agtm-btn agtm-btn-success agtm-btn-sm">✅ Marquer payé</button>
+              <button onclick="window._delPaiement(455)" class="agtm-btn agtm-btn-danger agtm-btn-sm">🗑️ Suppr.</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Résumé financier -->
+  <div class="premium-card-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="display: flex; gap: 30px;">
+        <div style="text-align: center;">
+          <div class="stat-value" style="color: #22C55E; font-size: 1.3rem; font-weight: 700;">425 000</div>
+          <div class="stat-label" style="font-size: .7rem;">Total encaissé</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="stat-value" style="color: #F59E0B; font-size: 1.3rem; font-weight: 700;">125 000</div>
+          <div class="stat-label" style="font-size: .7rem;">En attente</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="stat-value" style="color: #EF4444; font-size: 1.3rem; font-weight: 700;">15 000</div>
+          <div class="stat-label" style="font-size: .7rem;">Retards</div>
+        </div>
+      </div>
+      <button onclick="window.savePaiement()" class="agtm-btn agtm-btn-primary">➕ Nouveau paiement</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================== -->
+<!-- CLASSES CSS COMPLÉMENTAIRES POUR LES MODULES -->
+<!-- ================================================== -->
+
+<style>
+  /* Groupes de boutons */
+  .agtm-btn-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  /* Groupes de champs */
+  .agtm-field-group {
+    margin-bottom: 1rem;
+  }
+
+  /* Badges RBAC spécialisés */
+  .badge-admin { background: rgba(212,160,23,0.15); color: var(--premium-gold-lt); border: 1px solid rgba(212,160,23,0.3); }
+  .badge-formateur { background: rgba(42,111,212,0.15); color: var(--premium-sapphire-lt); border: 1px solid rgba(42,111,212,0.3); }
+  .badge-etudiant { background: rgba(34,197,94,0.12); color: #22C55E; border: 1px solid rgba(34,197,94,0.25); }
+  .badge-secretaire { background: rgba(245,158,11,0.12); color: #F59E0B; border: 1px solid rgba(245,158,11,0.25); }
+  .badge-investisseur { background: rgba(139,92,246,0.12); color: #8B5CF6; border: 1px solid rgba(139,92,246,0.25); }
+  .badge-public { background: rgba(106,128,152,0.12); color: var(--premium-text-3); border: 1px solid rgba(106,128,152,0.2); }
+
+  /* Mise en forme des montants */
+  .montant-positif { color: #22C55E !important; font-weight: 700; }
+  .montant-negatif { color: #EF4444 !important; font-weight: 700; }
+  .montant-attente { color: #F59E0B !important; font-weight: 700; }
+
+  /* Adaptation responsive */
+  @media (max-width: 768px) {
+    .agtm-field-group {
+      grid-template-columns: 1fr !important;
+    }
+    .agtm-btn-group {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .premium-card-footer > div {
+      flex-direction: column;
+      gap: 16px;
+      align-items: stretch;
+    }
+  }
+</style>

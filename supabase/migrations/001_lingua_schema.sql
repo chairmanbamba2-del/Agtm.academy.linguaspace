@@ -143,38 +143,45 @@ ALTER TABLE lingua_modules         ENABLE ROW LEVEL SECURITY;
 ALTER TABLE lingua_content         ENABLE ROW LEVEL SECURITY;
 
 -- lingua_users : chaque user voit et modifie uniquement son profil
+DROP POLICY IF EXISTS "Users manage own profile" ON lingua_users;
 CREATE POLICY "Users manage own profile" ON lingua_users
   FOR ALL USING (auth.uid() = id);
 
 -- lingua_subscriptions : chaque user voit ses propres abonnements
+DROP POLICY IF EXISTS "Users see own subscriptions" ON lingua_subscriptions;
 CREATE POLICY "Users see own subscriptions" ON lingua_subscriptions
   FOR ALL USING (
     user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid())
   );
 
 -- lingua_progress : chaque user gère sa progression
+DROP POLICY IF EXISTS "Users manage own progress" ON lingua_progress;
 CREATE POLICY "Users manage own progress" ON lingua_progress
   FOR ALL USING (
     user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid())
   );
 
 -- lingua_ai_sessions : chaque user voit ses sessions
+DROP POLICY IF EXISTS "Users see own ai sessions" ON lingua_ai_sessions;
 CREATE POLICY "Users see own ai sessions" ON lingua_ai_sessions
   FOR ALL USING (
     user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid())
   );
 
 -- lingua_module_progress : chaque user gère sa progression modules
+DROP POLICY IF EXISTS "Users manage own module progress" ON lingua_module_progress;
 CREATE POLICY "Users manage own module progress" ON lingua_module_progress
   FOR ALL USING (
     user_id IN (SELECT id FROM lingua_users WHERE id = auth.uid())
   );
 
 -- lingua_modules : lecture publique pour utilisateurs authentifiés (modules publiés)
+DROP POLICY IF EXISTS "Auth users read published modules" ON lingua_modules;
 CREATE POLICY "Auth users read published modules" ON lingua_modules
   FOR SELECT USING (auth.role() = 'authenticated' AND is_published = TRUE);
 
 -- lingua_content : lecture publique pour utilisateurs authentifiés
+DROP POLICY IF EXISTS "Auth users read active content" ON lingua_content;
 CREATE POLICY "Auth users read active content" ON lingua_content
   FOR SELECT USING (auth.role() = 'authenticated' AND is_active = TRUE);
 

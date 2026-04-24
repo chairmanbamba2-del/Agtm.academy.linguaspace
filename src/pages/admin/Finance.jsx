@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { formatDate, formatNumber } from '../../lib/utils'
+import { admin } from '../../lib/admin'
 import AppLayout from '../../components/layout/AppLayout'
 
 const CATEGORIES = {
@@ -85,6 +86,51 @@ export default function Finance() {
     a.href     = URL.createObjectURL(blob)
     a.download = `lingua-finance-${new Date().toISOString().slice(0,7)}.csv`
     a.click()
+   }
+
+  async function handleAddTransaction() {
+    const direction = prompt('Direction (income / expense) :', 'income')
+    if (!direction) return
+    const type = prompt('Type (subscription, certificate, test, expense, other) :', 'subscription')
+    const amount = parseFloat(prompt('Montant FCFA :', '10000'))
+    const description = prompt('Description :', '')
+    const category = prompt('Catégorie (voir liste) :', 'abonnement_uni')
+    const payment_mode = prompt('Mode paiement (orange_money, wave, mtn, card, manual, free) :', 'manual')
+    const payment_ref = prompt('Référence paiement (optionnel) :', '')
+    const notes = prompt('Notes (optionnel) :', '')
+    let userId = null
+    if (direction === 'income') {
+      const userInput = prompt('ID utilisateur (email ou ID, optionnel) :', '')
+      if (userInput) {
+        if (userInput.includes('@')) {
+          const { data } = await supabase
+            .from('lingua_users')
+            .select('id')
+            .eq('email', userInput)
+            .single()
+          if (data) userId = data.id
+        } else {
+          userId = userInput
+        }
+      }
+    }
+    try {
+      await admin.addManualTransaction({
+        userId,
+        type,
+        direction,
+        amount_fcfa: amount,
+        description,
+        category,
+        payment_mode,
+        payment_ref,
+        notes,
+      })
+      alert('Transaction ajoutée')
+      loadData()
+    } catch (err) {
+      alert('Erreur : ' + err.message)
+    }
   }
 
   const TABS = [
@@ -100,9 +146,14 @@ export default function Finance() {
           <div className="font-mono text-[10px] tracking-widest text-gold uppercase mb-1">Administration</div>
           <h1 className="font-serif text-3xl text-white">Finance & <em className="text-gold italic">Comptabilité</em></h1>
         </div>
-        <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 bg-gold text-dark text-sm font-semibold rounded-sm hover:bg-gold-lt transition-all">
-          ⬇ Exporter CSV
-        </button>
+        <div className="flex gap-2">
+          <button onClick={handleAddTransaction} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-sm hover:bg-green-700 transition-all">
+            ➕ Ajouter
+          </button>
+          <button onClick={exportCSV} className="flex items-center gap-2 px-4 py-2 bg-gold text-dark text-sm font-semibold rounded-sm hover:bg-gold-lt transition-all">
+            ⬇ Exporter CSV
+          </button>
+        </div>
       </div>
 
       {/* KPIs */}
@@ -262,8 +313,9 @@ export default function Finance() {
                   <td className="px-4 py-3 text-xs text-muted">{s.email}</td>
                   <td className="px-4 py-3">
                     <span className={`font-mono text-[9px] px-2 py-0.5 rounded border
-                      ${s.plan_type === 'all_access' ? 'bg-blue/20 border-blue/40 text-blue-300' : 'bg-gold/15 border-gold/30 text-gold'}`}>
-                      {s.plan_type === 'all_access' ? 'ALL ACCESS' : 'UNI'}
+                      ${s.plan_type?.startsWith('all_access') ? 'bg-blue/20 border-blue/40 text-blue-300' : 'bg-gold/15 border-gold/30 text-gold'}`}>
+                      {s.plan_type?.startsWith('all_access') ? 'ALL ACCESS' : 'UNI'}
+                      {s.plan_type?.includes('trimestrial') ? ' 3M' : ''}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-xs text-white">{s.selected_language?.toUpperCase() || '4 langues'}</td>

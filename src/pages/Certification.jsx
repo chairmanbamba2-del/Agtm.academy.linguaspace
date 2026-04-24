@@ -35,7 +35,7 @@ export default function Certification() {
     load()
   }, [user])
 
-  const langColors = { en: '#C8102E', es: '#F1BF00', de: '#94A3B8', fr: '#4A7FBF' }
+  const langColors = { en: '#C8102E', es: '#F1BF00', de: '#94A3B8', fr: '#4A7FBF', ar: '#059669' }
 
   return (
     <AppLayout>
@@ -162,6 +162,31 @@ export default function Certification() {
         <div className="bg-gold/8 border border-gold/20 px-4 py-3 text-xs text-muted leading-relaxed">
           ℹ️ <strong className="text-white">4 compétences évaluées :</strong> Compréhension orale (35%) · Compréhension écrite (30%) · Grammaire & Vocabulaire (25%) · Expression guidée (10%)
           &nbsp;·&nbsp; Durée : 45 minutes &nbsp;·&nbsp; Score minimum pour certification : 60%
+        </div>
+      </div>
+
+      {/* Test Culture Arabe */}
+      <div className="card p-6 mt-6" style={{ borderColor: 'rgba(5,150,105,0.3)' }}>
+        <div className="flex items-center gap-4">
+          <div className="text-4xl">🕌</div>
+          <div className="flex-1">
+            <h3 className="font-serif text-xl text-white mb-1">Test de Culture Arabe</h3>
+            <p className="text-muted text-sm leading-relaxed">
+              Évaluez vos connaissances sur le monde arabe : géographie, traditions, Ramadan, art culinaire,
+              histoire, famille et société. Questions adaptées à votre langue maternelle.
+            </p>
+            <div className="flex items-center gap-4 mt-3 text-xs text-muted">
+              <span>📝 15 questions QCM</span>
+              <span>⏱️ 30 minutes</span>
+              <span>🎯 5 rubriques</span>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate('/culture-test')}
+            className="btn bg-emerald-600 text-white font-semibold px-6 py-3 hover:bg-emerald-500 transition-all whitespace-nowrap"
+          >
+            🎯 Commencer →
+          </button>
         </div>
       </div>
 
