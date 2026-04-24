@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGTM Digital Academy — Plateforme de Présentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#060E1A; color:#D4C8A0; line-height:1.7; }
+  .slide { max-width:1100px; margin:0 auto; padding:60px 40px; border-bottom:1px solid rgba(200,150,12,0.15); scroll-margin-top:20px; }
+  h1 { font-size:3rem; font-weight:900; background:linear-gradient(135deg,#E8B84B,#D4A017,#E8B84B); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:12px; letter-spacing:-.03em; }
+  h2 { font-size:1.8rem; font-weight:700; color:#E8B84B; margin-bottom:24px; display:flex; align-items:center; gap:12px; }
+  h2 .num { font-size:1rem; background:#D4A01722; border:1px solid #D4A01744; padding:2px 12px; border-radius:20px; color:#D4A017; }
+  h3 { font-size:1.15rem; color:#E8D4A0; margin-bottom:10px; }
+  .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; border-bottom:none; }
+  .hero h1 { font-size:4rem; margin-bottom:16px; }
+  .hero p { font-size:1.3rem; color:#8AAAC0; max-width:700px; margin:0 auto 24px; }
+  .badge { display:inline-block; padding:4px 14px; border-radius:20px; font-size:.75rem; font-weight:700; margin:3px; }
+  .badge-gold { background:#D4A01722; color:#E8B84B; border:1px solid #D4A01744; }
+  .badge-blue { background:#4A90D922; color:#4A90D9; border:1px solid #4A90D944; }
+  .badge-green { background:#4AE09022; color:#4AE090; border:1px solid #4AE09044; }
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+  .grid-4 { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+  .card { background:linear-gradient(160deg,#0F1E38,#1A140A); border:1px solid rgba(200,150,12,0.2); border-radius:13px; padding:20px; transition:transform .2s; }
+  .card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(200,150,12,0.12); }
+  .stat { text-align:center; padding:24px; }
+  .stat-num { font-size:2.4rem; font-weight:900; color:#E8B84B; }
+  .stat-label { font-size:.82rem; color:#6A8AAA; }
+  .feature-icon { font-size:2rem; margin-bottom:10px; }
+  .tag { display:inline-block; padding:1px 8px; border-radius:6px; font-size:.65rem; font-weight:700; margin:2px; }
+  .tag-tech { background:#1E3050; color:#6A8AAA; border:1px solid #2A3F58; }
+  .btn { display:inline-block; padding:12px 32px; border-radius:10px; font-weight:700; font-size:.9rem; border:none; cursor:pointer; text-decoration:none; margin:4px; }
+  .btn-gold { background:linear-gradient(135deg,#D4A017,#E8B84B); color:#0A1520; }
+  .btn-outline { border:1.5px solid #D4A017; color:#E8B84B; background:transparent; }
+  .nav-bar { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(6,14,26,0.95); backdrop-filter:blur(10px); border-bottom:1px solid rgba(200,150,12,0.1); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; }
+  .nav-bar a { color:#8AAAC0; text-decoration:none; font-size:.78rem; margin:0 10px; }
+  .nav-bar a:hover { color:#E8B84B; }
+  .progress-bar { height:4px; background:linear-gradient(90deg,#D4A017,#E8B84B); border-radius:2px; margin-top:16px; }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:.82rem; }
+  th { text-align:left; color:#D4A017; font-weight:700; padding:10px 12px; border-bottom:2px solid rgba(200,150,12,0.2); }
+  td { padding:8px 12px; border-bottom:1px solid rgba(200,150,12,0.08); color:#B0A890; }
+  .footer { text-align:center; padding:40px; color:#5A7090; font-size:.8rem; border-top:1px solid rgba(200,150,12,0.1); }
+  @media(max-width:768px){ .grid-2,.grid-3{grid-template-columns:1fr} h1{font-size:2.2rem} .hero h1{font-size:2.5rem} .slide{padding:40px 20px} }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <span style="font-weight:900;color:#E8B84B;font-size:.85rem">AGTM</span>
+  <div>
+    <a href="#vision">Vision</a>
+    <a href="#plateforme">Plateforme</a>
+    <a href="#modules">Modules</a>
+    <a href="#technologie">Technologie</a>
+    <a href="#ia">IA</a>
+    <a href="#whatsapp">WhatsApp</a>
+    <a href="#equipe">Équipe</a>
+    <a href="#investir">Investir</a>
+  </div>
+</nav>
+
+<section class="slide hero">
+  <div>
+    <div style="font-size:.85rem;color:#D4A017;font-weight:700;letter-spacing:.15em;margin-bottom:16px">AGTM DIGITAL ACADEMY</div>
+    <h1>L'Anglais pour<br>Tous les Africains</h1>
+    <p>Plateforme edtech panafricaine combinant IA, WhatsApp et pédagogie certifiante pour démocratiser l'accès à l'anglais en Afrique francophone.</p>
+    <div style="margin-top:20px">
+      <span class="badge badge-gold">🌍 300+ Modules</span>
+      <span class="badge badge-blue">🤖 IA Multi-modèles</span>
+      <span class="badge badge-green">📱 WhatsApp Intégré</span>
+    </div>
+    <div style="margin-top:30px">
+      <span class="stat-num" style="font-size:2.8rem">Prêt au lancement</span>
+    </div>
+    <div class="progress-bar" style="max-width:400px;margin:20px auto 0"></div>
+  </div>
+</section>
+
+<section class="slide" id="vision">
+  <h2><span class="num">01</span> Vision & Mission</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="feature-icon">🌍</div>
+      <h3>Le Problème</h3>
+      <p style="color:#8AAAC0;font-size:.9rem;line-height:1.7">En Afrique francophone, l'anglais est la clé de l'employabilité, des études à l'étranger et des affaires internationales. Pourtant, 95% des apprenants n'ont pas accès à une formation de qualité, les écoles locales sont rares et chères, et les plateformes existantes ne sont pas adaptées au contexte africain (mobile, WhatsApp, faible bande passante).</p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">🚀</div>
+      <h3>Notre Solution</h3>
+      <p style="color:#8AAAC0;font-size:.9rem;line-height:1.7">AGTM Digital Academy : une plateforme complète d'apprentissage de l'anglais avec IA intégrée, WhatsApp comme canal d'accès principal, préparation aux examens internationaux (TOEIC, TOEFL) et locaux (BAC, BEPC), le tout à un prix accessible pour le marché africain.</p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">🎯</div>
+      <h3>Cible</h3>
+      <p style="color:#8AAAC0;font-size:.9rem;line-height:1.7">Étudiants (BAC, BEPC), professionnels (TOEIC, Business English), francophones de tous niveaux (A1→C2) en Côte d'Ivoire et dans toute l'Afrique francophone. Marché adressable : <strong style="color:#E8B84B">350M+</strong> francophones.</p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">💡</div>
+      <h3>Avantage Concurrentiel</h3>
+      <p style="color:#8AAAC0;font-size:.9rem;line-height:1.7">Seule plateforme africaine combinant : IA multi-modèles (Claude, DeepSeek, Groq), WhatsApp comme canal principal (sans app), préparation aux examens locaux ET internationaux, et contenu pédagogique adapté au contexte ivoirien/africain.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="plateforme">
+  <h2><span class="num">02</span> La Plateforme</h2>
+  <div class="grid-3" style="margin-bottom:24px">
+    <div class="card stat">
+      <div class="stat-num">300+</div>
+      <div class="stat-label">Modules pédagogiques</div>
+    </div>
+    <div class="card stat">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Catégories (Grammaire, Vocab, Business, BAC/BEPC, TOEIC/TOEFL)</div>
+    </div>
+    <div class="card stat">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Niveaux CECRL (A1→C2)</div>
+    </div>
+  </div>
+
+  <h3>Fonctionnalités clés</h3>
+  <div class="grid-3">
+    <div class="card"><div class="feature-icon">📚</div><h3>Catalogue modulaire</h3><p style="font-size:.82rem;color:#8AAAC0">300+ modules avec quiz, vidéos YouTube, lexique, et suivi de progression.</p></div>
+    <div class="card"><div class="feature-icon">🤖</div><h3>Assistant IA</h3><p style="font-size:.82rem;color:#8AAAC0">Chatbot intelligent multi-modèles (Claude, DeepSeek, Groq) pour répondre aux questions et générer du contenu.</p></div>
+    <div class="card"><div class="feature-icon">💬</div><h3>WhatsApp Academy</h3><p style="font-size:.82rem;color:#8AAAC0">Cours, quiz et notifications via WhatsApp — 8 templates Meta approuvés avec Twilio.</p></div>
+    <div class="card"><div class="feature-icon">📝</div><h3>Tests de placement</h3><p style="font-size:.82rem;color:#8AAAC0">Diagnostic A1→C2 avec 20+ questions adaptatives pour orienter l'apprenant.</p></div>
+    <div class="card"><div class="feature-icon">🏆</div><h3>Certifications</h3><p style="font-size:.82rem;color:#8AAAC0">Génération de certificats PDF après validation des modules et examens.</p></div>
+    <div class="card"><div class="feature-icon">📱</div><h3>PWA Mobile</h3><p style="font-size:.82rem;color:#8AAAC0">Progressive Web App installable — fonctionne sans connexion après chargement.</p></div>
+    <div class="card"><div class="feature-icon">🌍</div><h3>English Corner</h3><p style="font-size:.82rem;color:#8AAAC0">Podcasts, vidéos YouTube et contenus culturels anglophones enrichis de quiz.</p></div>
+    <div class="card"><div class="feature-icon">📊</div><h3>Dashboard Admin</h3><p style="font-size:.82rem;color:#8AAAC0">Gestion des utilisateurs, des formateurs, des abonnements et des rapports financiers.</p></div>
+    <div class="card"><div class="feature-icon">🎓</div><h3>Prépa Examens</h3><p style="font-size:.82rem;color:#8AAAC0">Modules dédiés TOEIC (20), TOEFL (10), BAC (9), BEPC (9) avec quiz et stratégies.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="modules">
+  <h2><span class="num">03</span> Contenu Pédagogique</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Catégorie</th><th>Modules</th><th>Niveaux</th><th>Exemples</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>📖 Grammaire</td><td>80+</td><td>A1→C2</td><td>Temps verbaux, articles, conditionnels, discours rapporté, subjonctif</td></tr>
+        <tr><td>🔤 Vocabulaire</td><td>70+</td><td>A1→C1</td><td>Vocabulaire académique, thématique, collocations, phrasal verbs</td></tr>
+        <tr><td>💼 Business English</td><td>60+</td><td>B1→C1</td><td>Incoterms, réunions, négociations, correspondance, finance</td></tr>
+        <tr><td>🎓 Prépa BEPC</td><td>9</td><td>B1</td><td>Structure épreuve, reading, writing, grammar BAC</td></tr>
+        <tr><td>🏆 Prépa BAC</td><td>9</td><td>B2</td><td>Essay, conditionnels, discours rapporté, expression écrite</td></tr>
+        <tr><td>🌍 Prépa TOEIC</td><td>20</td><td>A2→B2</td><td>Parts 1→7 complètes : listening, reading, grammar, vocabulaire</td></tr>
+        <tr><td>🇺🇸 Prépa TOEFL</td><td>10</td><td>B2→C1</td><td>Reading, Listening, Speaking, Writing, AWL Vocabulary</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="color:#5A7090;font-size:.8rem;margin-top:12px">Chaque module inclut : leçon structurée, quiz, vidéo YouTube, objectifs pédagogiques et récompense XP.</p>
+
+  <h3 style="margin-top:24px">Test de placement</h3>
+  <p style="color:#8AAAC0;font-size:.9rem">20 questions adaptatives couvrant A1→B2 — grammaire, vocabulaire et compréhension — pour orienter chaque apprenant vers le bon niveau.</p>
+</section>
+
+<section class="slide" id="technologie">
+  <h2><span class="num">04</span> Architecture Technique</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Frontend</h3>
+      <div>
+        <span class="tag tag-tech">React 18</span>
+        <span class="tag tag-tech">Vite</span>
+        <span class="tag tag-tech">Tailwind CSS</span>
+        <span class="tag tag-tech">PWA</span>
+        <span class="tag tag-tech">HTML/CSS natif (dashboard)</span>
+      </div>
+      <p style="color:#8AAAC0;font-size:.85rem;margin-top:10px">Interface responsive, installable sur mobile, conçue pour les réseaux africains.</p>
+    </div>
+    <div class="card">
+      <h3>Backend & Infra</h3>
+      <div>
+        <span class="tag tag-tech">Supabase</span>
+        <span class="tag tag-tech">PostgreSQL</span>
+        <span class="tag tag-tech">Netlify Functions</span>
+        <span class="tag tag-tech">Supabase Edge Functions</span>
+      </div>
+      <p style="color:#8AAAC0;font-size:.85rem;margin-top:10px">Architecture serverless, base de données PostgreSQL avec Row Level Security.</p>
+    </div>
+    <div class="card">
+      <h3>IA Multi-fournisseurs</h3>
+      <div>
+        <span class="tag tag-tech">Anthropic Claude</span>
+        <span class="tag tag-tech">DeepSeek</span>
+        <span class="tag tag-tech">Groq (Llama/Mixtral)</span>
+        <span class="tag tag-tech">Tavily / Brave Search</span>
+      </div>
+      <p style="color:#8AAAC0;font-size:.85rem;margin-top:10px">3 modèles disponibles avec permissions configurables par utilisateur ou plan.</p>
+    </div>
+    <div class="card">
+      <h3>Communication</h3>
+      <div>
+        <span class="tag tag-tech">Twilio WhatsApp</span>
+        <span class="tag tag-tech">Meta Templates</span>
+        <span class="tag tag-tech">YouTube API</span>
+        <span class="tag tag-tech">Webhooks</span>
+      </div>
+      <p style="color:#8AAAC0;font-size:.85rem;margin-top:10px">Messagerie WhatsApp avec 8 templates Meta approuvés, webhook entrant/sortant.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="ia">
+  <h2><span class="num">05</span> Intelligence Artificielle</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="feature-icon">🧠</div>
+      <h3>Génération de Quiz</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">Cliquez sur "Générer un quiz TOEIC/TOEFL" — l'IA Claude crée instantanément 5 questions adaptées au thème et niveau. Les questions sont intégrées au quiz interactif du dashboard.</p>
+      <div style="margin-top:8px"><span class="badge badge-gold">Bouton dédié dans dashboard</span></div>
+    </div>
+    <div class="card">
+      <div class="feature-icon">💬</div>
+      <h3>Assistant Pédagogique</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">Chatbot IA disponible dans l'espace pédagogique pour répondre aux questions des apprenants. Supporte Claude, DeepSeek et Groq avec recherche web Tavily/Brave pour des réponses à jour.</p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">🎯</div>
+      <h3>Correction Automatique</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">Les évaluations sont corrigées automatiquement par l'IA avec explications détaillées. Support des essais argumentatifs (TOEFL Task 2).</p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">🔐</div>
+      <h3>Permissions IA</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">Contrôle granulaire : limites de tokens quotidiennes, modèles autorisés par utilisateur ou plan d'abonnement, recherche web activable/désactivable.</p>
+      <div style="margin-top:8px"><span class="badge badge-blue">Interface admin dédiée</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="whatsapp">
+  <h2><span class="num">06</span> WhatsApp Academy</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="feature-icon">📱</div>
+      <h3>8 Templates Meta Approuvés</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">Tous les messages sont des modèles Meta validés avec variables dynamiques, boutons et samples.</p>
+      <div class="table-wrap" style="margin-top:10px">
+        <table>
+          <thead><tr><th>Template</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td><code>etudiant</code></td><td>Suivi pédagogique étudiant</td></tr>
+            <tr><td><code>nouveau</code></td><td>Bienvenue nouveau apprenant</td></tr>
+            <tr><td><code>rappel_paiement</code></td><td>Relance de paiement</td></tr>
+            <tr><td><code>devoir_publie</code></td><td>Notification nouveau devoir</td></tr>
+            <tr><td><code>promo_marketing</code></td><td>Campagnes promotionnelles</td></tr>
+            <tr><td><code>certificat_disponible</code></td><td>Certificat prêt à télécharger</td></tr>
+            <tr><td><code>rappel_abonnement</code></td><td>Expiration abonnement</td></tr>
+            <tr><td><code>note_etudiant</code></td><td>Résultat d'évaluation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="feature-icon">🔄</div>
+      <h3>Flux WhatsApp Complet</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">Webhook Twilio → Table <code>messages_whatsapp</code> → Traitement IA → Réponse automatique. Toute la messagerie est traçable dans le dashboard admin.</p>
+      <div style="margin-top:10px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-tech">Twilio API</span>
+          <span class="tag tag-tech">Webhook</span>
+          <span class="tag tag-tech">Edge Functions</span>
+          <span class="tag tag-tech">Sélecteur de contacts intelligent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="equipe">
+  <h2><span class="num">07</span> Équipe & Gouvernance</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div style="font-size:1.1rem;font-weight:900;color:#E8B84B">Issa Bamba</div>
+      <div style="color:#6A8AAA;font-size:.8rem;margin-bottom:8px">Fondateur & Directeur</div>
+      <p style="color:#8AAAC0;font-size:.85rem">Visionnaire de l'edtech en Afrique francophone. Expert en pédagogie numérique et en développement de plateformes éducatives.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.1rem;font-weight:900;color:#E8B84B">Formateurs Certifiés</div>
+      <div style="color:#6A8AAA;font-size:.8rem;margin-bottom:8px">Équipe pédagogique</div>
+      <p style="color:#8AAAC0;font-size:.85rem">Professeurs d'anglais expérimentés, spécialistes TOEIC, TOEFL, BAC et BEPC. Formateurs disponibles pour sessions live et correction personnalisée.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.1rem;font-weight:900;color:#E8B84B">Staff Administratif</div>
+      <div style="color:#6A8AAA;font-size:.8rem;margin-bottom:8px">Secrétariat, comptabilité, RH</div>
+      <p style="color:#8AAAC0;font-size:.85rem">Gestion des inscriptions, des abonnements, de la paie formateurs et des rapports financiers — automatisée dans le dashboard.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.1rem;font-weight:900;color:#E8B84B">Rôles & Permissions</div>
+      <div style="color:#6A8AAA;font-size:.8rem;margin-bottom:8px">Contrôle d'accès granulaire</div>
+      <p style="color:#8AAAC0;font-size:.85rem">Admin, formateur, secrétaire, directeur pédagogique — chaque rôle a son interface et ses permissions dans le dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="investir">
+  <h2><span class="num">08</span> Opportunité d'Investissement</h2>
+  <div class="grid-2">
+    <div class="card">
+      <div class="feature-icon">📊</div>
+      <h3>Marché</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">L'Afrique francophone compte <strong style="color:#E8B84B">350M+</strong> personnes. L'anglais est un prérequis pour l'emploi, les études supérieures et les affaires. L'edtech africaine croît de <strong style="color:#E8B84B">35% par an</strong>. Aucun leader panafricain de l'anglais n'a encore émergé.</p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">🏗️</div>
+      <h3>Produit Prêt</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">Plateforme complète développée et déployable : 300+ modules, IA multi-modèles, WhatsApp intégré, dashboard admin, PWA mobile. Besoin de <strong style="color:#E8B84B">marketing, acquisition utilisateurs et scaling</strong>.</p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">💎</div>
+      <h3>Modèle Économique</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">
+        • <strong>Abonnements UNI</strong> : accès à tous les modules + IA<br>
+        • <strong>Formations certifiantes</strong> : TOEIC, TOEFL, BAC, BEPC<br>
+        • <strong>Formules Entreprises</strong> : Business English pour professionnels<br>
+        • <strong>Sessions live</strong> : cours en visio avec formateurs
+      </p>
+    </div>
+    <div class="card">
+      <div class="feature-icon">🎯</div>
+      <h3>Pourquoi Maintenant ?</h3>
+      <p style="color:#8AAAC0;font-size:.85rem;line-height:1.6">1. La demande d'anglais explose en Afrique francophone<br>
+      2. Aucune plateforme locale panafricaine dominante<br>
+      3. WhatsApp = 95% de pénétration mobile en Afrique<br>
+      4. L'IA réduit le coût de production de contenu éducatif<br>
+      5. AGTM a tout construit : prêt à scale</p>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:32px;padding:24px;background:linear-gradient(135deg,#0F1E38,#1A140A);border:1px solid rgba(200,150,12,0.3);border-radius:13px">
+    <div style="font-size:1.3rem;font-weight:700;color:#E8B84B;margin-bottom:8px">Contactez-nous</div>
+    <p style="color:#8AAAC0;font-size:.9rem;margin-bottom:16px">Pour recevoir notre business plan complet, une démo ou discuter d'un partenariat :</p>
+    <div style="font-size:1rem;color:#D4C8A0">📧 <a href="mailto:contact@agtm.ci" style="color:#E8B84B;text-decoration:none">contact@agtm.ci</a></div>
+    <div style="font-size:1rem;color:#D4C8A0;margin-top:6px">📱 <span style="color:#E8B84B">+225 07 09 26 98 80</span></div>
+  </div>
+</section>
+
+<section class="slide" style="text-align:center;border-bottom:none;min-height:auto;padding:40px">
+  <p style="font-size:.85rem;color:#5A7090">AGTM Digital Academy — Construire l'avenir de l'éducation anglophone en Afrique.<br>
+  Document généré le 24 avril 2026 · Tous droits réservés © AGTM</p>
+  <div style="margin-top:12px;display:flex;justify-content:center;gap:10px">
+    <span class="badge badge-gold">🤖 IA</span>
+    <span class="badge badge-blue">📱 WhatsApp</span>
+    <span class="badge badge-green">🌍 Panafricain</span>
+    <span class="badge badge-gold">🎓 Certifiant</span>
+  </div>
+</section>
+
+</body>
+</html>

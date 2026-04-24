@@ -1,0 +1,119 @@
+{
+  "title": "AGTM Digital Academy — Présentation Investisseurs",
+  "author": "AGTM Digital Academy",
+  "subject": "Plateforme EdTech Africaine",
+  "slides": [
+    {
+      "type": "hero",
+      "title": "AGTM DIGITAL ACADEMY",
+      "lines": [
+        "L'Anglais pour Tous les Africains",
+        "Plateforme EdTech panafricaine • IA • WhatsApp • Certifiante",
+        "",
+        "Prêt au lancement — En recherche de partenaires"
+      ]
+    },
+    {
+      "type": "standard",
+      "title": "Le Problème & Notre Solution",
+      "lines": [
+        "## LE PROBLÈME",
+        "95% des francophones africains sans accès à une formation d'anglais de qualité",
+        "Écoles rares, chères, inexistantes hors des capitales",
+        "Plateformes existantes pas adaptées au contexte africain",
+        "",
+        "## NOTRE SOLUTION",
+        "Plateforme complète avec IA multi-modèles, WhatsApp comme canal principal",
+        "Préparation TOEIC, TOEFL, BAC, BEPC — examens locaux ET internationaux",
+        "Interface mobile-first, PWA, fonctionnement hors-ligne partiel"
+      ]
+    },
+    {
+      "type": "standard",
+      "title": "La Plateforme en Chiffres",
+      "lines": [
+        "📚 300+ modules pédagogiques (Grammaire, Vocabulaire, Business, Examens)",
+        "🌍 6 niveaux CECRL (A1 → C2)",
+        "🎯 20 modules TOEIC + 10 modules TOEFL",
+        "🏆 9 modules BAC + 9 modules BEPC",
+        "🤖 4 modèles IA (Claude, DeepSeek, Groq, Mixtral)",
+        "💬 8 templates WhatsApp Meta approuvés",
+        "📱 Application PWA installable sur mobile",
+        "🔐 5 rôles utilisateur (Admin, Formateur, Secrétaire, etc.)"
+      ]
+    },
+    {
+      "type": "standard",
+      "title": "Intelligence Artificielle",
+      "lines": [
+        "🧠 Génération automatique de quiz (Cliquez Générer TOEIC/TOEFL)",
+        "💬 Assistant pédagogique multi-modèles avec recherche web",
+        "📝 Correction automatique des évaluations",
+        "🔐 Permissions IA configurables par utilisateur et par plan",
+        "🎯 Quiz adaptés au niveau CECRL de l'apprenant",
+        "📊 Limites de tokens quotidiennes gérables"
+      ]
+    },
+    {
+      "type": "standard",
+      "title": "WhatsApp Academy",
+      "lines": [
+        "📱 8 templates Meta Business approuvés avec variables dynamiques",
+        "🔄 Webhook Twilio entrant → traitement IA → réponse automatique",
+        "👥 Sélecteur de contacts intelligent selon le template",
+        "📬 Messages traçables dans le dashboard admin",
+        "🎯 Templates : Étudiant, Nouveau, Paiement, Devoir, Promo, Certificat, Abonnement, Note"
+      ]
+    },
+    {
+      "type": "standard",
+      "title": "Opportunité de Marché",
+      "lines": [
+        "🌍 350M+ francophones en Afrique — marché en croissance",
+        "📈 EdTech africaine : +35% de croissance annuelle",
+        "🎓 L'anglais = clé de l'employabilité et des études à l'étranger",
+        "📱 WhatsApp : 95% de pénétration mobile en Afrique",
+        "🏗️ Aucun leader panafricain de l'anglais n'a encore émergé",
+        "💡 L'IA réduit le coût de production de contenu éducatif de 80%"
+      ]
+    },
+    {
+      "type": "standard",
+      "title": "Stack Technique",
+      "lines": [
+        "Frontend : React 18 + Vite + Tailwind CSS + PWA",
+        "Backend : Supabase + PostgreSQL (Row Level Security)",
+        "Hosting : Netlify (Functions + Edge Functions)",
+        "IA : Anthropic Claude, DeepSeek, Groq (Llama, Mixtral, Gemma)",
+        "Recherche : Tavily + Brave Search API",
+        "Messagerie : Twilio WhatsApp + Meta Cloud API",
+        "Contenu : YouTube API + Podcasts"
+      ]
+    },
+    {
+      "type": "standard",
+      "title": "Modèle Économique",
+      "lines": [
+        "🎓 Abonnement UNI : accès illimité à tous les modules + IA",
+        "🏆 Formations certifiantes : TOEIC, TOEFL, BAC, BEPC",
+        "💼 Business English : formules entreprises (B2B)",
+        "📹 Sessions live : cours en visioconférence avec formateurs",
+        "📊 Rapports financiers automatisés dans le dashboard admin"
+      ]
+    },
+    {
+      "type": "hero",
+      "title": "Nous Contacter",
+      "lines": [
+        "AGTM Digital Academy",
+        "",
+        "📧 contact@agtm.ci",
+        "📱 +225 07 09 26 98 80",
+        "",
+        "Prêt à scaler — Partenaire recherché",
+        "",
+        "Document généré le 24 avril 2026"
+      ]
+    }
+  ]
+}
