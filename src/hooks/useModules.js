@@ -1,5 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase, getModules, markModuleComplete, updateProgress } from '../lib/supabase'
+import { XP_PER_LEVEL, nextLevel } from '../lib/utils'
+import { CEFR_LEVELS } from '../lib/constants'
 
 export function useModules(lang, level = null) {
   return useQuery({
@@ -41,11 +43,18 @@ export function useModuleProgress(userId) {
 export function useCompleteModule() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async ({ userId, moduleId, score, lang, xpPoints, modulesCompleted }) => {
+    mutationFn: async ({ userId, moduleId, score, lang, xpPoints, modulesCompleted, currentLevel }) => {
       await markModuleComplete(userId, moduleId, score)
+
+      const levelIdx = CEFR_LEVELS.indexOf(currentLevel)
+      const next = levelIdx < CEFR_LEVELS.length - 1 ? CEFR_LEVELS[levelIdx + 1] : null
+      const xpNeeded = next ? XP_PER_LEVEL[currentLevel] : Infinity
+      const newLevel = xpPoints >= xpNeeded && next ? next : currentLevel
+
       await updateProgress(userId, lang, {
         xp_points: xpPoints,
         modules_completed: modulesCompleted,
+        current_level: newLevel,
         last_activity_at: new Date().toISOString(),
       })
     },

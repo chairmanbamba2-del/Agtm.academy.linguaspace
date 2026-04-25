@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import AppLayout from '../components/layout/AppLayout'
 import Modal from '../components/ui/Modal'
 import MasterCard, { LevelBadge } from '../components/ui/MasterCard'
@@ -46,7 +48,7 @@ export default function Module() {
       })
       setQuiz(data.questions)
     } catch {
-      setQuiz(FALLBACK_QUIZ)
+      setQuiz(getFallbackQuiz(lang))
     } finally {
       setLoading(false)
     }
@@ -66,6 +68,7 @@ export default function Module() {
       lang,
       xpPoints: (prog?.xp_points || 0) + xpGain,
       modulesCompleted: (prog?.modules_completed || 0) + 1,
+      currentLevel: prog?.current_level || 'A1',
     })
   }
 
@@ -126,7 +129,7 @@ export default function Module() {
 
         <MasterCard variant="content" padding="lg" className="mb-8">
            <div className="prose prose-invert prose-sm md:prose-base max-w-none prose-headings:text-white prose-p:text-white/80 prose-li:text-white/80 leading-relaxed">
-            {module.content_text || module.description || `Ce module couvre les fondamentaux de la leçon "${module.title}". Travaillez les exercices et pratiquez avec votre coach IA pour consolider vos acquis.`}
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{module.content_text || module.description || `Ce module couvre les fondamentaux de la leçon "${module.title}". Travaillez les exercices et pratiquez avec votre coach IA pour consolider vos acquis.`}</ReactMarkdown>
           </div>
         </MasterCard>
 
@@ -244,8 +247,30 @@ export default function Module() {
   )
 }
 
-const FALLBACK_QUIZ = [
-  { id: '1', question: 'Which greeting is used in the morning?', options: ['A. Good evening', 'B. Good morning', 'C. Good night', 'D. Good afternoon'], correct: 'B', explanation: 'Good morning is used before noon.' },
-  { id: '2', question: 'How do you say your name in English?', options: ['A. I have name is...', 'B. My name is...', 'C. Name me is...', 'D. I name...'], correct: 'B', explanation: 'The correct structure is "My name is ___."' },
-  { id: '3', question: 'Which response is correct after "Nice to meet you"?', options: ['A. Yes please', 'B. Thank you very much', 'C. Nice to meet you too', 'D. I am fine'], correct: 'C', explanation: 'The standard reply is "Nice to meet you too."' },
-]
+function getFallbackQuiz(lang) {
+  const QUIZZES = {
+    fr: [
+      { id: '1', question: 'Quelle salutation utilise-t-on le matin ?', options: ['A. Bonsoir', 'B. Bonjour', 'C. Bonne nuit', 'D. Bon après-midi'], correct: 'B', explanation: 'Bonjour est utilisé avant midi.' },
+      { id: '2', question: 'Comment dit-on son prénom en français ?', options: ['A. J\'ai nom...', 'B. Mon nom est...', 'C. Je m\'appelle...', 'D. Moi nom...'], correct: 'C', explanation: 'La structure correcte est "Je m\'appelle ___".' },
+      { id: '3', question: 'Quelle réponse est correcte après "Enchanté" ?', options: ['A. Oui s\'il vous plaît', 'B. Merci beaucoup', 'C. Enchanté aussi', 'D. Je vais bien'], correct: 'C', explanation: 'La réponse standard est "Enchanté aussi".' },
+    ],
+    es: [
+      { id: '1', question: '¿Qué saludo se usa por la mañana?', options: ['A. Buenas tardes', 'B. Buenos días', 'C. Buenas noches', 'D. Hola'], correct: 'B', explanation: 'Buenos días se usa antes del mediodía.' },
+      { id: '2', question: '¿Cómo dices tu nombre en español?', options: ['A. Yo tener nombre...', 'B. Mi nombre es...', 'C. Me llamo...', 'D. Yo nombre...'], correct: 'C', explanation: 'La estructura correcta es "Me llamo ___".' },
+      { id: '3', question: '¿Qué respuesta es correcta después de "Mucho gusto"?', options: ['A. Sí por favor', 'B. Muchas gracias', 'C. Mucho gusto también', 'D. Estoy bien'], correct: 'C', explanation: 'La respuesta estándar es "Mucho gusto también".' },
+    ],
+    de: [
+      { id: '1', question: 'Welche Begrüßung verwendet man am Morgen?', options: ['A. Guten Abend', 'B. Guten Morgen', 'C. Gute Nacht', 'D. Guten Tag'], correct: 'B', explanation: 'Guten Morgen wird vor Mittag verwendet.' },
+      { id: '2', question: 'Wie sagt man seinen Namen auf Deutsch?', options: ['A. Ich habe Name...', 'B. Mein Name ist...', 'C. Ich heiße...', 'D. Name ich...'], correct: 'C', explanation: 'Die korrekte Struktur ist "Ich heiße ___".' },
+      { id: '3', question: 'Welche Antwort ist nach "Freut mich" richtig?', options: ['A. Ja bitte', 'B. Vielen Dank', 'C. Freut mich auch', 'D. Mir geht es gut'], correct: 'C', explanation: 'Die Standardantwort ist "Freut mich auch".' },
+    ],
+    ar: [
+      { id: '1', question: 'ما التحية المستخدمة في الصباح؟', options: ['A. مساء الخير', 'B. صباح الخير', 'C. تصبح على خير', 'D. بعد الظهر'], correct: 'B', explanation: 'صباح الخير تستخدم قبل الظهر.' },
+      { id: '2', question: 'كيف تقول اسمك بالعربية؟', options: ['A. أنا اسم...', 'B. اسمي هو...', 'C. أدعى...', 'D. اسم أنا...'], correct: 'C', explanation: 'التركيبة الصحيحة هي "أدعى ___".' },
+      { id: '3', question: 'ما الرد الصحيح بعد "تشرفنا"؟', options: ['A. نعم من فضلك', 'B. شكراً جزيلاً', 'C. تشرفنا أيضاً', 'D. أنا بخير'], correct: 'C', explanation: 'الرد المعتاد هو "تشرفنا أيضاً".' },
+    ],
+  }
+  return QUIZZES[lang] || QUIZZES.en
+}
+
+

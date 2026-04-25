@@ -305,7 +305,7 @@ const Landing = () => {
                   <LevelBadge level="PREMIUM" lang="premium" size="sm" />
                 </div>
 
-                <div className="font-serif text-4xl text-gold mb-1">15 000 <span className="text-lg text-muted">FCFA</span></div>
+                  <div className="font-serif text-4xl text-gold mb-1">30 000 <span className="text-lg text-muted">FCFA</span></div>
                 <div className="text-sm text-muted mb-6">/mois · 5 langues incluses</div>
 
                 <div className="space-y-2 mb-8 text-left max-w-sm mx-auto">
